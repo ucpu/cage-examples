@@ -1,0 +1,17 @@
+
+[]
+scheme = pack
+car.pack
+
+[]
+scheme = mesh
+car.obj
+
+[]
+scheme = texture
+albedo.psd
+special.psd
+
+[]
+scheme = object
+car.object

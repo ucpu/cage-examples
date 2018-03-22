@@ -1,0 +1,18 @@
+
+[]
+scheme = pack
+tree.pack
+
+[]
+scheme = mesh
+tree.obj?Bark
+tree.obj?Ranges
+
+[]
+scheme = texture
+bark.jpg
+leaves.png
+
+[]
+scheme = object
+tree.object

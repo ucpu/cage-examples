@@ -1,0 +1,15 @@
+
+[]
+scheme = pack
+dragon.pack
+
+[]
+scheme = object
+dragon.object
+
+[]
+scheme = mesh
+scale = 50
+export_uv = false
+export_tangent = false
+dragon.obj?1

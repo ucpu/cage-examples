@@ -1,0 +1,16 @@
+
+[]
+scheme = pack
+medium.pack
+
+[]
+scheme = mesh
+medium.obj
+
+[]
+scheme = texture
+#medium.png
+
+[]
+scheme = object
+medium.object

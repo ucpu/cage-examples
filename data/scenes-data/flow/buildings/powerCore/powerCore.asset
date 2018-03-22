@@ -1,0 +1,18 @@
+
+[]
+scheme = pack
+powerCore.pack
+
+[]
+scheme = mesh
+powerCore.obj?stand
+powerCore.obj?sphere
+
+[]
+scheme = texture
+albedo.psd
+special.psd
+
+[]
+scheme = object
+powerCore.object

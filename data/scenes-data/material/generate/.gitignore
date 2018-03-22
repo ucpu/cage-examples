@@ -1,0 +1,6 @@
+*
+!.gitignore
+!*.sln
+!*.vcxproj
+!*.h
+!*.cpp

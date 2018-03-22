@@ -1,0 +1,9 @@
+scenes/mcguire/rungholt/house.pack
+
+scenes/common/ground.obj
+0 0 0
+0
+
+scenes/mcguire/rungholt/house.object
+0 0 0
+0

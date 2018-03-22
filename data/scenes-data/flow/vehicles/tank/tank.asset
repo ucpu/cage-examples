@@ -1,0 +1,16 @@
+
+[]
+scheme = pack
+tank.pack
+
+[]
+scheme = mesh
+tank.obj
+
+[]
+scheme = texture
+#tank.png
+
+[]
+scheme = object
+tank.object

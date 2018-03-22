@@ -1,0 +1,16 @@
+
+[]
+scheme = pack
+lightWeapon.pack
+
+[]
+scheme = mesh
+lightWeapon.obj
+
+[]
+scheme = texture
+albedo.psd
+
+[]
+scheme = object
+lightWeapon.object

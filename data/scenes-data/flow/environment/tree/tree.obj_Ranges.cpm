@@ -1,0 +1,11 @@
+[base]
+roughness = 0.8
+
+[textures]
+albedo = leaves.png
+
+[flags]
+two-sided
+transparency
+opacity-texture
+

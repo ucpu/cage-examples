@@ -1,0 +1,16 @@
+
+[]
+scheme = pack
+heavyWeapon.pack
+
+[]
+scheme = mesh
+heavyWeapon.obj
+
+[]
+scheme = texture
+albedo.psd
+
+[]
+scheme = object
+heavyWeapon.object

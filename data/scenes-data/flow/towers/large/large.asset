@@ -1,0 +1,16 @@
+
+[]
+scheme = pack
+large.pack
+
+[]
+scheme = mesh
+large.obj
+
+[]
+scheme = texture
+#large.png
+
+[]
+scheme = object
+large.object

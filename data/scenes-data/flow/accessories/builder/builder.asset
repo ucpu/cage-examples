@@ -1,0 +1,17 @@
+
+[]
+scheme = pack
+builder.pack
+
+[]
+scheme = mesh
+builder.obj
+
+[]
+scheme = texture
+albedo.psd
+special.psd
+
+[]
+scheme = object
+builder.object

@@ -1,0 +1,33 @@
+
+[]
+scheme = pack
+common.pack
+
+[]
+scheme = mesh
+scale = 2
+ground.obj
+
+[]
+scheme = texture
+ground.jpg;d
+
+[]
+scheme = texture
+convert_normal = 0.5
+ground.jpg;n
+
+[]
+scheme = mesh
+skybox.obj
+
+[]
+scheme = texture
+target = GL_TEXTURE_2D_ARRAY
+animation_duration = 10000000
+skyboxes/$.png
+
+[]
+scheme = mesh
+scale = 0.05
+lightbulb.obj

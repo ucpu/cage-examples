@@ -1,0 +1,15 @@
+
+[]
+scheme = pack
+heavyArmor.pack
+
+[]
+scheme = mesh
+heavyArmor.obj
+
+[]
+scheme = texture
+
+[]
+scheme = object
+heavyArmor.object

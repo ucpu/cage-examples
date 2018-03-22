@@ -1,0 +1,17 @@
+
+[]
+scheme = pack
+energySender.pack
+
+[]
+scheme = mesh
+energySender.obj
+
+[]
+scheme = texture
+albedo.psd
+special.psd
+
+[]
+scheme = object
+energySender.object

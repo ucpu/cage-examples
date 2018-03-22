@@ -1,0 +1,9 @@
+scenes/mcguire/sibenik/sibenik.pack
+
+scenes/common/ground.obj
+0 -15.6 0
+0
+
+scenes/mcguire/sibenik/sibenik.object
+0 0 0
+0

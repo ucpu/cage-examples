@@ -1,0 +1,12 @@
+
+[]
+scheme = texture
+kamen.png
+KAMEN-stup.png
+mramor6x6.png
+
+[]
+scheme = texture
+convert_normal = 1.5
+kamen-bump.png
+mramor6x6-bump.png

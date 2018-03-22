@@ -1,0 +1,16 @@
+
+[]
+scheme = pack
+bike.pack
+
+[]
+scheme = mesh
+bike.obj
+
+[]
+scheme = texture
+#bike.png
+
+[]
+scheme = object
+bike.object

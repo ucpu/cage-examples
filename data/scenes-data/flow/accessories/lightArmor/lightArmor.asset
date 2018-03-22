@@ -1,0 +1,15 @@
+
+[]
+scheme = pack
+lightArmor.pack
+
+[]
+scheme = mesh
+lightArmor.obj
+
+[]
+scheme = texture
+
+[]
+scheme = object
+lightArmor.object

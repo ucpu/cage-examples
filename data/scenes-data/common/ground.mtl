@@ -1,0 +1,10 @@
+
+newmtl ground
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.100000 0.100000
+d 1.000000
+illum 2
+Ns 10.000000
+map_Kd ground.jpg;d
+map_Bump ground.jpg;n

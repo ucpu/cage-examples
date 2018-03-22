@@ -1,0 +1,9 @@
+scenes/mcguire/crytek/sponza.pack
+
+scenes/common/ground.obj
+0 -1.264425 0
+0
+
+scenes/mcguire/crytek/sponza.object
+0 0 0
+0

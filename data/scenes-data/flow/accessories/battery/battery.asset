@@ -1,0 +1,17 @@
+
+[]
+scheme = pack
+battery.pack
+
+[]
+scheme = mesh
+battery.obj
+
+[]
+scheme = texture
+albedo.psd
+special.psd
+
+[]
+scheme = object
+battery.object

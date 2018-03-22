@@ -1,0 +1,17 @@
+
+[]
+scheme = pack
+sphere.pack
+
+[]
+scheme = mesh
+sphere.obj
+
+[]
+scheme = texture
+albedo.psd
+special.psd
+
+[]
+scheme = object
+sphere.object

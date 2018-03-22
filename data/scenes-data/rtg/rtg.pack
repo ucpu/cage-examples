@@ -1,0 +1,24 @@
+
+[6] #object
+Asteroid1.001.object
+Asteroid1.object
+Bridge.object
+Character.object
+LargePlatform.001.object
+LargePlatform.object
+LargePlatformBottom.object
+MainLab.object
+MainLabAccessories.object
+Platform.object
+PlatformBottom.object
+Ship.object
+SideLab.object
+SideLabAccessories.object
+SidePlatform.object
+SidePlatformBottom.object
+SidePlatformRamp.object
+Tank.object
+TankAccessories.object
+Transport.object
+TransportAccesories.object
+TransportBottom.object

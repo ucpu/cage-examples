@@ -1,0 +1,16 @@
+
+[]
+scheme = pack
+rangeWeapon.pack
+
+[]
+scheme = mesh
+rangeWeapon.obj
+
+[]
+scheme = texture
+albedo.psd
+
+[]
+scheme = object
+rangeWeapon.object

@@ -1,0 +1,21 @@
+
+[]
+scheme = pack
+other.pack
+
+[]
+scheme = mesh
+export_uv = false
+export_normal = false
+export_tangent = false
+selectedUnit.obj
+beam.obj
+lifebar.obj
+energybar.obj
+
+[]
+scheme = object
+selectedUnit.object
+beam.object
+lifebar.object
+energybar.object

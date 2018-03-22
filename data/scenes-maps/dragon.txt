@@ -1,0 +1,9 @@
+scenes/mcguire/dragon/dragon.pack
+
+scenes/mcguire/dragon/dragon.object
+0 0 0
+0
+
+scenes/common/ground.obj
+0 -14 0
+0
