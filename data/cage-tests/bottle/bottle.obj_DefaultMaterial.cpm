@@ -1,0 +1,7 @@
+
+[base]
+
+[textures]
+albedo = albedo.png
+normal = normal.png
+special = special.png

@@ -1,0 +1,7 @@
+
+[ref]
+shadower = lods.obj?floor
+collider = lods.obj?floor;collider
+
+[]
+lods.obj?floor

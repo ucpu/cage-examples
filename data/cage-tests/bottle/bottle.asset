@@ -1,0 +1,28 @@
+
+[]
+scheme = pack
+bottle.pack
+
+[]
+scheme = mesh
+bottle.obj
+
+[]
+scheme = mesh
+export_uv = false
+export_tangent = false
+scale = 0.3
+other.obj?arrow
+
+[]
+scheme = mesh
+export_uv = false
+export_tangent = false
+scale = 5
+other.obj?plane
+
+[]
+scheme = texture
+albedo.png
+normal.png
+special.png

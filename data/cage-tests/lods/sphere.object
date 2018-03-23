@@ -1,0 +1,21 @@
+
+[size]
+world = 10
+pixels = 512
+
+[ref]
+shadower = lods.obj?sphere_1
+collider = lods.obj?sphere_1;collider
+
+[]
+threshold = 1
+lods.obj?sphere_3
+
+[]
+threshold = 0.6
+lods.obj?sphere_2
+
+[]
+threshold = 0.3
+lods.obj?sphere_1
+

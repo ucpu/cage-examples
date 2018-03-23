@@ -1,0 +1,21 @@
+
+[size]
+world = 10
+pixels = 512
+
+[ref]
+shadower = lods.obj?cube_1
+collider = lods.obj?cube_1;collider
+
+[]
+threshold = 1
+lods.obj?cube_3
+
+[]
+threshold = 0.6
+lods.obj?cube_2
+
+[]
+threshold = 0.3
+lods.obj?cube_1
+

@@ -1,0 +1,15 @@
+
+[]
+scheme = pack
+logo.pack
+
+[]
+scheme = sound
+type = stream
+before = repeat
+after = repeat
+logo.ogg
+
+[]
+scheme = texture
+logo.png

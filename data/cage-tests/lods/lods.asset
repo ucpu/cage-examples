@@ -1,0 +1,30 @@
+
+[]
+scheme = pack
+lods.pack
+
+[]
+scheme = mesh
+scale = 5
+export_uv = false
+export_tangent = false
+lods.obj?sphere_3
+lods.obj?sphere_2
+lods.obj?sphere_1
+lods.obj?cube_3
+lods.obj?cube_2
+lods.obj?cube_1
+lods.obj?floor
+
+[]
+scheme = collider
+scale = 5
+lods.obj?sphere_1;collider
+lods.obj?cube_1;collider
+lods.obj?floor;collider
+
+[]
+scheme = object
+sphere.object
+cube.object
+floor.object
