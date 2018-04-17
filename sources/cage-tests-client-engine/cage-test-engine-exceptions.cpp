@@ -6,7 +6,7 @@
 #include <cage-core/config.h>
 #include <cage-core/utility/hashString.h>
 #include <cage-client/core.h>
-#include <cage-client/graphic.h>
+#include <cage-client/window.h>
 #include <cage-client/engine.h>
 #include <cage-client/utility/highPerformanceGpuHint.h>
 
