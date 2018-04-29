@@ -42,7 +42,7 @@ bool keyPress(uint32, uint32 b, modifiersFlags modifiers)
 
 void box(const vec3 &pos, const quat &rot)
 {
-	entityClass *e = entities()->newEntity();
+	entityClass *e = entities()->newAnonymousEntity();
 	ENGINE_GET_COMPONENT(transform, t, e);
 	ENGINE_GET_COMPONENT(render, r, e);
 	t.position = pos;

@@ -76,7 +76,7 @@ bool update()
 		{
 			for (uint32 x = 0; x < side; x++)
 			{
-				entityClass *e = ents->newEntity();
+				entityClass *e = ents->newAnonymousEntity();
 				ENGINE_GET_COMPONENT(transform, t, e);
 				t.scale = 0.15 * 0.49;
 				t.position = vec3((x - side * 0.5) * 0.15, 0, (y - side * 0.5) * 0.15);
@@ -112,14 +112,14 @@ bool update()
 bool guiInit()
 {
 	guiClass *g = cage::gui();
-	entityClass *panel = g->entities()->newEntity(g->entities()->generateUniqueName());
+	entityClass *panel = g->entities()->newUniqueEntity();
 	{
 		GUI_GET_COMPONENT(groupBox, c, panel);
 		GUI_GET_COMPONENT(layoutTable, l, panel);
 	}
 
 	{ // boxes count
-		entityClass *lab = g->entities()->newEntity(g->entities()->generateUniqueName());
+		entityClass *lab = g->entities()->newUniqueEntity();
 		{
 			GUI_GET_COMPONENT(parent, child, lab);
 			child.parent = panel->getName();
@@ -143,7 +143,7 @@ bool guiInit()
 	}
 
 	{ // camera range
-		entityClass *lab = g->entities()->newEntity(g->entities()->generateUniqueName());
+		entityClass *lab = g->entities()->newUniqueEntity();
 		{
 			GUI_GET_COMPONENT(parent, child, lab);
 			child.parent = panel->getName();
@@ -163,7 +163,7 @@ bool guiInit()
 	}
 
 	{ // shadow
-		entityClass *lab = g->entities()->newEntity(g->entities()->generateUniqueName());
+		entityClass *lab = g->entities()->newUniqueEntity();
 		{
 			GUI_GET_COMPONENT(parent, child, lab);
 			child.parent = panel->getName();

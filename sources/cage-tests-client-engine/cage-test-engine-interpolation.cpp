@@ -82,8 +82,8 @@ bool guiInit()
 {
 	guiClass *g = cage::gui();
 
-	entityClass *panel = g->entities()->newEntity(g->entities()->generateUniqueName());
-	entityClass *layout = g->entities()->newEntity(g->entities()->generateUniqueName());
+	entityClass *panel = g->entities()->newUniqueEntity();
+	entityClass *layout = g->entities()->newUniqueEntity();
 	{
 		GUI_GET_COMPONENT(groupBox, c, panel);
 		GUI_GET_COMPONENT(layoutTable, l, layout);
@@ -97,7 +97,7 @@ bool guiInit()
 	CAGE_ASSERT_COMPILE(sizeof(names) / sizeof(names[0]) == sizeof(values) / sizeof(values[0]), arrays_must_have_same_length);
 	for (uint32 i = 0; i < sizeof(names) / sizeof(names[0]); i++)
 	{
-		entityClass *lab = g->entities()->newEntity(g->entities()->generateUniqueName());
+		entityClass *lab = g->entities()->newUniqueEntity();
 		{
 			GUI_GET_COMPONENT(parent, child, lab);
 			child.parent = layout->getName();

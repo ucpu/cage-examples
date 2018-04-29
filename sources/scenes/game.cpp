@@ -47,7 +47,7 @@ void sceneReload()
 		{
 			if (name.empty())
 				continue;
-			entityClass *e = entities()->newEntity();
+			entityClass *e = entities()->newAnonymousEntity();
 			ENGINE_GET_COMPONENT(render, rs, e);
 			rs.object = hashString(name.c_str());
 			if (!rs.object)
@@ -102,7 +102,7 @@ void sceneReload()
 	}
 	for (int i = 0; i < directionalLightsCount; i++)
 	{ // directional lights
-		directionalLights[i] = entities()->newEntity();
+		directionalLights[i] = entities()->newAnonymousEntity();
 		ENGINE_GET_COMPONENT(transform, ts, directionalLights[i]);
 		ts.orientation = quat(degs(cage::random() * -20 - 30), degs(i * 360.0f / (float)directionalLightsCount + cage::random() * 180 / (float)directionalLightsCount), degs());
 		ENGINE_GET_COMPONENT(light, ls, directionalLights[i]);
@@ -114,7 +114,7 @@ void sceneReload()
 	}
 	for (int i = 0; i < pointLightsCount; i++)
 	{ // point lights
-		pointLights[i] = entities()->newEntity();
+		pointLights[i] = entities()->newAnonymousEntity();
 		ENGINE_GET_COMPONENT(transform, ts, pointLights[i]);
 		ts.position = (vec3(cage::random(), cage::random(), cage::random()) * 2 - 1) * 15;
 		ENGINE_GET_COMPONENT(light, ls, pointLights[i]);
