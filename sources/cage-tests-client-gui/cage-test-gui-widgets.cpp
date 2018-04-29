@@ -449,6 +449,8 @@ void guiInitialize()
 		entityClass *split = ents->newEntity(1);
 		GUI_GET_COMPONENT(layoutSplitter, ls, split);
 		ls.vertical = true;
+		ls.anchor = 0.5;
+		ls.allowSlaveResize = true;
 		GUI_GET_COMPONENT(position, ep, split);
 		ep.size.value = vec2(1, 1);
 		ep.size.units[0] = unitEnum::ScreenWidth;
@@ -525,6 +527,7 @@ void guiInitialize()
 		p.order = 2;
 		GUI_GET_COMPONENT(layoutLine, ll, panel);
 		ll.vertical = true;
+		ll.cellsAnchor = vec2(0.5, 0);
 		GUI_GET_COMPONENT(widgetState, ws, panel);
 	}
 
