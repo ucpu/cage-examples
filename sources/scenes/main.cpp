@@ -23,19 +23,19 @@ int main(int argc, const char *args[])
 
 	updateListener.bind<&update>();
 	assetsUpdateListener.bind<&assetsUpdate>();
-	listeners.windowClose.bind<&closeButton>();
-	listeners.keyPress.bind<&keyPress>();
-	guiListener.bind<&guiFunction>();
+	controlThread::update.attach(updateListener);
+	controlThread::assets.attach(assetsUpdateListener);
 
 	{
 		windowClass *win = window();
 		win->modeSetWindowed(windowFlags::Border | windowFlags::Resizeable);
 		win->windowedSize(pointStruct(800, 600));
-		controlThread::update.attach(updateListener);
-		controlThread::assets.attach(assetsUpdateListener);
+		listeners.windowClose.bind<&closeButton>();
+		listeners.keyPress.bind<&keyPress>();
 		listeners.attachAll(window());
 	}
 
+	guiListener.bind<&guiFunction>();
 	gui()->widgetEvent.attach(guiListener);
 
 	updateInitialize();

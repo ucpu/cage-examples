@@ -67,8 +67,8 @@ int main(int argc, char *args[])
 		// events
 #define GCHL_GENERATE(TYPE, FUNC, EVENT) eventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
 		GCHL_GENERATE((), windowClose, window()->events.windowClose);
-		GCHL_GENERATE((), graphicInitialize, graphicDispatchThread::initialize);
-		GCHL_GENERATE((), graphicFinalize, graphicDispatchThread::finalize);
+		GCHL_GENERATE((), graphicInitialize, graphicsDispatchThread::initialize);
+		GCHL_GENERATE((), graphicFinalize, graphicsDispatchThread::finalize);
 #undef GCHL_GENERATE
 
 		// window
