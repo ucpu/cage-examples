@@ -1,0 +1,20 @@
+[]
+scheme = animation
+lemur.x?ADefault
+lemur.x?AttackMelee
+lemur.x?Default_Action
+lemur.x?idle
+lemur.x?run
+[]
+scheme = mesh
+export_bones = true
+lemur.x
+[]
+scheme = skeleton
+lemur.x;skeleton
+[]
+scheme = texture
+lemurT.png
+[]
+scheme = pack
+lemur.pack

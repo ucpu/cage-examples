@@ -1,0 +1,26 @@
+[]
+scheme = animation
+monk.x?Attack1
+monk.x?Dance
+monk.x?Die
+monk.x?Flee
+monk.x?Idle
+monk.x?Sad
+monk.x?Sleep
+monk.x?TortureFire
+monk.x?Walk
+[]
+scheme = mesh
+export_bones = true
+monk.x?Monk_MonkBody
+monk.x?Monk_MonkHair
+monk.x?Monk_MonkHead
+[]
+scheme = skeleton
+monk.x;skeleton
+[]
+scheme = pack
+monk.pack
+[]
+scheme = object
+monk.object
