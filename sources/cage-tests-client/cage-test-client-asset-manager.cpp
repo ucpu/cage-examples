@@ -99,7 +99,7 @@ int main(int argc, char *args[])
 			{
 				if (random() < 0.7)
 				{
-					uint32 i = random(0, count);
+					uint32 i = random((uint32)0, count);
 					CAGE_ASSERT_RUNTIME(i < count);
 					if (loaded[i])
 						assets->remove(names[i]);

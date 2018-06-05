@@ -58,9 +58,7 @@ void sceneReload()
 			ENGINE_GET_COMPONENT(transform, ts, e);
 			string posLine;
 			f->readLine(posLine);
-			ts.position[0] = posLine.split().trim().toFloat();
-			ts.position[1] = posLine.split().trim().toFloat();
-			ts.position[2] = posLine.split().trim().toFloat();
+			ts.position = vec3(posLine);
 			string rotLine;
 			f->readLine(rotLine);
 			ts.orientation = quat(rads(), rads(rotLine.toFloat()), rads());
