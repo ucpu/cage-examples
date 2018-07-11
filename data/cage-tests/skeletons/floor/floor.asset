@@ -1,0 +1,8 @@
+[]
+scheme = mesh
+export_uv = false
+export_tangent = false
+floor.obj
+[]
+scheme = pack
+floor.pack

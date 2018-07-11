@@ -1,0 +1,17 @@
+[]
+scheme = animation
+cylinder.x?Default_Action
+cylinder.x?bend
+cylinder.x?curve
+[]
+scheme = mesh
+export_bones = true
+export_uv = false
+export_tangent = false
+cylinder.x
+[]
+scheme = skeleton
+cylinder.x;skeleton
+[]
+scheme = pack
+cylinder.pack
