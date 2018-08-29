@@ -113,7 +113,7 @@ int main(int argc, char *args[])
 		log1->format.bind<logFormatPolicyConsole>();
 		log1->output.bind<logOutputPolicyStdOut>();
 
-		configSetBool("cage-client.engine.debugRenderMissingMeshes", true);
+		configSetBool("cage-client.engine.renderMissingMeshes", true);
 		engineInitialize(engineCreateConfig());
 
 		// events

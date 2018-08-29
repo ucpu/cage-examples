@@ -5,15 +5,18 @@ gui.pack
 
 []
 scheme = font
-immortal.ttf?12
-immortal.ttf?14
-immortal.ttf?16
-immortal.ttf?20
-immortal.ttf?24
-immortal.ttf?30
-immortal.ttf?50
+immortal.ttf
+DroidSansMono.ttf
+asimov.otf
 
-DroidSansMono.ttf?12
+[]
+scheme = font
+resolution = 32
+roboto.ttf
+
+[]
+scheme = texture
+skin.png
 
 []
 scheme = textpack
