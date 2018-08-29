@@ -23,8 +23,8 @@ int main(int argc, const char *args[])
 
 	updateListener.bind<&update>();
 	assetsUpdateListener.bind<&assetsUpdate>();
-	controlThread::update.attach(updateListener);
-	controlThread::assets.attach(assetsUpdateListener);
+	controlThread().update.attach(updateListener);
+	controlThread().assets.attach(assetsUpdateListener);
 
 	{
 		windowClass *win = window();

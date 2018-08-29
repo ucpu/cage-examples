@@ -227,13 +227,13 @@ int main(int argc, char *args[])
 		log1->format.bind<logFormatPolicyConsole>();
 		log1->output.bind<logOutputPolicyStdOut>();
 
-		configSetBool("cage-client.engine.debugRenderMissingMeshes", true);
+		configSetBool("cage-client.engine.renderMissingMeshes", true);
 		engineInitialize(engineCreateConfig());
 
 		// events
 #define GCHL_GENERATE(TYPE, FUNC, EVENT) eventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
-		GCHL_GENERATE((), update, controlThread::update);
-		GCHL_GENERATE((), guiInit, controlThread::initialize);
+		GCHL_GENERATE((), update, controlThread().update);
+		GCHL_GENERATE((), guiInit, controlThread().initialize);
 #undef GCHL_GENERATE
 		eventListener<bool()> windowCloseListener;
 		windowCloseListener.bind<&windowClose>();

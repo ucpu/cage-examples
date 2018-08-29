@@ -139,8 +139,8 @@ namespace
 
 bool guiUpdate()
 {
-	setIntValue(0, controlThread::timePerTick, false);
-	setIntValue(1, soundThread::timePerTick, false);
+	setIntValue(0, controlThread().timePerTick, false);
+	setIntValue(1, soundThread().timePerTick, false);
 	setIntValue(2, updateDelay, true);
 	setIntValue(3, prepareDelay, true);
 	setIntValue(4, renderDelay, true);
@@ -163,11 +163,11 @@ int main(int argc, char *args[])
 
 		// events
 #define GCHL_GENERATE(TYPE, FUNC, EVENT) eventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
-		GCHL_GENERATE((), update, controlThread::update);
-		GCHL_GENERATE((), prepare, graphicsPrepareThread::prepare);
-		GCHL_GENERATE((), render, graphicsDispatchThread::render);
-		GCHL_GENERATE((), soundUpdate, soundThread::sound);
-		GCHL_GENERATE((), guiInit, controlThread::initialize);
+		GCHL_GENERATE((), update, controlThread().update);
+		GCHL_GENERATE((), prepare, graphicsPrepareThread().prepare);
+		GCHL_GENERATE((), render, graphicsDispatchThread().render);
+		GCHL_GENERATE((), soundUpdate, soundThread().sound);
+		GCHL_GENERATE((), guiInit, controlThread().initialize);
 #undef GCHL_GENERATE
 		eventListener<bool()> windowCloseListener;
 		windowCloseListener.bind<&windowClose>();

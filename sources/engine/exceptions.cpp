@@ -135,8 +135,8 @@ int main(int argc, char *args[])
 		detail::setGlobalBreakpointOverride(false);
 
 		// config
-		configSetBool("cage-client.engine.debugRenderMissingMeshes", true);
-		controlThread::timePerTick = 1000000 / 60;
+		configSetBool("cage-client.engine.renderMissingMeshes", true);
+		controlThread().timePerTick = 1000000 / 60;
 
 		// run
 		while (!fullStop)
@@ -145,20 +145,20 @@ int main(int argc, char *args[])
 
 			// events
 #define GCHL_GENERATE(TYPE, FUNC, EVENT) eventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
-			GCHL_GENERATE((), controlUpdate, controlThread::update);
-			GCHL_GENERATE((), controlInit, controlThread::initialize);
-			GCHL_GENERATE((), controlFinish, controlThread::finalize);
-			GCHL_GENERATE((), controlAssets, controlThread::assets);
-			GCHL_GENERATE((), prepareInit, graphicsPrepareThread::initialize);
-			GCHL_GENERATE((), prepareFinish, graphicsPrepareThread::finalize);
-			GCHL_GENERATE((), preparePrepare, graphicsPrepareThread::prepare);
-			GCHL_GENERATE((), dispatchInit, graphicsDispatchThread::initialize);
-			GCHL_GENERATE((), dispatchFinish, graphicsDispatchThread::finalize);
-			GCHL_GENERATE((), dispatchRender, graphicsDispatchThread::render);
-			GCHL_GENERATE((), dispatchSwap, graphicsDispatchThread::swap);
-			GCHL_GENERATE((), soundInit, soundThread::initialize);
-			GCHL_GENERATE((), soundFinish, soundThread::finalize);
-			GCHL_GENERATE((), soundSound, soundThread::sound);
+			GCHL_GENERATE((), controlUpdate, controlThread().update);
+			GCHL_GENERATE((), controlInit, controlThread().initialize);
+			GCHL_GENERATE((), controlFinish, controlThread().finalize);
+			GCHL_GENERATE((), controlAssets, controlThread().assets);
+			GCHL_GENERATE((), prepareInit, graphicsPrepareThread().initialize);
+			GCHL_GENERATE((), prepareFinish, graphicsPrepareThread().finalize);
+			GCHL_GENERATE((), preparePrepare, graphicsPrepareThread().prepare);
+			GCHL_GENERATE((), dispatchInit, graphicsDispatchThread().initialize);
+			GCHL_GENERATE((), dispatchFinish, graphicsDispatchThread().finalize);
+			GCHL_GENERATE((), dispatchRender, graphicsDispatchThread().render);
+			GCHL_GENERATE((), dispatchSwap, graphicsDispatchThread().swap);
+			GCHL_GENERATE((), soundInit, soundThread().initialize);
+			GCHL_GENERATE((), soundFinish, soundThread().finalize);
+			GCHL_GENERATE((), soundSound, soundThread().sound);
 #undef GCHL_GENERATE
 			eventListener<bool()> windowCloseListener;
 			windowCloseListener.bind<&windowClose>();

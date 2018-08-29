@@ -206,7 +206,7 @@ int main(int argc, char *args[])
 		log1->format.bind<logFormatPolicyConsole>();
 		log1->output.bind<logOutputPolicyStdOut>();
 
-		configSetBool("cage-client.engine.debugRenderMissingMeshes", true);
+		configSetBool("cage-client.engine.renderMissingMeshes", true);
 		engineInitialize(engineCreateConfig());
 
 		// events
@@ -219,7 +219,7 @@ int main(int argc, char *args[])
 		updateListener.bind<&update>();
 		windowCloseListener.attach(window()->events.windowClose);
 		keyPressListener.attach(window()->events.keyPress);
-		updateListener.attach(controlThread::update);
+		updateListener.attach(controlThread().update);
 
 		window()->modeSetWindowed((windowFlags)(windowFlags::Border | windowFlags::Resizeable));
 		window()->windowedSize(pointStruct(800, 600));
