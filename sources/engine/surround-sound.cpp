@@ -43,7 +43,7 @@ void controlInit()
 		ENGINE_GET_COMPONENT(render, r, e);
 		r.object = 1;
 		ENGINE_GET_COMPONENT(listener, l, e);
-		l.volumeAttenuationByDistance = vec3(0, 0.1, 0.005);
+		l.attenuation = vec3(0, 0.1, 0.005);
 	}
 
 	static const vec3 boxPositions[] = { vec3(-1, -1, 0), vec3(1, -1, 0), vec3(-1, 1, 0), vec3(1, 1, 0) };

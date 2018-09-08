@@ -42,7 +42,7 @@ void controlInit()
 		ENGINE_GET_COMPONENT(render, r, e);
 		r.object = 1;
 		ENGINE_GET_COMPONENT(listener, l, e);
-		l.volumeAttenuationByDistance = vec3(1, 0.01, 0);
+		l.attenuation = vec3(1, 0.01, 0);
 		l.dopplerEffect = true;
 	}
 

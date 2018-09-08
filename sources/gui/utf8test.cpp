@@ -51,7 +51,7 @@ void guiInitialize()
 		text.assetName = hashString("cage-tests/gui/utf8test.textpack");
 		text.textName = hashString((string() + "utf8test/" + i).c_str());
 		GUI_GET_COMPONENT(textFormat, format, e);
-		format.fontName = hashString("cage-tests/gui/DroidSansMono.ttf");
+		format.font = hashString("cage-tests/gui/DroidSansMono.ttf");
 	}
 }
 

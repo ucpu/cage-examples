@@ -113,7 +113,7 @@ bool guiInit()
 			child.order = i * 2 + 1;
 			GUI_GET_COMPONENT(inputBox, c, con);
 			c.type = inputTypeEnum::Integer;
-			c.min.i = 1;
+			c.min.i = i >= 2 ? 0 : 1;
 			c.max.i = 1000;
 			c.step.i = 1;
 			c.value = values[i];

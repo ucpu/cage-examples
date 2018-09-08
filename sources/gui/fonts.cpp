@@ -82,7 +82,7 @@ void guiInitialize()
 		GUI_GET_COMPONENT(text, text, e);
 		text.value = labelTexts[i];
 		GUI_GET_COMPONENT(textFormat, format, e);
-		format.fontName = hashString(fontNames[i]);
+		format.font = hashString(fontNames[i]);
 		format.align = textAlignEnum::Center;
 		format.lineSpacing = 1;
 		format.color = convertHsvToRgb(vec3(random(), 1, 1));
