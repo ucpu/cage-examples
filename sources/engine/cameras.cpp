@@ -30,10 +30,10 @@ bool windowClose()
 	return false;
 }
 
-bool graphicInitialize()
+bool graphicsInitialize()
 {
 	fabScreenTex = newTexture(window());
-	fabScreenTex->image2d(400, 250, GL_RGB8, GL_RGB, GL_BYTE, nullptr);
+	fabScreenTex->image2d(800, 500, GL_RGB8, GL_RGB, GL_BYTE, nullptr);
 	fabScreenTex->filters(GL_LINEAR, GL_LINEAR, 0);
 	assets()->set<assetSchemeIndexTexture>(screenName, fabScreenTex.get());
 	{
@@ -44,10 +44,21 @@ bool graphicInitialize()
 	return false;
 }
 
-bool graphicFinalize()
+bool graphicsFinalize()
 {
 	assets()->set<assetSchemeIndexTexture>(screenName, (textureClass*)nullptr);
 	fabScreenTex.clear();
+	return false;
+}
+
+bool update()
+{
+	uint64 time = currentControlTime();
+
+	ENGINE_GET_COMPONENT(transform, t1, entities()->getEntity(3));
+	ENGINE_GET_COMPONENT(transform, t2, entities()->getEntity(4));
+	t1.orientation = t2.orientation = quat(degs(-25), degs(sin(degs(time * 3e-5)) * 20 + 125), degs());
+
 	return false;
 }
 
@@ -67,8 +78,9 @@ int main(int argc, char *args[])
 		// events
 #define GCHL_GENERATE(TYPE, FUNC, EVENT) eventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
 		GCHL_GENERATE((), windowClose, window()->events.windowClose);
-		GCHL_GENERATE((), graphicInitialize, graphicsDispatchThread().initialize);
-		GCHL_GENERATE((), graphicFinalize, graphicsDispatchThread().finalize);
+		GCHL_GENERATE((), graphicsInitialize, graphicsDispatchThread().initialize);
+		GCHL_GENERATE((), graphicsFinalize, graphicsDispatchThread().finalize);
+		GCHL_GENERATE((), update, controlThread().update);
 #undef GCHL_GENERATE
 
 		// window
@@ -87,7 +99,7 @@ int main(int argc, char *args[])
 			r.object = roomName;
 			r.renderMask = 3;
 			ENGINE_GET_COMPONENT(transform, t, e);
-            (void)t;
+			(void)t;
 		}
 		entityClass *eye = nullptr;
 		{ // eye
@@ -108,7 +120,7 @@ int main(int argc, char *args[])
 			entityClass *e = ents->newEntity(2);
 			ENGINE_GET_COMPONENT(transform, t, e);
 			t.position = vec3(2.5, 2.5, -1.3);
-			t.orientation = quat(degs(), degs(100), degs());
+			t.orientation = quat(degs(), degs(125), degs());
 			ENGINE_GET_COMPONENT(render, r, e);
 			r.object = hashString("cage-tests/room/camera.obj?camera_stand");
 			r.renderMask = 1;
@@ -117,7 +129,6 @@ int main(int argc, char *args[])
 			entityClass *e = ents->newEntity(3);
 			ENGINE_GET_COMPONENT(transform, t, e);
 			t.position = vec3(2.5, 2.5, -1.3);
-			t.orientation = quat(degs(-25), degs(100), degs());
 			ENGINE_GET_COMPONENT(render, r, e);
 			r.object = hashString("cage-tests/room/camera.obj?lens");
 			r.renderMask = 1;
@@ -126,7 +137,6 @@ int main(int argc, char *args[])
 			entityClass *e = ents->newEntity(4);
 			ENGINE_GET_COMPONENT(transform, t, e);
 			t.position = vec3(2.5, 2.5, -1.3);
-			t.orientation = quat(degs(-25), degs(100), degs());
 			ENGINE_GET_COMPONENT(render, r, e);
 			r.object = hashString("cage-tests/room/camera.obj?camera");
 			r.renderMask = 1;

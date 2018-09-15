@@ -27,7 +27,7 @@ void controlInit()
 	{ // camera
 		entityClass *e = ents->newEntity(1);
 		ENGINE_GET_COMPONENT(transform, t, e);
-        (void)t;
+		(void)t;
 		ENGINE_GET_COMPONENT(camera, c, e);
 		c.ambientLight = vec3(1, 1, 1);
 		c.cameraType = cameraTypeEnum::Orthographic;
@@ -83,7 +83,7 @@ int main(int argc, char *args[])
 		log1->format.bind <logFormatPolicyConsole>();
 		log1->output.bind <logOutputPolicyStdOut>();
 
-		configSetBool("cage-client.engine.debugRenderMissingMeshes", true);
+		configSetBool("cage-client.engine.renderMissingMeshes", true);
 		engineInitialize(engineCreateConfig());
 
 		// events

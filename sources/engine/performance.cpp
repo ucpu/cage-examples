@@ -93,14 +93,10 @@ bool update()
 	}
 
 	{ // update boxes
-		uint32 bc = entities()->getAllEntities()->entitiesCount();
-		entityClass *const *bs = entities()->getAllEntities()->entitiesArray();
-		for (uint32 i = 0; i < bc; i++)
+		for (entityClass *e : renderComponent::component->getComponentEntities()->entities())
 		{
-			if (!bs[i]->hasComponent(renderComponent::component))
-				continue;
-			ENGINE_GET_COMPONENT(transform, t, bs[i]);
-			t.position[1] = noiseClouds(1, vec3(vec2(t.position[0], t.position[2]) * 0.15, time * 5e-8)) * 2 - 3;
+			ENGINE_GET_COMPONENT(transform, t, e);
+			t.position[1] = noiseClouds(42, vec3(vec2(t.position[0], t.position[2]) * 0.15, time * 5e-8)) * 2 - 3;
 		}
 	}
 
