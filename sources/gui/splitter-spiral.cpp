@@ -6,7 +6,7 @@
 #include <cage-client/window.h>
 #include <cage-client/gui.h>
 #include <cage-client/engine.h>
-#include <cage-client/utility/highPerformanceGpuHint.h>
+#include <cage-client/highPerformanceGpuHint.h>
 
 using namespace cage;
 

@@ -3,14 +3,14 @@
 #include <cage-core/log.h>
 #include <cage-core/concurrent.h>
 #include <cage-core/assets.h>
-#include <cage-core/utility/timer.h>
-#include <cage-core/utility/hashString.h>
+#include <cage-core/timer.h>
+#include <cage-core/hashString.h>
 #include <cage-client/core.h>
 #include <cage-client/window.h>
 #include <cage-client/graphics.h>
 #include <cage-client/sound.h>
 #include <cage-client/opengl.h>
-#include <cage-client/utility/highPerformanceGpuHint.h>
+#include <cage-client/highPerformanceGpuHint.h>
 
 using namespace cage;
 

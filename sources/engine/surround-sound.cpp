@@ -4,11 +4,11 @@
 #include <cage-core/entities.h>
 #include <cage-core/config.h>
 #include <cage-core/assets.h>
-#include <cage-core/utility/hashString.h>
+#include <cage-core/hashString.h>
 #include <cage-client/core.h>
 #include <cage-client/window.h>
 #include <cage-client/engine.h>
-#include <cage-client/utility/highPerformanceGpuHint.h>
+#include <cage-client/highPerformanceGpuHint.h>
 
 using namespace cage;
 

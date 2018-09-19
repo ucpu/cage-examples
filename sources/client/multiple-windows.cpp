@@ -4,11 +4,11 @@
 #include <cage-core/math.h>
 #include <cage-core/log.h>
 #include <cage-core/concurrent.h>
-#include <cage-core/utility/color.h>
+#include <cage-core/color.h>
 #include <cage-client/core.h>
 #include <cage-client/window.h>
 #include <cage-client/opengl.h>
-#include <cage-client/utility/highPerformanceGpuHint.h>
+#include <cage-client/highPerformanceGpuHint.h>
 
 using namespace cage;
 

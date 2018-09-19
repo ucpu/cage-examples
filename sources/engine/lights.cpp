@@ -6,16 +6,16 @@
 #include <cage-core/entities.h>
 #include <cage-core/config.h>
 #include <cage-core/assets.h>
-#include <cage-core/utility/hashString.h>
-#include <cage-core/utility/color.h>
+#include <cage-core/hashString.h>
+#include <cage-core/color.h>
 #include <cage-client/core.h>
 #include <cage-client/window.h>
 #include <cage-client/gui.h>
 #include <cage-client/engine.h>
 #include <cage-client/opengl.h>
-#include <cage-client/utility/engineProfiling.h>
-#include <cage-client/utility/cameraController.h>
-#include <cage-client/utility/highPerformanceGpuHint.h>
+#include <cage-client/engineProfiling.h>
+#include <cage-client/cameraController.h>
+#include <cage-client/highPerformanceGpuHint.h>
 
 using namespace cage;
 static const uint32 assetsName = hashString("cage-tests/bottle/bottle.pack");

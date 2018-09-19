@@ -2,14 +2,14 @@
 #include <cage-core/math.h>
 #include <cage-core/log.h>
 #include <cage-core/entities.h>
-#include <cage-core/utility/hashString.h>
-#include <cage-core/utility/color.h>
-#include <cage-core/utility/png.h>
+#include <cage-core/hashString.h>
+#include <cage-core/color.h>
+#include <cage-core/png.h>
 #include <cage-client/core.h>
 #include <cage-client/window.h>
 #include <cage-client/gui.h>
 #include <cage-client/engine.h>
-#include <cage-client/utility/highPerformanceGpuHint.h>
+#include <cage-client/highPerformanceGpuHint.h>
 
 using namespace cage;
 

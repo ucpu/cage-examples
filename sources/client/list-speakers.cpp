@@ -2,7 +2,7 @@
 #include <cage-core/math.h>
 #include <cage-core/log.h>
 #include <cage-core/concurrent.h>
-#include <cage-core/utility/timer.h>
+#include <cage-core/timer.h>
 #include <cage-client/core.h>
 #include <cage-client/sound.h>
 
