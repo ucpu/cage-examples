@@ -26,7 +26,7 @@ bool windowClose()
 
 void maybeThrow(float chance, uint32 index)
 {
-	if (random() < chance)
+	if (randomChance() < chance)
 		CAGE_THROW_ERROR(codeException, "intentionally thrown exception", index);
 }
 

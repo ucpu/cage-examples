@@ -426,7 +426,7 @@ void guiColorPickers(uint32 parentName)
 		p.order = index++;
 		GUI_GET_COMPONENT(colorPicker, cp, e);
 		cp.collapsible = true;
-		cp.color = convertToRainbowColor(random());
+		cp.color = convertToRainbowColor(randomChance());
 	}
 
 	{ // large
@@ -437,7 +437,7 @@ void guiColorPickers(uint32 parentName)
 		p.order = index++;
 		GUI_GET_COMPONENT(colorPicker, cp, e);
 		cp.collapsible = false;
-		cp.color = convertToRainbowColor(random());
+		cp.color = convertToRainbowColor(randomChance());
 	}
 }
 

@@ -48,7 +48,7 @@ void box(const vec3 &pos, const quat &rot)
 	t.position = pos;
 	t.orientation = rot;
 	r.object = 1;
-	r.renderMask = 0b111 & ~(holes ? (1 << random(0, 3)) : 0);
+	r.renderMask = 0b111 & ~(holes ? (1 << randomRange(0, 3)) : 0);
 }
 
 void letter(char c, const vec3 &pos)

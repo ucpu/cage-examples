@@ -24,7 +24,7 @@ void testScreen(const string &screenId, const pointStruct &resolution, uint32 fr
 		w->swapBuffers();
 		w->processEvents();
 		glViewport(0, 0, resolution.x, resolution.y);
-		glClearColor(random().value, random().value, random().value, 0);
+		glClearColor(randomChance().value, randomChance().value, randomChance().value, 0);
 		glClear(GL_COLOR_BUFFER_BIT);
 		w->swapBuffers();
 		w->processEvents();

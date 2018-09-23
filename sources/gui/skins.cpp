@@ -34,7 +34,7 @@ bool update()
 		animateOption = combo.selected;
 	}
 
-	static real offset = random() * 1000;
+	static real offset = randomChance() * 1000;
 	real t = getApplicationTime() / 5e6f + offset;
 
 	vec4 a4;

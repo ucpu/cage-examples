@@ -97,9 +97,9 @@ int main(int argc, char *args[])
 			uint64 stepEnd = getApplicationTime() + 1000 * 1000;
 			while (getApplicationTime() < stepEnd)
 			{
-				if (random() < 0.7)
+				if (randomChance() < 0.7)
 				{
-					uint32 i = random((uint32)0, count);
+					uint32 i = randomRange((uint32)0, count);
 					CAGE_ASSERT_RUNTIME(i < count);
 					if (loaded[i])
 						assets->remove(names[i]);

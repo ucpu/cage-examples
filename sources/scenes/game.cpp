@@ -102,7 +102,7 @@ void sceneReload()
 	{ // directional lights
 		directionalLights[i] = entities()->newAnonymousEntity();
 		ENGINE_GET_COMPONENT(transform, ts, directionalLights[i]);
-		ts.orientation = quat(degs(cage::random() * -20 - 30), degs(i * 360.0f / (float)directionalLightsCount + cage::random() * 180 / (float)directionalLightsCount), degs());
+		ts.orientation = quat(degs(randomChance() * -20 - 30), degs(i * 360.0f / (float)directionalLightsCount + randomChance() * 180 / (float)directionalLightsCount), degs());
 		ENGINE_GET_COMPONENT(light, ls, directionalLights[i]);
 		ls.color = vec3(1, 1, 1) * 0.5;
 		ls.lightType = lightTypeEnum::Directional;
@@ -114,9 +114,9 @@ void sceneReload()
 	{ // point lights
 		pointLights[i] = entities()->newAnonymousEntity();
 		ENGINE_GET_COMPONENT(transform, ts, pointLights[i]);
-		ts.position = (vec3(cage::random(), cage::random(), cage::random()) * 2 - 1) * 15;
+		ts.position = (vec3(randomChance(), randomChance(), randomChance()) * 2 - 1) * 15;
 		ENGINE_GET_COMPONENT(light, ls, pointLights[i]);
-		ls.color = convertHsvToRgb(vec3(cage::random(), 1, 1));
+		ls.color = convertHsvToRgb(vec3(randomChance(), 1, 1));
 		ls.attenuation = vec3(0.3, 0, 4);
 		ls.lightType = lightTypeEnum::Point;
 		//ENGINE_GET_COMPONENT(shadowmap, ss, pointLights[i]);

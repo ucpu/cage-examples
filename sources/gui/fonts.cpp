@@ -44,7 +44,7 @@ real steeper(rads x)
 bool update()
 {
 	entityManagerClass *ents = gui()->entities();
-	static real offset = random() * 1000;
+	static real offset = randomChance() * 1000;
 	real t = getApplicationTime() / 2e7f + offset;
 	for (uint32 i = 0; i < fontsCount; i++)
 	{
@@ -85,7 +85,7 @@ void guiInitialize()
 		format.font = hashString(fontNames[i]);
 		format.align = textAlignEnum::Center;
 		format.lineSpacing = 1;
-		format.color = convertHsvToRgb(vec3(random(), 1, 1));
+		format.color = convertHsvToRgb(vec3(randomChance(), 1, 1));
 	}
 }
 
