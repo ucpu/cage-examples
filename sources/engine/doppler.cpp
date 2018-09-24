@@ -26,7 +26,7 @@ void controlInit()
 	entityManagerClass *ents = entities();
 
 	{ // camera
-		entityClass *e = ents->newEntity(1);
+		entityClass *e = ents->create(1);
 		ENGINE_GET_COMPONENT(transform, t, e);
 		(void)t;
 		ENGINE_GET_COMPONENT(camera, c, e);
@@ -38,7 +38,7 @@ void controlInit()
 	}
 
 	{ // listener
-		entityClass *e = ents->newEntity(2);
+		entityClass *e = ents->create(2);
 		ENGINE_GET_COMPONENT(render, r, e);
 		r.object = 1;
 		ENGINE_GET_COMPONENT(listener, l, e);
@@ -47,7 +47,7 @@ void controlInit()
 	}
 
 	{ // moving voice
-		entityClass *e = ents->newEntity(3);
+		entityClass *e = ents->create(3);
 		ENGINE_GET_COMPONENT(transform, t, e);
 		(void)t;
 		ENGINE_GET_COMPONENT(render, r, e);
@@ -79,7 +79,7 @@ bool update()
 	entityManagerClass *ents = entities();
 	vec3 box;
 	{ // moving voice
-		entityClass *e = ents->getEntity(3);
+		entityClass *e = ents->get(3);
 		ENGINE_GET_COMPONENT(transform, t, e);
 		static const uint64 duration = 8000000;
 		bool odd = (time / duration) % 2 == 1;
@@ -96,7 +96,7 @@ bool update()
 	}
 	box = box.normalize();
 	{ // listener
-		entityClass *e = ents->getEntity(2);
+		entityClass *e = ents->get(2);
 		ENGINE_GET_COMPONENT(transform, t, e);
 		t.orientation = quat(degs(90), degs(), degs()) * quat(degs(), aTan2(box[0], box[1]) - degs(90), degs());
 	}

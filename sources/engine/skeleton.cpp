@@ -61,7 +61,7 @@ int main(int argc, char *args[])
 			uint32 i = 0;
 			for (uint32 animation : animations)
 			{
-				entityClass *e = ents->newEntity(1 + i);
+				entityClass *e = ents->create(1 + i);
 				ENGINE_GET_COMPONENT(render, r, e);
 				r.object = hashString("cage-tests/skeletons/lemur/lemur.x");
 				ENGINE_GET_COMPONENT(animatedSkeleton, s, e);
@@ -77,7 +77,7 @@ int main(int argc, char *args[])
 			uint32 i = 0;
 			for (uint32 animation : animations)
 			{
-				entityClass *e = ents->newEntity(10 + i);
+				entityClass *e = ents->create(10 + i);
 				ENGINE_GET_COMPONENT(render, r, e);
 				r.object = hashString("cage-tests/skeletons/cylinder/cylinder.x");
 				ENGINE_GET_COMPONENT(animatedSkeleton, s, e);
@@ -93,7 +93,7 @@ int main(int argc, char *args[])
 			uint32 i = 0;
 			for (uint32 animation : animations)
 			{
-				entityClass *e = ents->newEntity(20 + i);
+				entityClass *e = ents->create(20 + i);
 				ENGINE_GET_COMPONENT(render, r, e);
 				r.object = hashString("cage-tests/skeletons/monk/monk.object");
 				ENGINE_GET_COMPONENT(animatedSkeleton, s, e);
@@ -104,14 +104,14 @@ int main(int argc, char *args[])
 			}
 		}
 		{ // floor
-			entityClass *e = ents->newEntity(100);
+			entityClass *e = ents->create(100);
 			ENGINE_GET_COMPONENT(render, r, e);
 			r.object = hashString("cage-tests/skeletons/floor/floor.obj");
 			ENGINE_GET_COMPONENT(transform, t, e);
 			(void)t;
 		}
 		{ // sun
-			entityClass *e = ents->newEntity(101);
+			entityClass *e = ents->create(101);
 			ENGINE_GET_COMPONENT(transform, t, e);
 			t.orientation = quat(degs(-50), degs(42), degs());
 			ENGINE_GET_COMPONENT(light, l, e);
@@ -121,7 +121,7 @@ int main(int argc, char *args[])
 			s.worldRadius = vec3(15, 15, 15);
 		}
 		{ // camera
-			entityClass *e = ents->newEntity(102);
+			entityClass *e = ents->create(102);
 			ENGINE_GET_COMPONENT(transform, t, e);
 			t.position = vec3(0, 5, 10);
 			t.orientation = quat(degs(-10), degs(), degs());
@@ -131,7 +131,7 @@ int main(int argc, char *args[])
 			c.far = 100;
 		}
 
-		holder<cameraControllerClass> cameraController = newCameraController(ents->getEntity(102));
+		holder<cameraControllerClass> cameraController = newCameraController(ents->get(102));
 		cameraController->mouseButton = mouseButtonsFlags::Left;
 		cameraController->movementSpeed = 0.3;
 		holder<engineProfilingClass> engineProfiling = newEngineProfiling();

@@ -42,7 +42,7 @@ bool keyPress(uint32, uint32 b, modifiersFlags modifiers)
 
 void box(const vec3 &pos, const quat &rot)
 {
-	entityClass *e = entities()->newAnonymousEntity();
+	entityClass *e = entities()->createAnonymous();
 	ENGINE_GET_COMPONENT(transform, t, e);
 	ENGINE_GET_COMPONENT(render, r, e);
 	t.position = pos;
@@ -101,11 +101,11 @@ void letter(char c, const vec3 &pos)
 void regenerate()
 {
 	entityManagerClass *ents = entities();
-	ents->getAllEntities()->destroyAllEntities();
+	ents->destroy();
 
 	for (uint32 i = 0; i < 3; i++)
 	{ // camera
-		entityClass *e = ents->newEntity(i + 1);
+		entityClass *e = ents->create(i + 1);
 		ENGINE_GET_COMPONENT(transform, t, e);
 		(void)t;
 		ENGINE_GET_COMPONENT(camera, c, e);
@@ -133,7 +133,7 @@ void regenerate()
 	letter('E', vec3(+3, 0, +0) * 10);
 
 	{ // light
-		entityClass *e = ents->newEntity(10);
+		entityClass *e = ents->create(10);
 		ENGINE_GET_COMPONENT(transform, t, e);
 		t.orientation = randomDirectionQuat();
 		ENGINE_GET_COMPONENT(light, l, e);
@@ -161,7 +161,7 @@ bool update()
 	{ // rotating viewports
 		for (uint32 i = 0; i < 3; i++)
 		{
-			entityClass *e = ents->getEntity(i + 1);
+			entityClass *e = ents->get(i + 1);
 			ENGINE_GET_COMPONENT(camera, c, e);
 			c.ambientLight = vec3(1, 1, 1) * 0.5;
 			c.renderMask = 1 << i;
@@ -174,7 +174,7 @@ bool update()
 
 	for (uint32 i = 0; i < 3; i++)
 	{ // transformations of cameras
-		entityClass *e = ents->getEntity(i + 1);
+		entityClass *e = ents->get(i + 1);
 		ENGINE_GET_COMPONENT(transform, t, e);
 		switch (i)
 		{

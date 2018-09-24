@@ -57,28 +57,28 @@ int main(int argc, char *args[])
 		// entities
 		entityManagerClass *ents = entities();
 		{ // cube
-			entityClass *e = ents->newEntity(1);
+			entityClass *e = ents->create(1);
 			ENGINE_GET_COMPONENT(render, r, e);
 			r.object = hashString("cage-tests/lods/cube.object");
 			ENGINE_GET_COMPONENT(transform, t, e);
 			t.position = vec3(-8, 0, 0);
 		}
 		{ // sphere
-			entityClass *e = ents->newEntity(2);
+			entityClass *e = ents->create(2);
 			ENGINE_GET_COMPONENT(render, r, e);
 			r.object = hashString("cage-tests/lods/sphere.object");
 			ENGINE_GET_COMPONENT(transform, t, e);
 			t.position = vec3(8, 0, 0);
 		}
 		{ // floor
-			entityClass *e = ents->newEntity(3);
+			entityClass *e = ents->create(3);
 			ENGINE_GET_COMPONENT(render, r, e);
 			r.object = hashString("cage-tests/lods/floor.object");
 			ENGINE_GET_COMPONENT(transform, t, e);
 			t.position = vec3(0, -5, 0);
 		}
 		{ // sun
-			entityClass *e = ents->newEntity(9);
+			entityClass *e = ents->create(9);
 			ENGINE_GET_COMPONENT(transform, t, e);
 			t.orientation = quat(degs(-60), degs(20), degs());
 			ENGINE_GET_COMPONENT(light, l, e);
@@ -88,7 +88,7 @@ int main(int argc, char *args[])
 			s.worldRadius = vec3(20, 20, 20);
 		}
 		{ // camera
-			entityClass *e = ents->newEntity(10);
+			entityClass *e = ents->create(10);
 			ENGINE_GET_COMPONENT(transform, t, e);
 			t.position = vec3(0, 3, 30);
 			t.orientation = quat(degs(-10), degs(), degs());
@@ -98,7 +98,7 @@ int main(int argc, char *args[])
 			c.far = 200;
 		}
 
-		holder<cameraControllerClass> cameraController = newCameraController(ents->getEntity(10));
+		holder<cameraControllerClass> cameraController = newCameraController(ents->get(10));
 		cameraController->mouseButton = mouseButtonsFlags::Left;
 		cameraController->movementSpeed = 1;
 		holder<engineProfilingClass> engineProfiling = newEngineProfiling();

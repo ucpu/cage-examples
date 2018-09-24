@@ -29,14 +29,14 @@ void controlInit()
 {
 	entityManagerClass *ents = entities();
 	{ // camera
-		entityClass *e = ents->newEntity(1);
+		entityClass *e = ents->create(1);
 		ENGINE_GET_COMPONENT(transform, t, e);
 		(void)t;
 		ENGINE_GET_COMPONENT(camera, c, e);
 		c.ambientLight = vec3(1, 1, 1);
 	}
 	{ // box 1
-		entityClass *e = ents->newEntity(2);
+		entityClass *e = ents->create(2);
 		ENGINE_GET_COMPONENT(transform, t, e);
 		(void)t;
 		ENGINE_GET_COMPONENT(render, r, e);
@@ -51,7 +51,7 @@ bool update()
 	uint64 time = currentControlTime();
 	entityManagerClass *ents = entities();
 	{ // box 1
-		entityClass *e = ents->getEntity(2);
+		entityClass *e = ents->get(2);
 		ENGINE_GET_COMPONENT(transform, t, e);
 		t.position = vec3(sin(rads(time * 1e-6)) * 10, cos(rads(time * 1e-6)) * 10, -20);
 	}
@@ -82,13 +82,13 @@ bool guiInit()
 {
 	guiClass *g = cage::gui();
 
-	entityClass *panel = g->entities()->newUniqueEntity();
-	entityClass *layout = g->entities()->newUniqueEntity();
+	entityClass *panel = g->entities()->createUnique();
+	entityClass *layout = g->entities()->createUnique();
 	{
 		GUI_GET_COMPONENT(groupBox, c, panel);
 		GUI_GET_COMPONENT(layoutTable, l, layout);
 		GUI_GET_COMPONENT(parent, child, layout);
-		child.parent = panel->getName();
+		child.parent = panel->name();
 	}
 
 	// controls
@@ -97,19 +97,19 @@ bool guiInit()
 	CAGE_ASSERT_COMPILE(sizeof(names) / sizeof(names[0]) == sizeof(values) / sizeof(values[0]), arrays_must_have_same_length);
 	for (uint32 i = 0; i < sizeof(names) / sizeof(names[0]); i++)
 	{
-		entityClass *lab = g->entities()->newUniqueEntity();
+		entityClass *lab = g->entities()->createUnique();
 		{
 			GUI_GET_COMPONENT(parent, child, lab);
-			child.parent = layout->getName();
+			child.parent = layout->name();
 			child.order = i * 2 + 0;
 			GUI_GET_COMPONENT(label, c, lab);
 			GUI_GET_COMPONENT(text, t, lab);
 			t.value = names[i];
 		}
-		entityClass *con = g->entities()->newEntity(20 + i);
+		entityClass *con = g->entities()->create(20 + i);
 		{
 			GUI_GET_COMPONENT(parent, child, con);
-			child.parent = layout->getName();
+			child.parent = layout->name();
 			child.order = i * 2 + 1;
 			GUI_GET_COMPONENT(inputBox, c, con);
 			c.type = inputTypeEnum::Integer;
@@ -127,7 +127,7 @@ namespace
 {
 	void setIntValue(uint32 index, uint64 &value, bool allowZero)
 	{
-		entityClass *control = cage::gui()->entities()->getEntity(20 + index);
+		entityClass *control = cage::gui()->entities()->get(20 + index);
 		GUI_GET_COMPONENT(inputBox, t, control);
 		if (t.valid)
 		{

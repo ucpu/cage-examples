@@ -25,7 +25,7 @@ void controlInit()
 	entityManagerClass *ents = entities();
 
 	{ // camera
-		entityClass *e = ents->newEntity(1);
+		entityClass *e = ents->create(1);
 		ENGINE_GET_COMPONENT(transform, t, e);
 		(void)t;
 		ENGINE_GET_COMPONENT(camera, c, e);
@@ -37,7 +37,7 @@ void controlInit()
 	}
 
 	{ // listener
-		entityClass *e = ents->newEntity(2);
+		entityClass *e = ents->create(2);
 		ENGINE_GET_COMPONENT(transform, t, e);
 		t.orientation = quat(degs(90), degs(), degs());
 		ENGINE_GET_COMPONENT(render, r, e);
@@ -49,7 +49,7 @@ void controlInit()
 	static const vec3 boxPositions[] = { vec3(-1, -1, 0), vec3(1, -1, 0), vec3(-1, 1, 0), vec3(1, 1, 0) };
 	for (uint32 i = 0; i < sizeof(boxPositions) / sizeof(boxPositions[0]); i++)
 	{ // box
-		entityClass *e = ents->newEntity(10 + i);
+		entityClass *e = ents->create(10 + i);
 		ENGINE_GET_COMPONENT(transform, t, e);
 		t.position = boxPositions[i] * 30;
 		ENGINE_GET_COMPONENT(render, r, e);
@@ -63,7 +63,7 @@ bool update()
 {
 	entityManagerClass *ents = entities();
 	{ // listener
-		entityClass *e = ents->getEntity(2);
+		entityClass *e = ents->get(2);
 		ENGINE_GET_COMPONENT(transform, t, e);
 		pointStruct cursor = window()->mousePosition();
 		pointStruct resolution = window()->resolution();

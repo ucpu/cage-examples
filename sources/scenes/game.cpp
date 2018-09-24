@@ -33,10 +33,7 @@ void sceneReload()
 	string scenePath = maps[sceneIndexCurrent];
 	CAGE_LOG(severityEnum::Info, "scenes", string() + "loading scene description from file: '" + scenePath + "'");
 	window()->title(string() + "map: " + pathExtractFilename(scenePath));
-	{ // destroy old entities
-		while (entities()->getAllEntities()->entitiesCount() > 0)
-			entities()->getAllEntities()->entitiesArray()[0]->destroy();
-	}
+	entities()->destroy();
 	try
 	{ // load new entities
 		holder<fileClass> f = newFile(scenePath, fileMode(true, false));
@@ -47,7 +44,7 @@ void sceneReload()
 		{
 			if (name.empty())
 				continue;
-			entityClass *e = entities()->newAnonymousEntity();
+			entityClass *e = entities()->createAnonymous();
 			ENGINE_GET_COMPONENT(render, rs, e);
 			rs.object = hashString(name.c_str());
 			if (!rs.object)
@@ -63,14 +60,14 @@ void sceneReload()
 			f->readLine(rotLine);
 			ts.orientation = quat(rads(), rads(rotLine.toFloat()), rads());
 		}
-		CAGE_LOG(severityEnum::Info, "scenes", string() + "scene contains " + (entities()->getAllEntities()->entitiesCount()) + " entities");
+		CAGE_LOG(severityEnum::Info, "scenes", string() + "scene contains " + (entities()->group()->count()) + " entities");
 	}
 	catch (...)
 	{
 		CAGE_LOG(severityEnum::Error, "scenes", "failed to load a scene description");
 	}
 	{ // camera
-		entityClass *cam = entities()->newEntity(1);
+		entityClass *cam = entities()->create(1);
 		ENGINE_GET_COMPONENT(transform, t, cam);
 		t.position = vec3(0, 10, 30);;
 		ENGINE_GET_COMPONENT(camera, c, cam);
@@ -80,7 +77,7 @@ void sceneReload()
 		cameraController->setEntity(cam);
 	}
 	{ // skybox
-		entityClass *cam = entities()->newEntity(2);
+		entityClass *cam = entities()->create(2);
 		ENGINE_GET_COMPONENT(transform, tc, cam);
 		(void)tc;
 		ENGINE_GET_COMPONENT(camera, c, cam);
@@ -89,7 +86,7 @@ void sceneReload()
 		c.cameraOrder = 1;
 		c.near = 0.5;
 		c.far = 2;
-		entityClass *sky = entities()->newEntity(3);
+		entityClass *sky = entities()->create(3);
 		ENGINE_GET_COMPONENT(transform, ts, sky);
 		(void)ts;
 		ENGINE_GET_COMPONENT(render, r, sky);
@@ -100,7 +97,7 @@ void sceneReload()
 	}
 	for (int i = 0; i < directionalLightsCount; i++)
 	{ // directional lights
-		directionalLights[i] = entities()->newAnonymousEntity();
+		directionalLights[i] = entities()->createAnonymous();
 		ENGINE_GET_COMPONENT(transform, ts, directionalLights[i]);
 		ts.orientation = quat(degs(randomChance() * -20 - 30), degs(i * 360.0f / (float)directionalLightsCount + randomChance() * 180 / (float)directionalLightsCount), degs());
 		ENGINE_GET_COMPONENT(light, ls, directionalLights[i]);
@@ -112,7 +109,7 @@ void sceneReload()
 	}
 	for (int i = 0; i < pointLightsCount; i++)
 	{ // point lights
-		pointLights[i] = entities()->newAnonymousEntity();
+		pointLights[i] = entities()->createAnonymous();
 		ENGINE_GET_COMPONENT(transform, ts, pointLights[i]);
 		ts.position = (vec3(randomChance(), randomChance(), randomChance()) * 2 - 1) * 15;
 		ENGINE_GET_COMPONENT(light, ls, pointLights[i]);
@@ -166,8 +163,8 @@ bool update()
 	}
 
 	{ // update camera for skybox
-		ENGINE_GET_COMPONENT(transform, t1, entities()->getEntity(1));
-		ENGINE_GET_COMPONENT(transform, t2, entities()->getEntity(2));
+		ENGINE_GET_COMPONENT(transform, t1, entities()->get(1));
+		ENGINE_GET_COMPONENT(transform, t2, entities()->get(2));
 		t2.orientation = t1.orientation;
 	}
 
@@ -221,7 +218,7 @@ void updateInitialize()
 	assets()->add(hashString("scenes/common/common.pack"));
 
 	{ // prev
-		entityClass *e = cage::gui()->entities()->newEntity(1);
+		entityClass *e = cage::gui()->entities()->create(1);
 		GUI_GET_COMPONENT(button, c, e);
 		GUI_GET_COMPONENT(text, t, e);
 		t.value = "< prev";
@@ -231,7 +228,7 @@ void updateInitialize()
 		p.position.units[1] = unitEnum::ScreenHeight;
 	}
 	{ // next
-		entityClass *e = cage::gui()->entities()->newEntity(2);
+		entityClass *e = cage::gui()->entities()->create(2);
 		GUI_GET_COMPONENT(button, c, e);
 		GUI_GET_COMPONENT(text, t, e);
 		t.value = "next >";

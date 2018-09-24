@@ -28,7 +28,7 @@ bool windowClose()
 
 vec3 getGuiColor(uint32 id)
 {
-	entityClass *e = gui()->entities()->getEntity(id);
+	entityClass *e = gui()->entities()->get(id);
 	GUI_GET_COMPONENT(colorPicker, c, e);
 	return c.color;
 }
@@ -39,7 +39,7 @@ vec3 getGuiOrientation(uint32 id)
 	entityManagerClass *ents = gui()->entities();
 	for (uint32 i = 0; i < 2; i++)
 	{
-		entityClass *e = ents->getEntity(id + i);
+		entityClass *e = ents->get(id + i);
 		GUI_GET_COMPONENT(sliderBar, c, e);
 		result[i] = c.value;
 	}
@@ -51,14 +51,14 @@ bool update()
 	entityManagerClass *ents = entities();
 
 	{ // update ambient light
-		entityClass *e = ents->getEntity(10);
+		entityClass *e = ents->get(10);
 		ENGINE_GET_COMPONENT(camera, c, e);
 		c.ambientLight = getGuiColor(27);
 	}
 
 	for (uint32 i = 0; i < 3; i++)
 	{ // update lights
-		entityClass *e = ents->getEntity(5 + i);
+		entityClass *e = ents->get(5 + i);
 		ENGINE_GET_COMPONENT(render, r, e);
 		ENGINE_GET_COMPONENT(light, l, e);
 		r.color = l.color = getGuiColor(37 + i * 10);
@@ -69,7 +69,7 @@ bool update()
 	}
 
 	{ // rotate the bottle
-		entityClass *e = ents->getEntity(2);
+		entityClass *e = ents->get(2);
 		ENGINE_GET_COMPONENT(transform, t, e);
 		t.orientation = quat(degs(), degs(1), degs()) * t.orientation;
 	}
@@ -78,7 +78,7 @@ bool update()
 
 void initializeGuiColors(uint32 parentId, uint32 id, const vec3 &hsv)
 {
-	entityClass *e = gui()->entities()->newEntity(id);
+	entityClass *e = gui()->entities()->create(id);
 	GUI_GET_COMPONENT(parent, p, e);
 	p.parent = parentId;
 	p.order = 5;
@@ -90,7 +90,7 @@ void initializeGuiColors(uint32 parentId, uint32 id, const vec3 &hsv)
 void initializeGui()
 {
 	entityManagerClass *ents = gui()->entities();
-	entityClass *layout = ents->newEntity(1);
+	entityClass *layout = ents->create(1);
 	{ // layout
 		GUI_GET_COMPONENT(layoutLine, l, layout);
 		l.vertical = true;
@@ -98,10 +98,10 @@ void initializeGui()
 	}
 
 	{ // ambient
-		entityClass *panel = ents->newEntity(20);
+		entityClass *panel = ents->create(20);
 		{
 			GUI_GET_COMPONENT(parent, p, panel);
-			p.parent = layout->getName();
+			p.parent = layout->name();
 			p.order = 1;
 			GUI_GET_COMPONENT(groupBox, c, panel);
 			c.type = groupBoxTypeEnum::Spoiler;
@@ -110,7 +110,7 @@ void initializeGui()
 			GUI_GET_COMPONENT(layoutLine, l, panel);
 			l.vertical = true;
 		}
-		initializeGuiColors(panel->getName(), 27, vec3(0, 0, 0.5));
+		initializeGuiColors(panel->name(), 27, vec3(0, 0, 0.5));
 	}
 
 	vec3 colors[3] = {
@@ -122,10 +122,10 @@ void initializeGui()
 	real yaws[3] = { 0.1 * 360, 0.2 * 360, 0.6 * 360 };
 	for (uint32 i = 0; i < 3; i++)
 	{ // spot lights
-		entityClass *panel = ents->newEntity(30 + i * 10);
+		entityClass *panel = ents->create(30 + i * 10);
 		{
 			GUI_GET_COMPONENT(parent, p, panel);
-			p.parent = layout->getName();
+			p.parent = layout->name();
 			p.order = 5 + i;
 			GUI_GET_COMPONENT(groupBox, c, panel);
 			c.type = groupBoxTypeEnum::Spoiler;
@@ -135,9 +135,9 @@ void initializeGui()
 			l.vertical = true;
 		}
 		{
-			entityClass *e = ents->newEntity(33 + i * 10);
+			entityClass *e = ents->create(33 + i * 10);
 			GUI_GET_COMPONENT(parent, p, e);
-			p.parent = panel->getName();
+			p.parent = panel->name();
 			p.order = 2;
 			GUI_GET_COMPONENT(sliderBar, c, e);
 			c.value = pitches[i].value;
@@ -145,16 +145,16 @@ void initializeGui()
 			c.max = 90;
 		}
 		{
-			entityClass *e = ents->newEntity(34 + i * 10);
+			entityClass *e = ents->create(34 + i * 10);
 			GUI_GET_COMPONENT(parent, p, e);
-			p.parent = panel->getName();
+			p.parent = panel->name();
 			p.order = 3;
 			GUI_GET_COMPONENT(sliderBar, c, e);
 			c.value = yaws[i].value;
 			c.min = 0;
 			c.max = 360;
 		}
-		initializeGuiColors(panel->getName(), 37 + i * 10, colors[i]);
+		initializeGuiColors(panel->name(), 37 + i * 10, colors[i]);
 	}
 }
 
@@ -185,14 +185,14 @@ int main(int argc, char *args[])
 		// entities
 		entityManagerClass *ents = entities();
 		{ // floor
-			entityClass *e = ents->newEntity(1);
+			entityClass *e = ents->create(1);
 			ENGINE_GET_COMPONENT(render, r, e);
 			r.object = hashString("cage-tests/bottle/other.obj?plane");
 			ENGINE_GET_COMPONENT(transform, t, e);
 			(void)t;
 		}
 		{ // bottle
-			entityClass *e = ents->newEntity(2);
+			entityClass *e = ents->create(2);
 			ENGINE_GET_COMPONENT(render, r, e);
 			r.object = hashString("cage-tests/bottle/bottle.obj");
 			ENGINE_GET_COMPONENT(transform, t, e);
@@ -200,7 +200,7 @@ int main(int argc, char *args[])
 		}
 		for (uint32 i = 0; i < 3; i++)
 		{ // spot lights
-			entityClass *e = ents->newEntity(5 + i);
+			entityClass *e = ents->create(5 + i);
 			ENGINE_GET_COMPONENT(render, r, e);
 			r.object = hashString("cage-tests/bottle/other.obj?arrow");
 			ENGINE_GET_COMPONENT(light, l, e);
@@ -212,7 +212,7 @@ int main(int argc, char *args[])
 			s.worldRadius = vec3(3, 20, 0);
 		}
 		{ // camera
-			entityClass *e = ents->newEntity(10);
+			entityClass *e = ents->create(10);
 			ENGINE_GET_COMPONENT(transform, t, e);
 			t.position = vec3(0, 5, 7);
 			t.orientation = quat(degs(-10), degs(), degs());
@@ -221,7 +221,7 @@ int main(int argc, char *args[])
 			c.far = 150;
 		}
 
-		holder<cameraControllerClass> cameraController = newCameraController(ents->getEntity(10));
+		holder<cameraControllerClass> cameraController = newCameraController(ents->get(10));
 		cameraController->mouseButton = mouseButtonsFlags::Left;
 		cameraController->movementSpeed = 0.3;
 		holder<engineProfilingClass> engineProfiling = newEngineProfiling();

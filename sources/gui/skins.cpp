@@ -30,7 +30,7 @@ bool update()
 
 	uint32 animateOption = -1;
 	{
-		GUI_GET_COMPONENT(comboBox, combo, ents->getEntity(100));
+		GUI_GET_COMPONENT(comboBox, combo, ents->get(100));
 		animateOption = combo.selected;
 	}
 
@@ -78,7 +78,7 @@ void guiInitialize()
 	entityManagerClass *ents = gui()->entities();
 
 	{ // splitter
-		entityClass *split = ents->newEntity(1);
+		entityClass *split = ents->create(1);
 		GUI_GET_COMPONENT(layoutSplitter, ls, split);
 		ls.vertical = true;
 		ls.anchor = 0.5;
@@ -89,14 +89,14 @@ void guiInitialize()
 		ep.size.units[1] = unitEnum::ScreenHeight;
 	}
 	{ // top panel
-		entityClass *panel = ents->newEntity(2);
+		entityClass *panel = ents->create(2);
 		GUI_GET_COMPONENT(parent, p, panel);
 		p.parent = 1;
 		p.order = 1;
 		GUI_GET_COMPONENT(groupBox, gp, panel);
 	}
 	{ // animate option
-		entityClass *e = ents->newEntity(100);
+		entityClass *e = ents->create(100);
 		GUI_GET_COMPONENT(parent, p, e);
 		p.parent = 2;
 		GUI_GET_COMPONENT(comboBox, input, e);
@@ -109,7 +109,7 @@ void guiInitialize()
 		};
 		for (uint32 i = 0; i < sizeof(options)/sizeof(options[0]); i++)
 		{
-			entityClass *ee = ents->newUniqueEntity();
+			entityClass *ee = ents->createUnique();
 			GUI_GET_COMPONENT(parent, p, ee);
 			p.parent = 100;
 			p.order = i;
@@ -118,14 +118,14 @@ void guiInitialize()
 		}
 	}
 	{ // bottom
-		entityClass *panel = ents->newEntity(3);
+		entityClass *panel = ents->create(3);
 		GUI_GET_COMPONENT(parent, p, panel);
 		p.parent = 1;
 		p.order = 2;
 		GUI_GET_COMPONENT(layoutLine, ll, panel);
 	}
 	{ // left panel
-		entityClass *panel = ents->newEntity(4);
+		entityClass *panel = ents->create(4);
 		GUI_GET_COMPONENT(parent, p, panel);
 		p.parent = 3;
 		p.order = 1;
@@ -134,7 +134,7 @@ void guiInitialize()
 		ll.vertical = true;
 	}
 	{ // right panel
-		entityClass *panel = ents->newEntity(5);
+		entityClass *panel = ents->create(5);
 		GUI_GET_COMPONENT(parent, p, panel);
 		p.parent = 3;
 		p.order = 2;
@@ -148,7 +148,7 @@ void guiInitialize()
 	{
 		uint32 index = 0;
 		{ // label
-			entityClass *e = ents->newUniqueEntity();
+			entityClass *e = ents->createUnique();
 			GUI_GET_COMPONENT(parent, p, e);
 			p.parent = side;
 			p.order = index++;
@@ -159,7 +159,7 @@ void guiInitialize()
 			format.align = textAlignEnum::Left;
 		}
 		{ // button
-			entityClass *e = ents->newUniqueEntity();
+			entityClass *e = ents->createUnique();
 			GUI_GET_COMPONENT(parent, p, e);
 			p.parent = side;
 			p.order = index++;
@@ -168,7 +168,7 @@ void guiInitialize()
 			text.value = "button";
 		}
 		{ // text input box
-			entityClass *e = ents->newUniqueEntity();
+			entityClass *e = ents->createUnique();
 			GUI_GET_COMPONENT(parent, p, e);
 			p.parent = side;
 			p.order = index++;
@@ -177,7 +177,7 @@ void guiInitialize()
 			text.value = "text input box";
 		}
 		{ // real input box
-			entityClass *e = ents->newUniqueEntity();
+			entityClass *e = ents->createUnique();
 			GUI_GET_COMPONENT(parent, p, e);
 			p.parent = side;
 			p.order = index++;
@@ -187,7 +187,7 @@ void guiInitialize()
 			text.value = "real input box";
 		}
 		{ // checkbox
-			entityClass *e = ents->newUniqueEntity();
+			entityClass *e = ents->createUnique();
 			GUI_GET_COMPONENT(parent, p, e);
 			p.parent = side;
 			p.order = index++;
@@ -196,7 +196,7 @@ void guiInitialize()
 			text.value = "checkbox";
 		}
 		{ // combo box
-			entityClass *e = ents->newUniqueEntity();
+			entityClass *e = ents->createUnique();
 			GUI_GET_COMPONENT(parent, p, e);
 			p.parent = side;
 			p.order = index++;
@@ -205,23 +205,23 @@ void guiInitialize()
 			text.value = "combo box";
 			for (uint32 i = 0; i < 5; i++)
 			{
-				entityClass *ee = ents->newUniqueEntity();
+				entityClass *ee = ents->createUnique();
 				GUI_GET_COMPONENT(parent, p, ee);
-				p.parent = e->getName();
+				p.parent = e->name();
 				p.order = i;
 				GUI_GET_COMPONENT(text, text, ee);
 				text.value = i;
 			}
 		}
 		{ // slider
-			entityClass *e = ents->newUniqueEntity();
+			entityClass *e = ents->createUnique();
 			GUI_GET_COMPONENT(parent, p, e);
 			p.parent = side;
 			p.order = index++;
 			GUI_GET_COMPONENT(sliderBar, slider, e);
 		}
 		{ // color picker
-			entityClass *e = ents->newUniqueEntity();
+			entityClass *e = ents->createUnique();
 			GUI_GET_COMPONENT(parent, p, e);
 			p.parent = side;
 			p.order = index++;

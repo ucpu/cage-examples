@@ -24,9 +24,9 @@ bool update()
 	entityManagerClass *ents = gui()->entities();
 
 	{ // update disabled state
-		entityClass *ae = ents->getEntity(100);
+		entityClass *ae = ents->get(100);
 		GUI_GET_COMPONENT(checkBox, chb, ae);
-		entityClass *be = ents->getEntity(3);
+		entityClass *be = ents->get(3);
 		GUI_GET_COMPONENT(widgetState, ws, be);
 		ws.disabled = chb.state == checkBoxStateEnum::Checked;
 	}
@@ -41,33 +41,33 @@ bool guiEvent(uint32 name)
 	entityManagerClass *ents = gui()->entities();
 
 	{
-		entityClass *e = ents->getEntity(name);
+		entityClass *e = ents->get(name);
 
-		if (e->hasComponent(gui()->components().checkBox))
+		if (e->has(gui()->components().checkBox))
 		{
 			GUI_GET_COMPONENT(checkBox, c, e);
 			CAGE_LOG(severityEnum::Info, "gui event", string() + "check box state: " + (uint32)c.state);
 		}
 
-		if (e->hasComponent(gui()->components().colorPicker))
+		if (e->has(gui()->components().colorPicker))
 		{
 			GUI_GET_COMPONENT(colorPicker, c, e);
 			CAGE_LOG(severityEnum::Info, "gui event", string() + "color picker: " + c.color);
 		}
 
-		if (e->hasComponent(gui()->components().comboBox))
+		if (e->has(gui()->components().comboBox))
 		{
 			GUI_GET_COMPONENT(comboBox, c, e);
 			CAGE_LOG(severityEnum::Info, "gui event", string() + "combo box selected: " + c.selected);
 		}
 
-		if (e->hasComponent(gui()->components().inputBox))
+		if (e->has(gui()->components().inputBox))
 		{
 			GUI_GET_COMPONENT(inputBox, c, e);
 			CAGE_LOG(severityEnum::Info, "gui event", string() + "input box valid: " + c.valid + ", value: " + c.value);
 		}
 
-		if (e->hasComponent(gui()->components().sliderBar))
+		if (e->has(gui()->components().sliderBar))
 		{
 			GUI_GET_COMPONENT(sliderBar, c, e);
 			CAGE_LOG(severityEnum::Info, "gui event", string() + "slider bar value: " + c.value);
@@ -90,7 +90,7 @@ bool guiEvent(uint32 name)
 void guiLabel(uint32 parentName, uint32 &index, const string &name)
 {
 	entityManagerClass *ents = gui()->entities();
-	entityClass *e = ents->newUniqueEntity();
+	entityClass *e = ents->createUnique();
 	GUI_GET_COMPONENT(parent, p, e);
 	p.parent = parentName;
 	p.order = index++;
@@ -102,7 +102,7 @@ void guiLabel(uint32 parentName, uint32 &index, const string &name)
 uint32 guiPanel(uint32 parentName, uint32 &index, const string &name)
 {
 	entityManagerClass *ents = gui()->entities();
-	entityClass *panel = ents->newUniqueEntity();
+	entityClass *panel = ents->createUnique();
 	GUI_GET_COMPONENT(parent, p, panel);
 	p.parent = parentName;
 	p.order = index++;
@@ -116,7 +116,7 @@ uint32 guiPanel(uint32 parentName, uint32 &index, const string &name)
 	lt.expandToSameWidth = false;
 	lt.expandToSameHeight = false;
 	lt.cellsAnchor = vec2();
-	return panel->getName();
+	return panel->name();
 }
 
 void guiButtons(uint32 parentName)
@@ -126,7 +126,7 @@ void guiButtons(uint32 parentName)
 
 	{ // with text
 		guiLabel(parentName, index, "with text");
-		entityClass *e = ents->newUniqueEntity();
+		entityClass *e = ents->createUnique();
 		GUI_GET_COMPONENT(parent, p, e);
 		p.parent = parentName;
 		p.order = index++;
@@ -136,16 +136,16 @@ void guiButtons(uint32 parentName)
 	}
 	{ // horizontal
 		guiLabel(parentName, index, "horizontal");
-		entityClass *layout = ents->newUniqueEntity();
+		entityClass *layout = ents->createUnique();
 		GUI_GET_COMPONENT(parent, p, layout);
 		p.parent = parentName;
 		p.order = index++;
 		GUI_GET_COMPONENT(layoutLine, l, layout);
 		for (uint32 i = 0; i < 4; i++)
 		{
-			entityClass *e = ents->newUniqueEntity();
+			entityClass *e = ents->createUnique();
 			GUI_GET_COMPONENT(parent, p, e);
-			p.parent = layout->getName();
+			p.parent = layout->name();
 			p.order = index++;
 			GUI_GET_COMPONENT(button, b, e);
 			b.allowMerging = true;
@@ -155,7 +155,7 @@ void guiButtons(uint32 parentName)
 	}
 	{ // vertical
 		guiLabel(parentName, index, "vertical");
-		entityClass *layout = ents->newUniqueEntity();
+		entityClass *layout = ents->createUnique();
 		GUI_GET_COMPONENT(parent, p, layout);
 		p.parent = parentName;
 		p.order = index++;
@@ -163,9 +163,9 @@ void guiButtons(uint32 parentName)
 		l.vertical = true;
 		for (uint32 i = 0; i < 4; i++)
 		{
-			entityClass *e = ents->newUniqueEntity();
+			entityClass *e = ents->createUnique();
 			GUI_GET_COMPONENT(parent, p, e);
-			p.parent = layout->getName();
+			p.parent = layout->name();
 			p.order = index++;
 			GUI_GET_COMPONENT(button, b, e);
 			b.allowMerging = true;
@@ -175,7 +175,7 @@ void guiButtons(uint32 parentName)
 	}
 	{ // with image
 		guiLabel(parentName, index, "with image");
-		entityClass *e = ents->newUniqueEntity();
+		entityClass *e = ents->createUnique();
 		GUI_GET_COMPONENT(parent, p, e);
 		p.parent = parentName;
 		p.order = index++;
@@ -194,7 +194,7 @@ void guiInputBoxes(uint32 parentName)
 
 	{ // default
 		guiLabel(parentName, index, "default");
-		entityClass *e = ents->newUniqueEntity();
+		entityClass *e = ents->createUnique();
 		GUI_GET_COMPONENT(parent, p, e);
 		p.parent = parentName;
 		p.order = index++;
@@ -203,7 +203,7 @@ void guiInputBoxes(uint32 parentName)
 
 	{ // integer
 		guiLabel(parentName, index, "integer");
-		entityClass *e = ents->newUniqueEntity();
+		entityClass *e = ents->createUnique();
 		GUI_GET_COMPONENT(parent, p, e);
 		p.parent = parentName;
 		p.order = index++;
@@ -216,7 +216,7 @@ void guiInputBoxes(uint32 parentName)
 
 	{ // real
 		guiLabel(parentName, index, "real");
-		entityClass *e = ents->newUniqueEntity();
+		entityClass *e = ents->createUnique();
 		GUI_GET_COMPONENT(parent, p, e);
 		p.parent = parentName;
 		p.order = index++;
@@ -229,7 +229,7 @@ void guiInputBoxes(uint32 parentName)
 
 	{ // password
 		guiLabel(parentName, index, "password");
-		entityClass *e = ents->newUniqueEntity();
+		entityClass *e = ents->createUnique();
 		GUI_GET_COMPONENT(parent, p, e);
 		p.parent = parentName;
 		p.order = index++;
@@ -241,7 +241,7 @@ void guiInputBoxes(uint32 parentName)
 
 	{ // email
 		guiLabel(parentName, index, "email");
-		entityClass *e = ents->newUniqueEntity();
+		entityClass *e = ents->createUnique();
 		GUI_GET_COMPONENT(parent, p, e);
 		p.parent = parentName;
 		p.order = index++;
@@ -253,7 +253,7 @@ void guiInputBoxes(uint32 parentName)
 
 	{ // url
 		guiLabel(parentName, index, "url");
-		entityClass *e = ents->newUniqueEntity();
+		entityClass *e = ents->createUnique();
 		GUI_GET_COMPONENT(parent, p, e);
 		p.parent = parentName;
 		p.order = index++;
@@ -271,7 +271,7 @@ void guiCheckBoxes(uint32 parentName)
 
 	{ // default
 		guiLabel(parentName, index, "default");
-		entityClass *e = ents->newUniqueEntity();
+		entityClass *e = ents->createUnique();
 		GUI_GET_COMPONENT(parent, p, e);
 		p.parent = parentName;
 		p.order = index++;
@@ -280,7 +280,7 @@ void guiCheckBoxes(uint32 parentName)
 
 	{ // with label
 		guiLabel(parentName, index, "with label");
-		entityClass *e = ents->newUniqueEntity();
+		entityClass *e = ents->createUnique();
 		GUI_GET_COMPONENT(parent, p, e);
 		p.parent = parentName;
 		p.order = index++;
@@ -291,7 +291,7 @@ void guiCheckBoxes(uint32 parentName)
 
 	{ // checked
 		guiLabel(parentName, index, "checked");
-		entityClass *e = ents->newUniqueEntity();
+		entityClass *e = ents->createUnique();
 		GUI_GET_COMPONENT(parent, p, e);
 		p.parent = parentName;
 		p.order = index++;
@@ -301,7 +301,7 @@ void guiCheckBoxes(uint32 parentName)
 
 	{ // indeterminate
 		guiLabel(parentName, index, "indeterminate");
-		entityClass *e = ents->newUniqueEntity();
+		entityClass *e = ents->createUnique();
 		GUI_GET_COMPONENT(parent, p, e);
 		p.parent = parentName;
 		p.order = index++;
@@ -312,7 +312,7 @@ void guiCheckBoxes(uint32 parentName)
 
 	{ // radios
 		guiLabel(parentName, index, "radio buttons");
-		entityClass *layout = ents->newUniqueEntity();
+		entityClass *layout = ents->createUnique();
 		GUI_GET_COMPONENT(parent, p, layout);
 		p.parent = parentName;
 		p.order = index++;
@@ -320,9 +320,9 @@ void guiCheckBoxes(uint32 parentName)
 		l.vertical = true;
 		for (uint32 i = 0; i < 4; i++)
 		{
-			entityClass *e = ents->newUniqueEntity();
+			entityClass *e = ents->createUnique();
 			GUI_GET_COMPONENT(parent, p, e);
-			p.parent = layout->getName();
+			p.parent = layout->name();
 			p.order = index++;
 			GUI_GET_COMPONENT(checkBox, b, e);
 			b.type = checkBoxTypeEnum::RadioButton;
@@ -339,7 +339,7 @@ void guiCombos(uint32 parentName)
 
 	{ // empty
 		guiLabel(parentName, index, "empty");
-		entityClass *e = ents->newUniqueEntity();
+		entityClass *e = ents->createUnique();
 		GUI_GET_COMPONENT(parent, p, e);
 		p.parent = parentName;
 		p.order = index++;
@@ -349,7 +349,7 @@ void guiCombos(uint32 parentName)
 	}
 	{ // items
 		guiLabel(parentName, index, "items");
-		entityClass *e = ents->newUniqueEntity();
+		entityClass *e = ents->createUnique();
 		GUI_GET_COMPONENT(parent, p, e);
 		p.parent = parentName;
 		p.order = index++;
@@ -358,9 +358,9 @@ void guiCombos(uint32 parentName)
 		t.value = "select one:";
 		for (uint32 i = 0; i < 4; i++)
 		{
-			entityClass *o = ents->newUniqueEntity();
+			entityClass *o = ents->createUnique();
 			GUI_GET_COMPONENT(parent, p, o);
-			p.parent = e->getName();
+			p.parent = e->name();
 			p.order = index++;
 			GUI_GET_COMPONENT(text, t, o);
 			t.value = string("option ") + i;
@@ -368,7 +368,7 @@ void guiCombos(uint32 parentName)
 	}
 	{ // items
 		guiLabel(parentName, index, "preselected");
-		entityClass *e = ents->newUniqueEntity();
+		entityClass *e = ents->createUnique();
 		GUI_GET_COMPONENT(parent, p, e);
 		p.parent = parentName;
 		p.order = index++;
@@ -378,9 +378,9 @@ void guiCombos(uint32 parentName)
 		t.value = "select one:";
 		for (uint32 i = 0; i < 4; i++)
 		{
-			entityClass *o = ents->newUniqueEntity();
+			entityClass *o = ents->createUnique();
 			GUI_GET_COMPONENT(parent, p, o);
-			p.parent = e->getName();
+			p.parent = e->name();
 			p.order = index++;
 			GUI_GET_COMPONENT(text, t, o);
 			t.value = string("option ") + i;
@@ -395,7 +395,7 @@ void guiSliders(uint32 parentName)
 
 	{ // default
 		guiLabel(parentName, index, "default");
-		entityClass *e = ents->newUniqueEntity();
+		entityClass *e = ents->createUnique();
 		GUI_GET_COMPONENT(parent, p, e);
 		p.parent = parentName;
 		p.order = index++;
@@ -404,7 +404,7 @@ void guiSliders(uint32 parentName)
 
 	{ // vertical
 		guiLabel(parentName, index, "vertical");
-		entityClass *e = ents->newUniqueEntity();
+		entityClass *e = ents->createUnique();
 		GUI_GET_COMPONENT(parent, p, e);
 		p.parent = parentName;
 		p.order = index++;
@@ -420,7 +420,7 @@ void guiColorPickers(uint32 parentName)
 
 	{ // small
 		guiLabel(parentName, index, "small");
-		entityClass *e = ents->newUniqueEntity();
+		entityClass *e = ents->createUnique();
 		GUI_GET_COMPONENT(parent, p, e);
 		p.parent = parentName;
 		p.order = index++;
@@ -431,7 +431,7 @@ void guiColorPickers(uint32 parentName)
 
 	{ // large
 		guiLabel(parentName, index, "large");
-		entityClass *e = ents->newUniqueEntity();
+		entityClass *e = ents->createUnique();
 		GUI_GET_COMPONENT(parent, p, e);
 		p.parent = parentName;
 		p.order = index++;
@@ -446,7 +446,7 @@ void guiInitialize()
 	entityManagerClass *ents = gui()->entities();
 
 	{ // splitter
-		entityClass *split = ents->newEntity(1);
+		entityClass *split = ents->create(1);
 		GUI_GET_COMPONENT(layoutSplitter, ls, split);
 		ls.vertical = true;
 		ls.anchor = 0.5;
@@ -457,7 +457,7 @@ void guiInitialize()
 		ep.size.units[1] = unitEnum::ScreenHeight;
 	}
 	{ // top panel
-		entityClass *panel = ents->newEntity(2);
+		entityClass *panel = ents->create(2);
 		GUI_GET_COMPONENT(parent, p, panel);
 		p.parent = 1;
 		p.order = 1;
@@ -465,7 +465,7 @@ void guiInitialize()
 		GUI_GET_COMPONENT(layoutSplitter, ls, panel);
 
 		{ // disable widgets
-			entityClass *e = ents->newEntity(100);
+			entityClass *e = ents->create(100);
 			GUI_GET_COMPONENT(parent, p, e);
 			p.parent = 2;
 			p.order = 1;
@@ -474,27 +474,27 @@ void guiInitialize()
 			txt.value = "disable widgets";
 		}
 		{ // right splitter
-			entityClass *rightSplitter = ents->newEntity(101);
+			entityClass *rightSplitter = ents->create(101);
 			GUI_GET_COMPONENT(parent, p, rightSplitter);
 			p.parent = 2;
 			p.order = 2;
 			GUI_GET_COMPONENT(layoutSplitter, ls, rightSplitter);
 			ls.inverse = true;
 			{ // middle line
-				entityClass *middleLine = ents->newEntity(102);
+				entityClass *middleLine = ents->create(102);
 				GUI_GET_COMPONENT(parent, p, middleLine);
 				p.parent = 101;
 				p.order = 1;
 				GUI_GET_COMPONENT(layoutLine, ll, middleLine);
 			}
 			{ // right line
-				entityClass *rightLine = ents->newEntity(103);
+				entityClass *rightLine = ents->create(103);
 				GUI_GET_COMPONENT(parent, p, rightLine);
 				p.parent = 101;
 				p.order = 2;
 				GUI_GET_COMPONENT(layoutLine, ll, rightLine);
 				{ // smaller
-					entityClass *e = ents->newEntity(110);
+					entityClass *e = ents->create(110);
 					GUI_GET_COMPONENT(parent, p, e);
 					p.parent = 103;
 					p.order = 1;
@@ -506,7 +506,7 @@ void guiInitialize()
 					ep.size.value = vec2(32, 32);
 				}
 				{ // larger
-					entityClass *e = ents->newEntity(111);
+					entityClass *e = ents->create(111);
 					GUI_GET_COMPONENT(parent, p, e);
 					p.parent = 103;
 					p.order = 2;
@@ -521,7 +521,7 @@ void guiInitialize()
 		}
 	}
 	{ // bottom panel
-		entityClass *panel = ents->newEntity(3);
+		entityClass *panel = ents->create(3);
 		GUI_GET_COMPONENT(parent, p, panel);
 		p.parent = 1;
 		p.order = 2;

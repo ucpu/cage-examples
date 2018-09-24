@@ -47,7 +47,7 @@ bool controlUpdate()
 	uint64 time = currentControlTime();
 	entityManagerClass *ents = entities();
 	{
-		entityClass *e = ents->getEntity(2);
+		entityClass *e = ents->get(2);
 		ENGINE_GET_COMPONENT(transform, t, e);
 		t.position = vec3(sin(rads(time * 1e-6)) * 10, cos(rads(time * 1e-6)) * 10, -20);
 	}
@@ -169,14 +169,14 @@ int main(int argc, char *args[])
 			window()->title("cage test engine exceptions");
 
 			{ // camera
-				entityClass *e = entities()->newEntity(1);
+				entityClass *e = entities()->create(1);
 				ENGINE_GET_COMPONENT(transform, t, e);
 				(void)t;
 				ENGINE_GET_COMPONENT(camera, c, e);
 				c.ambientLight = vec3(1, 1, 1);
 			}
 			{ // box 1
-				entityClass *e = entities()->newEntity(2);
+				entityClass *e = entities()->create(2);
 				ENGINE_GET_COMPONENT(transform, t, e);
 				(void)t;
 				ENGINE_GET_COMPONENT(render, r, e);

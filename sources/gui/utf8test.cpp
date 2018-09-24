@@ -29,7 +29,7 @@ void guiInitialize()
 {
 	entityManagerClass *ents = gui()->entities();
 
-	entityClass *panel = ents->newEntity(2);
+	entityClass *panel = ents->create(2);
 	{
 		GUI_GET_COMPONENT(groupBox, gp, panel);
 		GUI_GET_COMPONENT(position, pos, panel);
@@ -42,9 +42,9 @@ void guiInitialize()
 
 	for (uint32 i = 0; i < 300; i++)
 	{
-		entityClass * e = ents->newEntity(100 + i);
+		entityClass * e = ents->create(100 + i);
 		GUI_GET_COMPONENT(parent, parent, e);
-		parent.parent = panel->getName();
+		parent.parent = panel->name();
 		parent.order = i;
 		GUI_GET_COMPONENT(label, label, e);
 		GUI_GET_COMPONENT(text, text, e);

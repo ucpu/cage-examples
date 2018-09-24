@@ -32,7 +32,7 @@ entityClass *makeSplitterRec(uint32 depth)
 {
 	entityManagerClass *ents = gui()->entities();
 
-	entityClass *cell = ents->newUniqueEntity();
+	entityClass *cell = ents->createUnique();
 	{
 		GUI_GET_COMPONENT(groupBox, b, cell);
 		b.type = groupBoxTypeEnum::Panel;
@@ -40,9 +40,9 @@ entityClass *makeSplitterRec(uint32 depth)
 
 	if (depth == 15)
 	{
-		entityClass *e = ents->newUniqueEntity();
+		entityClass *e = ents->createUnique();
 		GUI_GET_COMPONENT(parent, p, e);
-		p.parent = cell->getName();
+		p.parent = cell->name();
 		GUI_GET_COMPONENT(label, l, e);
 		GUI_GET_COMPONENT(text, t, e);
 		t.value = "Hi";
@@ -53,9 +53,9 @@ entityClass *makeSplitterRec(uint32 depth)
 		s.vertical = (depth % 2) == 1;
 		s.inverse = ((depth / 2) % 2) == 1;
 		{ // first
-			entityClass *e = ents->newUniqueEntity();
+			entityClass *e = ents->createUnique();
 			GUI_GET_COMPONENT(parent, p, e);
-			p.parent = cell->getName();
+			p.parent = cell->name();
 			p.order = s.inverse;
 			GUI_GET_COMPONENT(button, l, e);
 			GUI_GET_COMPONENT(text, t, e);
@@ -64,7 +64,7 @@ entityClass *makeSplitterRec(uint32 depth)
 		{ // second
 			entityClass *e = makeSplitterRec(depth + 1);
 			GUI_GET_COMPONENT(parent, p, e);
-			p.parent = cell->getName();
+			p.parent = cell->name();
 			p.order = !s.inverse;
 		}
 	}

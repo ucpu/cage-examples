@@ -26,39 +26,39 @@ bool guiEvent(uint32 e)
 {
 	CAGE_LOG(severityEnum::Info, "gui event", string() + "gui event on entity: " + e);
 	entityManagerClass *ents = gui()->entities();
-	GUI_GET_COMPONENT(layoutSplitter, s, ents->getEntity(42));
+	GUI_GET_COMPONENT(layoutSplitter, s, ents->get(42));
 	switch (e)
 	{
 	case 1:
 	{
-		GUI_GET_COMPONENT(checkBox, b, ents->getEntity(e));
+		GUI_GET_COMPONENT(checkBox, b, ents->get(e));
 		s.allowMasterResize = b.state == checkBoxStateEnum::Checked;
 	} break;
 	case 2:
 	{
-		GUI_GET_COMPONENT(checkBox, b, ents->getEntity(e));
+		GUI_GET_COMPONENT(checkBox, b, ents->get(e));
 		s.allowSlaveResize = b.state == checkBoxStateEnum::Checked;
 	} break;
 	case 3:
 	{
-		GUI_GET_COMPONENT(checkBox, b, ents->getEntity(e));
+		GUI_GET_COMPONENT(checkBox, b, ents->get(e));
 		s.vertical = b.state == checkBoxStateEnum::Checked;
 	} break;
 	case 4:
 	{
-		GUI_GET_COMPONENT(checkBox, b, ents->getEntity(e));
+		GUI_GET_COMPONENT(checkBox, b, ents->get(e));
 		s.inverse = b.state == checkBoxStateEnum::Checked;
 	} break;
 	case 5:
 	{
-		GUI_GET_COMPONENT(sliderBar, b, ents->getEntity(e));
+		GUI_GET_COMPONENT(sliderBar, b, ents->get(e));
 		s.anchor = b.value;
 	} break;
 	case 6:
 	{
-		GUI_GET_COMPONENT(checkBox, b, ents->getEntity(e));
-		GUI_GET_COMPONENT(parent, p1, ents->getEntity(41));
-		GUI_GET_COMPONENT(parent, p2, ents->getEntity(42));
+		GUI_GET_COMPONENT(checkBox, b, ents->get(e));
+		GUI_GET_COMPONENT(parent, p1, ents->get(41));
+		GUI_GET_COMPONENT(parent, p2, ents->get(42));
 		if (b.state == checkBoxStateEnum::Checked)
 		{
 			p1.parent = 39;
@@ -77,7 +77,7 @@ bool guiEvent(uint32 e)
 void genContent(sint32 order, const string &name)
 {
 	entityManagerClass *ents = gui()->entities();
-	entityClass *e = ents->newUniqueEntity();
+	entityClass *e = ents->createUnique();
 	{
 		GUI_GET_COMPONENT(parent, p, e);
 		p.parent = 42;
@@ -88,10 +88,10 @@ void genContent(sint32 order, const string &name)
 		t.value = name;
 		GUI_GET_COMPONENT(layoutLine, l, e);
 	}
-	entityClass *b = ents->newEntity(100 + order);
+	entityClass *b = ents->create(100 + order);
 	{
 		GUI_GET_COMPONENT(parent, p, b);
-		p.parent = e->getName();
+		p.parent = e->name();
 		GUI_GET_COMPONENT(button, but, b);
 		GUI_GET_COMPONENT(text, t, b);
 		t.value = "Button";
@@ -102,7 +102,7 @@ void guiInitialize()
 {
 	entityManagerClass *ents = gui()->entities();
 
-	entityClass *mainSplitter = ents->newEntity(39);
+	entityClass *mainSplitter = ents->create(39);
 	{
 		GUI_GET_COMPONENT(position, p, mainSplitter);
 		p.size.value = vec2(1, 1);
@@ -112,19 +112,19 @@ void guiInitialize()
 		l.vertical = true;
 	}
 
-	entityClass *menu = ents->newUniqueEntity();
+	entityClass *menu = ents->createUnique();
 	{
 		GUI_GET_COMPONENT(parent, p, menu);
-		p.parent = mainSplitter->getName();
+		p.parent = mainSplitter->name();
 		p.order = 1;
 		GUI_GET_COMPONENT(groupBox, b, menu);
 		GUI_GET_COMPONENT(layoutLine, l, menu);
 	}
 
 	{ // allowMasterResize
-		entityClass *e = ents->newEntity(1);
+		entityClass *e = ents->create(1);
 		GUI_GET_COMPONENT(parent, p, e);
-		p.parent = menu->getName();
+		p.parent = menu->name();
 		p.order = 1;
 		GUI_GET_COMPONENT(checkBox, b, e);
 		GUI_GET_COMPONENT(text, t, e);
@@ -132,9 +132,9 @@ void guiInitialize()
 	}
 
 	{ // allowSlaveResize
-		entityClass *e = ents->newEntity(2);
+		entityClass *e = ents->create(2);
 		GUI_GET_COMPONENT(parent, p, e);
-		p.parent = menu->getName();
+		p.parent = menu->name();
 		p.order = 2;
 		GUI_GET_COMPONENT(checkBox, b, e);
 		GUI_GET_COMPONENT(text, t, e);
@@ -142,9 +142,9 @@ void guiInitialize()
 	}
 
 	{ // vertical
-		entityClass *e = ents->newEntity(3);
+		entityClass *e = ents->create(3);
 		GUI_GET_COMPONENT(parent, p, e);
-		p.parent = menu->getName();
+		p.parent = menu->name();
 		p.order = 3;
 		GUI_GET_COMPONENT(checkBox, b, e);
 		GUI_GET_COMPONENT(text, t, e);
@@ -152,9 +152,9 @@ void guiInitialize()
 	}
 
 	{ // inverse
-		entityClass *e = ents->newEntity(4);
+		entityClass *e = ents->create(4);
 		GUI_GET_COMPONENT(parent, p, e);
-		p.parent = menu->getName();
+		p.parent = menu->name();
 		p.order = 4;
 		GUI_GET_COMPONENT(checkBox, b, e);
 		GUI_GET_COMPONENT(text, t, e);
@@ -162,17 +162,17 @@ void guiInitialize()
 	}
 
 	{ // anchor
-		entityClass *e = ents->newEntity(5);
+		entityClass *e = ents->create(5);
 		GUI_GET_COMPONENT(parent, p, e);
-		p.parent = menu->getName();
+		p.parent = menu->name();
 		p.order = 5;
 		GUI_GET_COMPONENT(sliderBar, b, e);
 	}
 
 	{ // detached
-		entityClass *e = ents->newEntity(6);
+		entityClass *e = ents->create(6);
 		GUI_GET_COMPONENT(parent, p, e);
-		p.parent = menu->getName();
+		p.parent = menu->name();
 		p.order = 6;
 		GUI_GET_COMPONENT(checkBox, b, e);
 		GUI_GET_COMPONENT(text, t, e);
@@ -180,7 +180,7 @@ void guiInitialize()
 	}
 
 	// center
-	entityClass *center = ents->newEntity(40);
+	entityClass *center = ents->create(40);
 	{
 		GUI_GET_COMPONENT(position, p, center);
 		p.anchor = vec2(0.5, 0.5);
@@ -191,7 +191,7 @@ void guiInitialize()
 	}
 
 	// dummy
-	entityClass *dummy = ents->newEntity(41);
+	entityClass *dummy = ents->create(41);
 	{
 		GUI_GET_COMPONENT(parent, p, dummy);
 		p.parent = 40;
@@ -201,7 +201,7 @@ void guiInitialize()
 	}
 
 	// the test splitter
-	entityClass *presentation = ents->newEntity(42);
+	entityClass *presentation = ents->create(42);
 	{
 		GUI_GET_COMPONENT(parent, p, presentation);
 		p.parent = 39;

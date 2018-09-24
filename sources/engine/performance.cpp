@@ -40,10 +40,10 @@ bool update()
 	if (regenerate)
 	{
 		regenerate = false;
-		ents->getAllEntities()->destroyAllEntities();
+		ents->destroy();
 
 		{ // camera
-			entityClass *e = ents->newEntity(1);
+			entityClass *e = ents->create(1);
 			ENGINE_GET_COMPONENT(transform, t, e);
 			t.orientation = quat(degs(-30), degs(), degs());
 			ENGINE_GET_COMPONENT(camera, c, e);
@@ -52,7 +52,7 @@ bool update()
 		}
 
 		{ // light
-			entityClass *e = ents->newEntity(2);
+			entityClass *e = ents->create(2);
 			ENGINE_GET_COMPONENT(transform, t, e);
 			t.orientation = quat(degs(-30), degs(-110), degs());
 			ENGINE_GET_COMPONENT(light, l, e);
@@ -76,7 +76,7 @@ bool update()
 		{
 			for (uint32 x = 0; x < side; x++)
 			{
-				entityClass *e = ents->newAnonymousEntity();
+				entityClass *e = ents->createAnonymous();
 				ENGINE_GET_COMPONENT(transform, t, e);
 				t.scale = 0.15 * 0.49;
 				t.position = vec3((x - side * 0.5) * 0.15, 0, (y - side * 0.5) * 0.15);
@@ -87,13 +87,13 @@ bool update()
 	}
 
 	{ // camera
-		entityClass *e = ents->getEntity(1);
+		entityClass *e = ents->get(1);
 		ENGINE_GET_COMPONENT(camera, c, e);
 		c.far = c.near + cameraRange * 25 + 1;
 	}
 
 	{ // update boxes
-		for (entityClass *e : renderComponent::component->getComponentEntities()->entities())
+		for (entityClass *e : renderComponent::component->entities())
 		{
 			ENGINE_GET_COMPONENT(transform, t, e);
 			t.position[1] = noiseClouds(42, vec3(vec2(t.position[0], t.position[2]) * 0.15, time * 5e-8)) * 2 - 3;
@@ -108,26 +108,26 @@ bool update()
 bool guiInit()
 {
 	guiClass *g = cage::gui();
-	entityClass *panel = g->entities()->newUniqueEntity();
+	entityClass *panel = g->entities()->createUnique();
 	{
 		GUI_GET_COMPONENT(groupBox, c, panel);
 		GUI_GET_COMPONENT(layoutTable, l, panel);
 	}
 
 	{ // boxes count
-		entityClass *lab = g->entities()->newUniqueEntity();
+		entityClass *lab = g->entities()->createUnique();
 		{
 			GUI_GET_COMPONENT(parent, child, lab);
-			child.parent = panel->getName();
+			child.parent = panel->name();
 			child.order = 1;
 			GUI_GET_COMPONENT(label, c, lab);
 			GUI_GET_COMPONENT(text, t, lab);
 			t.value = "boxes: ";
 		}
-		entityClass *con = g->entities()->newEntity(1);
+		entityClass *con = g->entities()->create(1);
 		{
 			GUI_GET_COMPONENT(parent, child, con);
-			child.parent = panel->getName();
+			child.parent = panel->name();
 			child.order = 2;
 			GUI_GET_COMPONENT(inputBox, c, con);
 			c.type = inputTypeEnum::Integer;
@@ -139,19 +139,19 @@ bool guiInit()
 	}
 
 	{ // camera range
-		entityClass *lab = g->entities()->newUniqueEntity();
+		entityClass *lab = g->entities()->createUnique();
 		{
 			GUI_GET_COMPONENT(parent, child, lab);
-			child.parent = panel->getName();
+			child.parent = panel->name();
 			child.order = 3;
 			GUI_GET_COMPONENT(label, c, lab);
 			GUI_GET_COMPONENT(text, t, lab);
 			t.value = "camera range: ";
 		}
-		entityClass *con = g->entities()->newEntity(2);
+		entityClass *con = g->entities()->create(2);
 		{
 			GUI_GET_COMPONENT(parent, child, con);
-			child.parent = panel->getName();
+			child.parent = panel->name();
 			child.order = 4;
 			GUI_GET_COMPONENT(sliderBar, c, con);
 			c.value = 1.f;
@@ -159,19 +159,19 @@ bool guiInit()
 	}
 
 	{ // shadow
-		entityClass *lab = g->entities()->newUniqueEntity();
+		entityClass *lab = g->entities()->createUnique();
 		{
 			GUI_GET_COMPONENT(parent, child, lab);
-			child.parent = panel->getName();
+			child.parent = panel->name();
 			child.order = 5;
 			GUI_GET_COMPONENT(label, c, lab);
 			GUI_GET_COMPONENT(text, t, lab);
 			t.value = "enable shadow: ";
 		}
-		entityClass *con = g->entities()->newEntity(4);
+		entityClass *con = g->entities()->create(4);
 		{
 			GUI_GET_COMPONENT(parent, child, con);
-			child.parent = panel->getName();
+			child.parent = panel->name();
 			child.order = 6;
 			GUI_GET_COMPONENT(checkBox, c, con);
 			c.state = checkBoxStateEnum::Checked;
@@ -184,7 +184,7 @@ bool guiInit()
 bool guiUpdate()
 {
 	{ // update boxes count
-		entityClass *e = cage::gui()->entities()->getEntity(1);
+		entityClass *e = cage::gui()->entities()->get(1);
 		GUI_GET_COMPONENT(inputBox, c, e);
 		if (c.valid && c.value.toUint32() != boxesCount)
 		{
@@ -194,13 +194,13 @@ bool guiUpdate()
 	}
 
 	{ // update camera range
-		entityClass *e = cage::gui()->entities()->getEntity(2);
+		entityClass *e = cage::gui()->entities()->get(2);
 		GUI_GET_COMPONENT(sliderBar, c, e);
 		cameraRange = c.value;
 	}
 
 	{ // update enable shadow
-		entityClass *e = cage::gui()->entities()->getEntity(4);
+		entityClass *e = cage::gui()->entities()->get(4);
 		GUI_GET_COMPONENT(checkBox, c, e);
 		bool checked = c.state == checkBoxStateEnum::Checked;
 		if (checked != shadowEnabled)

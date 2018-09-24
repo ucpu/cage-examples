@@ -37,7 +37,7 @@ bool graphicsInitialize()
 	fabScreenTex->filters(GL_LINEAR, GL_LINEAR, 0);
 	assets()->set<assetSchemeIndexTexture>(screenName, fabScreenTex.get());
 	{
-		entityClass *e = entities()->getEntity(4);
+		entityClass *e = entities()->get(4);
 		ENGINE_GET_COMPONENT(camera, c, e);
 		c.target = fabScreenTex.get();
 	}
@@ -55,8 +55,8 @@ bool update()
 {
 	uint64 time = currentControlTime();
 
-	ENGINE_GET_COMPONENT(transform, t1, entities()->getEntity(3));
-	ENGINE_GET_COMPONENT(transform, t2, entities()->getEntity(4));
+	ENGINE_GET_COMPONENT(transform, t1, entities()->get(3));
+	ENGINE_GET_COMPONENT(transform, t2, entities()->get(4));
 	t1.orientation = t2.orientation = quat(degs(-25), degs(sin(degs(time * 3e-5)) * 20 + 125), degs());
 
 	return false;
@@ -94,7 +94,7 @@ int main(int argc, char *args[])
 		// entities
 		entityManagerClass *ents = entities();
 		{ // room
-			entityClass *e = ents->newEntity(10);
+			entityClass *e = ents->create(10);
 			ENGINE_GET_COMPONENT(render, r, e);
 			r.object = roomName;
 			r.renderMask = 3;
@@ -103,7 +103,7 @@ int main(int argc, char *args[])
 		}
 		entityClass *eye = nullptr;
 		{ // eye
-			entityClass *e = eye = ents->newEntity(1);
+			entityClass *e = eye = ents->create(1);
 			ENGINE_GET_COMPONENT(transform, t, e);
 			t.position = vec3(0, 1.7, 0);
 			ENGINE_GET_COMPONENT(camera, c, e);
@@ -117,7 +117,7 @@ int main(int argc, char *args[])
 			r.renderMask = 2;
 		}
 		{ // camera stand
-			entityClass *e = ents->newEntity(2);
+			entityClass *e = ents->create(2);
 			ENGINE_GET_COMPONENT(transform, t, e);
 			t.position = vec3(2.5, 2.5, -1.3);
 			t.orientation = quat(degs(), degs(125), degs());
@@ -126,7 +126,7 @@ int main(int argc, char *args[])
 			r.renderMask = 1;
 		}
 		{ // camera lens
-			entityClass *e = ents->newEntity(3);
+			entityClass *e = ents->create(3);
 			ENGINE_GET_COMPONENT(transform, t, e);
 			t.position = vec3(2.5, 2.5, -1.3);
 			ENGINE_GET_COMPONENT(render, r, e);
@@ -134,7 +134,7 @@ int main(int argc, char *args[])
 			r.renderMask = 1;
 		}
 		{ // camera body
-			entityClass *e = ents->newEntity(4);
+			entityClass *e = ents->create(4);
 			ENGINE_GET_COMPONENT(transform, t, e);
 			t.position = vec3(2.5, 2.5, -1.3);
 			ENGINE_GET_COMPONENT(render, r, e);
