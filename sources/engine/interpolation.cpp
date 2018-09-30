@@ -85,7 +85,7 @@ bool guiInit()
 	entityClass *panel = g->entities()->createUnique();
 	entityClass *layout = g->entities()->createUnique();
 	{
-		GUI_GET_COMPONENT(groupBox, c, panel);
+		GUI_GET_COMPONENT(panel, c, panel);
 		GUI_GET_COMPONENT(layoutTable, l, layout);
 		GUI_GET_COMPONENT(parent, child, layout);
 		child.parent = panel->name();
@@ -111,7 +111,7 @@ bool guiInit()
 			GUI_GET_COMPONENT(parent, child, con);
 			child.parent = layout->name();
 			child.order = i * 2 + 1;
-			GUI_GET_COMPONENT(inputBox, c, con);
+			GUI_GET_COMPONENT(input, c, con);
 			c.type = inputTypeEnum::Integer;
 			c.min.i = i >= 2 ? 0 : 1;
 			c.max.i = 1000;
@@ -128,7 +128,7 @@ namespace
 	void setIntValue(uint32 index, uint64 &value, bool allowZero)
 	{
 		entityClass *control = cage::gui()->entities()->get(20 + index);
-		GUI_GET_COMPONENT(inputBox, t, control);
+		GUI_GET_COMPONENT(input, t, control);
 		if (t.valid)
 		{
 			CAGE_ASSERT_RUNTIME(t.value.isDigitsOnly() && !t.value.empty());

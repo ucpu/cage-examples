@@ -94,7 +94,6 @@ void initializeGui()
 	{ // layout
 		GUI_GET_COMPONENT(layoutLine, l, layout);
 		l.vertical = true;
-		l.expandToSameWidth = true;
 	}
 
 	{ // ambient
@@ -103,8 +102,7 @@ void initializeGui()
 			GUI_GET_COMPONENT(parent, p, panel);
 			p.parent = layout->name();
 			p.order = 1;
-			GUI_GET_COMPONENT(groupBox, c, panel);
-			c.type = groupBoxTypeEnum::Spoiler;
+			GUI_GET_COMPONENT(spoiler, c, panel);
 			GUI_GET_COMPONENT(text, t, panel);
 			t.value = "Ambient";
 			GUI_GET_COMPONENT(layoutLine, l, panel);
@@ -127,8 +125,7 @@ void initializeGui()
 			GUI_GET_COMPONENT(parent, p, panel);
 			p.parent = layout->name();
 			p.order = 5 + i;
-			GUI_GET_COMPONENT(groupBox, c, panel);
-			c.type = groupBoxTypeEnum::Spoiler;
+			GUI_GET_COMPONENT(spoiler, c, panel);
 			GUI_GET_COMPONENT(text, t, panel);
 			t.value = string() + "Spot light [" + i + "]:";
 			GUI_GET_COMPONENT(layoutLine, l, panel);

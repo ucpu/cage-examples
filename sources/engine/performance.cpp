@@ -110,7 +110,7 @@ bool guiInit()
 	guiClass *g = cage::gui();
 	entityClass *panel = g->entities()->createUnique();
 	{
-		GUI_GET_COMPONENT(groupBox, c, panel);
+		GUI_GET_COMPONENT(panel, c, panel);
 		GUI_GET_COMPONENT(layoutTable, l, panel);
 	}
 
@@ -129,7 +129,7 @@ bool guiInit()
 			GUI_GET_COMPONENT(parent, child, con);
 			child.parent = panel->name();
 			child.order = 2;
-			GUI_GET_COMPONENT(inputBox, c, con);
+			GUI_GET_COMPONENT(input, c, con);
 			c.type = inputTypeEnum::Integer;
 			c.min.i = 100;
 			c.max.i = 100000;
@@ -185,7 +185,7 @@ bool guiUpdate()
 {
 	{ // update boxes count
 		entityClass *e = cage::gui()->entities()->get(1);
-		GUI_GET_COMPONENT(inputBox, c, e);
+		GUI_GET_COMPONENT(input, c, e);
 		if (c.valid && c.value.toUint32() != boxesCount)
 		{
 			boxesCount = c.value.toUint32();
