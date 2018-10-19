@@ -108,8 +108,16 @@ bool update()
 bool guiInit()
 {
 	guiClass *g = cage::gui();
+
+	entityClass *root = g->entities()->createUnique();
+	{
+		GUI_GET_COMPONENT(scrollbars, sc, root);
+	}
+
 	entityClass *panel = g->entities()->createUnique();
 	{
+		GUI_GET_COMPONENT(parent, child, panel);
+		child.parent = root->name();
 		GUI_GET_COMPONENT(panel, c, panel);
 		GUI_GET_COMPONENT(layoutTable, l, panel);
 	}

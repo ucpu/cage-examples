@@ -92,6 +92,7 @@ void initializeGui()
 	entityManagerClass *ents = gui()->entities();
 	entityClass *layout = ents->create(1);
 	{ // layout
+		GUI_GET_COMPONENT(scrollbars, sc, layout);
 		GUI_GET_COMPONENT(layoutLine, l, layout);
 		l.vertical = true;
 	}

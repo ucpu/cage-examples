@@ -44,11 +44,8 @@ public:
 		entityClass *panel = ents->create(2);
 		{
 			GUI_GET_COMPONENT(panel, gp, panel);
-			GUI_GET_COMPONENT(position, pos, panel);
-			pos.anchor = vec2(.5, .5);
-			pos.position.units[0] = unitEnum::ScreenWidth;
-			pos.position.units[1] = unitEnum::ScreenHeight;
-			pos.position.value = vec2(.5, .5);
+			GUI_GET_COMPONENT(scrollbars, sc, panel);
+			sc.alignment = vec2(0.5, 0.5);
 			GUI_GET_COMPONENT(layoutLine, ll, panel);
 			ll.vertical = true;
 		}

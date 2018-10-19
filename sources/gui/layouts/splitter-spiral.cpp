@@ -51,10 +51,6 @@ public:
 	{
 		entityManagerClass *ents = gui()->entities();
 		entityClass *e = makeSplitterRec(0);
-		GUI_GET_COMPONENT(position, p, e);
-		p.size.value = vec2(1, 1);
-		p.size.units[0] = unitEnum::ScreenWidth;
-		p.size.units[1] = unitEnum::ScreenHeight;
 	}
 
 };

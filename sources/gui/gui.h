@@ -41,10 +41,6 @@ public:
 			entityClass *split = ents->create(1);
 			GUI_GET_COMPONENT(layoutSplitter, ls, split);
 			ls.vertical = true;
-			GUI_GET_COMPONENT(position, ep, split);
-			ep.size.value = vec2(1, 1);
-			ep.size.units[0] = unitEnum::ScreenWidth;
-			ep.size.units[1] = unitEnum::ScreenHeight;
 		}
 		{ // top panel
 			entityClass *panel = ents->create(2);
@@ -52,6 +48,7 @@ public:
 			p.parent = 1;
 			p.order = 1;
 			GUI_GET_COMPONENT(panel, gp, panel);
+			GUI_GET_COMPONENT(scrollbars, sc, panel);
 		}
 		{ // bottom panel
 			entityClass *panel = ents->create(3);
@@ -59,8 +56,8 @@ public:
 			p.parent = 1;
 			p.order = 2;
 			GUI_GET_COMPONENT(panel, pan, panel);
-			GUI_GET_COMPONENT(layoutTable, lt, panel);
-			lt.vertical = true;
+			//GUI_GET_COMPONENT(layoutTable, lt, panel);
+			//lt.vertical = true;
 			GUI_GET_COMPONENT(scrollbars, sc, panel);
 			sc.alignment = vec2(0.5, 0);
 		}

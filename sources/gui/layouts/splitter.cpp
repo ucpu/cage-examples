@@ -24,7 +24,7 @@ public:
 		}
 	}
 
-	void genContent(sint32 order, const string &name)
+	void genContent(sint32 order)
 	{
 		entityManagerClass *ents = gui()->entities();
 		entityClass *e = ents->createUnique();
@@ -32,9 +32,17 @@ public:
 			GUI_GET_COMPONENT(parent, p, e);
 			p.parent = 42;
 			p.order = order;
-			GUI_GET_COMPONENT(spoiler, b, e);
 			GUI_GET_COMPONENT(text, t, e);
-			t.value = name;
+			if (order == 1)
+			{
+				GUI_GET_COMPONENT(panel, panel, e);
+				t.value = "Panel";
+			}
+			else
+			{
+				GUI_GET_COMPONENT(spoiler, spoiler, e);
+				t.value = "Spoiler";
+			}
 			GUI_GET_COMPONENT(layoutLine, l, e);
 		}
 		entityClass *b = ents->create(100 + order);
@@ -53,10 +61,6 @@ public:
 
 		entityClass *mainSplitter = ents->createUnique();
 		{
-			GUI_GET_COMPONENT(position, p, mainSplitter);
-			p.size.value = vec2(1, 1);
-			p.size.units[0] = unitEnum::ScreenWidth;
-			p.size.units[1] = unitEnum::ScreenHeight;
 			GUI_GET_COMPONENT(layoutSplitter, l, mainSplitter);
 			l.vertical = true;
 		}
@@ -98,12 +102,14 @@ public:
 			GUI_GET_COMPONENT(parent, p, presentation);
 			p.parent = mainSplitter->name();
 			p.order = 2;
-			GUI_GET_COMPONENT(panel, b, presentation);
+			//GUI_GET_COMPONENT(panel, b, presentation);
 			GUI_GET_COMPONENT(layoutSplitter, l, presentation);
 		}
 
-		genContent(1, "First Panel");
-		genContent(2, "Second Panel");
+		genContent(1);
+		genContent(2);
+
+		//gui()->setZoom(10);
 	}
 
 };

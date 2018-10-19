@@ -218,27 +218,30 @@ void updateInitialize()
 	assets()->add(hashString("scenes/common/common.pack"));
 
 	{ // prev
+		entityClass *a = cage::gui()->entities()->createUnique();
+		{ // a
+			GUI_GET_COMPONENT(scrollbars, sc, a);
+			sc.alignment = vec2(0, 1);
+		}
 		entityClass *e = cage::gui()->entities()->create(1);
+		GUI_GET_COMPONENT(parent, parent, e);
+		parent.parent = a->name();
 		GUI_GET_COMPONENT(button, c, e);
 		GUI_GET_COMPONENT(text, t, e);
 		t.value = "< prev";
-		GUI_GET_COMPONENT(position, p, e);
-		p.anchor[1] = 1;
-		p.position.values[1] = 1;
-		p.position.units[1] = unitEnum::ScreenHeight;
 	}
 	{ // next
+		entityClass *a = cage::gui()->entities()->createUnique();
+		{ // a
+			GUI_GET_COMPONENT(scrollbars, sc, a);
+			sc.alignment = vec2(1, 1);
+		}
 		entityClass *e = cage::gui()->entities()->create(2);
+		GUI_GET_COMPONENT(parent, parent, e);
+		parent.parent = a->name();
 		GUI_GET_COMPONENT(button, c, e);
 		GUI_GET_COMPONENT(text, t, e);
 		t.value = "next >";
-		GUI_GET_COMPONENT(position, p, e);
-		p.anchor[0] = 1;
-		p.position.values[0] = 1;
-		p.position.units[0] = unitEnum::ScreenWidth;
-		p.anchor[1] = 1;
-		p.position.values[1] = 1;
-		p.position.units[1] = unitEnum::ScreenHeight;
 	}
 }
 

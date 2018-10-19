@@ -17,12 +17,9 @@ public:
 		entityClass *panel = ents->create(2);
 		{
 			GUI_GET_COMPONENT(panel, gp, panel);
-			GUI_GET_COMPONENT(position, pos, panel);
-			pos.size.units[0] = unitEnum::ScreenWidth;
-			pos.size.units[1] = unitEnum::ScreenHeight;
-			pos.size.value = vec2(1, 1);
 			GUI_GET_COMPONENT(layoutLine, ll, panel);
 			ll.vertical = true;
+			GUI_GET_COMPONENT(scrollbars, sc, panel);
 		}
 
 		for (uint32 i = 0; i < 300; i++)

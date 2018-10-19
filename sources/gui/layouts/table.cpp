@@ -15,6 +15,16 @@ public:
 		GUI_GET_COMPONENT(layoutTable, s, ents->get(42));
 		switch (name)
 		{
+		case 2:
+		{
+			GUI_GET_COMPONENT(checkBox, b, ents->get(name));
+			if (b.state == checkBoxStateEnum::Checked)
+			{
+				GUI_GET_COMPONENT(scrollbars, sc, ents->get(42));
+			}
+			else
+				ents->get(42)->remove(gui()->components().scrollbars);
+		} break;
 		case 3:
 		{
 			GUI_GET_COMPONENT(checkBox, b, ents->get(name));
@@ -59,10 +69,6 @@ public:
 
 		entityClass *mainSplitter = ents->createUnique();
 		{
-			GUI_GET_COMPONENT(position, p, mainSplitter);
-			p.size.value = vec2(1, 1);
-			p.size.units[0] = unitEnum::ScreenWidth;
-			p.size.units[1] = unitEnum::ScreenHeight;
 			GUI_GET_COMPONENT(layoutSplitter, l, mainSplitter);
 			l.vertical = true;
 		}
@@ -75,6 +81,17 @@ public:
 				p.order = 1;
 				GUI_GET_COMPONENT(panel, b, menu);
 				GUI_GET_COMPONENT(layoutLine, l, menu);
+				GUI_GET_COMPONENT(scrollbars, sc, menu);
+			}
+
+			{ // scrollbar
+				entityClass *e = ents->create(2);
+				GUI_GET_COMPONENT(parent, p, e);
+				p.parent = menu->name();
+				p.order = 2;
+				GUI_GET_COMPONENT(checkBox, b, e);
+				GUI_GET_COMPONENT(text, t, e);
+				t.value = "scrollbar";
 			}
 
 			{ // vertical
@@ -155,10 +172,6 @@ public:
 				GUI_GET_COMPONENT(button, but, b);
 				GUI_GET_COMPONENT(text, t, b);
 				t.value = string("item ") + i;
-				GUI_GET_COMPONENT(position, pos, b);
-				pos.size.value = randomRange2(50, 150);
-				pos.size.units[0] = unitEnum::Points;
-				pos.size.units[1] = unitEnum::Points;
 			}
 		}
 	}

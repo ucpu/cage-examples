@@ -83,9 +83,13 @@ bool guiInit()
 	guiClass *g = cage::gui();
 
 	entityClass *panel = g->entities()->createUnique();
+	{
+		GUI_GET_COMPONENT(scrollbars, sc, panel);
+	}
+
 	entityClass *layout = g->entities()->createUnique();
 	{
-		GUI_GET_COMPONENT(panel, c, panel);
+		GUI_GET_COMPONENT(panel, c, layout);
 		GUI_GET_COMPONENT(layoutTable, l, layout);
 		GUI_GET_COMPONENT(parent, child, layout);
 		child.parent = panel->name();

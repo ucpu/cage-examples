@@ -5,9 +5,14 @@ class guiTestImpl : public guiTestClass
 
 	void initialize() override
 	{
-		guiBasicLayout();
-
 		entityManagerClass *ents = gui()->entities();
+
+		guiBasicLayout();
+		{
+			entityClass *e = ents->get(3);
+			GUI_GET_COMPONENT(layoutTable, layout, e);
+		}
+
 		uint32 index = 1;
 
 		{ // default
