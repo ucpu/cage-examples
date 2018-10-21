@@ -20,6 +20,7 @@ public:
 			GUI_GET_COMPONENT(layoutLine, ll, panel);
 			ll.vertical = true;
 			GUI_GET_COMPONENT(scrollbars, sc, panel);
+			sc.alignment = vec2(0.5, 0);
 		}
 
 		for (uint32 i = 0; i < 300; i++)
@@ -39,4 +40,4 @@ public:
 
 };
 
-MAIN(guiTestImpl, "splitter")
+MAIN(guiTestImpl, "utf8 test")

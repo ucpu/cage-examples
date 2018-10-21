@@ -8,6 +8,7 @@
 #include <cage-core/config.h>
 #include <cage-core/hashString.h>
 #include <cage-core/noise.h>
+#include <cage-core/threadPool.h>
 #include <cage-client/core.h>
 #include <cage-client/window.h>
 #include <cage-client/gui.h>
@@ -19,6 +20,7 @@
 using namespace cage;
 
 holder<cameraControllerClass> cameraController;
+holder<threadPoolClass> updateThreads;
 uint32 boxesCount;
 real cameraRange;
 bool shadowEnabled;
@@ -32,9 +34,28 @@ bool windowClose()
 
 bool guiUpdate();
 
-bool update()
+void updateBoxes(uint32 thrIndex, uint32 thrCount)
 {
 	uint64 time = currentControlTime();
+	uint32 boxesCount = renderComponent::component->group()->count();
+	entityClass *const *boxesEntities = renderComponent::component->group()->array();
+
+	uint32 myCount = boxesCount / thrCount;
+	uint32 start = thrIndex * myCount;
+	uint32 end = start + myCount;
+	if (thrIndex == thrCount - 1)
+		end = boxesCount;
+
+	for (uint32 i = start; i != end; i++)
+	{
+		entityClass *e = boxesEntities[i];
+		ENGINE_GET_COMPONENT(transform, t, e);
+		t.position[1] = noiseClouds(42, vec3(vec2(t.position[0], t.position[2]) * 0.15, time * 5e-8)) * 2 - 3;
+	}
+}
+
+bool update()
+{
 	entityManagerClass *ents = entities();
 
 	if (regenerate)
@@ -89,15 +110,11 @@ bool update()
 	{ // camera
 		entityClass *e = ents->get(1);
 		ENGINE_GET_COMPONENT(camera, c, e);
-		c.far = c.near + cameraRange * 25 + 1;
+		c.far = c.near + cameraRange * 50 + 1;
 	}
 
 	{ // update boxes
-		for (entityClass *e : renderComponent::component->entities())
-		{
-			ENGINE_GET_COMPONENT(transform, t, e);
-			t.position[1] = noiseClouds(42, vec3(vec2(t.position[0], t.position[2]) * 0.15, time * 5e-8)) * 2 - 3;
-		}
+		updateThreads->run();
 	}
 
 	guiUpdate();
@@ -162,7 +179,7 @@ bool guiInit()
 			child.parent = panel->name();
 			child.order = 4;
 			GUI_GET_COMPONENT(sliderBar, c, con);
-			c.value = 1.f;
+			c.value = 0.5;
 		}
 	}
 
@@ -245,17 +262,22 @@ int main(int argc, char *args[])
 
 		window()->modeSetWindowed(windowFlags::Border | windowFlags::Resizeable);
 		window()->windowedSize(pointStruct(800, 600));
-		window()->title("cage test cpu performance (wave)");
+		window()->title("cage test cpu performance (automatic instancing)");
 		regenerate = true;
 
 		cameraController = newCameraController();
 		cameraController->movementSpeed = 0.1;
-		cameraController->mouseButton = mouseButtonsFlags::Middle;
+		cameraController->mouseButton = mouseButtonsFlags::Left;
 
 		holder<engineProfilingClass> engineProfiling = newEngineProfiling();
 
+		updateThreads = newThreadPool();
+		updateThreads->function.bind<&updateBoxes>();
+
 		engineStart();
 		engineFinalize();
+
+		updateThreads.clear();
 
 		cameraController.clear();
 

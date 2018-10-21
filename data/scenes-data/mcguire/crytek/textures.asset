@@ -1,6 +1,7 @@
 
 []
 scheme = texture
+flip_v = true
 textures/background.tga
 textures/chain_texture.tga
 textures/chain_texture_mask.png
@@ -12,12 +13,6 @@ textures/sponza_arch_diff.tga
 textures/sponza_arch_spec.tga
 textures/sponza_ceiling_a_diff.tga
 textures/sponza_ceiling_a_spec.tga
-textures/sponza_column_a_diff.tga
-textures/sponza_column_a_spec.tga
-textures/sponza_column_b_diff.tga
-textures/sponza_column_b_spec.tga
-textures/sponza_column_c_diff.tga
-textures/sponza_column_c_spec.tga
 textures/sponza_curtain_blue_diff.tga
 textures/sponza_curtain_diff.tga
 textures/sponza_curtain_green_diff.tga
@@ -42,19 +37,26 @@ textures/vase_plant_mask.png
 textures/vase_plant_spec.tga
 textures/vase_round.tga
 textures/vase_round_spec.tga
+textures/sponza_column_a_diff.tga
+textures/sponza_column_a_spec.tga
+textures/sponza_column_b_diff.tga
+textures/sponza_column_b_spec.tga
+textures/sponza_column_c_diff.tga
+textures/sponza_column_c_spec.tga
 
 []
 scheme = texture
-convert_normal = 3
+convert_normal = 1
+flip_v = true
 textures/background_bump.png
 textures/chain_texture_bump.png
 textures/lion2_bump.png
 textures/lion_bump.png
 textures/spnza_bricks_a_bump.png
 textures/sponza_arch_bump.png
-textures/sponza_column_a_bump.png
-textures/sponza_column_b_bump.png
-textures/sponza_column_c_bump.png
 textures/sponza_thorn_bump.png
 textures/vase_bump.png
 textures/vase_round_bump.png
+textures/sponza_column_a_bump.png
+textures/sponza_column_b_bump.png
+textures/sponza_column_c_bump.png

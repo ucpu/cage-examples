@@ -7,6 +7,6 @@ mramor6x6.png
 
 []
 scheme = texture
-convert_normal = 1.5
+convert_normal = 0.3
 kamen-bump.png
 mramor6x6-bump.png
