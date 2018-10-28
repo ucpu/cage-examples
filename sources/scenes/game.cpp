@@ -73,6 +73,8 @@ void sceneReload()
 		ENGINE_GET_COMPONENT(camera, c, cam);
 		c.ambientLight = vec3(0.1, 0.1, 0.1);
 		c.cameraOrder = 2;
+		c.near = 0.1;
+		c.far = 200;
 		c.clear = cameraClearFlags::None;
 		cameraController->setEntity(cam);
 	}

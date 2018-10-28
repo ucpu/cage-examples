@@ -14,6 +14,7 @@ using namespace cage;
 
 std::atomic<int> globalWindowIndex;
 bool globalClosing = false;
+holder<mutexClass> openglInitMut = newMutex();
 
 class windowTestClass
 {
@@ -24,7 +25,10 @@ public:
 		window = newWindow();
 		window->modeSetWindowed(windowFlags::Border | windowFlags::Resizeable);
 		window->windowedSize(pointStruct(400, 300));
-		detail::initializeOpengl();
+		{
+			scopeLock<mutexClass> l(openglInitMut);
+			detail::initializeOpengl();
+		}
 		window->title(string() + "window " + index);
 		listeners.attachAll(window.get());
 #define GCHL_GENERATE(N) listeners.N.bind<windowTestClass, &windowTestClass::N>(this);

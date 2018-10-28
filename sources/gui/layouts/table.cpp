@@ -172,6 +172,8 @@ public:
 				GUI_GET_COMPONENT(button, but, b);
 				GUI_GET_COMPONENT(text, t, b);
 				t.value = string("item ") + i;
+				GUI_GET_COMPONENT(explicitSize, size, b);
+				size.size = randomRange2(50, 250);
 			}
 		}
 	}

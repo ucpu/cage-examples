@@ -8,6 +8,7 @@
 #include <cage-client/core.h>
 #include <cage-client/window.h>
 #include <cage-client/engine.h>
+#include <cage-client/engineProfiling.h>
 #include <cage-client/highPerformanceGpuHint.h>
 
 using namespace cage;
@@ -17,32 +18,29 @@ static const float probInit = 0.05f;
 static const float probLoop = 0.001f;
 static const float probFinish = 0.1f;
 
-bool windowClose()
+void windowClose()
 {
 	fullStop = true;
 	engineStop();
-	return false;
 }
 
 void maybeThrow(float chance, uint32 index)
 {
 	if (randomChance() < chance)
-		CAGE_THROW_ERROR(codeException, "intentionally thrown exception", index);
+		CAGE_THROW_WARNING(codeException, "intentionally thrown exception", index);
 }
 
-bool controlInit()
+void controlInit()
 {
 	maybeThrow(probInit, 1);
-	return false;
 }
 
-bool controlFinish()
+void controlFinish()
 {
 	maybeThrow(probFinish, 2);
-	return false;
 }
 
-bool controlUpdate()
+void controlUpdate()
 {
 	uint64 time = currentControlTime();
 	entityManagerClass *ents = entities();
@@ -52,73 +50,61 @@ bool controlUpdate()
 		t.position = vec3(sin(rads(time * 1e-6)) * 10, cos(rads(time * 1e-6)) * 10, -20);
 	}
 	maybeThrow(probLoop, 3);
-	return false;
 }
 
-bool controlAssets()
+void controlAssets()
 {
 	maybeThrow(probLoop, 4);
-	return false;
 }
 
-bool prepareInit()
+void prepareInit()
 {
 	maybeThrow(probInit, 5);
-	return false;
 }
 
-bool prepareFinish()
+void prepareFinish()
 {
 	maybeThrow(probFinish, 6);
-	return false;
 }
 
-bool preparePrepare()
+void preparePrepare()
 {
 	maybeThrow(probLoop, 7);
-	return false;
 }
 
-bool dispatchInit()
+void dispatchInit()
 {
 	maybeThrow(probInit, 8);
-	return false;
 }
 
-bool dispatchFinish()
+void dispatchFinish()
 {
 	maybeThrow(probFinish, 9);
-	return false;
 }
 
-bool dispatchRender()
+void dispatchRender()
 {
 	maybeThrow(probLoop, 10);
-	return false;
 }
 
-bool dispatchSwap()
+void dispatchSwap()
 {
 	maybeThrow(probLoop, 11);
-	return false;
 }
 
-bool soundInit()
+void soundInit()
 {
 	maybeThrow(probInit, 12);
-	return false;
 }
 
-bool soundFinish()
+void soundFinish()
 {
 	maybeThrow(probFinish, 13);
-	return false;
 }
 
-bool soundSound()
+void soundSound()
 {
 	maybeThrow(probLoop, 14);
-	return false;
 }
 
 int main(int argc, char *args[])
@@ -136,7 +122,6 @@ int main(int argc, char *args[])
 
 		// config
 		configSetBool("cage-client.engine.renderMissingMeshes", true);
-		controlThread().timePerTick = 1000000 / 60;
 
 		// run
 		while (!fullStop)
@@ -144,23 +129,23 @@ int main(int argc, char *args[])
 			engineInitialize(engineCreateConfig());
 
 			// events
-#define GCHL_GENERATE(TYPE, FUNC, EVENT) eventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
-			GCHL_GENERATE((), controlUpdate, controlThread().update);
-			GCHL_GENERATE((), controlInit, controlThread().initialize);
-			GCHL_GENERATE((), controlFinish, controlThread().finalize);
-			GCHL_GENERATE((), controlAssets, controlThread().assets);
-			GCHL_GENERATE((), prepareInit, graphicsPrepareThread().initialize);
-			GCHL_GENERATE((), prepareFinish, graphicsPrepareThread().finalize);
-			GCHL_GENERATE((), preparePrepare, graphicsPrepareThread().prepare);
-			GCHL_GENERATE((), dispatchInit, graphicsDispatchThread().initialize);
-			GCHL_GENERATE((), dispatchFinish, graphicsDispatchThread().finalize);
-			GCHL_GENERATE((), dispatchRender, graphicsDispatchThread().render);
-			GCHL_GENERATE((), dispatchSwap, graphicsDispatchThread().swap);
-			GCHL_GENERATE((), soundInit, soundThread().initialize);
-			GCHL_GENERATE((), soundFinish, soundThread().finalize);
-			GCHL_GENERATE((), soundSound, soundThread().sound);
+#define GCHL_GENERATE(FUNC, EVENT) eventListener<void()> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
+			GCHL_GENERATE(controlUpdate, controlThread().update);
+			GCHL_GENERATE(controlInit, controlThread().initialize);
+			GCHL_GENERATE(controlFinish, controlThread().finalize);
+			GCHL_GENERATE(controlAssets, controlThread().assets);
+			GCHL_GENERATE(prepareInit, graphicsPrepareThread().initialize);
+			GCHL_GENERATE(prepareFinish, graphicsPrepareThread().finalize);
+			GCHL_GENERATE(preparePrepare, graphicsPrepareThread().prepare);
+			GCHL_GENERATE(dispatchInit, graphicsDispatchThread().initialize);
+			GCHL_GENERATE(dispatchFinish, graphicsDispatchThread().finalize);
+			GCHL_GENERATE(dispatchRender, graphicsDispatchThread().render);
+			GCHL_GENERATE(dispatchSwap, graphicsDispatchThread().swap);
+			GCHL_GENERATE(soundInit, soundThread().initialize);
+			GCHL_GENERATE(soundFinish, soundThread().finalize);
+			GCHL_GENERATE(soundSound, soundThread().sound);
 #undef GCHL_GENERATE
-			eventListener<bool()> windowCloseListener;
+			eventListener<void()> windowCloseListener;
 			windowCloseListener.bind<&windowClose>();
 			windowCloseListener.attach(window()->events.windowClose);
 
@@ -171,17 +156,17 @@ int main(int argc, char *args[])
 			{ // camera
 				entityClass *e = entities()->create(1);
 				ENGINE_GET_COMPONENT(transform, t, e);
-				(void)t;
 				ENGINE_GET_COMPONENT(camera, c, e);
 				c.ambientLight = vec3(1, 1, 1);
 			}
 			{ // box 1
 				entityClass *e = entities()->create(2);
 				ENGINE_GET_COMPONENT(transform, t, e);
-				(void)t;
 				ENGINE_GET_COMPONENT(render, r, e);
 				r.object = 1; // something non-existing
 			}
+
+			holder<engineProfilingClass> profiling = newEngineProfiling();
 
 			engineStart();
 			engineFinalize();
