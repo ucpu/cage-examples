@@ -3,6 +3,18 @@
 class guiTestImpl : public guiTestClass
 {
 
+	entityClass *envelopeInScrollbars(entityClass *e)
+	{
+		entityClass *r = gui()->entities()->createUnique();
+		GUI_GET_COMPONENT(parent, pr, r);
+		GUI_GET_COMPONENT(parent, pe, e);
+		pr = pe;
+		pe.parent = r->name();
+		pe.order = 0;
+		GUI_GET_COMPONENT(scrollbars, sc, r);
+		return r;
+	}
+
 	void initialize() override
 	{
 		entityManagerClass *ents = gui()->entities();
@@ -22,6 +34,7 @@ class guiTestImpl : public guiTestClass
 			p.parent = 3;
 			p.order = index++;
 			GUI_GET_COMPONENT(sliderBar, s, e);
+			envelopeInScrollbars(e);
 		}
 
 		{ // vertical
@@ -32,6 +45,7 @@ class guiTestImpl : public guiTestClass
 			p.order = index++;
 			GUI_GET_COMPONENT(sliderBar, s, e);
 			s.vertical = true;
+			envelopeInScrollbars(e);
 		}
 
 		{ // range
@@ -44,6 +58,7 @@ class guiTestImpl : public guiTestClass
 			s.min = 13;
 			s.max = 42;
 			s.value = 21;
+			envelopeInScrollbars(e);
 		}
 	}
 

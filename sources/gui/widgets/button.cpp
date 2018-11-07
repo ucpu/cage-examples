@@ -39,7 +39,7 @@ class guiTestImpl : public guiTestClass
 				p.parent = layout->name();
 				p.order = index++;
 				GUI_GET_COMPONENT(button, b, e);
-				b.allowMerging = true;
+				//b.allowMerging = true;
 				GUI_GET_COMPONENT(text, t, e);
 				t.value = i;
 			}
@@ -59,7 +59,7 @@ class guiTestImpl : public guiTestClass
 				p.parent = layout->name();
 				p.order = index++;
 				GUI_GET_COMPONENT(button, b, e);
-				b.allowMerging = true;
+				//b.allowMerging = true;
 				GUI_GET_COMPONENT(text, t, e);
 				t.value = i;
 			}

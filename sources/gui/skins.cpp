@@ -27,6 +27,7 @@ public:
 		case 0: // margins
 			skin.defaults.button.margin = a4;
 			skin.defaults.checkBox.margin = a4;
+			skin.defaults.radioBox.margin = a4;
 			skin.defaults.colorPicker.margin = a4;
 			skin.defaults.comboBox.baseMargin = a4;
 			skin.defaults.panel.baseMargin = a4;
@@ -77,6 +78,7 @@ public:
 				"margins",
 				"borders",
 				"paddings",
+				"none",
 			};
 			for (uint32 i = 0; i < sizeof(options)/sizeof(options[0]); i++)
 			{
@@ -154,6 +156,9 @@ public:
 				p.order = index++;
 				GUI_GET_COMPONENT(input, input, e);
 				input.type = inputTypeEnum::Real;
+				input.min.f = -5;
+				input.max.f = 5;
+				input.step.f = 0.1;
 				GUI_GET_COMPONENT(text, text, e);
 				text.value = "real input box";
 			}
@@ -165,6 +170,15 @@ public:
 				GUI_GET_COMPONENT(checkBox, box, e);
 				GUI_GET_COMPONENT(text, text, e);
 				text.value = "checkbox";
+			}
+			{ // radiobox
+				entityClass *e = ents->createUnique();
+				GUI_GET_COMPONENT(parent, p, e);
+				p.parent = side;
+				p.order = index++;
+				GUI_GET_COMPONENT(radioBox, box, e);
+				GUI_GET_COMPONENT(text, text, e);
+				text.value = "radiobox";
 			}
 			{ // combo box
 				entityClass *e = ents->createUnique();
