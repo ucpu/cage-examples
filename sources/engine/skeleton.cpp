@@ -18,11 +18,21 @@
 #include <cage-client/highPerformanceGpuHint.h>
 
 using namespace cage;
+
 static const uint32 assetsName = hashString("cage-tests/skeletons/skeletons.pack");
+
+configBool renderSkeletonBones("cage-client.engine.renderSkeletonBones", true);
 
 bool windowClose()
 {
 	engineStop();
+	return false;
+}
+
+bool keyPress(uint32 b, uint32, modifiersFlags modifiers)
+{
+	if (b == 32)
+		renderSkeletonBones = !renderSkeletonBones;
 	return false;
 }
 
@@ -46,6 +56,7 @@ int main(int argc, char *args[])
 		// events
 #define GCHL_GENERATE(TYPE, FUNC, EVENT) eventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
 		GCHL_GENERATE((), windowClose, window()->events.windowClose);
+		GCHL_GENERATE((uint32, uint32, modifiersFlags), keyPress, window()->events.keyPress);
 		GCHL_GENERATE((), update, controlThread().update);
 #undef GCHL_GENERATE
 
