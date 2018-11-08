@@ -78,9 +78,15 @@ int main(int argc, char *args[])
 				ENGINE_GET_COMPONENT(animatedSkeleton, s, e);
 				s.name = animation;
 				ENGINE_GET_COMPONENT(transform, t, e);
-				t.position = vec3(i * 3 - 3.f, 0, 3);
-				t.scale = 0.01;
+				t.position = vec3(i * 3 - 4.5f, 0, 3);
 				i++;
+			}
+			{
+				entityClass *e = ents->create(1 + i);
+				ENGINE_GET_COMPONENT(render, r, e);
+				r.object = hashString("cage-tests/skeletons/lemur/lemur.x");
+				ENGINE_GET_COMPONENT(transform, t, e);
+				t.position = vec3(i * 3 - 4.5f, 0, 3);
 			}
 		}
 		{ // cylinders
@@ -94,9 +100,15 @@ int main(int argc, char *args[])
 				ENGINE_GET_COMPONENT(animatedSkeleton, s, e);
 				s.name = animation;
 				ENGINE_GET_COMPONENT(transform, t, e);
-				t.position = vec3(i * 3 - 1.5f, 0, 0);
-				t.scale = 0.5;
+				t.position = vec3(i * 3 - 3.f, 0, 0);
 				i++;
+			}
+			{
+				entityClass *e = ents->create(10 + i);
+				ENGINE_GET_COMPONENT(render, r, e);
+				r.object = hashString("cage-tests/skeletons/cylinder/cylinder.x");
+				ENGINE_GET_COMPONENT(transform, t, e);
+				t.position = vec3(i * 3 - 3.f, 0, 0);
 			}
 		}
 		{ // monks
@@ -110,8 +122,15 @@ int main(int argc, char *args[])
 				ENGINE_GET_COMPONENT(animatedSkeleton, s, e);
 				s.name = animation;
 				ENGINE_GET_COMPONENT(transform, t, e);
-				t.position = vec3(i * 3 - 3.f, 0, -3);
+				t.position = vec3(i * 3 - 4.5f, 0, -3);
 				i++;
+			}
+			{
+				entityClass *e = ents->create(20 + i);
+				ENGINE_GET_COMPONENT(render, r, e);
+				r.object = hashString("cage-tests/skeletons/monk/monk.object");
+				ENGINE_GET_COMPONENT(transform, t, e);
+				t.position = vec3(i * 3 - 4.5f, 0, -3);
 			}
 		}
 		{ // floor
@@ -124,7 +143,7 @@ int main(int argc, char *args[])
 		{ // sun
 			entityClass *e = ents->create(101);
 			ENGINE_GET_COMPONENT(transform, t, e);
-			t.orientation = quat(degs(-50), degs(42), degs());
+			t.orientation = quat(degs(-50), degs(-42 + 180), degs());
 			ENGINE_GET_COMPONENT(light, l, e);
 			l.lightType = lightTypeEnum::Directional;
 			ENGINE_GET_COMPONENT(shadowmap, s, e);

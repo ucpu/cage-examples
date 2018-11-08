@@ -5,16 +5,24 @@ lemur.x?AttackMelee
 lemur.x?Default_Action
 lemur.x?idle
 lemur.x?run
+
 []
 scheme = mesh
 export_bones = true
+axes = +x-z+y
+scale = 0.01
 lemur.x
+
 []
 scheme = skeleton
+axes = +x-z+y
+scale = 0.01
 lemur.x;skeleton
+
 []
 scheme = texture
 lemurT.png
+
 []
 scheme = pack
 lemur.pack

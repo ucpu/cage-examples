@@ -9,18 +9,24 @@ monk.x?Sad
 monk.x?Sleep
 monk.x?TortureFire
 monk.x?Walk
+
 []
 scheme = mesh
 export_bones = true
+axes = +x-z+y
 monk.x?Monk_MonkBody
 monk.x?Monk_MonkHair
 monk.x?Monk_MonkHead
+
 []
 scheme = skeleton
+axes = +x-z+y
 monk.x;skeleton
+
 []
 scheme = pack
 monk.pack
+
 []
 scheme = object
 monk.object
