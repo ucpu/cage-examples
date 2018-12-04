@@ -106,7 +106,7 @@ void sceneReload()
 		ls.color = vec3(1, 1, 1) * 0.5;
 		ls.lightType = lightTypeEnum::Directional;
 		ENGINE_GET_COMPONENT(shadowmap, ss, directionalLights[i]);
-		ss.worldRadius = vec3(35, 35, 35);
+		ss.worldSize = vec3(35, 35, 35);
 		ss.resolution = 512;
 	}
 	for (int i = 0; i < pointLightsCount; i++)

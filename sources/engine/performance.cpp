@@ -82,7 +82,7 @@ bool update()
 			if (shadowEnabled)
 			{
 				ENGINE_GET_COMPONENT(shadowmap, s, e);
-				s.worldRadius = vec3(20, 20, 20);
+				s.worldSize = vec3(20, 20, 20);
 				s.resolution = 1024;
 			}
 		}

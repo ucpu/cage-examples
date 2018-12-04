@@ -207,7 +207,7 @@ int main(int argc, char *args[])
 			l.spotExponent = 2;
 			ENGINE_GET_COMPONENT(shadowmap, s, e);
 			s.resolution = 1024;
-			s.worldRadius = vec3(3, 20, 0);
+			s.worldSize = vec3(3, 20, 0);
 		}
 		{ // camera
 			entityClass *e = ents->create(10);

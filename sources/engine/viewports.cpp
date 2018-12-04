@@ -141,7 +141,7 @@ void regenerate()
 		l.color = vec3(1, 1, 1) * 0.9;
 		ENGINE_GET_COMPONENT(shadowmap, s, e);
 		s.resolution = 512;
-		s.worldRadius = vec3(50, 50, 50);
+		s.worldSize = vec3(50, 50, 50);
 	}
 }
 
