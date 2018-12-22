@@ -5,4 +5,6 @@
 CMakeLists.txt.user
 *.blend*
 !*.blend
+!*.blend*.cpm
+
 
