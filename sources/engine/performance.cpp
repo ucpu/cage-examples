@@ -21,6 +21,7 @@ using namespace cage;
 
 holder<cameraControllerClass> cameraController;
 holder<threadPoolClass> updateThreads;
+holder<noiseClass> noise;
 uint32 boxesCount;
 real cameraRange;
 bool shadowEnabled;
@@ -50,7 +51,7 @@ void updateBoxes(uint32 thrIndex, uint32 thrCount)
 	{
 		entityClass *e = boxesEntities[i];
 		ENGINE_GET_COMPONENT(transform, t, e);
-		t.position[1] = noiseClouds(42, vec3(vec2(t.position[0], t.position[2]) * 0.15, time * 5e-8)) * 2 - 3;
+		t.position[1] = noise->evaluate(vec3(vec2(t.position[0], t.position[2]) * 0.15, time * 5e-8)) - 2;
 	}
 }
 
@@ -273,6 +274,13 @@ int main(int argc, char *args[])
 
 		updateThreads = newThreadPool();
 		updateThreads->function.bind<&updateBoxes>();
+
+		{
+			noiseCreateConfig cfg;
+			cfg.type = noiseTypeEnum::Cellular;
+			cfg.operation = noiseOperationEnum::Divide;
+			noise = newNoise(cfg);
+		}
 
 		engineStart();
 		engineFinalize();
