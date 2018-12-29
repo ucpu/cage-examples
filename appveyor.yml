@@ -30,5 +30,5 @@ build:
   project: c:\project\build\cage-examples.sln
 
 test_script:
-  - c:\project\build\result\%CONFIGURATION%\cage-asset-database.exe
-
+  - if "%CONFIGURATION%"=="RelWithDebInfo" c:\project\build\result\%CONFIGURATION%\cage-asset-database.exe
+# converting all assets takes too long in debug builds
