@@ -71,11 +71,12 @@ void sceneReload()
 		ENGINE_GET_COMPONENT(transform, t, cam);
 		t.position = vec3(0, 10, 30);;
 		ENGINE_GET_COMPONENT(camera, c, cam);
-		c.ambientLight = vec3(0.1, 0.1, 0.1);
+		c.ambientLight = vec3(0.2, 0.2, 0.2);
 		c.cameraOrder = 2;
 		c.near = 0.1;
 		c.far = 200;
 		c.clear = cameraClearFlags::None;
+		c.effects |= cameraEffectsFlags::AmbientOcclusion | cameraEffectsFlags::MotionBlur | cameraEffectsFlags::AntiAliasing;
 		cameraController->setEntity(cam);
 	}
 	{ // skybox
@@ -107,7 +108,7 @@ void sceneReload()
 		ls.lightType = lightTypeEnum::Directional;
 		ENGINE_GET_COMPONENT(shadowmap, ss, directionalLights[i]);
 		ss.worldSize = vec3(35, 35, 35);
-		ss.resolution = 512;
+		ss.resolution = 1024;
 	}
 	for (int i = 0; i < pointLightsCount; i++)
 	{ // point lights

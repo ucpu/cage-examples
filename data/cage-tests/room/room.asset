@@ -100,7 +100,6 @@ room.obj?windowframe_windowframe
 []
 scheme = texture
 apple.jpg
-door.tif
 eye.png
 floor.jpg
 magazine1.jpg
@@ -115,6 +114,11 @@ setopbox.jpg
 skybox.jpg
 tvscreen.jpg
 wallpaper.jpg
+
+[]
+scheme = texture
+convert_normal = 1
+door.tif
 
 []
 scheme = pack

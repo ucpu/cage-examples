@@ -159,6 +159,7 @@ int main(int argc, char *args[])
 			c.ambientLight = vec3(0.1, 0.1, 0.1);
 			c.near = 0.1;
 			c.far = 100;
+			c.effects |= cameraEffectsFlags::AmbientOcclusion | cameraEffectsFlags::MotionBlur | cameraEffectsFlags::AntiAliasing;
 		}
 
 		holder<cameraControllerClass> cameraController = newCameraController(ents->get(102));

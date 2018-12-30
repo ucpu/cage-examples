@@ -1,0 +1,7 @@
+[base]
+albedo = 0.348421, 0.044065, 0.496908
+roughness = 0.144249
+
+[flags]
+two-sided
+

@@ -217,6 +217,7 @@ int main(int argc, char *args[])
 			ENGINE_GET_COMPONENT(camera, c, e);
 			c.near = 0.1;
 			c.far = 150;
+			c.effects |= cameraEffectsFlags::AmbientOcclusion | cameraEffectsFlags::MotionBlur | cameraEffectsFlags::AntiAliasing;
 		}
 
 		holder<cameraControllerClass> cameraController = newCameraController(ents->get(10));

@@ -69,7 +69,8 @@ bool update()
 			ENGINE_GET_COMPONENT(transform, t, e);
 			t.orientation = quat(degs(-30), degs(), degs());
 			ENGINE_GET_COMPONENT(camera, c, e);
-			c.ambientLight = vec3(1, 1, 1) * 0.1;
+			c.ambientLight = vec3(1, 1, 1) * 0.2;
+			c.effects |= cameraEffectsFlags::AmbientOcclusion | cameraEffectsFlags::MotionBlur | cameraEffectsFlags::AntiAliasing;
 			cameraController->setEntity(e);
 		}
 
@@ -79,7 +80,7 @@ bool update()
 			t.orientation = quat(degs(-30), degs(-110), degs());
 			ENGINE_GET_COMPONENT(light, l, e);
 			l.lightType = lightTypeEnum::Directional;
-			l.color = vec3(1, 1, 1) * 0.9;
+			l.color = vec3(1, 1, 1) * 0.8;
 			if (shadowEnabled)
 			{
 				ENGINE_GET_COMPONENT(shadowmap, s, e);

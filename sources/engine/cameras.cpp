@@ -112,6 +112,7 @@ int main(int argc, char *args[])
 			c.far = 100;
 			c.cameraOrder = 3;
 			c.renderMask = 1;
+			c.effects |= cameraEffectsFlags::AmbientOcclusion | cameraEffectsFlags::MotionBlur | cameraEffectsFlags::AntiAliasing;
 			ENGINE_GET_COMPONENT(render, r, e);
 			r.object = hashString("cage-tests/room/eye.obj");
 			r.renderMask = 2;
@@ -146,6 +147,8 @@ int main(int argc, char *args[])
 			c.far = 100;
 			c.cameraOrder = 2;
 			c.renderMask = 2;
+			c.effects |= cameraEffectsFlags::AmbientOcclusion;
+			c.effects |= cameraEffectsFlags::MotionBlur;
 		}
 		holder<cameraControllerClass> cameraController = newCameraController(eye);
 		cameraController->mouseButton = mouseButtonsFlags::Left;
