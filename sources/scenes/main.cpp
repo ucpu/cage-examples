@@ -13,6 +13,12 @@ void updateFinalize();
 
 int main(int argc, const char *args[])
 {
+	// log to console
+	holder<loggerClass> log1 = newLogger();
+	log1->filter.bind<logFilterPolicyPass>();
+	log1->format.bind<logFormatPolicyConsole>();
+	log1->output.bind<logOutputPolicyStdOut>();
+
 	engineInitialize(engineCreateConfig());
 	cameraInitialize();
 

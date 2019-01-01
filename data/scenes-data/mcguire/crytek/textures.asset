@@ -4,7 +4,6 @@ scheme = texture
 flip_v = true
 textures/background.tga
 textures/chain_texture.tga
-textures/chain_texture_mask.png
 textures/gi_flag.tga
 textures/lion.tga
 textures/spnza_bricks_a_diff.tga
@@ -28,12 +27,10 @@ textures/sponza_floor_a_diff.tga
 textures/sponza_floor_a_spec.tga
 textures/sponza_roof_diff.tga
 textures/sponza_thorn_diff.tga
-textures/sponza_thorn_mask.png
 textures/sponza_thorn_spec.tga
 textures/vase_dif.tga
 textures/vase_hanging.tga
 textures/vase_plant.tga
-textures/vase_plant_mask.png
 textures/vase_plant_spec.tga
 textures/vase_round.tga
 textures/vase_round_spec.tga
@@ -46,8 +43,13 @@ textures/sponza_column_c_spec.tga
 
 []
 scheme = texture
+textures/chain_texture_mask.png
+textures/sponza_thorn_mask.png
+textures/vase_plant_mask.png
+
+[]
+scheme = texture
 convert_normal = 1
-flip_v = true
 textures/background_bump.png
 textures/chain_texture_bump.png
 textures/lion2_bump.png
