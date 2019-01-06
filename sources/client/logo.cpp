@@ -66,7 +66,7 @@ int main(int argc, char *args[])
 		// fetch assets
 		meshClass *mesh = assets->get<assetSchemeIndexMesh, meshClass>(hashString("cage/mesh/square.obj"));
 		textureClass *texture = assets->get<assetSchemeIndexTexture, textureClass>(hashString("cage-tests/logo/logo.png"));
-		shaderClass *shader = assets->get<assetSchemeIndexShader, shaderClass>(hashString("cage/shader/blitColor.glsl"));
+		shaderClass *shader = assets->get<assetSchemeIndexShader, shaderClass>(hashString("cage/shader/engine/blit.glsl"));
 		sourceClass *source = assets->get<assetSchemeIndexSound, sourceClass>(hashString("cage-tests/logo/logo.ogg"));
 
 		{

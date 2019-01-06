@@ -55,7 +55,7 @@ void sceneReload()
 			ENGINE_GET_COMPONENT(transform, ts, e);
 			string posLine;
 			f->readLine(posLine);
-			ts.position = vec3(posLine);
+			ts.position = vec3::parse(posLine);
 			string rotLine;
 			f->readLine(rotLine);
 			ts.orientation = quat(rads(), rads(rotLine.toFloat()), rads());
@@ -71,12 +71,12 @@ void sceneReload()
 		ENGINE_GET_COMPONENT(transform, t, cam);
 		t.position = vec3(0, 10, 30);;
 		ENGINE_GET_COMPONENT(camera, c, cam);
-		c.ambientLight = vec3(0.2, 0.2, 0.2);
+		c.ambientLight = vec3(1,1,1) * 0.1;
 		c.cameraOrder = 2;
 		c.near = 0.1;
 		c.far = 200;
 		c.clear = cameraClearFlags::None;
-		c.effects |= cameraEffectsFlags::AmbientOcclusion | cameraEffectsFlags::MotionBlur | cameraEffectsFlags::AntiAliasing;
+		c.effects = cameraEffectsFlags::FinalPass;
 		cameraController->setEntity(cam);
 	}
 	{ // skybox
@@ -107,8 +107,8 @@ void sceneReload()
 		ls.color = vec3(1, 1, 1) * 0.5;
 		ls.lightType = lightTypeEnum::Directional;
 		ENGINE_GET_COMPONENT(shadowmap, ss, directionalLights[i]);
-		ss.worldSize = vec3(35, 35, 35);
-		ss.resolution = 1024;
+		ss.worldSize = vec3(50, 50, 50);
+		ss.resolution = 2048;
 	}
 	for (int i = 0; i < pointLightsCount; i++)
 	{ // point lights
@@ -117,7 +117,6 @@ void sceneReload()
 		ts.position = (vec3(randomChance(), randomChance(), randomChance()) * 2 - 1) * 15;
 		ENGINE_GET_COMPONENT(light, ls, pointLights[i]);
 		ls.color = convertHsvToRgb(vec3(randomChance(), 1, 1));
-		ls.attenuation = vec3(0.3, 0, 4);
 		ls.lightType = lightTypeEnum::Point;
 		//ENGINE_GET_COMPONENT(shadowmap, ss, pointLights[i]);
 		//ss.worldRadius = vec3(35, 35, 35);

@@ -109,13 +109,13 @@ void initializeGui()
 			GUI_GET_COMPONENT(layoutLine, l, panel);
 			l.vertical = true;
 		}
-		initializeGuiColors(panel->name(), 27, vec3(0, 0, 0.5));
+		initializeGuiColors(panel->name(), 27, vec3(0, 0, 0.02));
 	}
 
 	vec3 colors[3] = {
-		vec3(0.00, 1, 0.4),
-		vec3(0.33, 1, 0.4),
-		vec3(0.66, 1, 0.4)
+		vec3(0.11, 0.95, 0.8),
+		vec3(0.44, 0.95, 0.8),
+		vec3(0.77, 0.95, 0.8)
 	};
 	real pitches[3] = { 0.25 * 90, 0.3 * 90, 0.55 * 90 };
 	real yaws[3] = { 0.1 * 360, 0.2 * 360, 0.6 * 360 };
@@ -187,6 +187,7 @@ int main(int argc, char *args[])
 			ENGINE_GET_COMPONENT(render, r, e);
 			r.object = hashString("cage-tests/bottle/other.obj?plane");
 			ENGINE_GET_COMPONENT(transform, t, e);
+			t.scale = 5;
 			(void)t;
 		}
 		{ // bottle
@@ -194,7 +195,7 @@ int main(int argc, char *args[])
 			ENGINE_GET_COMPONENT(render, r, e);
 			r.object = hashString("cage-tests/bottle/bottle.obj");
 			ENGINE_GET_COMPONENT(transform, t, e);
-			(void)t;
+			t.position += vec3(1, 0, 0);
 		}
 		for (uint32 i = 0; i < 3; i++)
 		{ // spot lights
@@ -204,10 +205,10 @@ int main(int argc, char *args[])
 			ENGINE_GET_COMPONENT(light, l, e);
 			l.lightType = lightTypeEnum::Spot;
 			l.spotAngle = degs(40);
-			l.spotExponent = 2;
+			l.spotExponent = 40;
 			ENGINE_GET_COMPONENT(shadowmap, s, e);
-			s.resolution = 1024;
-			s.worldSize = vec3(3, 20, 0);
+			s.resolution = 512;
+			s.worldSize = vec3(3, 50, 0);
 		}
 		{ // camera
 			entityClass *e = ents->create(10);
@@ -217,7 +218,7 @@ int main(int argc, char *args[])
 			ENGINE_GET_COMPONENT(camera, c, e);
 			c.near = 0.1;
 			c.far = 150;
-			c.effects |= cameraEffectsFlags::AmbientOcclusion | cameraEffectsFlags::MotionBlur | cameraEffectsFlags::AntiAliasing;
+			c.effects = cameraEffectsFlags::FinalPass;
 		}
 
 		holder<cameraControllerClass> cameraController = newCameraController(ents->get(10));

@@ -9,6 +9,7 @@ rangeWeapon.obj
 
 []
 scheme = texture
+degamma_on = true
 albedo.psd
 
 []

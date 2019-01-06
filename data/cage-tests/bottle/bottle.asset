@@ -23,6 +23,10 @@ other.obj?plane
 
 []
 scheme = texture
+degamma_on = true
 albedo.png
+
+[]
+scheme = texture
 normal.png
 special.png

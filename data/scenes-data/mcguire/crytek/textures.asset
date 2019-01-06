@@ -2,6 +2,7 @@
 []
 scheme = texture
 flip_v = true
+degamma_on = true
 textures/background.tga
 textures/chain_texture.tga
 textures/gi_flag.tga

@@ -112,7 +112,7 @@ int main(int argc, char *args[])
 			}
 		}
 		{ // monks
-			uint32 animations[] = { hashString("cage-tests/skeletons/monk/monk.x?Attack1"), hashString("cage-tests/skeletons/monk/monk.x?Dance"), hashString("cage-tests/skeletons/monk/monk.x?Walk") };
+			uint32 animations[] = { hashString("cage-tests/skeletons/monk/monk.x?Attack1"), hashString("cage-tests/skeletons/monk/monk.x?Dance"), hashString("cage-tests/skeletons/monk/monk.x?Die") };
 			uint32 i = 0;
 			for (uint32 animation : animations)
 			{
@@ -146,9 +146,10 @@ int main(int argc, char *args[])
 			t.orientation = quat(degs(-50), degs(-42 + 180), degs());
 			ENGINE_GET_COMPONENT(light, l, e);
 			l.lightType = lightTypeEnum::Directional;
+			l.color = vec3(1, 1, 1) * 0.5;
 			ENGINE_GET_COMPONENT(shadowmap, s, e);
-			s.resolution = 4096;
-			s.worldSize = vec3(15, 15, 15);
+			s.resolution = 2048;
+			s.worldSize = vec3(12, 12, 10);
 		}
 		{ // camera
 			entityClass *e = ents->create(102);
@@ -156,10 +157,10 @@ int main(int argc, char *args[])
 			t.position = vec3(0, 5, 10);
 			t.orientation = quat(degs(-10), degs(), degs());
 			ENGINE_GET_COMPONENT(camera, c, e);
-			c.ambientLight = vec3(0.1, 0.1, 0.1);
+			c.ambientLight = vec3(1, 1, 1) * 0.02;
 			c.near = 0.1;
 			c.far = 100;
-			c.effects |= cameraEffectsFlags::AmbientOcclusion | cameraEffectsFlags::MotionBlur | cameraEffectsFlags::AntiAliasing;
+			c.effects = cameraEffectsFlags::FinalPass;
 		}
 
 		holder<cameraControllerClass> cameraController = newCameraController(ents->get(102));

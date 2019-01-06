@@ -125,6 +125,7 @@ void regenerate()
 		case 2: // rotating
 			break;
 		}
+		c.effects = cameraEffectsFlags::FinalPass;
 	}
 
 	letter('C', vec3(-3, 0, +0) * 10);

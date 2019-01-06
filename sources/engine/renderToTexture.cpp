@@ -33,8 +33,9 @@ bool windowClose()
 bool graphicsInitialize()
 {
 	fabScreenTex = newTexture(window());
-	fabScreenTex->image2d(800, 500, GL_RGB8, GL_RGB, GL_BYTE, nullptr);
+	fabScreenTex->image2d(1000, 600, GL_RGB16F);
 	fabScreenTex->filters(GL_LINEAR, GL_LINEAR, 0);
+	fabScreenTex->wraps(GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);
 	assets()->set<assetSchemeIndexTexture>(screenName, fabScreenTex.get());
 	{
 		entityClass *e = entities()->get(4);
@@ -107,12 +108,13 @@ int main(int argc, char *args[])
 			ENGINE_GET_COMPONENT(transform, t, e);
 			t.position = vec3(0, 1.7, 0);
 			ENGINE_GET_COMPONENT(camera, c, e);
-			c.ambientLight = vec3(1, 1, 1);
+			c.ambientLight = vec3(1, 1, 1) * 0.6;
 			c.near = 0.2;
 			c.far = 100;
 			c.cameraOrder = 3;
 			c.renderMask = 1;
-			c.effects |= cameraEffectsFlags::AmbientOcclusion | cameraEffectsFlags::MotionBlur | cameraEffectsFlags::AntiAliasing;
+			c.effects = cameraEffectsFlags::FinalPass;
+			c.ssao.worldRadius = 0.3;
 			ENGINE_GET_COMPONENT(render, r, e);
 			r.object = hashString("cage-tests/room/eye.obj");
 			r.renderMask = 2;
@@ -147,8 +149,8 @@ int main(int argc, char *args[])
 			c.far = 100;
 			c.cameraOrder = 2;
 			c.renderMask = 2;
-			c.effects |= cameraEffectsFlags::AmbientOcclusion;
-			c.effects |= cameraEffectsFlags::MotionBlur;
+			c.effects = cameraEffectsFlags::IntermediatePass;
+			c.ssao.worldRadius = 0.3;
 		}
 		holder<cameraControllerClass> cameraController = newCameraController(eye);
 		cameraController->mouseButton = mouseButtonsFlags::Left;

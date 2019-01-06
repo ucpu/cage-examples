@@ -10,6 +10,7 @@ ground.obj
 
 []
 scheme = texture
+degamma_on = true
 ground.jpg;d
 
 []
@@ -23,6 +24,7 @@ skybox.obj
 
 []
 scheme = texture
+degamma_on = true
 target = GL_TEXTURE_2D_ARRAY
 animation_duration = 10000000
 skyboxes/$.png

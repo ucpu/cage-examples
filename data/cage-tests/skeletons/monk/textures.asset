@@ -1,7 +1,12 @@
+
 []
 scheme = texture
+degamma_on = true
 hair-skin.png
-monk-tuc-body-norm512.png
 monk-tuc-body-skin.png
-monk-tuc-head-norm512.png
 monk-tuc-head-skin.png
+
+[]
+scheme = texture
+monk-tuc-body-norm512.png
+monk-tuc-head-norm512.png

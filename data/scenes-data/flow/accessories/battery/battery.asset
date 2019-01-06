@@ -9,7 +9,11 @@ battery.obj
 
 []
 scheme = texture
+degamma_on = true
 albedo.psd
+
+[]
+scheme = texture
 special.psd
 
 []

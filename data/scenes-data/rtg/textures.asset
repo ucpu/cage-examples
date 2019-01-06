@@ -1,6 +1,7 @@
 
 []
 scheme = texture
+degamma_on = true
 Asteroid1.png
 Bridge.png
 Character.png

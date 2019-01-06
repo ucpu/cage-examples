@@ -9,6 +9,7 @@ heavyWeapon.obj
 
 []
 scheme = texture
+degamma_on = true
 albedo.psd
 
 []

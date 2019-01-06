@@ -99,6 +99,7 @@ room.obj?windowframe_windowframe
 
 []
 scheme = texture
+degamma_on = true
 apple.jpg
 eye.png
 floor.jpg
