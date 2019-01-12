@@ -74,7 +74,6 @@ int main(int argc, char *args[])
 			mesh->bind();
 			texture->bind();
 			shader->bind();
-			shader->uniform(0, vec4(0, 0, 1, 1));
 
 			// initialize sounds
 			holder<speakerClass> speaker = newSpeaker(sl.get(), speakerCreateConfig(), "cage");

@@ -146,7 +146,7 @@ int main(int argc, char *args[])
 			t.orientation = quat(degs(-50), degs(-42 + 180), degs());
 			ENGINE_GET_COMPONENT(light, l, e);
 			l.lightType = lightTypeEnum::Directional;
-			l.color = vec3(1, 1, 1) * 0.5;
+			l.color = vec3(1, 1, 1) * 5;
 			ENGINE_GET_COMPONENT(shadowmap, s, e);
 			s.resolution = 2048;
 			s.worldSize = vec3(12, 12, 10);
@@ -160,7 +160,7 @@ int main(int argc, char *args[])
 			c.ambientLight = vec3(1, 1, 1) * 0.02;
 			c.near = 0.1;
 			c.far = 100;
-			c.effects = cameraEffectsFlags::FinalPass;
+			c.effects = cameraEffectsFlags::CombinedPass;
 		}
 
 		holder<cameraControllerClass> cameraController = newCameraController(ents->get(102));

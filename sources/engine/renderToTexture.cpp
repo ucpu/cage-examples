@@ -113,7 +113,7 @@ int main(int argc, char *args[])
 			c.far = 100;
 			c.cameraOrder = 3;
 			c.renderMask = 1;
-			c.effects = cameraEffectsFlags::FinalPass;
+			c.effects = cameraEffectsFlags::CombinedPass;
 			c.ssao.worldRadius = 0.3;
 			ENGINE_GET_COMPONENT(render, r, e);
 			r.object = hashString("cage-tests/room/eye.obj");
@@ -149,7 +149,7 @@ int main(int argc, char *args[])
 			c.far = 100;
 			c.cameraOrder = 2;
 			c.renderMask = 2;
-			c.effects = cameraEffectsFlags::IntermediatePass;
+			c.effects = cameraEffectsFlags::GeometryPass;
 			c.ssao.worldRadius = 0.3;
 		}
 		holder<cameraControllerClass> cameraController = newCameraController(eye);

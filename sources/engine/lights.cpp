@@ -206,6 +206,7 @@ int main(int argc, char *args[])
 			l.lightType = lightTypeEnum::Spot;
 			l.spotAngle = degs(40);
 			l.spotExponent = 40;
+			l.attenuation = vec3(1, 0, 0.005);
 			ENGINE_GET_COMPONENT(shadowmap, s, e);
 			s.resolution = 512;
 			s.worldSize = vec3(3, 50, 0);
@@ -217,8 +218,8 @@ int main(int argc, char *args[])
 			t.orientation = quat(degs(-10), degs(), degs());
 			ENGINE_GET_COMPONENT(camera, c, e);
 			c.near = 0.1;
-			c.far = 150;
-			c.effects = cameraEffectsFlags::FinalPass;
+			c.far = 300;
+			c.effects = cameraEffectsFlags::CombinedPass;
 		}
 
 		holder<cameraControllerClass> cameraController = newCameraController(ents->get(10));

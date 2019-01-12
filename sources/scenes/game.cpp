@@ -76,7 +76,7 @@ void sceneReload()
 		c.near = 0.1;
 		c.far = 200;
 		c.clear = cameraClearFlags::None;
-		c.effects = cameraEffectsFlags::FinalPass;
+		c.effects = cameraEffectsFlags::CombinedPass;
 		cameraController->setEntity(cam);
 	}
 	{ // skybox
@@ -104,7 +104,7 @@ void sceneReload()
 		ENGINE_GET_COMPONENT(transform, ts, directionalLights[i]);
 		ts.orientation = quat(degs(randomChance() * -20 - 30), degs(i * 360.0f / (float)directionalLightsCount + randomChance() * 180 / (float)directionalLightsCount), degs());
 		ENGINE_GET_COMPONENT(light, ls, directionalLights[i]);
-		ls.color = vec3(1, 1, 1) * 0.5;
+		ls.color = vec3(1, 1, 1) * 2.5;
 		ls.lightType = lightTypeEnum::Directional;
 		ENGINE_GET_COMPONENT(shadowmap, ss, directionalLights[i]);
 		ss.worldSize = vec3(50, 50, 50);

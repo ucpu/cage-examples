@@ -70,7 +70,7 @@ bool update()
 			t.orientation = quat(degs(-30), degs(), degs());
 			ENGINE_GET_COMPONENT(camera, c, e);
 			c.ambientLight = vec3(1, 1, 1) * 0.01;
-			c.effects = cameraEffectsFlags::FinalPass;
+			c.effects = cameraEffectsFlags::CombinedPass;
 			cameraController->setEntity(e);
 		}
 

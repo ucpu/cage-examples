@@ -34,7 +34,7 @@ void controlInit()
 		(void)t;
 		ENGINE_GET_COMPONENT(camera, c, e);
 		c.ambientLight = vec3(1, 1, 1);
-		c.effects = cameraEffectsFlags::FinalPass;
+		c.effects = cameraEffectsFlags::CombinedPass;
 	}
 	{ // box 1
 		entityClass *e = ents->create(2);
