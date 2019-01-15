@@ -10,7 +10,7 @@ tree.obj?Ranges
 
 []
 scheme = texture
-degamma_on = true
+srgb = true
 bark.jpg
 leaves.png
 

@@ -1,7 +1,7 @@
 
 []
 scheme = texture
-degamma_on = true
+srgb = true
 kamen.png
 KAMEN-stup.png
 mramor6x6.png

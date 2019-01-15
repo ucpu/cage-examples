@@ -21,7 +21,7 @@ lemur.x;skeleton
 
 []
 scheme = texture
-degamma_on = true
+srgb = true
 lemurT.png
 
 []

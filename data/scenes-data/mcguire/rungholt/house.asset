@@ -9,10 +9,17 @@ house.pack
 
 []
 scheme = texture
-degamma_on = true
+srgb = true
 premultiply_alpha = true
-house-RGB.png
 house-RGBA.png
+
+[]
+scheme = texture
+srgb = true
+house-RGB.png
+
+[]
+scheme = texture
 house-Alpha.png
 
 []

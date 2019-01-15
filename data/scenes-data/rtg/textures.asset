@@ -1,7 +1,7 @@
 
 []
 scheme = texture
-degamma_on = true
+srgb = true
 Asteroid1.png
 Bridge.png
 Character.png

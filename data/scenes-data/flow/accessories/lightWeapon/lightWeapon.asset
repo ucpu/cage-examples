@@ -9,7 +9,7 @@ lightWeapon.obj
 
 []
 scheme = texture
-degamma_on = true
+srgb = true
 albedo.psd
 
 []

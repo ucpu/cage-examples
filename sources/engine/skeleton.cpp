@@ -146,7 +146,7 @@ int main(int argc, char *args[])
 			t.orientation = quat(degs(-50), degs(-42 + 180), degs());
 			ENGINE_GET_COMPONENT(light, l, e);
 			l.lightType = lightTypeEnum::Directional;
-			l.color = vec3(1, 1, 1) * 5;
+			l.color = vec3(1, 1, 1) * 3;
 			ENGINE_GET_COMPONENT(shadowmap, s, e);
 			s.resolution = 2048;
 			s.worldSize = vec3(12, 12, 10);

@@ -1,7 +1,7 @@
 
 []
 scheme = texture
-degamma_on = true
+srgb = true
 hair-skin.png
 monk-tuc-body-skin.png
 monk-tuc-head-skin.png

@@ -2,44 +2,48 @@
 []
 scheme = texture
 flip_v = true
-degamma_on = true
+srgb = true
 textures/background.tga
 textures/chain_texture.tga
 textures/gi_flag.tga
 textures/lion.tga
 textures/spnza_bricks_a_diff.tga
-textures/spnza_bricks_a_spec.tga
 textures/sponza_arch_diff.tga
-textures/sponza_arch_spec.tga
 textures/sponza_ceiling_a_diff.tga
-textures/sponza_ceiling_a_spec.tga
 textures/sponza_curtain_blue_diff.tga
 textures/sponza_curtain_diff.tga
 textures/sponza_curtain_green_diff.tga
 textures/sponza_details_diff.tga
-textures/sponza_details_spec.tga
 textures/sponza_fabric_blue_diff.tga
 textures/sponza_fabric_diff.tga
 textures/sponza_fabric_green_diff.tga
-textures/sponza_fabric_spec.tga
 textures/sponza_flagpole_diff.tga
-textures/sponza_flagpole_spec.tga
 textures/sponza_floor_a_diff.tga
-textures/sponza_floor_a_spec.tga
 textures/sponza_roof_diff.tga
 textures/sponza_thorn_diff.tga
-textures/sponza_thorn_spec.tga
 textures/vase_dif.tga
 textures/vase_hanging.tga
 textures/vase_plant.tga
-textures/vase_plant_spec.tga
 textures/vase_round.tga
-textures/vase_round_spec.tga
 textures/sponza_column_a_diff.tga
-textures/sponza_column_a_spec.tga
 textures/sponza_column_b_diff.tga
-textures/sponza_column_b_spec.tga
 textures/sponza_column_c_diff.tga
+
+[]
+scheme = texture
+flip_v = true
+textures/spnza_bricks_a_spec.tga
+textures/sponza_arch_spec.tga
+textures/sponza_ceiling_a_spec.tga
+textures/sponza_details_spec.tga
+textures/sponza_fabric_spec.tga
+textures/sponza_flagpole_spec.tga
+textures/sponza_floor_a_spec.tga
+textures/sponza_thorn_spec.tga
+textures/vase_plant_spec.tga
+textures/vase_round_spec.tga
+textures/sponza_column_a_spec.tga
+textures/sponza_column_b_spec.tga
 textures/sponza_column_c_spec.tga
 
 []
