@@ -264,7 +264,7 @@ int main(int argc, char *args[])
 
 		window()->modeSetWindowed(windowFlags::Border | windowFlags::Resizeable);
 		window()->windowedSize(pointStruct(800, 600));
-		window()->title("cage test cpu performance (automatic instancing)");
+		window()->title("performance");
 		regenerate = true;
 
 		cameraController = newCameraController();

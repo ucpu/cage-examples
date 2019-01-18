@@ -151,7 +151,7 @@ int main(int argc, char *args[])
 
 			window()->modeSetWindowed((windowFlags)(windowFlags::Border | windowFlags::Resizeable));
 			window()->windowedSize(pointStruct(800, 600));
-			window()->title("cage test engine exceptions");
+			window()->title("exceptions");
 
 			{ // camera
 				entityClass *e = entities()->create(1);

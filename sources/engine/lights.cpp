@@ -177,7 +177,7 @@ int main(int argc, char *args[])
 		// window
 		window()->modeSetWindowed((windowFlags)(windowFlags::Border | windowFlags::Resizeable));
 		window()->windowedSize(pointStruct(800, 600));
-		window()->title("cage test engine lights (bottle)");
+		window()->title("lights");
 		initializeGui();
 
 		// entities

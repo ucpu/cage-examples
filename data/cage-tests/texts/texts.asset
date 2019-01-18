@@ -1,0 +1,14 @@
+[]
+scheme = pack
+texts.pack
+
+[]
+scheme = textpack
+internationalized = texts.textpack
+czech.textpack
+english.textpack
+
+[]
+scheme = texture
+czech.png
+english.png

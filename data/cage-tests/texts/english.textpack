@@ -1,0 +1,9 @@
+[short]
+hello = hello
+
+[long]
+a = brown fox jumps over a lazy dog
+b = lorem ipsum dolor sit amet
+
+[params]
+a = position: x: {0}, y: {1}, z: {2}

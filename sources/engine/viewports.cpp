@@ -224,7 +224,7 @@ int main(int argc, char *args[])
 
 		window()->modeSetWindowed((windowFlags)(windowFlags::Border | windowFlags::Resizeable));
 		window()->windowedSize(pointStruct(800, 600));
-		window()->title("cage test multiple viewports");
+		window()->title("multiple viewports");
 		dirty = true;
 		holder<engineProfilingClass> engineProfiling = newEngineProfiling();
 

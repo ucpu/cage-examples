@@ -87,7 +87,7 @@ int main(int argc, char *args[])
 		// window
 		window()->modeSetWindowed((windowFlags)(windowFlags::Border | windowFlags::Resizeable));
 		window()->windowedSize(pointStruct(800, 600));
-		window()->title("cage test render to texture (room)");
+		window()->title("render to texture");
 
 		// screen
 		assets()->fabricate(assetSchemeIndexTexture, screenName, "fab tv screen");

@@ -52,7 +52,7 @@ int main(int argc, char *args[])
 		// window
 		window()->modeSetWindowed((windowFlags)(windowFlags::Border | windowFlags::Resizeable));
 		window()->windowedSize(pointStruct(800, 600));
-		window()->title("cage test render lods (cubes and spheres)");
+		window()->title("levels of details");
 
 		// entities
 		entityManagerClass *ents = entities();

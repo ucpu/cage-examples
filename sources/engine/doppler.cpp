@@ -32,7 +32,7 @@ void controlInit()
 		ENGINE_GET_COMPONENT(camera, c, e);
 		c.ambientLight = vec3(1, 1, 1);
 		c.cameraType = cameraTypeEnum::Orthographic;
-		c.orthographicSize = vec2(50, 50);
+		c.camera.orthographicSize = vec2(50, 50);
 		c.near = -5;
 		c.far = 5;
 	}
@@ -126,7 +126,7 @@ int main(int argc, char *args[])
 
 		window()->modeSetWindowed((windowFlags)(windowFlags::Border | windowFlags::Resizeable));
 		window()->windowedSize(pointStruct(600, 600));
-		window()->title("cage test doppler [WIP]");
+		window()->title("doppler [WIP]");
 		controlInit();
 
 		engineStart();
