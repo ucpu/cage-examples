@@ -62,6 +62,12 @@ bool update()
 		r.value = string() + t.position[0] + "|" + t.position[1] + "|" + t.position[2];
 	}
 
+	{
+		entityClass *e = ents->get(11);
+		ENGINE_GET_COMPONENT(transform, t, e);
+		t.orientation = quat(degs(), degs(currentControlTime() * 1e-5), degs());
+	}
+
 	return false;
 }
 
@@ -119,7 +125,7 @@ int main(int argc, char *args[])
 			c.effects = cameraEffectsFlags::CombinedPass;
 		}
 		{ // text hello
-			entityClass *e = ents->createAnonymous();
+			entityClass *e = ents->create(11);
 			ENGINE_GET_COMPONENT(renderText, r, e);
 			r.assetName = hashString("cage-tests/texts/texts.textpack");
 			r.textName = hashString("short/hello");
