@@ -3,10 +3,6 @@
 world = 10
 pixels = 512
 
-[ref]
-shadower = lods.obj?cube_1
-collider = lods.obj?cube_1;collider
-
 []
 lods.obj?cube_3
 

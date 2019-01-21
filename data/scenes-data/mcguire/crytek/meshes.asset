@@ -2,6 +2,7 @@
 []
 scheme = mesh
 bake_model = true
+instances_limit = 1
 scale = 0.01
 
 sponza.obj?0
