@@ -1,50 +1,55 @@
 
-[]
-scheme = texture
-flip_v = true
-srgb = true
-textures/background.tga
-textures/chain_texture.tga
-textures/gi_flag.tga
-textures/lion.tga
-textures/spnza_bricks_a_diff.tga
-textures/sponza_arch_diff.tga
-textures/sponza_ceiling_a_diff.tga
-textures/sponza_curtain_blue_diff.tga
-textures/sponza_curtain_diff.tga
-textures/sponza_curtain_green_diff.tga
-textures/sponza_details_diff.tga
-textures/sponza_fabric_blue_diff.tga
-textures/sponza_fabric_diff.tga
-textures/sponza_fabric_green_diff.tga
-textures/sponza_flagpole_diff.tga
-textures/sponza_floor_a_diff.tga
-textures/sponza_roof_diff.tga
-textures/sponza_thorn_diff.tga
-textures/vase_dif.tga
-textures/vase_hanging.tga
-textures/vase_plant.tga
-textures/vase_round.tga
-textures/sponza_column_a_diff.tga
-textures/sponza_column_b_diff.tga
-textures/sponza_column_c_diff.tga
+#textures/floor_gloss.png
 
 []
 scheme = texture
-flip_v = true
-textures/spnza_bricks_a_spec.tga
-textures/sponza_arch_spec.tga
-textures/sponza_ceiling_a_spec.tga
-textures/sponza_details_spec.tga
-textures/sponza_fabric_spec.tga
-textures/sponza_flagpole_spec.tga
-textures/sponza_floor_a_spec.tga
-textures/sponza_thorn_spec.tga
-textures/vase_plant_spec.tga
-textures/vase_round_spec.tga
-textures/sponza_column_a_spec.tga
-textures/sponza_column_b_spec.tga
-textures/sponza_column_c_spec.tga
+srgb = true
+textures/background.png
+textures/chain_texture.png
+textures/lion.png
+textures/spnza_bricks_a_diff.png
+textures/sponza_arch_diff.png
+textures/sponza_ceiling_a_diff.png
+textures/sponza_column_a_diff.png
+textures/sponza_column_b_diff.png
+textures/sponza_column_c_diff.png
+textures/sponza_curtain_blue_diff.png
+textures/sponza_curtain_diff.png
+textures/sponza_curtain_green_diff.png
+textures/sponza_details_diff.png
+textures/sponza_fabric_blue_diff.png
+textures/sponza_fabric_diff.png
+textures/sponza_fabric_green_diff.png
+textures/sponza_fabric_purple.png
+textures/sponza_flagpole_diff.png
+textures/sponza_floor_a_diff.png
+textures/sponza_roof_diff.png
+textures/sponza_thorn_diff.png
+textures/vase_dif.png
+textures/vase_hanging.png
+textures/vase_plant.png
+textures/vase_round.png
+
+[]
+scheme = texture
+convert_specular_to_special = true
+textures/sponza_thorn_spec.png
+textures/vase_plant_spec.png
+textures/vase_round_spec.png
+
+[]
+scheme = texture
+convert_specular_to_special = true
+textures/sponza_details_spec.png
+textures/spnza_bricks_a_spec.png
+textures/sponza_arch_spec.png
+textures/sponza_ceiling_a_spec.png
+textures/sponza_column_a_spec.png
+textures/sponza_column_b_spec.png
+textures/sponza_column_c_spec.png
+textures/sponza_fabric_spec.png
+textures/sponza_flagpole_spec.png
+textures/sponza_floor_a_spec.png
 
 []
 scheme = texture
@@ -57,13 +62,13 @@ scheme = texture
 convert_normal = 1
 textures/background_bump.png
 textures/chain_texture_bump.png
-textures/lion2_bump.png
 textures/lion_bump.png
+textures/lion2_bump.png
 textures/spnza_bricks_a_bump.png
 textures/sponza_arch_bump.png
-textures/sponza_thorn_bump.png
-textures/vase_bump.png
-textures/vase_round_bump.png
 textures/sponza_column_a_bump.png
 textures/sponza_column_b_bump.png
 textures/sponza_column_c_bump.png
+textures/sponza_thorn_bump.png
+textures/vase_bump.png
+textures/vase_round_bump.png
