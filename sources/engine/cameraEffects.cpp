@@ -134,8 +134,16 @@ bool update()
 			if (in.valid)
 				cam.tonemap.white = in.value.toFloat();
 		}
+	}
+
+	{ // gamma
+		{ // enable
+			entityClass *e = ents->get(31);
+			GUI_GET_COMPONENT(checkBox, cb, e);
+			enableEffect(cameraEffectsFlags::GammaCorrection, cb.state == checkBoxStateEnum::Checked);
+		}
 		{ // gamma
-			entityClass *e = ents->get(29);
+			entityClass *e = ents->get(32);
 			GUI_GET_COMPONENT(input, in, e);
 			if (in.valid)
 				cam.gamma = in.value.toFloat();
@@ -144,7 +152,7 @@ bool update()
 
 	{ // antialiasing
 		{ // enable
-			entityClass *e = ents->get(31);
+			entityClass *e = ents->get(41);
 			GUI_GET_COMPONENT(checkBox, cb, e);
 			enableEffect(cameraEffectsFlags::AntiAliasing, cb.state == checkBoxStateEnum::Checked);
 		}
@@ -287,10 +295,9 @@ void initializeGui()
 		genInput(table, childIndex, 21, "Toe Numerator:", 0, 1, 0.02, cameraEffectsStruct().tonemap.toeNumerator);
 		genInput(table, childIndex, 21, "Toe Denominator:", 0, 1, 0.02, cameraEffectsStruct().tonemap.toeDenominator);
 		genInput(table, childIndex, 21, "White:", 0, 100, 1, cameraEffectsStruct().tonemap.white);
-		genInput(table, childIndex, 21, "Gamma:", 1, 5, 0.1, cameraEffectsStruct().gamma);
 	}
 
-	{ // antialiasing
+	{ // gamma
 		entityClass *panel = ents->createUnique();
 		{
 			GUI_GET_COMPONENT(parent, p, panel);
@@ -298,12 +305,45 @@ void initializeGui()
 			p.order = 4;
 			GUI_GET_COMPONENT(spoiler, c, panel);
 			GUI_GET_COMPONENT(text, t, panel);
-			t.value = "Antialiasing";
+			t.value = "Gamma";
 			GUI_GET_COMPONENT(layoutLine, l, panel);
 			l.vertical = true;
 		}
 		{ // enabled
 			entityClass *e = ents->create(31);
+			GUI_GET_COMPONENT(parent, p, e);
+			p.parent = panel->name();
+			p.order = 1;
+			GUI_GET_COMPONENT(text, t, e);
+			t.value = "Enabled";
+			GUI_GET_COMPONENT(checkBox, cb, e);
+			cb.state = checkBoxStateEnum::Checked;
+		}
+		entityClass *table = ents->createUnique();
+		{
+			GUI_GET_COMPONENT(parent, p, table);
+			p.parent = panel->name();
+			p.order = 2;
+			GUI_GET_COMPONENT(layoutTable, t, table);
+		}
+		sint32 childIndex = 1;
+		genInput(table, childIndex, 31, "Gamma:", 1, 5, 0.1, cameraEffectsStruct().gamma);
+	}
+
+	{ // antialiasing
+		entityClass *panel = ents->createUnique();
+		{
+			GUI_GET_COMPONENT(parent, p, panel);
+			p.parent = layout->name();
+			p.order = 5;
+			GUI_GET_COMPONENT(spoiler, c, panel);
+			GUI_GET_COMPONENT(text, t, panel);
+			t.value = "Antialiasing";
+			GUI_GET_COMPONENT(layoutLine, l, panel);
+			l.vertical = true;
+		}
+		{ // enabled
+			entityClass *e = ents->create(41);
 			GUI_GET_COMPONENT(parent, p, e);
 			p.parent = panel->name();
 			p.order = 1;
