@@ -76,6 +76,12 @@ bool update()
 			if (in.valid)
 				cam.ssao.power = in.value.toFloat();
 		}
+		{ // samples count
+			entityClass *e = ents->get(7);
+			GUI_GET_COMPONENT(input, in, e);
+			if (in.valid)
+				cam.ssao.samplesCount = in.value.toUint32();
+		}
 	}
 
 	{ // motion blur
@@ -161,7 +167,7 @@ bool update()
 	return false;
 }
 
-void genInput(entityClass *table, sint32 &childIndex, uint32 nameBase, const string &labelText, real rangeMin, real rangeMax, real step, real current)
+entityClass *genInput(entityClass *table, sint32 &childIndex, uint32 nameBase, const string &labelText, real rangeMin, real rangeMax, real step, real current)
 {
 	entityManagerClass *ents = gui()->entities();
 	{
@@ -184,6 +190,7 @@ void genInput(entityClass *table, sint32 &childIndex, uint32 nameBase, const str
 		in.max.f = rangeMax;
 		in.step.f = step;
 		in.value = current;
+		return e;
 	}
 }
 
@@ -232,6 +239,15 @@ void initializeGui()
 		genInput(table, childIndex, 1, "Strength:", 0.2, 5, 0.2, cameraEffectsStruct().ssao.strength);
 		genInput(table, childIndex, 1, "Bias:", 0, 1, 0.01, cameraEffectsStruct().ssao.bias);
 		genInput(table, childIndex, 1, "Power:", 0.1, 1, 0.02, cameraEffectsStruct().ssao.power);
+		{
+			entityClass *e = genInput(table, childIndex, 1, "Samples:", 0, 0, 0, 0);
+			GUI_GET_COMPONENT(input, in, e);
+			in.type = inputTypeEnum::Integer;
+			in.min.i = 1;
+			in.max.i = 128;
+			in.step.i = 1;
+			in.value = cameraEffectsStruct().ssao.samplesCount;
+		}
 	}
 
 	{ // motion blur
