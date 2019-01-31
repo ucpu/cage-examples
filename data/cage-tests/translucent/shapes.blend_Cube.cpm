@@ -1,0 +1,16 @@
+
+# emit light, but do not receive it (hologram)
+
+[base]
+emissive = 1
+opacity = 0.3
+albedo = 0.53, 0.09, 0.8
+
+[flags]
+translucency
+no-depth-write
+no-velocity-write
+no-lighting
+no-shadow-cast
+
+

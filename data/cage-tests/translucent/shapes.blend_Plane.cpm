@@ -1,0 +1,20 @@
+
+# use alpha channel of albedo texture as opacity
+# emit light, but do not receive it (hologram)
+
+[base]
+emissive = 1
+
+[textures]
+albedo = Plane.png
+
+[flags]
+opacity-texture
+two-sided
+translucency
+no-depth-write
+no-velocity-write
+no-lighting
+no-shadow-cast
+
+

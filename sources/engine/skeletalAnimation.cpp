@@ -146,7 +146,7 @@ int main(int argc, char *args[])
 			t.orientation = quat(degs(-50), degs(-42 + 180), degs());
 			ENGINE_GET_COMPONENT(light, l, e);
 			l.lightType = lightTypeEnum::Directional;
-			l.color = vec3(1, 1, 1) * 3;
+			l.color = vec3(3);
 			ENGINE_GET_COMPONENT(shadowmap, s, e);
 			s.resolution = 2048;
 			s.worldSize = vec3(12, 12, 10);
@@ -157,7 +157,7 @@ int main(int argc, char *args[])
 			t.position = vec3(0, 5, 10);
 			t.orientation = quat(degs(-10), degs(), degs());
 			ENGINE_GET_COMPONENT(camera, c, e);
-			c.ambientLight = vec3(1, 1, 1) * 0.02;
+			c.ambientLight = vec3(0.02);
 			c.near = 0.1;
 			c.far = 100;
 			c.effects = cameraEffectsFlags::CombinedPass;

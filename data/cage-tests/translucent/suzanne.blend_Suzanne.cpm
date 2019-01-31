@@ -1,0 +1,16 @@
+
+# receive light and cast shadows
+
+[base]
+opacity = 0.9
+albedo = 0.26, 0.14, 0.04
+roughness = 0.02
+metalness = 0.9
+
+[flags]
+#two-sided
+translucency
+no-depth-write
+no-velocity-write
+
+

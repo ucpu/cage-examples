@@ -188,7 +188,6 @@ int main(int argc, char *args[])
 			r.object = hashString("cage-tests/bottle/other.obj?plane");
 			ENGINE_GET_COMPONENT(transform, t, e);
 			t.scale = 5;
-			(void)t;
 		}
 		{ // bottle
 			entityClass *e = ents->create(2);
