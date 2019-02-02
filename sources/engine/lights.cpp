@@ -217,7 +217,7 @@ int main(int argc, char *args[])
 			t.orientation = quat(degs(-10), degs(), degs());
 			ENGINE_GET_COMPONENT(camera, c, e);
 			c.near = 0.1;
-			c.far = 300;
+			c.far = 1000;
 			c.effects = cameraEffectsFlags::CombinedPass;
 		}
 

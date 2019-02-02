@@ -49,7 +49,7 @@ bool update()
 		t.position[1] += sin(degs(currentControlTime() * 1e-5)) * 0.05;
 	}
 
-	// rotate objects (except the plane)
+	// rotate cube, sphere and suzanne
 	for (uint32 i = 10; i < 13; i++)
 	{
 		entityClass *e = ents->get(i);
@@ -62,7 +62,8 @@ bool update()
 	{
 		entityClass *e = ents->get(20 + i);
 		ENGINE_GET_COMPONENT(render, r, e);
-		// todo r.opacity = ...
+		real p = ((real(i) + currentControlTime() * 3e-6) % knotsCount) / knotsCount;
+		r.opacity = smootherstep(clamp(p * 2, 0, 1));
 	}
 
 	// moving light bulbs
@@ -71,7 +72,7 @@ bool update()
 		entityClass *e = ents->get(100 + i);
 		ENGINE_GET_COMPONENT(transform, t, e);
 #if 1
-		if (t.position.distance(vec3(0, 3, 0)) > 10)
+		if (t.position.distance(vec3(0, 3, 0)) > 10 || t.position[1] < -1)
 			t.position = randomDirection3() * randomRange(1, 5) + vec3(0, 3, 0);
 		vec3 &v = bulbsVelocities[i];
 		v += bulbChange(t.position) * 0.1;
@@ -114,11 +115,11 @@ int main(int argc, char *args[])
 		{ // camera
 			entityClass *e = ents->create(1);
 			ENGINE_GET_COMPONENT(transform, t, e);
-			t.position = vec3(6, 6, 7);
+			t.position = vec3(8, 6, 10);
 			t.orientation = quat(degs(-30), degs(40), degs());
 			ENGINE_GET_COMPONENT(camera, c, e);
 			c.near = 0.1;
-			c.far = 300;
+			c.far = 1000;
 			c.effects = cameraEffectsFlags::CombinedPass;
 			c.ambientLight = vec3(0.02);
 		}
@@ -129,10 +130,27 @@ int main(int argc, char *args[])
 			t.position = vec3(0, 5, 0);
 			ENGINE_GET_COMPONENT(light, l, e);
 			l.lightType = lightTypeEnum::Directional;
-			l.color = vec3(2);
-			//ENGINE_GET_COMPONENT(shadowmap, s, e);
-			//s.resolution = 2048;
-			//s.worldSize = vec3(15);
+			l.color = vec3(2, 2, 1);
+			ENGINE_GET_COMPONENT(shadowmap, s, e);
+			s.resolution = 2048;
+			s.worldSize = vec3(15);
+		}
+		{ // flash light
+			entityClass *e = ents->create(3);
+			ENGINE_GET_COMPONENT(transform, t, e);
+			t.position = vec3(-5, 4, 3);
+			t.orientation = quat(degs(-40), degs(-110), degs());
+			ENGINE_GET_COMPONENT(render, r, e);
+			r.object = hashString("cage-tests/bottle/other.obj?arrow");
+			ENGINE_GET_COMPONENT(light, l, e);
+			l.lightType = lightTypeEnum::Spot;
+			l.spotAngle = degs(60);
+			l.spotExponent = 40;
+			l.attenuation = vec3(1, 0, 0.03);
+			r.color = l.color = vec3(13);
+			ENGINE_GET_COMPONENT(shadowmap, s, e);
+			s.resolution = 1024;
+			s.worldSize = vec3(3, 50, 0);
 		}
 		{ // floor
 			entityClass *e = ents->create(5);
@@ -161,7 +179,7 @@ int main(int argc, char *args[])
 			ENGINE_GET_COMPONENT(render, r, e);
 			r.object = hashString("cage-tests/translucent/shapes.blend?Cube");
 			ENGINE_GET_COMPONENT(transform, t, e);
-			t.position = vec3(-2, 1, 0);
+			t.position = vec3(-3, 1, -2);
 			t.orientation = randomDirectionQuat();
 		}
 		{ // sphere
@@ -169,7 +187,7 @@ int main(int argc, char *args[])
 			ENGINE_GET_COMPONENT(render, r, e);
 			r.object = hashString("cage-tests/translucent/shapes.blend?Sphere");
 			ENGINE_GET_COMPONENT(transform, t, e);
-			t.position = vec3(0, 1, 2);
+			t.position = vec3(-0.5, 1, 3.5);
 			t.orientation = randomDirectionQuat();
 		}
 		{ // plane
@@ -177,7 +195,16 @@ int main(int argc, char *args[])
 			ENGINE_GET_COMPONENT(render, r, e);
 			r.object = hashString("cage-tests/translucent/shapes.blend?Plane");
 			ENGINE_GET_COMPONENT(transform, t, e);
-			t.position = vec3(0, 1, -2);
+			t.position = vec3(-0.5, 1, -1);
+			t.orientation = quat(degs(), degs(80), degs());
+		}
+		{ // bottle
+			entityClass *e = ents->create(14);
+			ENGINE_GET_COMPONENT(render, r, e);
+			r.object = hashString("cage-tests/bottle/bottle.obj");
+			ENGINE_GET_COMPONENT(transform, t, e);
+			t.position = vec3(-1.1, -0.2, 5.8);
+			t.scale = 0.6;
 		}
 		// animated knots
 		for (uint32 i = 0; i < knotsCount; i++)
@@ -203,7 +230,7 @@ int main(int argc, char *args[])
 			ENGINE_GET_COMPONENT(light, l, e);
 			l.lightType = lightTypeEnum::Point;
 			r.color = l.color = convertHsvToRgb(randomChance3() * vec3(1, .5, .5) + vec3(0, .5, .5));
-			l.attenuation = vec3(0, 0, 0.1);
+			l.attenuation = vec3(0.5, 0, 0.07);
 		}
 		for (uint32 j = 0; j < 3; j++)
 		{
