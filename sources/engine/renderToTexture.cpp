@@ -32,7 +32,7 @@ bool windowClose()
 
 bool graphicsInitialize()
 {
-	fabScreenTex = newTexture(window());
+	fabScreenTex = newTexture();
 	fabScreenTex->image2d(1000, 600, GL_RGB16F);
 	fabScreenTex->filters(GL_LINEAR, GL_LINEAR, 0);
 	fabScreenTex->wraps(GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);

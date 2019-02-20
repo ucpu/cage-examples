@@ -2,9 +2,9 @@
 # receive light and cast shadows
 
 [base]
-opacity = 0.9
+opacity = 0.6
 albedo = 0.26, 0.14, 0.04
-roughness = 0.02
+roughness = 0.5
 metalness = 0.9
 
 [flags]

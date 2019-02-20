@@ -15,7 +15,7 @@ ground.jpg;d
 
 []
 scheme = texture
-convert_normal = 0.5
+convert_normal = 0.3
 ground.jpg;n
 
 []

@@ -92,50 +92,84 @@ bool update()
 		}
 	}
 
-	{ // tone mapping
+	{ // bloom
 		{ // enable
 			entityClass *e = ents->get(21);
+			GUI_GET_COMPONENT(checkBox, cb, e);
+			enableEffect(cameraEffectsFlags::Bloom, cb.state == checkBoxStateEnum::Checked);
+		}
+		{ // threshold
+			entityClass *e = ents->get(22);
+			GUI_GET_COMPONENT(input, in, e);
+			if (in.valid)
+				cam.bloom.threshold = in.value.toFloat();
+		}
+		{ // blur radius
+			entityClass *e = ents->get(23);
+			GUI_GET_COMPONENT(input, in, e);
+			if (in.valid)
+				cam.bloom.blurRadius = in.value.toFloat();
+		}
+		{ // blur passes
+			entityClass *e = ents->get(24);
+			GUI_GET_COMPONENT(input, in, e);
+			if (in.valid)
+				cam.bloom.blurPasses = in.value.toUint32();
+		}
+	}
+
+	{ // eye adaptation
+		{ // enable
+			entityClass *e = ents->get(31);
+			GUI_GET_COMPONENT(checkBox, cb, e);
+			enableEffect(cameraEffectsFlags::EyeAdaptation, cb.state == checkBoxStateEnum::Checked);
+		}
+	}
+
+	{ // tone mapping
+		{ // enable
+			entityClass *e = ents->get(41);
 			GUI_GET_COMPONENT(checkBox, cb, e);
 			enableEffect(cameraEffectsFlags::ToneMapping, cb.state == checkBoxStateEnum::Checked);
 		}
 		{ // shoulderStrength
-			entityClass *e = ents->get(22);
+			entityClass *e = ents->get(42);
 			GUI_GET_COMPONENT(input, in, e);
 			if (in.valid)
 				cam.tonemap.shoulderStrength = in.value.toFloat();
 		}
 		{ // linearStrength
-			entityClass *e = ents->get(23);
+			entityClass *e = ents->get(43);
 			GUI_GET_COMPONENT(input, in, e);
 			if (in.valid)
 				cam.tonemap.linearStrength = in.value.toFloat();
 		}
 		{ // linearAngle
-			entityClass *e = ents->get(24);
+			entityClass *e = ents->get(44);
 			GUI_GET_COMPONENT(input, in, e);
 			if (in.valid)
 				cam.tonemap.linearAngle = in.value.toFloat();
 		}
 		{ // toeStrength
-			entityClass *e = ents->get(25);
+			entityClass *e = ents->get(45);
 			GUI_GET_COMPONENT(input, in, e);
 			if (in.valid)
 				cam.tonemap.toeStrength = in.value.toFloat();
 		}
 		{ // toeNumerator
-			entityClass *e = ents->get(26);
+			entityClass *e = ents->get(46);
 			GUI_GET_COMPONENT(input, in, e);
 			if (in.valid)
 				cam.tonemap.toeNumerator = in.value.toFloat();
 		}
 		{ // toeDenominator
-			entityClass *e = ents->get(27);
+			entityClass *e = ents->get(47);
 			GUI_GET_COMPONENT(input, in, e);
 			if (in.valid)
 				cam.tonemap.toeDenominator = in.value.toFloat();
 		}
 		{ // white
-			entityClass *e = ents->get(28);
+			entityClass *e = ents->get(48);
 			GUI_GET_COMPONENT(input, in, e);
 			if (in.valid)
 				cam.tonemap.white = in.value.toFloat();
@@ -144,12 +178,12 @@ bool update()
 
 	{ // gamma
 		{ // enable
-			entityClass *e = ents->get(31);
+			entityClass *e = ents->get(51);
 			GUI_GET_COMPONENT(checkBox, cb, e);
 			enableEffect(cameraEffectsFlags::GammaCorrection, cb.state == checkBoxStateEnum::Checked);
 		}
 		{ // gamma
-			entityClass *e = ents->get(32);
+			entityClass *e = ents->get(52);
 			GUI_GET_COMPONENT(input, in, e);
 			if (in.valid)
 				cam.gamma = in.value.toFloat();
@@ -158,7 +192,7 @@ bool update()
 
 	{ // antialiasing
 		{ // enable
-			entityClass *e = ents->get(41);
+			entityClass *e = ents->get(61);
 			GUI_GET_COMPONENT(checkBox, cb, e);
 			enableEffect(cameraEffectsFlags::AntiAliasing, cb.state == checkBoxStateEnum::Checked);
 		}
@@ -274,7 +308,7 @@ void initializeGui()
 		}
 	}
 
-	{ // tone mapping
+	{ // bloom
 		entityClass *panel = ents->createUnique();
 		{
 			GUI_GET_COMPONENT(parent, p, panel);
@@ -282,7 +316,7 @@ void initializeGui()
 			p.order = 3;
 			GUI_GET_COMPONENT(spoiler, c, panel);
 			GUI_GET_COMPONENT(text, t, panel);
-			t.value = "Tone Mapping";
+			t.value = "Bloom";
 			GUI_GET_COMPONENT(layoutLine, l, panel);
 			l.vertical = true;
 		}
@@ -304,16 +338,20 @@ void initializeGui()
 			GUI_GET_COMPONENT(layoutTable, t, table);
 		}
 		sint32 childIndex = 1;
-		genInput(table, childIndex, 21, "Shoulder Strength:", 0, 1, 0.02, cameraEffectsStruct().tonemap.shoulderStrength);
-		genInput(table, childIndex, 21, "Linear Strength:", 0, 1, 0.02, cameraEffectsStruct().tonemap.linearStrength);
-		genInput(table, childIndex, 21, "Linear Angle:", 0, 1, 0.02, cameraEffectsStruct().tonemap.linearAngle);
-		genInput(table, childIndex, 21, "Toe Strength:", 0, 1, 0.02, cameraEffectsStruct().tonemap.toeStrength);
-		genInput(table, childIndex, 21, "Toe Numerator:", 0, 1, 0.02, cameraEffectsStruct().tonemap.toeNumerator);
-		genInput(table, childIndex, 21, "Toe Denominator:", 0, 1, 0.02, cameraEffectsStruct().tonemap.toeDenominator);
-		genInput(table, childIndex, 21, "White:", 0, 100, 1, cameraEffectsStruct().tonemap.white);
+		genInput(table, childIndex, 21, "Threshold:", 0, 5, 0.01, cameraEffectsStruct().bloom.threshold);
+		genInput(table, childIndex, 21, "Blur Radius:", 0.3, 3, 0.05, cameraEffectsStruct().bloom.blurRadius);
+		{
+			entityClass *e = genInput(table, childIndex, 21, "Blur Passes:", 0, 0, 0, 0);
+			GUI_GET_COMPONENT(input, in, e);
+			in.type = inputTypeEnum::Integer;
+			in.min.i = 0;
+			in.max.i = 10;
+			in.step.i = 1;
+			in.value = cameraEffectsStruct().bloom.blurPasses;
+		}
 	}
 
-	{ // gamma
+	{ // eye adaptation
 		entityClass *panel = ents->createUnique();
 		{
 			GUI_GET_COMPONENT(parent, p, panel);
@@ -321,12 +359,36 @@ void initializeGui()
 			p.order = 4;
 			GUI_GET_COMPONENT(spoiler, c, panel);
 			GUI_GET_COMPONENT(text, t, panel);
-			t.value = "Gamma";
+			t.value = "Eye Adaptation";
 			GUI_GET_COMPONENT(layoutLine, l, panel);
 			l.vertical = true;
 		}
 		{ // enabled
 			entityClass *e = ents->create(31);
+			GUI_GET_COMPONENT(parent, p, e);
+			p.parent = panel->name();
+			p.order = 1;
+			GUI_GET_COMPONENT(text, t, e);
+			t.value = "Enabled";
+			GUI_GET_COMPONENT(checkBox, cb, e);
+			cb.state = checkBoxStateEnum::Unchecked;
+		}
+	}
+
+	{ // tone mapping
+		entityClass *panel = ents->createUnique();
+		{
+			GUI_GET_COMPONENT(parent, p, panel);
+			p.parent = layout->name();
+			p.order = 5;
+			GUI_GET_COMPONENT(spoiler, c, panel);
+			GUI_GET_COMPONENT(text, t, panel);
+			t.value = "Tone Mapping";
+			GUI_GET_COMPONENT(layoutLine, l, panel);
+			l.vertical = true;
+		}
+		{ // enabled
+			entityClass *e = ents->create(41);
 			GUI_GET_COMPONENT(parent, p, e);
 			p.parent = panel->name();
 			p.order = 1;
@@ -343,7 +405,46 @@ void initializeGui()
 			GUI_GET_COMPONENT(layoutTable, t, table);
 		}
 		sint32 childIndex = 1;
-		genInput(table, childIndex, 31, "Gamma:", 1, 5, 0.1, cameraEffectsStruct().gamma);
+		genInput(table, childIndex, 41, "Shoulder Strength:", 0, 1, 0.02, cameraEffectsStruct().tonemap.shoulderStrength);
+		genInput(table, childIndex, 41, "Linear Strength:", 0, 1, 0.02, cameraEffectsStruct().tonemap.linearStrength);
+		genInput(table, childIndex, 41, "Linear Angle:", 0, 1, 0.02, cameraEffectsStruct().tonemap.linearAngle);
+		genInput(table, childIndex, 41, "Toe Strength:", 0, 1, 0.02, cameraEffectsStruct().tonemap.toeStrength);
+		genInput(table, childIndex, 41, "Toe Numerator:", 0, 1, 0.02, cameraEffectsStruct().tonemap.toeNumerator);
+		genInput(table, childIndex, 41, "Toe Denominator:", 0, 1, 0.02, cameraEffectsStruct().tonemap.toeDenominator);
+		genInput(table, childIndex, 41, "White:", 0, 100, 1, cameraEffectsStruct().tonemap.white);
+	}
+
+	{ // gamma
+		entityClass *panel = ents->createUnique();
+		{
+			GUI_GET_COMPONENT(parent, p, panel);
+			p.parent = layout->name();
+			p.order = 6;
+			GUI_GET_COMPONENT(spoiler, c, panel);
+			GUI_GET_COMPONENT(text, t, panel);
+			t.value = "Gamma";
+			GUI_GET_COMPONENT(layoutLine, l, panel);
+			l.vertical = true;
+		}
+		{ // enabled
+			entityClass *e = ents->create(51);
+			GUI_GET_COMPONENT(parent, p, e);
+			p.parent = panel->name();
+			p.order = 1;
+			GUI_GET_COMPONENT(text, t, e);
+			t.value = "Enabled";
+			GUI_GET_COMPONENT(checkBox, cb, e);
+			cb.state = checkBoxStateEnum::Checked;
+		}
+		entityClass *table = ents->createUnique();
+		{
+			GUI_GET_COMPONENT(parent, p, table);
+			p.parent = panel->name();
+			p.order = 2;
+			GUI_GET_COMPONENT(layoutTable, t, table);
+		}
+		sint32 childIndex = 1;
+		genInput(table, childIndex, 51, "Gamma:", 1, 5, 0.1, cameraEffectsStruct().gamma);
 	}
 
 	{ // antialiasing
@@ -351,7 +452,7 @@ void initializeGui()
 		{
 			GUI_GET_COMPONENT(parent, p, panel);
 			p.parent = layout->name();
-			p.order = 5;
+			p.order = 7;
 			GUI_GET_COMPONENT(spoiler, c, panel);
 			GUI_GET_COMPONENT(text, t, panel);
 			t.value = "Antialiasing";
@@ -359,7 +460,7 @@ void initializeGui()
 			l.vertical = true;
 		}
 		{ // enabled
-			entityClass *e = ents->create(41);
+			entityClass *e = ents->create(61);
 			GUI_GET_COMPONENT(parent, p, e);
 			p.parent = panel->name();
 			p.order = 1;

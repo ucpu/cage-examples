@@ -2,7 +2,7 @@
 # receive light and cast shadows
 
 [base]
-opacity = 0.7
+opacity = 0.51
 albedo = 0.11, 0.62, 0.14
 roughness = 0.2
 
