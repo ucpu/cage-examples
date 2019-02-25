@@ -33,9 +33,10 @@ bool windowClose()
 bool graphicsInitialize()
 {
 	fabScreenTex = newTexture();
-	fabScreenTex->image2d(1000, 600, GL_RGB16F);
-	fabScreenTex->filters(GL_LINEAR, GL_LINEAR, 0);
+	fabScreenTex->image2d(1920, 1080, GL_RGB16F);
+	fabScreenTex->filters(GL_LINEAR, GL_LINEAR, 16);
 	fabScreenTex->wraps(GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);
+	fabScreenTex->setDebugName("fabScreenTex");
 	assets()->set<assetSchemeIndexTexture>(screenName, fabScreenTex.get());
 	{
 		entityClass *e = entities()->get(4);
@@ -114,7 +115,7 @@ int main(int argc, char *args[])
 			c.cameraOrder = 3;
 			c.renderMask = 1;
 			c.effects = cameraEffectsFlags::CombinedPass;
-			c.ssao.worldRadius = 0.3;
+			c.ssao.worldRadius = 0.05;
 			ENGINE_GET_COMPONENT(render, r, e);
 			r.object = hashString("cage-tests/room/eye.obj");
 			r.renderMask = 2;
@@ -144,14 +145,15 @@ int main(int argc, char *args[])
 			r.object = hashString("cage-tests/room/camera.obj?camera");
 			r.renderMask = 1;
 			ENGINE_GET_COMPONENT(camera, c, e);
-			c.ambientLight = vec3(1, 1, 1) * 0.7;
+			c.ambientLight = vec3(0.7);
 			c.near = 0.2;
 			c.far = 100;
 			c.cameraOrder = 2;
 			c.renderMask = 2;
 			c.effects = cameraEffectsFlags::GeometryPass;
-			c.ssao.worldRadius = 0.3;
+			c.ssao.worldRadius = 0.05;
 		}
+
 		holder<cameraControllerClass> cameraController = newCameraController(eye);
 		cameraController->mouseButton = mouseButtonsFlags::Left;
 		cameraController->movementSpeed = 0.1;

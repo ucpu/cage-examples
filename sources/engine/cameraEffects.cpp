@@ -52,12 +52,6 @@ bool update()
 			if (in.valid)
 				cam.ssao.worldRadius = in.value.toFloat();
 		}
-		{ // blur radius
-			entityClass *e = ents->get(3);
-			GUI_GET_COMPONENT(input, in, e);
-			if (in.valid)
-				cam.ssao.blurRadius = in.value.toFloat();
-		}
 		{ // strength
 			entityClass *e = ents->get(4);
 			GUI_GET_COMPONENT(input, in, e);
@@ -103,12 +97,6 @@ bool update()
 			GUI_GET_COMPONENT(input, in, e);
 			if (in.valid)
 				cam.bloom.threshold = in.value.toFloat();
-		}
-		{ // blur radius
-			entityClass *e = ents->get(23);
-			GUI_GET_COMPONENT(input, in, e);
-			if (in.valid)
-				cam.bloom.blurRadius = in.value.toFloat();
 		}
 		{ // blur passes
 			entityClass *e = ents->get(24);
@@ -269,7 +257,7 @@ void initializeGui()
 		}
 		sint32 childIndex = 1;
 		genInput(table, childIndex, 1, "World Radius:", 0.2, 5, 0.05, cameraEffectsStruct().ssao.worldRadius);
-		genInput(table, childIndex, 1, "Blur Radius:", 0.3, 3, 0.05, cameraEffectsStruct().ssao.blurRadius);
+		childIndex += 2;
 		genInput(table, childIndex, 1, "Strength:", 0.2, 5, 0.2, cameraEffectsStruct().ssao.strength);
 		genInput(table, childIndex, 1, "Bias:", 0, 1, 0.01, cameraEffectsStruct().ssao.bias);
 		genInput(table, childIndex, 1, "Power:", 0.1, 1, 0.02, cameraEffectsStruct().ssao.power);
@@ -339,7 +327,7 @@ void initializeGui()
 		}
 		sint32 childIndex = 1;
 		genInput(table, childIndex, 21, "Threshold:", 0, 5, 0.01, cameraEffectsStruct().bloom.threshold);
-		genInput(table, childIndex, 21, "Blur Radius:", 0.3, 3, 0.05, cameraEffectsStruct().bloom.blurRadius);
+		childIndex += 2;
 		{
 			entityClass *e = genInput(table, childIndex, 21, "Blur Passes:", 0, 0, 0, 0);
 			GUI_GET_COMPONENT(input, in, e);

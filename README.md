@@ -9,6 +9,7 @@ Example scenes and test applications made with Cage. See https://github.com/ucpu
 ![5](screenshots/5.png?raw=true)
 ![6](screenshots/6.png?raw=true)
 ![7](screenshots/7.png?raw=true)
+![8](screenshots/8.png?raw=true)
 
 # Building
 
