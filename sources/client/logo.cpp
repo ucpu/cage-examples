@@ -11,6 +11,7 @@
 #include <cage-client/sound.h>
 #include <cage-client/opengl.h>
 #include <cage-client/highPerformanceGpuHint.h>
+#include <cage-client/graphics/shaderConventions.h>
 
 using namespace cage;
 
@@ -72,6 +73,7 @@ int main(int argc, char *args[])
 		{
 			// initialize graphics
 			mesh->bind();
+			glActiveTexture(GL_TEXTURE0 + CAGE_SHADER_TEXTURE_COLOR);
 			texture->bind();
 			shader->bind();
 
@@ -84,7 +86,7 @@ int main(int argc, char *args[])
 			// show the window
 			pointStruct res(600, 600);
 			window->windowedSize(res);
-			window->modeSetWindowed((windowFlags)(windowFlags::Border | windowFlags::Resizeable));
+			window->modeSetWindowed(windowFlags::Border | windowFlags::Resizeable);
 
 			// loop
 			while (!closing)

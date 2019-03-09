@@ -142,12 +142,13 @@ int main(int argc, char *args[])
 			t.orientation = quat(degs(-40), degs(-110), degs());
 			ENGINE_GET_COMPONENT(render, r, e);
 			r.object = hashString("cage-tests/bottle/other.obj?arrow");
+			r.color = vec3(1);
 			ENGINE_GET_COMPONENT(light, l, e);
 			l.lightType = lightTypeEnum::Spot;
 			l.spotAngle = degs(60);
 			l.spotExponent = 40;
-			l.attenuation = vec3(1, 0, 0.03);
-			r.color = l.color = vec3(13);
+			l.attenuation = vec3(0, 0, 0.03);
+			l.color = vec3(15);
 			ENGINE_GET_COMPONENT(shadowmap, s, e);
 			s.resolution = 1024;
 			s.worldSize = vec3(3, 50, 0);
