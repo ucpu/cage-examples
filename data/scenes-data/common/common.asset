@@ -15,7 +15,8 @@ ground.jpg;d
 
 []
 scheme = texture
-convert_normal = 0.3
+convert = height_to_normal
+normal_strength = 0.3
 ground.jpg;n
 
 []
@@ -25,7 +26,7 @@ skybox.obj
 []
 scheme = texture
 srgb = true
-target = GL_TEXTURE_2D_ARRAY
+target = 2d_array
 animation_duration = 10000000
 skyboxes/$.png
 

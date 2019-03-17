@@ -118,7 +118,7 @@ wallpaper.jpg
 
 []
 scheme = texture
-convert_normal = 1
+convert = height_to_normal
 door.tif
 
 []
