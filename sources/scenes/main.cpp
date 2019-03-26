@@ -34,7 +34,7 @@ int main(int argc, const char *args[])
 
 	{
 		windowClass *win = window();
-		win->modeSetWindowed(windowFlags::Border | windowFlags::Resizeable);
+		win->setWindowed();
 		win->windowedSize(pointStruct(800, 600));
 		listeners.windowClose.bind<&closeButton>();
 		listeners.keyPress.bind<&keyPress>();

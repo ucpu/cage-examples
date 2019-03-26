@@ -23,7 +23,7 @@ public:
 	{
 		CAGE_LOG(severityEnum::Info, "test", string() + "creating window " + index);
 		window = newWindow();
-		window->modeSetWindowed(windowFlags::Border | windowFlags::Resizeable);
+		window->setWindowed();
 		window->windowedSize(pointStruct(400, 300));
 		{
 			scopeLock<mutexClass> l(openglInitMut);

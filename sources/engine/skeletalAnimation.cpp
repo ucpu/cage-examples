@@ -61,7 +61,7 @@ int main(int argc, char *args[])
 #undef GCHL_GENERATE
 
 		// window
-		window()->modeSetWindowed((windowFlags)(windowFlags::Border | windowFlags::Resizeable));
+		window()->setWindowed();
 		window()->windowedSize(pointStruct(800, 600));
 		window()->title("skeletal animation");
 

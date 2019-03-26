@@ -17,7 +17,7 @@ void testScreen(const string &screenId, const pointStruct &resolution, uint32 fr
 	CAGE_LOG(severityEnum::Info, "test", string() + "monitor: '" + screenId + "', resolution: " + resolution.x + " * " + resolution.y + ", frequency: " + frequency);
 	{
 		holder<windowClass> w = newWindow();
-		w->modeSetFullscreen(resolution, frequency, screenId);
+		w->setFullscreen(resolution, frequency, screenId);
 		w->title("cage test monitors");
 		w->processEvents();
 		detail::initializeOpengl();

@@ -94,7 +94,7 @@ int main(int argc, char *args[])
 		windowCloseListener.bind<&windowClose>();
 		windowCloseListener.attach(window()->events.windowClose);
 
-		window()->modeSetWindowed((windowFlags)(windowFlags::Border | windowFlags::Resizeable));
+		window()->setWindowed();
 		window()->windowedSize(pointStruct(600, 600));
 		window()->title("surround sound");
 		controlInit();

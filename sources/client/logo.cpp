@@ -86,7 +86,7 @@ int main(int argc, char *args[])
 			// show the window
 			pointStruct res(600, 600);
 			window->windowedSize(res);
-			window->modeSetWindowed(windowFlags::Border | windowFlags::Resizeable);
+			window->setWindowed();
 
 			// loop
 			while (!closing)

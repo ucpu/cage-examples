@@ -147,7 +147,7 @@ public:
 			guiListener.bind<guiTestClass, &guiTestClass::guiEvent>(this);
 
 			// window
-			window()->modeSetWindowed((windowFlags)(windowFlags::Border | windowFlags::Resizeable));
+			window()->setWindowed();
 			window()->windowedSize(pointStruct(800, 600));
 			window()->title(title);
 

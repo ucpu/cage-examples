@@ -124,7 +124,7 @@ int main(int argc, char *args[])
 		GCHL_GENERATE((), windowClose, window()->events.windowClose);
 #undef GCHL_GENERATE
 
-		window()->modeSetWindowed((windowFlags)(windowFlags::Border | windowFlags::Resizeable));
+		window()->setWindowed();
 		window()->windowedSize(pointStruct(600, 600));
 		window()->title("doppler [WIP]");
 		controlInit();

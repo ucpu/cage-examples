@@ -202,7 +202,7 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder <loggerClass> log1 = newLogger();
+		holder<loggerClass> log1 = newLogger();
 		log1->filter.bind<logFilterPolicyPass>();
 		log1->format.bind<logFormatPolicyConsole>();
 		log1->output.bind<logOutputPolicyStdOut>();
@@ -222,7 +222,7 @@ int main(int argc, char *args[])
 		keyPressListener.attach(window()->events.keyPress);
 		updateListener.attach(controlThread().update);
 
-		window()->modeSetWindowed((windowFlags)(windowFlags::Border | windowFlags::Resizeable));
+		window()->setWindowed();
 		window()->windowedSize(pointStruct(800, 600));
 		window()->title("multiple viewports");
 		dirty = true;
