@@ -17,7 +17,7 @@ std::vector<string> maps;
 
 void loadMapsList()
 {
-	string root = pathFind("scenes-maps");
+	string root = pathSearchTowardsRoot("scenes-maps", pathTypeFlags::Directory | pathTypeFlags::Archive);
 	holder<directoryListClass> list = newDirectoryList(root);
 	while (list->valid())
 	{
