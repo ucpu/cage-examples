@@ -33,7 +33,7 @@ public:
 		{
 			entityClass * e = ents->get(100 + i);
 			GUI_GET_COMPONENT(textFormat, format, e);
-			format.size = (steeper(rads(t) + rads::Full * real(i) / fontsCount) * 0.5 + 0.5) * 80 + 10;
+			format.size = (steeper(rads(t) + rads::Full() * real(i) / fontsCount) * 0.5 + 0.5) * 80 + 10;
 		}
 	}
 

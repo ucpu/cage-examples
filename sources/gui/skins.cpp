@@ -19,7 +19,7 @@ public:
 
 		vec4 a4;
 		for (uint32 i = 0; i < 4; i++)
-			a4[i] = (steeper(rads(t) + rads::Full * real(i) / 4) * 0.5 + 0.5) * 20;
+			a4[i] = (steeper(rads(t) + rads::Full() * real(i) / 4) * 0.5 + 0.5) * 20;
 
 		skinConfigStruct skin;
 		switch (animateOption)
