@@ -11,7 +11,6 @@
 #include <cage-client/window.h>
 #include <cage-client/gui.h>
 #include <cage-client/engine.h>
-#include <cage-client/opengl.h>
 #include <cage-client/engineProfiling.h>
 #include <cage-client/cameraController.h>
 #include <cage-client/highPerformanceGpuHint.h>
