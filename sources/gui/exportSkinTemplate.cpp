@@ -1,6 +1,6 @@
 #include "gui.h"
 
-#include <cage-core/png.h>
+#include <cage-core/image.h>
 
 class guiTestImpl : public guiTestClass
 {

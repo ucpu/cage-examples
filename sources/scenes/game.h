@@ -6,10 +6,11 @@
 #include <cage-core/core.h>
 #include <cage-core/log.h>
 #include <cage-core/math.h>
-#include <cage-core/filesystem.h>
+#include <cage-core/files.h>
+#include <cage-core/fileUtils.h>
 #include <cage-core/entities.h>
 #include <cage-core/config.h>
-#include <cage-core/assets.h>
+#include <cage-core/assetManager.h>
 #include <cage-core/timer.h>
 #include <cage-core/hashString.h>
 #include <cage-core/color.h>

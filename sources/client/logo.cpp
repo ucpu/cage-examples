@@ -2,7 +2,8 @@
 #include <cage-core/math.h>
 #include <cage-core/log.h>
 #include <cage-core/concurrent.h>
-#include <cage-core/assets.h>
+#include <cage-core/assetStructs.h>
+#include <cage-core/assetManager.h>
 #include <cage-core/timer.h>
 #include <cage-core/hashString.h>
 #include <cage-client/core.h>
@@ -30,7 +31,6 @@ int main(int argc, char *args[])
 	{
 		// log to console
 		holder<loggerClass> log1 = newLogger();
-		log1->filter.bind<logFilterPolicyPass>();
 		log1->format.bind<logFormatPolicyConsole>();
 		log1->output.bind<logOutputPolicyStdOut>();
 
