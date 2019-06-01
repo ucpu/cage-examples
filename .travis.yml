@@ -51,5 +51,5 @@ script:
   - if [ "$TRAVIS_OS_NAME" == "windows" ] ; then cmake -A $ARCH .. ; fi
   - if [ "$TRAVIS_OS_NAME" != "windows" ] ; then cmake --build . ; fi
   - if [ "$TRAVIS_OS_NAME" == "windows" ] ; then cmake --build . --config $CONFIG ; fi
-  - result/$CONFIG/cage-asset-database
+  - if [ "$TRAVIS_OS_NAME" != "windows" -o "$CONFIG" != "debug" ] ; then result/$CONFIG/cage-asset-database ; fi
 
