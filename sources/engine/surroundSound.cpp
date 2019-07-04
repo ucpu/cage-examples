@@ -22,13 +22,13 @@ bool windowClose()
 
 void controlInit()
 {
-	entityManagerClass *ents = entities();
+	entityManager *ents = entities();
 
 	{ // camera
-		entityClass *e = ents->create(1);
-		ENGINE_GET_COMPONENT(transform, t, e);
+		entity *e = ents->create(1);
+		CAGE_COMPONENT_ENGINE(transform, t, e);
 		(void)t;
-		ENGINE_GET_COMPONENT(camera, c, e);
+		CAGE_COMPONENT_ENGINE(camera, c, e);
 		c.ambientLight = vec3(1, 1, 1);
 		c.cameraType = cameraTypeEnum::Orthographic;
 		c.camera.orthographicSize = vec2(50, 50);
@@ -37,36 +37,36 @@ void controlInit()
 	}
 
 	{ // listener
-		entityClass *e = ents->create(2);
-		ENGINE_GET_COMPONENT(transform, t, e);
+		entity *e = ents->create(2);
+		CAGE_COMPONENT_ENGINE(transform, t, e);
 		t.orientation = quat(degs(90), degs(), degs());
-		ENGINE_GET_COMPONENT(render, r, e);
+		CAGE_COMPONENT_ENGINE(render, r, e);
 		r.object = 1;
-		ENGINE_GET_COMPONENT(listener, l, e);
+		CAGE_COMPONENT_ENGINE(listener, l, e);
 		l.attenuation = vec3(0, 0.1, 0.005);
 	}
 
 	static const vec3 boxPositions[] = { vec3(-1, -1, 0), vec3(1, -1, 0), vec3(-1, 1, 0), vec3(1, 1, 0) };
 	for (uint32 i = 0; i < sizeof(boxPositions) / sizeof(boxPositions[0]); i++)
 	{ // box
-		entityClass *e = ents->create(10 + i);
-		ENGINE_GET_COMPONENT(transform, t, e);
+		entity *e = ents->create(10 + i);
+		CAGE_COMPONENT_ENGINE(transform, t, e);
 		t.position = boxPositions[i] * 30;
-		ENGINE_GET_COMPONENT(render, r, e);
+		CAGE_COMPONENT_ENGINE(render, r, e);
 		r.object = 2;
-		ENGINE_GET_COMPONENT(voice, s, e);
+		CAGE_COMPONENT_ENGINE(voice, s, e);
 		s.name = assetsName;
 	}
 }
 
 bool update()
 {
-	entityManagerClass *ents = entities();
+	entityManager *ents = entities();
 	{ // listener
-		entityClass *e = ents->get(2);
-		ENGINE_GET_COMPONENT(transform, t, e);
-		pointStruct cursor = window()->mousePosition();
-		pointStruct resolution = window()->resolution();
+		entity *e = ents->get(2);
+		CAGE_COMPONENT_ENGINE(transform, t, e);
+		ivec2 cursor = window()->mousePosition();
+		ivec2 resolution = window()->resolution();
 		vec3 cur = vec3((real)cursor.x / (real)resolution.x, (real)1 - (real)cursor.y / (real)resolution.y, 0);
 		t.position = 50 * (cur * 2 - 1) * vec3(1, 1, 0);
 	}
@@ -78,9 +78,9 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder <loggerClass> log1 = newLogger();
-		log1->format.bind <logFormatPolicyConsole>();
-		log1->output.bind <logOutputPolicyStdOut>();
+		holder<logger> log1 = newLogger();
+		log1->format.bind <logFormatConsole>();
+		log1->output.bind <logOutputStdOut>();
 
 		configSetBool("cage-client.engine.renderMissingMeshes", true);
 		engineInitialize(engineCreateConfig());
@@ -94,7 +94,7 @@ int main(int argc, char *args[])
 		windowCloseListener.attach(window()->events.windowClose);
 
 		window()->setWindowed();
-		window()->windowedSize(pointStruct(600, 600));
+		window()->windowedSize(ivec2(600, 600));
 		window()->title("surround sound");
 		controlInit();
 

@@ -14,9 +14,9 @@ void updateFinalize();
 int main(int argc, const char *args[])
 {
 	// log to console
-	holder<loggerClass> log1 = newLogger();
-	log1->format.bind<logFormatPolicyConsole>();
-	log1->output.bind<logOutputPolicyStdOut>();
+	holder<logger> log1 = newLogger();
+	log1->format.bind<logFormatConsole>();
+	log1->output.bind<logOutputStdOut>();
 
 	engineInitialize(engineCreateConfig());
 	cameraInitialize();
@@ -32,9 +32,9 @@ int main(int argc, const char *args[])
 	controlThread().assets.attach(assetsUpdateListener);
 
 	{
-		windowClass *win = window();
+		windowHandle *win = window();
 		win->setWindowed();
-		win->windowedSize(pointStruct(800, 600));
+		win->windowedSize(ivec2(800, 600));
 		listeners.windowClose.bind<&closeButton>();
 		listeners.keyPress.bind<&keyPress>();
 		listeners.attachAll(window());
@@ -49,7 +49,7 @@ int main(int argc, const char *args[])
 	engineFinalize();
 
 	{
-		holder<configListClass> l = newConfigList();
+		holder<configList> l = newConfigList();
 		while (l->valid())
 		{
 			CAGE_LOG(severityEnum::Info, "config", string() + l->name() + " = " + l->getString() + " (" + l->typeName() + ")");

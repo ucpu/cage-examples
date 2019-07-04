@@ -23,42 +23,42 @@ public:
 
 	static void guiLabel(uint32 parentName, uint32 &index, const string &name)
 	{
-		entityManagerClass *ents = gui()->entities();
-		entityClass *e = ents->createUnique();
-		GUI_GET_COMPONENT(parent, p, e);
+		entityManager *ents = gui()->entities();
+		entity *e = ents->createUnique();
+		CAGE_COMPONENT_GUI(parent, p, e);
 		p.parent = parentName;
 		p.order = index++;
-		GUI_GET_COMPONENT(label, l, e);
-		GUI_GET_COMPONENT(text, t, e);
+		CAGE_COMPONENT_GUI(label, l, e);
+		CAGE_COMPONENT_GUI(text, t, e);
 		t.value = name;
 	}
 
 	static void guiBasicLayout()
 	{
-		entityManagerClass *ents = gui()->entities();
+		entityManager *ents = gui()->entities();
 
 		{ // splitter
-			entityClass *split = ents->create(1);
-			GUI_GET_COMPONENT(layoutSplitter, ls, split);
+			entity *split = ents->create(1);
+			CAGE_COMPONENT_GUI(layoutSplitter, ls, split);
 			ls.vertical = true;
 		}
 		{ // top panel
-			entityClass *panel = ents->create(2);
-			GUI_GET_COMPONENT(parent, p, panel);
+			entity *panel = ents->create(2);
+			CAGE_COMPONENT_GUI(parent, p, panel);
 			p.parent = 1;
 			p.order = 1;
-			GUI_GET_COMPONENT(panel, gp, panel);
-			GUI_GET_COMPONENT(scrollbars, sc, panel);
+			CAGE_COMPONENT_GUI(panel, gp, panel);
+			CAGE_COMPONENT_GUI(scrollbars, sc, panel);
 		}
 		{ // bottom panel
-			entityClass *panel = ents->create(3);
-			GUI_GET_COMPONENT(parent, p, panel);
+			entity *panel = ents->create(3);
+			CAGE_COMPONENT_GUI(parent, p, panel);
 			p.parent = 1;
 			p.order = 2;
-			GUI_GET_COMPONENT(panel, pan, panel);
-			//GUI_GET_COMPONENT(layoutTable, lt, panel);
+			CAGE_COMPONENT_GUI(panel, pan, panel);
+			//CAGE_COMPONENT_GUI(layoutTable, lt, panel);
 			//lt.vertical = true;
-			GUI_GET_COMPONENT(scrollbars, sc, panel);
+			CAGE_COMPONENT_GUI(scrollbars, sc, panel);
 			sc.alignment = vec2(0.5, 0);
 		}
 	}
@@ -75,7 +75,7 @@ public:
 	{
 		CAGE_LOG(severityEnum::Info, "gui event", string() + "gui event on entity: " + name);
 
-		entityClass *e = gui()->entities()->get(name);
+		entity *e = gui()->entities()->get(name);
 
 		if (e->has(gui()->components().button))
 		{
@@ -84,37 +84,37 @@ public:
 
 		if (e->has(gui()->components().checkBox))
 		{
-			GUI_GET_COMPONENT(checkBox, c, e);
+			CAGE_COMPONENT_GUI(checkBox, c, e);
 			CAGE_LOG(severityEnum::Info, "gui event", string() + "check box state: " + (uint32)c.state);
 		}
 
 		if (e->has(gui()->components().radioBox))
 		{
-			GUI_GET_COMPONENT(radioBox, c, e);
+			CAGE_COMPONENT_GUI(radioBox, c, e);
 			CAGE_LOG(severityEnum::Info, "gui event", string() + "radio box state: " + (uint32)c.state);
 		}
 
 		if (e->has(gui()->components().colorPicker))
 		{
-			GUI_GET_COMPONENT(colorPicker, c, e);
+			CAGE_COMPONENT_GUI(colorPicker, c, e);
 			CAGE_LOG(severityEnum::Info, "gui event", string() + "color picker: " + c.color);
 		}
 
 		if (e->has(gui()->components().comboBox))
 		{
-			GUI_GET_COMPONENT(comboBox, c, e);
+			CAGE_COMPONENT_GUI(comboBox, c, e);
 			CAGE_LOG(severityEnum::Info, "gui event", string() + "combo box selected: " + c.selected);
 		}
 
 		if (e->has(gui()->components().input))
 		{
-			GUI_GET_COMPONENT(input, c, e);
+			CAGE_COMPONENT_GUI(input, c, e);
 			CAGE_LOG(severityEnum::Info, "gui event", string() + "input box valid: " + c.valid + ", value: " + c.value);
 		}
 
 		if (e->has(gui()->components().sliderBar))
 		{
-			GUI_GET_COMPONENT(sliderBar, c, e);
+			CAGE_COMPONENT_GUI(sliderBar, c, e);
 			CAGE_LOG(severityEnum::Info, "gui event", string() + "slider bar value: " + c.value);
 		}
 	}
@@ -131,9 +131,9 @@ public:
 		try
 		{
 			// log to console
-			holder<loggerClass> log1 = newLogger();
-			log1->format.bind<logFormatPolicyConsole>();
-			log1->output.bind<logOutputPolicyStdOut>();
+			holder<logger> log1 = newLogger();
+			log1->format.bind<logFormatConsole>();
+			log1->output.bind<logOutputStdOut>();
 
 			initializeEngine();
 
@@ -147,7 +147,7 @@ public:
 
 			// window
 			window()->setWindowed();
-			window()->windowedSize(pointStruct(800, 600));
+			window()->windowedSize(ivec2(800, 600));
 			window()->title(title);
 
 			// run

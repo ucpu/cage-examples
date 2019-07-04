@@ -12,8 +12,8 @@
 
 using namespace cage;
 
-holder<sourceClass> toneSource;
-holder<busClass> toneBus;
+holder<soundSource> toneSource;
+holder<mixingBus> toneBus;
 
 bool windowClose()
 {
@@ -23,13 +23,13 @@ bool windowClose()
 
 void controlInit()
 {
-	entityManagerClass *ents = entities();
+	entityManager *ents = entities();
 
 	{ // camera
-		entityClass *e = ents->create(1);
-		ENGINE_GET_COMPONENT(transform, t, e);
+		entity *e = ents->create(1);
+		CAGE_COMPONENT_ENGINE(transform, t, e);
 		(void)t;
-		ENGINE_GET_COMPONENT(camera, c, e);
+		CAGE_COMPONENT_ENGINE(camera, c, e);
 		c.ambientLight = vec3(1, 1, 1);
 		c.cameraType = cameraTypeEnum::Orthographic;
 		c.camera.orthographicSize = vec2(50, 50);
@@ -38,29 +38,29 @@ void controlInit()
 	}
 
 	{ // listener
-		entityClass *e = ents->create(2);
-		ENGINE_GET_COMPONENT(render, r, e);
+		entity *e = ents->create(2);
+		CAGE_COMPONENT_ENGINE(render, r, e);
 		r.object = 1;
-		ENGINE_GET_COMPONENT(listener, l, e);
+		CAGE_COMPONENT_ENGINE(listener, l, e);
 		l.attenuation = vec3(1, 0.01, 0);
 		l.dopplerEffect = true;
 	}
 
 	{ // moving voice
-		entityClass *e = ents->create(3);
-		ENGINE_GET_COMPONENT(transform, t, e);
+		entity *e = ents->create(3);
+		CAGE_COMPONENT_ENGINE(transform, t, e);
 		(void)t;
-		ENGINE_GET_COMPONENT(render, r, e);
+		CAGE_COMPONENT_ENGINE(render, r, e);
 		r.object = 2;
-		ENGINE_GET_COMPONENT(voice, s, e);
+		CAGE_COMPONENT_ENGINE(voice, s, e);
 		s.name = hashString("cage/sound/logo.ogg");
 	}
 }
 
 bool soundInit()
 {
-	toneBus = newBus(sound());
-	toneSource = newSource(sound());
+	toneBus = newMixingBus(sound());
+	toneSource = newSoundSource(sound());
 	toneSource->setDataTone();
 	toneSource->addOutput(toneBus.get());
 	return false;
@@ -76,11 +76,11 @@ bool soundFinish()
 bool update()
 {
 	uint64 time = currentControlTime();
-	entityManagerClass *ents = entities();
+	entityManager *ents = entities();
 	vec3 box;
 	{ // moving voice
-		entityClass *e = ents->get(3);
-		ENGINE_GET_COMPONENT(transform, t, e);
+		entity *e = ents->get(3);
+		CAGE_COMPONENT_ENGINE(transform, t, e);
 		static const uint64 duration = 8000000;
 		bool odd = (time / duration) % 2 == 1;
 		real x = ((real)time % duration) / duration;
@@ -89,15 +89,15 @@ bool update()
 		box = t.position = vec3(100 * (x - 0.5), 10, 0);
 		if (toneBus)
 		{
-			ENGINE_GET_COMPONENT(voice, v, e);
+			CAGE_COMPONENT_ENGINE(voice, v, e);
 			v.input = toneBus.get();
 			v.name = 0;
 		}
 	}
 	box = box.normalize();
 	{ // listener
-		entityClass *e = ents->get(2);
-		ENGINE_GET_COMPONENT(transform, t, e);
+		entity *e = ents->get(2);
+		CAGE_COMPONENT_ENGINE(transform, t, e);
 		t.orientation = quat(degs(90), degs(), degs()) * quat(degs(), aTan2(box[0], box[1]) - degs(90), degs());
 	}
 	return false;
@@ -108,9 +108,9 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder<loggerClass> log1 = newLogger();
-		log1->format.bind<logFormatPolicyConsole>();
-		log1->output.bind<logOutputPolicyStdOut>();
+		holder<logger> log1 = newLogger();
+		log1->format.bind<logFormatConsole>();
+		log1->output.bind<logOutputStdOut>();
 
 		configSetBool("cage-client.engine.renderMissingMeshes", true);
 		engineInitialize(engineCreateConfig());
@@ -124,7 +124,7 @@ int main(int argc, char *args[])
 #undef GCHL_GENERATE
 
 		window()->setWindowed();
-		window()->windowedSize(pointStruct(600, 600));
+		window()->windowedSize(ivec2(600, 600));
 		window()->title("doppler [WIP]");
 		controlInit();
 

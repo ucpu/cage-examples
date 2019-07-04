@@ -22,7 +22,7 @@ static const uint32 assetsName = hashString("cage-tests/room/room.pack");
 static const uint32 screenName = hashString("cage-tests/room/tvscreen.jpg");
 static const uint32 roomName = hashString("cage-tests/room/room.object");
 
-holder<textureClass> fabScreenTex;
+holder<renderTexture> fabScreenTex;
 
 bool windowClose()
 {
@@ -32,15 +32,15 @@ bool windowClose()
 
 bool graphicsInitialize()
 {
-	fabScreenTex = newTexture();
+	fabScreenTex = newRenderTexture();
 	fabScreenTex->image2d(1920, 1080, GL_RGB16F);
 	fabScreenTex->filters(GL_LINEAR, GL_LINEAR, 16);
 	fabScreenTex->wraps(GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);
 	fabScreenTex->setDebugName("fabScreenTex");
-	assets()->set<assetSchemeIndexTexture>(screenName, fabScreenTex.get());
+	assets()->set<assetSchemeIndexRenderTexture>(screenName, fabScreenTex.get());
 	{
-		entityClass *e = entities()->get(4);
-		ENGINE_GET_COMPONENT(camera, c, e);
+		entity *e = entities()->get(4);
+		CAGE_COMPONENT_ENGINE(camera, c, e);
 		c.target = fabScreenTex.get();
 	}
 	return false;
@@ -48,7 +48,7 @@ bool graphicsInitialize()
 
 bool graphicsFinalize()
 {
-	assets()->set<assetSchemeIndexTexture>(screenName, (textureClass*)nullptr);
+	assets()->set<assetSchemeIndexRenderTexture>(screenName, (renderTexture*)nullptr);
 	fabScreenTex.clear();
 	return false;
 }
@@ -57,8 +57,8 @@ bool update()
 {
 	uint64 time = currentControlTime();
 
-	ENGINE_GET_COMPONENT(transform, t1, entities()->get(3));
-	ENGINE_GET_COMPONENT(transform, t2, entities()->get(4));
+	CAGE_COMPONENT_ENGINE(transform, t1, entities()->get(3));
+	CAGE_COMPONENT_ENGINE(transform, t2, entities()->get(4));
 	t1.orientation = t2.orientation = quat(degs(-25), degs(sin(degs(time * 3e-5)) * 20 + 125), degs());
 
 	return false;
@@ -69,9 +69,9 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder<loggerClass> log1 = newLogger();
-		log1->format.bind<logFormatPolicyConsole>();
-		log1->output.bind<logOutputPolicyStdOut>();
+		holder<logger> log1 = newLogger();
+		log1->format.bind<logFormatConsole>();
+		log1->output.bind<logOutputStdOut>();
 
 		configSetBool("cage-client.engine.debugRenderMissingMeshes", true);
 		engineInitialize(engineCreateConfig());
@@ -86,28 +86,28 @@ int main(int argc, char *args[])
 
 		// window
 		window()->setWindowed();
-		window()->windowedSize(pointStruct(800, 600));
+		window()->windowedSize(ivec2(800, 600));
 		window()->title("render to texture");
 
 		// screen
-		assets()->fabricate(assetSchemeIndexTexture, screenName, "fab tv screen");
+		assets()->fabricate(assetSchemeIndexRenderTexture, screenName, "fab tv screen");
 
 		// entities
-		entityManagerClass *ents = entities();
+		entityManager *ents = entities();
 		{ // room
-			entityClass *e = ents->create(10);
-			ENGINE_GET_COMPONENT(render, r, e);
+			entity *e = ents->create(10);
+			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = roomName;
 			r.renderMask = 3;
-			ENGINE_GET_COMPONENT(transform, t, e);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			(void)t;
 		}
-		entityClass *eye = nullptr;
+		entity *eye = nullptr;
 		{ // eye
-			entityClass *e = eye = ents->create(1);
-			ENGINE_GET_COMPONENT(transform, t, e);
+			entity *e = eye = ents->create(1);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.position = vec3(0, 1.7, 0);
-			ENGINE_GET_COMPONENT(camera, c, e);
+			CAGE_COMPONENT_ENGINE(camera, c, e);
 			c.ambientLight = vec3(1, 1, 1) * 0.6;
 			c.near = 0.2;
 			c.far = 100;
@@ -115,35 +115,35 @@ int main(int argc, char *args[])
 			c.renderMask = 1;
 			c.effects = cameraEffectsFlags::CombinedPass;
 			c.ssao.worldRadius = 0.05;
-			ENGINE_GET_COMPONENT(render, r, e);
+			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/room/eye.obj");
 			r.renderMask = 2;
 		}
 		{ // camera stand
-			entityClass *e = ents->create(2);
-			ENGINE_GET_COMPONENT(transform, t, e);
+			entity *e = ents->create(2);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.position = vec3(2.5, 2.5, -1.3);
 			t.orientation = quat(degs(), degs(125), degs());
-			ENGINE_GET_COMPONENT(render, r, e);
+			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/room/camera.obj?camera_stand");
 			r.renderMask = 1;
 		}
 		{ // camera lens
-			entityClass *e = ents->create(3);
-			ENGINE_GET_COMPONENT(transform, t, e);
+			entity *e = ents->create(3);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.position = vec3(2.5, 2.5, -1.3);
-			ENGINE_GET_COMPONENT(render, r, e);
+			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/room/camera.obj?lens");
 			r.renderMask = 1;
 		}
 		{ // camera body
-			entityClass *e = ents->create(4);
-			ENGINE_GET_COMPONENT(transform, t, e);
+			entity *e = ents->create(4);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.position = vec3(2.5, 2.5, -1.3);
-			ENGINE_GET_COMPONENT(render, r, e);
+			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/room/camera.obj?camera");
 			r.renderMask = 1;
-			ENGINE_GET_COMPONENT(camera, c, e);
+			CAGE_COMPONENT_ENGINE(camera, c, e);
 			c.ambientLight = vec3(0.7);
 			c.near = 0.2;
 			c.far = 100;
@@ -153,10 +153,10 @@ int main(int argc, char *args[])
 			c.ssao.worldRadius = 0.05;
 		}
 
-		holder<cameraControllerClass> cameraController = newCameraController(eye);
+		holder<cameraController> cameraController = newCameraController(eye);
 		cameraController->mouseButton = mouseButtonsFlags::Left;
 		cameraController->movementSpeed = 0.1;
-		holder<engineProfilingClass> engineProfiling = newEngineProfiling();
+		holder<engineProfiling> engineProfiling = newEngineProfiling();
 
 		assets()->add(assetsName);
 		engineStart();

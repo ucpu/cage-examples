@@ -30,12 +30,12 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder<loggerClass> log1 = newLogger();
-		log1->format.bind<logFormatPolicyConsole>();
-		log1->output.bind<logOutputPolicyStdOut>();
+		holder<logger> log1 = newLogger();
+		log1->format.bind<logFormatConsole>();
+		log1->output.bind<logOutputStdOut>();
 
 		// window
-		holder<windowClass> window = newWindow();
+		holder<windowHandle> window = newWindow();
 		eventListener<bool()> windowCloseListener;
 		windowCloseListener.bind<&windowClose>();
 		window->events.windowClose.attach(windowCloseListener);
@@ -43,16 +43,16 @@ int main(int argc, char *args[])
 		detail::initializeOpengl();
 
 		// sound
-		holder<soundContextClass> sl = newSoundContext(soundContextCreateConfig(), "cage");
+		holder<soundContext> sl = newSoundContext(soundContextCreateConfig(), "cage");
 
 		// assets
-		holder<assetManagerClass> assets = newAssetManager(assetManagerCreateConfig());
+		holder<assetManager> assets = newAssetManager(assetManagerCreateConfig());
 		assets->defineScheme<void>(assetSchemeIndexPack, genAssetSchemePack(0));
-		assets->defineScheme<shaderClass>(assetSchemeIndexShader, genAssetSchemeShader(0, window.get()));
-		assets->defineScheme<textureClass>(assetSchemeIndexTexture, genAssetSchemeTexture(0, window.get()));
-		assets->defineScheme<meshClass>(assetSchemeIndexMesh, genAssetSchemeMesh(0, window.get()));
-		assets->defineScheme<fontClass>(assetSchemeIndexFont, genAssetSchemeFont(0, window.get()));
-		assets->defineScheme<sourceClass>(assetSchemeIndexSound, genAssetSchemeSound(0, sl.get()));
+		assets->defineScheme<shaderProgram>(assetSchemeIndexShaderProgram, genAssetSchemeShaderProgram(0, window.get()));
+		assets->defineScheme<renderTexture>(assetSchemeIndexRenderTexture, genAssetSchemeRenderTexture(0, window.get()));
+		assets->defineScheme<renderMesh>(assetSchemeIndexMesh, genAssetSchemeRenderMesh(0, window.get()));
+		assets->defineScheme<fontFace>(assetSchemeIndexFontFace, genAssetSchemeFontFace(0, window.get()));
+		assets->defineScheme<soundSource>(assetSchemeIndexSoundSource, genAssetSchemeSoundSource(0, sl.get()));
 
 		// load assets
 		assets->add(assetsName);
@@ -65,10 +65,10 @@ int main(int argc, char *args[])
 		}
 
 		// fetch assets
-		meshClass *mesh = assets->get<assetSchemeIndexMesh, meshClass>(hashString("cage/mesh/square.obj"));
-		textureClass *texture = assets->get<assetSchemeIndexTexture, textureClass>(hashString("cage-tests/logo/logo.png"));
-		shaderClass *shader = assets->get<assetSchemeIndexShader, shaderClass>(hashString("cage/shader/engine/blit.glsl"));
-		sourceClass *source = assets->get<assetSchemeIndexSound, sourceClass>(hashString("cage-tests/logo/logo.ogg"));
+		renderMesh *mesh = assets->get<assetSchemeIndexMesh, renderMesh>(hashString("cage/mesh/square.obj"));
+		renderTexture *texture = assets->get<assetSchemeIndexRenderTexture, renderTexture>(hashString("cage-tests/logo/logo.png"));
+		shaderProgram *shader = assets->get<assetSchemeIndexShaderProgram, shaderProgram>(hashString("cage/shader/engine/blit.glsl"));
+		soundSource *source = assets->get<assetSchemeIndexSoundSource, soundSource>(hashString("cage-tests/logo/logo.ogg"));
 
 		{
 			// initialize graphics
@@ -78,13 +78,13 @@ int main(int argc, char *args[])
 			shader->bind();
 
 			// initialize sounds
-			holder<speakerClass> speaker = newSpeaker(sl.get(), speakerCreateConfig(), "cage");
-			holder<busClass> bus = newBus(sl.get());
+			holder<speakerOutput> speaker = newSpeakerOutput(sl.get(), speakerOutputCreateConfig(), "cage");
+			holder<mixingBus> bus = newMixingBus(sl.get());
 			speaker->setInput(bus.get());
 			source->addOutput(bus.get());
 
 			// show the window
-			pointStruct res(600, 600);
+			ivec2 res(600, 600);
 			window->windowedSize(res);
 			window->setWindowed();
 

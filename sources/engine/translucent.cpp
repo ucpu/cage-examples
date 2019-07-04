@@ -7,7 +7,7 @@
 #include <cage-core/assetManager.h>
 #include <cage-core/hashString.h>
 #include <cage-core/color.h>
-#include <cage-core/noise.h>
+#include <cage-core/noiseFunction.h>
 #include <cage-client/core.h>
 #include <cage-client/window.h>
 #include <cage-client/gui.h>
@@ -21,7 +21,7 @@ static const uint32 assetsName = hashString("cage-tests/translucent/translucent.
 static const uint32 knotsCount = 40;
 static const uint32 bulbsCount = 5;
 
-holder<noiseClass> bulbsNoise[3];
+holder<noiseFunction> bulbsNoise[3];
 vec3 bulbsVelocities[bulbsCount];
 
 vec3 bulbChange(const vec3 &pos)
@@ -40,11 +40,11 @@ bool windowClose()
 
 bool update()
 {
-	entityManagerClass *ents = entities();
+	entityManager *ents = entities();
 
 	{ // flying knot
-		entityClass *e = ents->get(6);
-		ENGINE_GET_COMPONENT(transform, t, e);
+		entity *e = ents->get(6);
+		CAGE_COMPONENT_ENGINE(transform, t, e);
 		t.orientation = quat(degs(), degs(0.5), degs()) * t.orientation;
 		t.position[1] += sin(degs(currentControlTime() * 1e-5)) * 0.05;
 	}
@@ -52,16 +52,16 @@ bool update()
 	// rotate cube, sphere and suzanne
 	for (uint32 i = 10; i < 13; i++)
 	{
-		entityClass *e = ents->get(i);
-		ENGINE_GET_COMPONENT(transform, t, e);
+		entity *e = ents->get(i);
+		CAGE_COMPONENT_ENGINE(transform, t, e);
 		t.orientation = quat(degs(), degs(i * 2 * 0.05), degs()) * t.orientation;
 	}
 
 	// animated knot opacities
 	for (uint32 i = 0; i < knotsCount; i++)
 	{
-		entityClass *e = ents->get(20 + i);
-		ENGINE_GET_COMPONENT(render, r, e);
+		entity *e = ents->get(20 + i);
+		CAGE_COMPONENT_ENGINE(render, r, e);
 		real p = ((real(i) + currentControlTime() * 3e-6) % knotsCount) / knotsCount;
 		r.opacity = smootherstep(clamp(p * 2, 0, 1));
 	}
@@ -69,8 +69,8 @@ bool update()
 	// moving light bulbs
 	for (uint32 i = 0; i < bulbsCount; i++)
 	{
-		entityClass *e = ents->get(100 + i);
-		ENGINE_GET_COMPONENT(transform, t, e);
+		entity *e = ents->get(100 + i);
+		CAGE_COMPONENT_ENGINE(transform, t, e);
 #if 1
 		if (t.position.distance(vec3(0, 3, 0)) > 10 || t.position[1] < -1)
 			t.position = randomDirection3() * randomRange(1, 5) + vec3(0, 3, 0);
@@ -92,9 +92,9 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder<loggerClass> log1 = newLogger();
-		log1->format.bind<logFormatPolicyConsole>();
-		log1->output.bind<logOutputPolicyStdOut>();
+		holder<logger> log1 = newLogger();
+		log1->format.bind<logFormatConsole>();
+		log1->output.bind<logOutputStdOut>();
 
 		engineInitialize(engineCreateConfig());
 
@@ -106,113 +106,113 @@ int main(int argc, char *args[])
 
 		// window
 		window()->setWindowed();
-		window()->windowedSize(pointStruct(800, 600));
+		window()->windowedSize(ivec2(800, 600));
 		window()->title("translucent");
 
 		// entities
-		entityManagerClass *ents = entities();
+		entityManager *ents = entities();
 		{ // camera
-			entityClass *e = ents->create(1);
-			ENGINE_GET_COMPONENT(transform, t, e);
+			entity *e = ents->create(1);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.position = vec3(8, 6, 10);
 			t.orientation = quat(degs(-30), degs(40), degs());
-			ENGINE_GET_COMPONENT(camera, c, e);
+			CAGE_COMPONENT_ENGINE(camera, c, e);
 			c.near = 0.1;
 			c.far = 1000;
 			c.effects = cameraEffectsFlags::CombinedPass;
 			c.ambientLight = vec3(0.02);
 		}
 		{ // sun
-			entityClass *e = ents->create(2);
-			ENGINE_GET_COMPONENT(transform, t, e);
+			entity *e = ents->create(2);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.orientation = quat(degs(-50), degs(-42 + 180), degs());
 			t.position = vec3(0, 5, 0);
-			ENGINE_GET_COMPONENT(light, l, e);
+			CAGE_COMPONENT_ENGINE(light, l, e);
 			l.lightType = lightTypeEnum::Directional;
 			l.color = vec3(2, 2, 1);
-			ENGINE_GET_COMPONENT(shadowmap, s, e);
+			CAGE_COMPONENT_ENGINE(shadowmap, s, e);
 			s.resolution = 2048;
 			s.worldSize = vec3(15);
 		}
 		{ // flash light
-			entityClass *e = ents->create(3);
-			ENGINE_GET_COMPONENT(transform, t, e);
+			entity *e = ents->create(3);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.position = vec3(-5, 4, 3);
 			t.orientation = quat(degs(-40), degs(-110), degs());
-			ENGINE_GET_COMPONENT(render, r, e);
+			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/bottle/other.obj?arrow");
 			r.color = vec3(1);
-			ENGINE_GET_COMPONENT(light, l, e);
+			CAGE_COMPONENT_ENGINE(light, l, e);
 			l.lightType = lightTypeEnum::Spot;
 			l.spotAngle = degs(60);
 			l.spotExponent = 40;
 			l.attenuation = vec3(0, 0, 0.03);
 			l.color = vec3(15);
-			ENGINE_GET_COMPONENT(shadowmap, s, e);
+			CAGE_COMPONENT_ENGINE(shadowmap, s, e);
 			s.resolution = 1024;
 			s.worldSize = vec3(3, 50, 0);
 		}
 		{ // floor
-			entityClass *e = ents->create(5);
-			ENGINE_GET_COMPONENT(render, r, e);
+			entity *e = ents->create(5);
+			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/translucent/shapes.blend?Ground");
-			ENGINE_GET_COMPONENT(transform, t, e);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.position = vec3(0, -0.2, 0);
 		}
 		{ // flying knot
-			entityClass *e = ents->create(6);
-			ENGINE_GET_COMPONENT(render, r, e);
+			entity *e = ents->create(6);
+			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/translucent/shapes.blend?Knot");
-			ENGINE_GET_COMPONENT(transform, t, e);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.position = vec3(5, 2, -5);
 			t.scale = 3;
 		}
 		{ // suzanne
-			entityClass *e = ents->create(10);
-			ENGINE_GET_COMPONENT(render, r, e);
+			entity *e = ents->create(10);
+			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/translucent/suzanne.blend");
-			ENGINE_GET_COMPONENT(transform, t, e);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.position = vec3(2, 1, 0);
 		}
 		{ // cube
-			entityClass *e = ents->create(11);
-			ENGINE_GET_COMPONENT(render, r, e);
+			entity *e = ents->create(11);
+			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/translucent/shapes.blend?Cube");
-			ENGINE_GET_COMPONENT(transform, t, e);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.position = vec3(-3, 1, -2);
 			t.orientation = randomDirectionQuat();
 		}
 		{ // sphere
-			entityClass *e = ents->create(12);
-			ENGINE_GET_COMPONENT(render, r, e);
+			entity *e = ents->create(12);
+			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/translucent/shapes.blend?Sphere");
-			ENGINE_GET_COMPONENT(transform, t, e);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.position = vec3(-0.5, 1, 3.5);
 			t.orientation = randomDirectionQuat();
 		}
 		{ // plane
-			entityClass *e = ents->create(13);
-			ENGINE_GET_COMPONENT(render, r, e);
+			entity *e = ents->create(13);
+			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/translucent/shapes.blend?Plane");
-			ENGINE_GET_COMPONENT(transform, t, e);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.position = vec3(-0.5, 1, -1);
 			t.orientation = quat(degs(), degs(80), degs());
 		}
 		{ // bottle
-			entityClass *e = ents->create(14);
-			ENGINE_GET_COMPONENT(render, r, e);
+			entity *e = ents->create(14);
+			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/bottle/bottle.obj");
-			ENGINE_GET_COMPONENT(transform, t, e);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.position = vec3(-1.1, -0.2, 5.8);
 			t.scale = 0.6;
 		}
 		// animated knots
 		for (uint32 i = 0; i < knotsCount; i++)
 		{
-			entityClass *e = ents->create(20 + i);
-			ENGINE_GET_COMPONENT(render, r, e);
+			entity *e = ents->create(20 + i);
+			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/translucent/shapes.blend?Knot");
-			ENGINE_GET_COMPONENT(transform, t, e);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			rads angle = degs(i * 360.0 / knotsCount);
 			t.position = vec3(sin(angle) * 8, 0.5, cos(angle) * 8);
 			t.orientation = quat(degs(), angle, degs());
@@ -221,29 +221,29 @@ int main(int argc, char *args[])
 		// animated bulbs
 		for (uint32 i = 0; i < bulbsCount; i++)
 		{
-			entityClass *e = ents->create(100 + i);
-			ENGINE_GET_COMPONENT(render, r, e);
+			entity *e = ents->create(100 + i);
+			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/translucent/shapes.blend?Bulb");
-			ENGINE_GET_COMPONENT(transform, t, e);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.scale = 0.1;
 			t.position = randomDirection3() * randomRange(1, 5) + vec3(0, 3, 0);
-			ENGINE_GET_COMPONENT(light, l, e);
+			CAGE_COMPONENT_ENGINE(light, l, e);
 			l.lightType = lightTypeEnum::Point;
 			r.color = l.color = convertHsvToRgb(randomChance3() * vec3(1, .5, .5) + vec3(0, .5, .5));
 			l.attenuation = vec3(0.5, 0, 0.07);
 		}
 		for (uint32 j = 0; j < 3; j++)
 		{
-			noiseCreateConfig cfg;
+			noiseFunctionCreateConfig cfg;
 			cfg.seed = j * 17 + 42 + randomRange(100, 1000);
 			cfg.frequency *= 0.5;
-			bulbsNoise[j] = newNoise(cfg);
+			bulbsNoise[j] = newNoiseFunction(cfg);
 		}
 
-		holder<cameraControllerClass> cameraController = newCameraController(ents->get(1));
-		cameraController->mouseButton = mouseButtonsFlags::Left;
-		cameraController->movementSpeed = 0.3;
-		holder<engineProfilingClass> engineProfiling = newEngineProfiling();
+		holder<cameraController> cameraCtrl = newCameraController(ents->get(1));
+		cameraCtrl->mouseButton = mouseButtonsFlags::Left;
+		cameraCtrl->movementSpeed = 0.3;
+		holder<engineProfiling> engineProfiling = newEngineProfiling();
 
 		assets()->add(assetsName);
 		engineStart();

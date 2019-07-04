@@ -43,10 +43,10 @@ void controlFinish()
 void controlUpdate()
 {
 	uint64 time = currentControlTime();
-	entityManagerClass *ents = entities();
+	entityManager *ents = entities();
 	{
-		entityClass *e = ents->get(2);
-		ENGINE_GET_COMPONENT(transform, t, e);
+		entity *e = ents->get(2);
+		CAGE_COMPONENT_ENGINE(transform, t, e);
 		t.position = vec3(sin(rads(time * 1e-6)) * 10, cos(rads(time * 1e-6)) * 10, -20);
 	}
 	maybeThrow(probLoop, 3);
@@ -112,9 +112,9 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder<loggerClass> log1 = newLogger();
-		log1->format.bind<logFormatPolicyConsole>();
-		log1->output.bind<logOutputPolicyStdOut>();
+		holder<logger> log1 = newLogger();
+		log1->format.bind<logFormatConsole>();
+		log1->output.bind<logOutputStdOut>();
 
 		// override breakpoints
 		detail::setGlobalBreakpointOverride(false);
@@ -149,23 +149,23 @@ int main(int argc, char *args[])
 			windowCloseListener.attach(window()->events.windowClose);
 
 			window()->setWindowed();
-			window()->windowedSize(pointStruct(800, 600));
+			window()->windowedSize(ivec2(800, 600));
 			window()->title("exceptions");
 
 			{ // camera
-				entityClass *e = entities()->create(1);
-				ENGINE_GET_COMPONENT(transform, t, e);
-				ENGINE_GET_COMPONENT(camera, c, e);
+				entity *e = entities()->create(1);
+				CAGE_COMPONENT_ENGINE(transform, t, e);
+				CAGE_COMPONENT_ENGINE(camera, c, e);
 				c.ambientLight = vec3(1, 1, 1);
 			}
 			{ // box 1
-				entityClass *e = entities()->create(2);
-				ENGINE_GET_COMPONENT(transform, t, e);
-				ENGINE_GET_COMPONENT(render, r, e);
+				entity *e = entities()->create(2);
+				CAGE_COMPONENT_ENGINE(transform, t, e);
+				CAGE_COMPONENT_ENGINE(render, r, e);
 				r.object = 1; // something non-existing
 			}
 
-			holder<engineProfilingClass> profiling = newEngineProfiling();
+			holder<engineProfiling> profiling = newEngineProfiling();
 
 			engineStart();
 			engineFinalize();

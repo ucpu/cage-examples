@@ -42,9 +42,9 @@ bool keyPress(uint32, uint32 b, modifiersFlags modifiers)
 
 void box(const vec3 &pos, const quat &rot)
 {
-	entityClass *e = entities()->createAnonymous();
-	ENGINE_GET_COMPONENT(transform, t, e);
-	ENGINE_GET_COMPONENT(render, r, e);
+	entity *e = entities()->createAnonymous();
+	CAGE_COMPONENT_ENGINE(transform, t, e);
+	CAGE_COMPONENT_ENGINE(render, r, e);
 	t.position = pos;
 	t.orientation = rot;
 	r.object = 1;
@@ -100,15 +100,15 @@ void letter(char c, const vec3 &pos)
 
 void regenerate()
 {
-	entityManagerClass *ents = entities();
+	entityManager *ents = entities();
 	ents->destroy();
 
 	for (uint32 i = 0; i < 3; i++)
 	{ // camera
-		entityClass *e = ents->create(i + 1);
-		ENGINE_GET_COMPONENT(transform, t, e);
+		entity *e = ents->create(i + 1);
+		CAGE_COMPONENT_ENGINE(transform, t, e);
 		(void)t;
-		ENGINE_GET_COMPONENT(camera, c, e);
+		CAGE_COMPONENT_ENGINE(camera, c, e);
 		c.ambientLight = vec3(1, 1, 1) * 0.1;
 		c.renderMask = 1 << i;
 		c.cameraOrder = i;
@@ -134,13 +134,13 @@ void regenerate()
 	letter('E', vec3(+3, 0, +0) * 10);
 
 	{ // light
-		entityClass *e = ents->create(10);
-		ENGINE_GET_COMPONENT(transform, t, e);
+		entity *e = ents->create(10);
+		CAGE_COMPONENT_ENGINE(transform, t, e);
 		t.orientation = randomDirectionQuat();
-		ENGINE_GET_COMPONENT(light, l, e);
+		CAGE_COMPONENT_ENGINE(light, l, e);
 		l.lightType = lightTypeEnum::Directional;
 		l.color = vec3(1, 1, 1) * 0.9;
-		ENGINE_GET_COMPONENT(shadowmap, s, e);
+		CAGE_COMPONENT_ENGINE(shadowmap, s, e);
 		s.resolution = 512;
 		s.worldSize = vec3(50, 50, 50);
 	}
@@ -156,14 +156,14 @@ bool update()
 		regenerate();
 	}
 
-	entityManagerClass *ents = entities();
+	entityManager *ents = entities();
 
 	if (camsLayout == 2)
 	{ // rotating viewports
 		for (uint32 i = 0; i < 3; i++)
 		{
-			entityClass *e = ents->get(i + 1);
-			ENGINE_GET_COMPONENT(camera, c, e);
+			entity *e = ents->get(i + 1);
+			CAGE_COMPONENT_ENGINE(camera, c, e);
 			c.ambientLight = vec3(1, 1, 1) * 0.5;
 			c.renderMask = 1 << i;
 			c.cameraOrder = i;
@@ -175,8 +175,8 @@ bool update()
 
 	for (uint32 i = 0; i < 3; i++)
 	{ // transformations of cameras
-		entityClass *e = ents->get(i + 1);
-		ENGINE_GET_COMPONENT(transform, t, e);
+		entity *e = ents->get(i + 1);
+		CAGE_COMPONENT_ENGINE(transform, t, e);
 		switch (i)
 		{
 		case 0:
@@ -202,9 +202,9 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder<loggerClass> log1 = newLogger();
-		log1->format.bind<logFormatPolicyConsole>();
-		log1->output.bind<logOutputPolicyStdOut>();
+		holder<logger> log1 = newLogger();
+		log1->format.bind<logFormatConsole>();
+		log1->output.bind<logOutputStdOut>();
 
 		configSetBool("cage-client.engine.renderMissingMeshes", true);
 		engineInitialize(engineCreateConfig());
@@ -222,10 +222,10 @@ int main(int argc, char *args[])
 		updateListener.attach(controlThread().update);
 
 		window()->setWindowed();
-		window()->windowedSize(pointStruct(800, 600));
+		window()->windowedSize(ivec2(800, 600));
 		window()->title("multiple viewports");
 		dirty = true;
-		holder<engineProfilingClass> engineProfiling = newEngineProfiling();
+		holder<engineProfiling> engineProfiling = newEngineProfiling();
 
 		engineStart();
 		engineFinalize();

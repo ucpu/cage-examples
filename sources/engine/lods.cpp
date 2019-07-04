@@ -34,9 +34,9 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder<loggerClass> log1 = newLogger();
-		log1->format.bind<logFormatPolicyConsole>();
-		log1->output.bind<logOutputPolicyStdOut>();
+		holder<logger> log1 = newLogger();
+		log1->format.bind<logFormatConsole>();
+		log1->output.bind<logOutputStdOut>();
 
 		configSetBool("cage-client.engine.debugRenderMissingMeshes", true);
 		engineInitialize(engineCreateConfig());
@@ -49,57 +49,57 @@ int main(int argc, char *args[])
 
 		// window
 		window()->setWindowed();
-		window()->windowedSize(pointStruct(800, 600));
+		window()->windowedSize(ivec2(800, 600));
 		window()->title("levels of details");
 
 		// entities
-		entityManagerClass *ents = entities();
+		entityManager *ents = entities();
 		{ // cube
-			entityClass *e = ents->create(1);
-			ENGINE_GET_COMPONENT(render, r, e);
+			entity *e = ents->create(1);
+			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/lods/cube.object");
-			ENGINE_GET_COMPONENT(transform, t, e);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.position = vec3(-8, 0, 0);
 		}
 		{ // sphere
-			entityClass *e = ents->create(2);
-			ENGINE_GET_COMPONENT(render, r, e);
+			entity *e = ents->create(2);
+			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/lods/sphere.object");
-			ENGINE_GET_COMPONENT(transform, t, e);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.position = vec3(8, 0, 0);
 		}
 		{ // floor
-			entityClass *e = ents->create(3);
-			ENGINE_GET_COMPONENT(render, r, e);
+			entity *e = ents->create(3);
+			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/lods/floor.object");
-			ENGINE_GET_COMPONENT(transform, t, e);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.position = vec3(0, -5, 0);
 		}
 		{ // sun
-			entityClass *e = ents->create(9);
-			ENGINE_GET_COMPONENT(transform, t, e);
+			entity *e = ents->create(9);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.orientation = quat(degs(-60), degs(20), degs());
-			ENGINE_GET_COMPONENT(light, l, e);
+			CAGE_COMPONENT_ENGINE(light, l, e);
 			l.lightType = lightTypeEnum::Directional;
-			ENGINE_GET_COMPONENT(shadowmap, s, e);
+			CAGE_COMPONENT_ENGINE(shadowmap, s, e);
 			s.resolution = 1024;
 			s.worldSize = vec3(20, 20, 20);
 		}
 		{ // camera
-			entityClass *e = ents->create(10);
-			ENGINE_GET_COMPONENT(transform, t, e);
+			entity *e = ents->create(10);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.position = vec3(0, 3, 30);
 			t.orientation = quat(degs(-10), degs(), degs());
-			ENGINE_GET_COMPONENT(camera, c, e);
+			CAGE_COMPONENT_ENGINE(camera, c, e);
 			c.ambientLight = vec3(1, 1, 1) * 0.5;
 			c.near = 0.1;
 			c.far = 200;
 		}
 
-		holder<cameraControllerClass> cameraController = newCameraController(ents->get(10));
+		holder<cameraController> cameraController = newCameraController(ents->get(10));
 		cameraController->mouseButton = mouseButtonsFlags::Left;
 		cameraController->movementSpeed = 1;
-		holder<engineProfilingClass> engineProfiling = newEngineProfiling();
+		holder<engineProfiling> engineProfiling = newEngineProfiling();
 
 		assets()->add(assetsName);
 		engineStart();

@@ -27,20 +27,20 @@ bool windowClose()
 
 void controlInit()
 {
-	entityManagerClass *ents = entities();
+	entityManager *ents = entities();
 	{ // camera
-		entityClass *e = ents->create(1);
-		ENGINE_GET_COMPONENT(transform, t, e);
+		entity *e = ents->create(1);
+		CAGE_COMPONENT_ENGINE(transform, t, e);
 		(void)t;
-		ENGINE_GET_COMPONENT(camera, c, e);
+		CAGE_COMPONENT_ENGINE(camera, c, e);
 		c.ambientLight = vec3(1, 1, 1);
 		c.effects = cameraEffectsFlags::CombinedPass;
 	}
 	{ // box 1
-		entityClass *e = ents->create(2);
-		ENGINE_GET_COMPONENT(transform, t, e);
+		entity *e = ents->create(2);
+		CAGE_COMPONENT_ENGINE(transform, t, e);
 		(void)t;
-		ENGINE_GET_COMPONENT(render, r, e);
+		CAGE_COMPONENT_ENGINE(render, r, e);
 		r.object = 1; // something non-existing
 	}
 }
@@ -50,10 +50,10 @@ bool guiUpdate();
 bool update()
 {
 	uint64 time = currentControlTime();
-	entityManagerClass *ents = entities();
+	entityManager *ents = entities();
 	{ // box 1
-		entityClass *e = ents->get(2);
-		ENGINE_GET_COMPONENT(transform, t, e);
+		entity *e = ents->get(2);
+		CAGE_COMPONENT_ENGINE(transform, t, e);
 		t.position = vec3(sin(rads(time * 1e-6)) * 10, cos(rads(time * 1e-6)) * 10, -20);
 	}
 	threadSleep(updateDelay);
@@ -81,18 +81,18 @@ bool soundUpdate()
 
 bool guiInit()
 {
-	guiClass *g = cage::gui();
+	guiManager *g = cage::gui();
 
-	entityClass *panel = g->entities()->createUnique();
+	entity *panel = g->entities()->createUnique();
 	{
-		GUI_GET_COMPONENT(scrollbars, sc, panel);
+		CAGE_COMPONENT_GUI(scrollbars, sc, panel);
 	}
 
-	entityClass *layout = g->entities()->createUnique();
+	entity *layout = g->entities()->createUnique();
 	{
-		GUI_GET_COMPONENT(panel, c, layout);
-		GUI_GET_COMPONENT(layoutTable, l, layout);
-		GUI_GET_COMPONENT(parent, child, layout);
+		CAGE_COMPONENT_GUI(panel, c, layout);
+		CAGE_COMPONENT_GUI(layoutTable, l, layout);
+		CAGE_COMPONENT_GUI(parent, child, layout);
 		child.parent = panel->name();
 	}
 
@@ -102,21 +102,21 @@ bool guiInit()
 	CAGE_ASSERT_COMPILE(sizeof(names) / sizeof(names[0]) == sizeof(values) / sizeof(values[0]), arrays_must_have_same_length);
 	for (uint32 i = 0; i < sizeof(names) / sizeof(names[0]); i++)
 	{
-		entityClass *lab = g->entities()->createUnique();
+		entity *lab = g->entities()->createUnique();
 		{
-			GUI_GET_COMPONENT(parent, child, lab);
+			CAGE_COMPONENT_GUI(parent, child, lab);
 			child.parent = layout->name();
 			child.order = i * 2 + 0;
-			GUI_GET_COMPONENT(label, c, lab);
-			GUI_GET_COMPONENT(text, t, lab);
+			CAGE_COMPONENT_GUI(label, c, lab);
+			CAGE_COMPONENT_GUI(text, t, lab);
 			t.value = names[i];
 		}
-		entityClass *con = g->entities()->create(20 + i);
+		entity *con = g->entities()->create(20 + i);
 		{
-			GUI_GET_COMPONENT(parent, child, con);
+			CAGE_COMPONENT_GUI(parent, child, con);
 			child.parent = layout->name();
 			child.order = i * 2 + 1;
-			GUI_GET_COMPONENT(input, c, con);
+			CAGE_COMPONENT_GUI(input, c, con);
 			c.type = inputTypeEnum::Integer;
 			c.min.i = i >= 2 ? 0 : 1;
 			c.max.i = 1000;
@@ -132,8 +132,8 @@ namespace
 {
 	void setIntValue(uint32 index, uint64 &value, bool allowZero)
 	{
-		entityClass *control = cage::gui()->entities()->get(20 + index);
-		GUI_GET_COMPONENT(input, t, control);
+		entity *control = cage::gui()->entities()->get(20 + index);
+		CAGE_COMPONENT_GUI(input, t, control);
 		if (t.valid)
 		{
 			CAGE_ASSERT_RUNTIME(t.value.isDigitsOnly() && !t.value.empty());
@@ -158,9 +158,9 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder<loggerClass> log1 = newLogger();
-		log1->format.bind<logFormatPolicyConsole>();
-		log1->output.bind<logOutputPolicyStdOut>();
+		holder<logger> log1 = newLogger();
+		log1->format.bind<logFormatConsole>();
+		log1->output.bind<logOutputStdOut>();
 
 		configSetBool("cage-client.engine.renderMissingMeshes", true);
 		engineInitialize(engineCreateConfig());
@@ -178,10 +178,10 @@ int main(int argc, char *args[])
 		windowCloseListener.attach(window()->events.windowClose);
 
 		window()->setWindowed();
-		window()->windowedSize(pointStruct(800, 600));
+		window()->windowedSize(ivec2(800, 600));
 		window()->title("interpolation");
 		controlInit();
-		holder<engineProfilingClass> engineProfiling = newEngineProfiling();
+		holder<engineProfiling> engineProfiling = newEngineProfiling();
 
 		engineStart();
 		engineFinalize();

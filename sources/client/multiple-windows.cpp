@@ -14,7 +14,7 @@ using namespace cage;
 
 std::atomic<int> globalWindowIndex;
 bool globalClosing = false;
-holder<mutexClass> openglInitMut = newMutex();
+holder<syncMutex> openglInitMut = newSyncMutex();
 
 class windowTestClass
 {
@@ -24,9 +24,9 @@ public:
 		CAGE_LOG(severityEnum::Info, "test", string() + "creating window " + index);
 		window = newWindow();
 		window->setWindowed();
-		window->windowedSize(pointStruct(400, 300));
+		window->windowedSize(ivec2(400, 300));
 		{
-			scopeLock<mutexClass> l(openglInitMut);
+			scopeLock<syncMutex> l(openglInitMut);
 			detail::initializeOpengl();
 		}
 		window->title(string() + "window " + index);
@@ -45,7 +45,7 @@ public:
 	void tick()
 	{
 		window->processEvents();
-		pointStruct resolution = window->resolution();
+		ivec2 resolution = window->resolution();
 		glViewport(0, 0, resolution.x, resolution.y);
 		vec3 color = convertHsvToRgb(vec3(hue, 1, 1));
 		hue = (hue + 0.002) % 1;
@@ -80,43 +80,43 @@ public:
 		return true;
 	}
 
-	bool windowMove(const pointStruct &p)
+	bool windowMove(const ivec2 &p)
 	{
 		CAGE_LOG(severityEnum::Info, "event", string() + "move window " + index + " to " + p.x + ", " + p.y);
 		return true;
 	}
 
-	bool windowResize(const pointStruct &p)
+	bool windowResize(const ivec2 &p)
 	{
 		CAGE_LOG(severityEnum::Info, "event", string() + "resize window " + index + " to " + p.x + ", " + p.y);
 		return true;
 	}
 
-	bool mousePress(mouseButtonsFlags b, modifiersFlags m, const pointStruct &p)
+	bool mousePress(mouseButtonsFlags b, modifiersFlags m, const ivec2 &p)
 	{
 		CAGE_LOG(severityEnum::Info, "event", string() + "mouse press button " + (uint32)b + ", mods " + (uint32)m + ", at " + p.x + ", " + p.y + " in window " + index);
 		return true;
 	}
 
-	bool mouseDouble(mouseButtonsFlags b, modifiersFlags m, const pointStruct &p)
+	bool mouseDouble(mouseButtonsFlags b, modifiersFlags m, const ivec2 &p)
 	{
 		CAGE_LOG(severityEnum::Info, "event", string() + "mouse double click button " + (uint32)b + ", mods " + (uint32)m + ", at " + p.x + ", " + p.y + " in window " + index);
 		return true;
 	}
 
-	bool mouseRelease(mouseButtonsFlags b, modifiersFlags m, const pointStruct &p)
+	bool mouseRelease(mouseButtonsFlags b, modifiersFlags m, const ivec2 &p)
 	{
 		CAGE_LOG(severityEnum::Info, "event", string() + "mouse release button " + (uint32)b + ", mods " + (uint32)m + ", at " + p.x + ", " + p.y + " in window " + index);
 		return true;
 	}
 
-	bool mouseMove(mouseButtonsFlags b, modifiersFlags m, const pointStruct &p)
+	bool mouseMove(mouseButtonsFlags b, modifiersFlags m, const ivec2 &p)
 	{
 		CAGE_LOG(severityEnum::Info, "event", string() + "mouse move button " + (uint32)b + ", mods " + (uint32)m + ", to " + p.x + ", " + p.y + " in window " + index);
 		return true;
 	}
 
-	bool mouseWheel(sint8 v, modifiersFlags m, const pointStruct &p)
+	bool mouseWheel(sint8 v, modifiersFlags m, const ivec2 &p)
 	{
 		CAGE_LOG(severityEnum::Info, "event", string() + "mouse wheel " + v + ", mods " + (uint32)m + ", at " + p.x + ", " + p.y + " in window " + index);
 		return true;
@@ -158,7 +158,7 @@ public:
 		return true;
 	}
 
-	holder<windowClass> window;
+	holder<windowHandle> window;
 	windowEventListeners listeners;
 	const uint32 index;
 	real hue;
@@ -177,16 +177,16 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder<loggerClass> log1 = newLogger();
-		log1->format.bind<logFormatPolicyConsole>();
-		log1->output.bind<logOutputPolicyStdOut>();
+		holder<logger> log1 = newLogger();
+		log1->format.bind<logFormatConsole>();
+		log1->output.bind<logOutputStdOut>();
 
 		CAGE_LOG(severityEnum::Warning, "compatibility", "be warned, this example depends on undocumented behavior and may not work on some platforms");
-		CAGE_LOG(severityEnum::Info, "compatibility", "it is recommended that all window-related tasks are made in the main thread");
+		CAGE_LOG(severityEnum::Info, "compatibility", "it is recommended that all window-related tasks are made in the main threadHandle");
 
-		holder<threadClass> thrs[3];
+		holder<threadHandle> thrs[3];
 		for (uint32 i = 0; i < 3; i++)
-			thrs[i] = newThread(delegate<void()>().bind<&windowThread>(), string("thread ") + i);
+			thrs[i] = newThread(delegate<void()>().bind<&windowThread>(), string("threadHandle ") + i);
 
 		return 0;
 	}

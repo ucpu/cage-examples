@@ -27,19 +27,19 @@ bool windowClose()
 
 vec3 getGuiColor(uint32 id)
 {
-	entityClass *e = gui()->entities()->get(id);
-	GUI_GET_COMPONENT(colorPicker, c, e);
+	entity *e = gui()->entities()->get(id);
+	CAGE_COMPONENT_GUI(colorPicker, c, e);
 	return c.color;
 }
 
 vec3 getGuiOrientation(uint32 id)
 {
 	vec3 result;
-	entityManagerClass *ents = gui()->entities();
+	entityManager *ents = gui()->entities();
 	for (uint32 i = 0; i < 2; i++)
 	{
-		entityClass *e = ents->get(id + i);
-		GUI_GET_COMPONENT(sliderBar, c, e);
+		entity *e = ents->get(id + i);
+		CAGE_COMPONENT_GUI(sliderBar, c, e);
 		result[i] = c.value;
 	}
 	return result;
@@ -47,29 +47,29 @@ vec3 getGuiOrientation(uint32 id)
 
 bool update()
 {
-	entityManagerClass *ents = entities();
+	entityManager *ents = entities();
 
 	{ // update ambient light
-		entityClass *e = ents->get(10);
-		ENGINE_GET_COMPONENT(camera, c, e);
+		entity *e = ents->get(10);
+		CAGE_COMPONENT_ENGINE(camera, c, e);
 		c.ambientLight = getGuiColor(27);
 	}
 
 	for (uint32 i = 0; i < 3; i++)
 	{ // update lights
-		entityClass *e = ents->get(5 + i);
-		ENGINE_GET_COMPONENT(render, r, e);
-		ENGINE_GET_COMPONENT(light, l, e);
+		entity *e = ents->get(5 + i);
+		CAGE_COMPONENT_ENGINE(render, r, e);
+		CAGE_COMPONENT_ENGINE(light, l, e);
 		r.color = l.color = getGuiColor(37 + i * 10);
-		ENGINE_GET_COMPONENT(transform, t, e);
+		CAGE_COMPONENT_ENGINE(transform, t, e);
 		vec3 o = getGuiOrientation(33 + i * 10);
 		t.orientation = quat(degs(o[0] - 90), degs(o[1]), degs());
 		t.position = vec3(0, 3, 0) + t.orientation * vec3(0, 0, 10);
 	}
 
 	{ // rotate the bottle
-		entityClass *e = ents->get(2);
-		ENGINE_GET_COMPONENT(transform, t, e);
+		entity *e = ents->get(2);
+		CAGE_COMPONENT_ENGINE(transform, t, e);
 		t.orientation = quat(degs(), degs(1), degs()) * t.orientation;
 	}
 	return false;
@@ -77,35 +77,35 @@ bool update()
 
 void initializeGuiColors(uint32 parentId, uint32 id, const vec3 &hsv)
 {
-	entityClass *e = gui()->entities()->create(id);
-	GUI_GET_COMPONENT(parent, p, e);
+	entity *e = gui()->entities()->create(id);
+	CAGE_COMPONENT_GUI(parent, p, e);
 	p.parent = parentId;
 	p.order = 5;
-	GUI_GET_COMPONENT(colorPicker, c, e);
+	CAGE_COMPONENT_GUI(colorPicker, c, e);
 	c.color = convertHsvToRgb(hsv);
 	c.collapsible = true;
 }
 
 void initializeGui()
 {
-	entityManagerClass *ents = gui()->entities();
-	entityClass *layout = ents->create(1);
+	entityManager *ents = gui()->entities();
+	entity *layout = ents->create(1);
 	{ // layout
-		GUI_GET_COMPONENT(scrollbars, sc, layout);
-		GUI_GET_COMPONENT(layoutLine, l, layout);
+		CAGE_COMPONENT_GUI(scrollbars, sc, layout);
+		CAGE_COMPONENT_GUI(layoutLine, l, layout);
 		l.vertical = true;
 	}
 
 	{ // ambient
-		entityClass *panel = ents->create(20);
+		entity *panel = ents->create(20);
 		{
-			GUI_GET_COMPONENT(parent, p, panel);
+			CAGE_COMPONENT_GUI(parent, p, panel);
 			p.parent = layout->name();
 			p.order = 1;
-			GUI_GET_COMPONENT(spoiler, c, panel);
-			GUI_GET_COMPONENT(text, t, panel);
+			CAGE_COMPONENT_GUI(spoiler, c, panel);
+			CAGE_COMPONENT_GUI(text, t, panel);
 			t.value = "Ambient";
-			GUI_GET_COMPONENT(layoutLine, l, panel);
+			CAGE_COMPONENT_GUI(layoutLine, l, panel);
 			l.vertical = true;
 		}
 		initializeGuiColors(panel->name(), 27, vec3(0, 0, 0.02));
@@ -120,33 +120,33 @@ void initializeGui()
 	real yaws[3] = { 0.1 * 360, 0.2 * 360, 0.6 * 360 };
 	for (uint32 i = 0; i < 3; i++)
 	{ // spot lights
-		entityClass *panel = ents->create(30 + i * 10);
+		entity *panel = ents->create(30 + i * 10);
 		{
-			GUI_GET_COMPONENT(parent, p, panel);
+			CAGE_COMPONENT_GUI(parent, p, panel);
 			p.parent = layout->name();
 			p.order = 5 + i;
-			GUI_GET_COMPONENT(spoiler, c, panel);
-			GUI_GET_COMPONENT(text, t, panel);
+			CAGE_COMPONENT_GUI(spoiler, c, panel);
+			CAGE_COMPONENT_GUI(text, t, panel);
 			t.value = string() + "Spot light [" + i + "]:";
-			GUI_GET_COMPONENT(layoutLine, l, panel);
+			CAGE_COMPONENT_GUI(layoutLine, l, panel);
 			l.vertical = true;
 		}
 		{
-			entityClass *e = ents->create(33 + i * 10);
-			GUI_GET_COMPONENT(parent, p, e);
+			entity *e = ents->create(33 + i * 10);
+			CAGE_COMPONENT_GUI(parent, p, e);
 			p.parent = panel->name();
 			p.order = 2;
-			GUI_GET_COMPONENT(sliderBar, c, e);
+			CAGE_COMPONENT_GUI(sliderBar, c, e);
 			c.value = pitches[i].value;
 			c.min = 0;
 			c.max = 90;
 		}
 		{
-			entityClass *e = ents->create(34 + i * 10);
-			GUI_GET_COMPONENT(parent, p, e);
+			entity *e = ents->create(34 + i * 10);
+			CAGE_COMPONENT_GUI(parent, p, e);
 			p.parent = panel->name();
 			p.order = 3;
-			GUI_GET_COMPONENT(sliderBar, c, e);
+			CAGE_COMPONENT_GUI(sliderBar, c, e);
 			c.value = yaws[i].value;
 			c.min = 0;
 			c.max = 360;
@@ -160,9 +160,9 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder<loggerClass> log1 = newLogger();
-		log1->format.bind<logFormatPolicyConsole>();
-		log1->output.bind<logOutputPolicyStdOut>();
+		holder<logger> log1 = newLogger();
+		log1->format.bind<logFormatConsole>();
+		log1->output.bind<logOutputStdOut>();
 
 		engineInitialize(engineCreateConfig());
 
@@ -174,55 +174,55 @@ int main(int argc, char *args[])
 
 		// window
 		window()->setWindowed();
-		window()->windowedSize(pointStruct(800, 600));
+		window()->windowedSize(ivec2(800, 600));
 		window()->title("lights");
 		initializeGui();
 
 		// entities
-		entityManagerClass *ents = entities();
+		entityManager *ents = entities();
 		{ // floor
-			entityClass *e = ents->create(1);
-			ENGINE_GET_COMPONENT(render, r, e);
+			entity *e = ents->create(1);
+			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/bottle/other.obj?plane");
-			ENGINE_GET_COMPONENT(transform, t, e);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.scale = 5;
 		}
 		{ // bottle
-			entityClass *e = ents->create(2);
-			ENGINE_GET_COMPONENT(render, r, e);
+			entity *e = ents->create(2);
+			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/bottle/bottle.obj");
-			ENGINE_GET_COMPONENT(transform, t, e);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.position += vec3(1, 0, 0);
 		}
 		for (uint32 i = 0; i < 3; i++)
 		{ // spot lights
-			entityClass *e = ents->create(5 + i);
-			ENGINE_GET_COMPONENT(render, r, e);
+			entity *e = ents->create(5 + i);
+			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/bottle/other.obj?arrow");
-			ENGINE_GET_COMPONENT(light, l, e);
+			CAGE_COMPONENT_ENGINE(light, l, e);
 			l.lightType = lightTypeEnum::Spot;
 			l.spotAngle = degs(40);
 			l.spotExponent = 40;
 			l.attenuation = vec3(1, 0, 0.005);
-			ENGINE_GET_COMPONENT(shadowmap, s, e);
+			CAGE_COMPONENT_ENGINE(shadowmap, s, e);
 			s.resolution = 512;
 			s.worldSize = vec3(3, 50, 0);
 		}
 		{ // camera
-			entityClass *e = ents->create(10);
-			ENGINE_GET_COMPONENT(transform, t, e);
+			entity *e = ents->create(10);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.position = vec3(0, 5, 7);
 			t.orientation = quat(degs(-10), degs(), degs());
-			ENGINE_GET_COMPONENT(camera, c, e);
+			CAGE_COMPONENT_ENGINE(camera, c, e);
 			c.near = 0.1;
 			c.far = 1000;
 			c.effects = cameraEffectsFlags::CombinedPass;
 		}
 
-		holder<cameraControllerClass> cameraController = newCameraController(ents->get(10));
+		holder<cameraController> cameraController = newCameraController(ents->get(10));
 		cameraController->mouseButton = mouseButtonsFlags::Left;
 		cameraController->movementSpeed = 0.3;
-		holder<engineProfilingClass> engineProfiling = newEngineProfiling();
+		holder<engineProfiling> engineProfiling = newEngineProfiling();
 
 		assets()->add(assetsName);
 		engineStart();

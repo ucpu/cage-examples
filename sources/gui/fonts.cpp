@@ -26,40 +26,40 @@ public:
 
 	void update() override
 	{
-		entityManagerClass *ents = gui()->entities();
+		entityManager *ents = gui()->entities();
 		static real offset = randomChance() * 1000;
 		real t = getApplicationTime() / 2e7f + offset;
 		for (uint32 i = 0; i < fontsCount; i++)
 		{
-			entityClass * e = ents->get(100 + i);
-			GUI_GET_COMPONENT(textFormat, format, e);
+			entity * e = ents->get(100 + i);
+			CAGE_COMPONENT_GUI(textFormat, format, e);
 			format.size = (steeper(rads(t) + rads::Full() * real(i) / fontsCount) * 0.5 + 0.5) * 80 + 10;
 		}
 	}
 
 	void initialize() override
 	{
-		entityManagerClass *ents = gui()->entities();
+		entityManager *ents = gui()->entities();
 
-		entityClass *panel = ents->create(2);
+		entity *panel = ents->create(2);
 		{
-			GUI_GET_COMPONENT(panel, gp, panel);
-			GUI_GET_COMPONENT(scrollbars, sc, panel);
+			CAGE_COMPONENT_GUI(panel, gp, panel);
+			CAGE_COMPONENT_GUI(scrollbars, sc, panel);
 			sc.alignment = vec2(0.5, 0.5);
-			GUI_GET_COMPONENT(layoutLine, ll, panel);
+			CAGE_COMPONENT_GUI(layoutLine, ll, panel);
 			ll.vertical = true;
 		}
 
 		for (uint32 i = 0; i < fontsCount; i++)
 		{
-			entityClass * e = ents->create(100 + i);
-			GUI_GET_COMPONENT(parent, parent, e);
+			entity * e = ents->create(100 + i);
+			CAGE_COMPONENT_GUI(parent, parent, e);
 			parent.parent = panel->name();
 			parent.order = i;
-			GUI_GET_COMPONENT(label, label, e);
-			GUI_GET_COMPONENT(text, text, e);
+			CAGE_COMPONENT_GUI(label, label, e);
+			CAGE_COMPONENT_GUI(text, text, e);
 			text.value = labelTexts[i];
-			GUI_GET_COMPONENT(textFormat, format, e);
+			CAGE_COMPONENT_GUI(textFormat, format, e);
 			format.font = hashString(fontNames[i]);
 			format.align = textAlignEnum::Center;
 			format.lineSpacing = 1;

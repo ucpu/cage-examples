@@ -45,9 +45,9 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder<loggerClass> log1 = newLogger();
-		log1->format.bind<logFormatPolicyConsole>();
-		log1->output.bind<logOutputPolicyStdOut>();
+		holder<logger> log1 = newLogger();
+		log1->format.bind<logFormatConsole>();
+		log1->output.bind<logOutputStdOut>();
 
 		engineInitialize(engineCreateConfig());
 
@@ -60,30 +60,30 @@ int main(int argc, char *args[])
 
 		// window
 		window()->setWindowed();
-		window()->windowedSize(pointStruct(800, 600));
+		window()->windowedSize(ivec2(800, 600));
 		window()->title("skeletal animation");
 
 		// entities
-		entityManagerClass *ents = entities();
+		entityManager *ents = entities();
 		{ // lemurs
 			uint32 animations[] = { hashString("cage-tests/skeletons/lemur/lemur.x?AttackMelee"), hashString("cage-tests/skeletons/lemur/lemur.x?idle"), hashString("cage-tests/skeletons/lemur/lemur.x?run") };
 			uint32 i = 0;
 			for (uint32 animation : animations)
 			{
-				entityClass *e = ents->create(1 + i);
-				ENGINE_GET_COMPONENT(render, r, e);
+				entity *e = ents->create(1 + i);
+				CAGE_COMPONENT_ENGINE(render, r, e);
 				r.object = hashString("cage-tests/skeletons/lemur/lemur.x");
-				ENGINE_GET_COMPONENT(animatedSkeleton, s, e);
+				CAGE_COMPONENT_ENGINE(skeletalAnimation, s, e);
 				s.name = animation;
-				ENGINE_GET_COMPONENT(transform, t, e);
+				CAGE_COMPONENT_ENGINE(transform, t, e);
 				t.position = vec3(i * 3 - 4.5f, 0, 3);
 				i++;
 			}
 			{
-				entityClass *e = ents->create(1 + i);
-				ENGINE_GET_COMPONENT(render, r, e);
+				entity *e = ents->create(1 + i);
+				CAGE_COMPONENT_ENGINE(render, r, e);
 				r.object = hashString("cage-tests/skeletons/lemur/lemur.x");
-				ENGINE_GET_COMPONENT(transform, t, e);
+				CAGE_COMPONENT_ENGINE(transform, t, e);
 				t.position = vec3(i * 3 - 4.5f, 0, 3);
 			}
 		}
@@ -92,20 +92,20 @@ int main(int argc, char *args[])
 			uint32 i = 0;
 			for (uint32 animation : animations)
 			{
-				entityClass *e = ents->create(10 + i);
-				ENGINE_GET_COMPONENT(render, r, e);
+				entity *e = ents->create(10 + i);
+				CAGE_COMPONENT_ENGINE(render, r, e);
 				r.object = hashString("cage-tests/skeletons/cylinder/cylinder.x");
-				ENGINE_GET_COMPONENT(animatedSkeleton, s, e);
+				CAGE_COMPONENT_ENGINE(skeletalAnimation, s, e);
 				s.name = animation;
-				ENGINE_GET_COMPONENT(transform, t, e);
+				CAGE_COMPONENT_ENGINE(transform, t, e);
 				t.position = vec3(i * 3 - 3.f, 0, 0);
 				i++;
 			}
 			{
-				entityClass *e = ents->create(10 + i);
-				ENGINE_GET_COMPONENT(render, r, e);
+				entity *e = ents->create(10 + i);
+				CAGE_COMPONENT_ENGINE(render, r, e);
 				r.object = hashString("cage-tests/skeletons/cylinder/cylinder.x");
-				ENGINE_GET_COMPONENT(transform, t, e);
+				CAGE_COMPONENT_ENGINE(transform, t, e);
 				t.position = vec3(i * 3 - 3.f, 0, 0);
 			}
 		}
@@ -114,57 +114,57 @@ int main(int argc, char *args[])
 			uint32 i = 0;
 			for (uint32 animation : animations)
 			{
-				entityClass *e = ents->create(20 + i);
-				ENGINE_GET_COMPONENT(render, r, e);
+				entity *e = ents->create(20 + i);
+				CAGE_COMPONENT_ENGINE(render, r, e);
 				r.object = hashString("cage-tests/skeletons/monk/monk.object");
-				ENGINE_GET_COMPONENT(animatedSkeleton, s, e);
+				CAGE_COMPONENT_ENGINE(skeletalAnimation, s, e);
 				s.name = animation;
-				ENGINE_GET_COMPONENT(transform, t, e);
+				CAGE_COMPONENT_ENGINE(transform, t, e);
 				t.position = vec3(i * 3 - 4.5f, 0, -3);
 				i++;
 			}
 			{
-				entityClass *e = ents->create(20 + i);
-				ENGINE_GET_COMPONENT(render, r, e);
+				entity *e = ents->create(20 + i);
+				CAGE_COMPONENT_ENGINE(render, r, e);
 				r.object = hashString("cage-tests/skeletons/monk/monk.object");
-				ENGINE_GET_COMPONENT(transform, t, e);
+				CAGE_COMPONENT_ENGINE(transform, t, e);
 				t.position = vec3(i * 3 - 4.5f, 0, -3);
 			}
 		}
 		{ // floor
-			entityClass *e = ents->create(100);
-			ENGINE_GET_COMPONENT(render, r, e);
+			entity *e = ents->create(100);
+			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/skeletons/floor/floor.obj");
-			ENGINE_GET_COMPONENT(transform, t, e);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			(void)t;
 		}
 		{ // sun
-			entityClass *e = ents->create(101);
-			ENGINE_GET_COMPONENT(transform, t, e);
+			entity *e = ents->create(101);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.orientation = quat(degs(-50), degs(-42 + 180), degs());
-			ENGINE_GET_COMPONENT(light, l, e);
+			CAGE_COMPONENT_ENGINE(light, l, e);
 			l.lightType = lightTypeEnum::Directional;
 			l.color = vec3(3);
-			ENGINE_GET_COMPONENT(shadowmap, s, e);
+			CAGE_COMPONENT_ENGINE(shadowmap, s, e);
 			s.resolution = 2048;
 			s.worldSize = vec3(12, 12, 10);
 		}
 		{ // camera
-			entityClass *e = ents->create(102);
-			ENGINE_GET_COMPONENT(transform, t, e);
+			entity *e = ents->create(102);
+			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.position = vec3(0, 5, 10);
 			t.orientation = quat(degs(-10), degs(), degs());
-			ENGINE_GET_COMPONENT(camera, c, e);
+			CAGE_COMPONENT_ENGINE(camera, c, e);
 			c.ambientLight = vec3(0.02);
 			c.near = 0.1;
 			c.far = 100;
 			c.effects = cameraEffectsFlags::CombinedPass;
 		}
 
-		holder<cameraControllerClass> cameraController = newCameraController(ents->get(102));
-		cameraController->mouseButton = mouseButtonsFlags::Left;
-		cameraController->movementSpeed = 0.3;
-		holder<engineProfilingClass> engineProfiling = newEngineProfiling();
+		holder<cameraController> cameraCtrl = newCameraController(ents->get(102));
+		cameraCtrl->mouseButton = mouseButtonsFlags::Left;
+		cameraCtrl->movementSpeed = 0.3;
+		holder<engineProfiling> engineProfiling = newEngineProfiling();
 
 		assets()->add(assetsName);
 		engineStart();

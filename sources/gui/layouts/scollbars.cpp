@@ -6,50 +6,50 @@ public:
 
 	void initialize() override
 	{
-		entityManagerClass *ents = gui()->entities();
+		entityManager *ents = gui()->entities();
 
 		uint32 an = 0;
 		{
-			entityClass *e = ents->createUnique();
+			entity *e = ents->createUnique();
 			an = e->name();
-			GUI_GET_COMPONENT(scrollbars, sc, e);
+			CAGE_COMPONENT_GUI(scrollbars, sc, e);
 			sc.alignment = vec2(0.5, 0.5);
 		}
 
 		uint32 bn = 0;
 		{
-			entityClass *e = ents->createUnique();
+			entity *e = ents->createUnique();
 			bn = e->name();
-			GUI_GET_COMPONENT(parent, p, e);
+			CAGE_COMPONENT_GUI(parent, p, e);
 			p.parent = an;
-			GUI_GET_COMPONENT(panel, panel, e);
-			GUI_GET_COMPONENT(text, text, e);
+			CAGE_COMPONENT_GUI(panel, panel, e);
+			CAGE_COMPONENT_GUI(text, text, e);
 			text.value = "Outer";
-			GUI_GET_COMPONENT(explicitSize, size, e);
+			CAGE_COMPONENT_GUI(explicitSize, size, e);
 			size.size = vec2(400, 400);
-			GUI_GET_COMPONENT(scrollbars, sc, e);
+			CAGE_COMPONENT_GUI(scrollbars, sc, e);
 			sc.alignment = vec2(0.5, 0.5);
 		}
 
 		uint32 cn = 0;
 		{
-			entityClass *e = ents->createUnique();
+			entity *e = ents->createUnique();
 			cn = e->name();
-			GUI_GET_COMPONENT(parent, p, e);
+			CAGE_COMPONENT_GUI(parent, p, e);
 			p.parent = bn;
-			GUI_GET_COMPONENT(spoiler, spoiler, e);
-			GUI_GET_COMPONENT(text, text, e);
+			CAGE_COMPONENT_GUI(spoiler, spoiler, e);
+			CAGE_COMPONENT_GUI(text, text, e);
 			text.value = "Inner";
 		}
 
 		{
-			entityClass *e = ents->createUnique();
-			GUI_GET_COMPONENT(parent, p, e);
+			entity *e = ents->createUnique();
+			CAGE_COMPONENT_GUI(parent, p, e);
 			p.parent = cn;
-			GUI_GET_COMPONENT(label, lab, e);
-			GUI_GET_COMPONENT(image, img, e);
+			CAGE_COMPONENT_GUI(label, lab, e);
+			CAGE_COMPONENT_GUI(image, img, e);
 			img.textureName = hashString("cage/texture/helper.jpg");
-			GUI_GET_COMPONENT(explicitSize, size, e);
+			CAGE_COMPONENT_GUI(explicitSize, size, e);
 			size.size = vec2(500, 500);
 		}
 	}

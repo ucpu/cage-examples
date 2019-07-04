@@ -12,11 +12,11 @@
 
 using namespace cage;
 
-void testScreen(const string &screenId, const pointStruct &resolution, uint32 frequency)
+void testScreen(const string &screenId, const ivec2 &resolution, uint32 frequency)
 {
 	CAGE_LOG(severityEnum::Info, "test", string() + "monitor: '" + screenId + "', resolution: " + resolution.x + " * " + resolution.y + ", frequency: " + frequency);
 	{
-		holder<windowClass> w = newWindow();
+		holder<windowHandle> w = newWindow();
 		w->setFullscreen(resolution, frequency, screenId);
 		w->title("cage test monitors");
 		w->processEvents();
@@ -38,32 +38,32 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder<loggerClass> log1 = newLogger();
-		log1->format.bind<logFormatPolicyConsole>();
-		log1->output.bind<logOutputPolicyStdOut>();
+		holder<logger> log1 = newLogger();
+		log1->format.bind<logFormatConsole>();
+		log1->output.bind<logOutputStdOut>();
 
-		holder<screenListClass> list = newScreenList();
+		holder<screenList> list = newScreenList();
 		for (uint32 i = 0; i < list->devicesCount(); i++)
 		{
-			CAGE_LOG(severityEnum::Info, "listing", string() + "monitor" + (list->primaryDevice() == i ? ", primary" : ""));
-			const screenDeviceClass &d = list->device(i);
-			CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "monitor id: '" + d.id() + "'");
-			CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "monitor name: '" + d.name() + "'");
+			CAGE_LOG(severityEnum::Info, "listing", string() + "monitor" + (list->defaultDevice() == i ? ", primary" : ""));
+			const screenDevice *d = list->device(i);
+			CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "monitor id: '" + d->id() + "'");
+			CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "monitor name: '" + d->name() + "'");
 
 			screenMode testmode;
 
-			for (uint32 j = 0; j < d.modesCount(); j++)
+			for (uint32 j = 0; j < d->modesCount(); j++)
 			{
-				const screenMode &m = d.mode(j);
-				CAGE_LOG(severityEnum::Info, "listing", string() + "video mode " + j + (d.currentMode() == j ? ", current" : ""));
-				pointStruct r = m.resolution;
+				const screenMode &m = d->mode(j);
+				CAGE_LOG(severityEnum::Info, "listing", string() + "video mode " + j + (d->currentMode() == j ? ", current" : ""));
+				ivec2 r = m.resolution;
 				CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "resolution: " + r.x + "*" + r.y);
 				CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "frequency: " + m.frequency);
-				if (d.currentMode() == j)
+				if (d->currentMode() == j)
 					testmode = m;
 			}
 
-			testScreen(d.id(), testmode.resolution, testmode.frequency);
+			testScreen(d->id(), testmode.resolution, testmode.frequency);
 		}
 
 		return 0;

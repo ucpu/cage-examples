@@ -3,8 +3,4 @@
 /x64
 /.vs
 CMakeLists.txt.user
-*.blend*
-!*.blend
-!*.blend*.cpm
-
 

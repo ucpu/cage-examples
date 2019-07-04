@@ -15,9 +15,9 @@
 using namespace cage;
 
 volatile bool destroying;
-holder<windowClass> window;
-holder<soundContextClass> sound;
-holder<assetManagerClass> assets;
+holder<windowHandle> window;
+holder<soundContext> sound;
+holder<assetManager> assets;
 
 void glThread()
 {
@@ -44,9 +44,9 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder <loggerClass> log1 = newLogger();
-		log1->format.bind<logFormatPolicyConsole>();
-		log1->output.bind<logOutputPolicyStdOut>();
+		holder<logger> log1 = newLogger();
+		log1->format.bind<logFormatConsole>();
+		log1->output.bind<logOutputStdOut>();
 
 		// contexts
 		window = newWindow();
@@ -56,15 +56,15 @@ int main(int argc, char *args[])
 		// asset schemes
 		assets = newAssetManager(assetManagerCreateConfig());
 		assets->defineScheme<void>(assetSchemeIndexPack, genAssetSchemePack(0));
-		assets->defineScheme<shaderClass>(assetSchemeIndexShader, genAssetSchemeShader(1, window.get()));
-		assets->defineScheme<textureClass>(assetSchemeIndexTexture, genAssetSchemeTexture(1, window.get()));
-		assets->defineScheme<meshClass>(assetSchemeIndexMesh, genAssetSchemeMesh(1, window.get()));
-		assets->defineScheme<fontClass>(assetSchemeIndexFont, genAssetSchemeFont(1, window.get()));
-		assets->defineScheme<sourceClass>(assetSchemeIndexSound, genAssetSchemeSound(2, sound.get()));
+		assets->defineScheme<shaderProgram>(assetSchemeIndexShaderProgram, genAssetSchemeShaderProgram(1, window.get()));
+		assets->defineScheme<renderTexture>(assetSchemeIndexRenderTexture, genAssetSchemeRenderTexture(1, window.get()));
+		assets->defineScheme<renderMesh>(assetSchemeIndexMesh, genAssetSchemeRenderMesh(1, window.get()));
+		assets->defineScheme<fontFace>(assetSchemeIndexFontFace, genAssetSchemeFontFace(1, window.get()));
+		assets->defineScheme<soundSource>(assetSchemeIndexSoundSource, genAssetSchemeSoundSource(2, sound.get()));
 
 		// threads
-		holder<threadClass> thrGl = newThread(delegate<void()>().bind<&glThread>(), "opengl");
-		holder<threadClass> thrSl = newThread(delegate<void()>().bind<&slThread>(), "sound");
+		holder<threadHandle> thrGl = newThread(delegate<void()>().bind<&glThread>(), "opengl");
+		holder<threadHandle> thrSl = newThread(delegate<void()>().bind<&slThread>(), "sound");
 
 		// asset names
 		uint32 names[] = {
@@ -87,7 +87,7 @@ int main(int argc, char *args[])
 		for (uint32 i = 0; i < count; i++)
 			loaded[i] = false;
 
-		assets->fabricate(assetSchemeIndexTexture, 42, "fabricated texture");
+		assets->fabricate(assetSchemeIndexRenderTexture, 42, "fabricated texture");
 
 		CAGE_LOG(severityEnum::Info, "test", "starting the test, please wait");
 

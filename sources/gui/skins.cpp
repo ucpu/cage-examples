@@ -6,11 +6,11 @@ public:
 
 	void update() override
 	{
-		entityManagerClass *ents = gui()->entities();
+		entityManager *ents = gui()->entities();
 
 		uint32 animateOption = -1;
 		{
-			GUI_GET_COMPONENT(comboBox, combo, ents->get(100));
+			CAGE_COMPONENT_GUI(comboBox, combo, ents->get(100));
 			animateOption = combo.selected;
 		}
 
@@ -21,7 +21,7 @@ public:
 		for (uint32 i = 0; i < 4; i++)
 			a4[i] = (steeper(rads(t) + rads::Full() * real(i) / 4) * 0.5 + 0.5) * 20;
 
-		skinConfigStruct skin;
+		guiSkinConfig skin;
 		switch (animateOption)
 		{
 		case 0: // margins
@@ -54,7 +54,7 @@ public:
 
 	void initializeEngine() override
 	{
-		guiCreateConfig g;
+		guiManagerCreateConfig g;
 		g.skinsCount = 2;
 		engineCreateConfig e;
 		e.gui = &g;
@@ -65,14 +65,14 @@ public:
 	{
 		guiBasicLayout();
 
-		entityManagerClass *ents = gui()->entities();
+		entityManager *ents = gui()->entities();
 
 		{ // animate option
-			entityClass *e = ents->create(100);
-			GUI_GET_COMPONENT(parent, p, e);
+			entity *e = ents->create(100);
+			CAGE_COMPONENT_GUI(parent, p, e);
 			p.parent = 2;
-			GUI_GET_COMPONENT(comboBox, input, e);
-			GUI_GET_COMPONENT(text, text, e);
+			CAGE_COMPONENT_GUI(comboBox, input, e);
+			CAGE_COMPONENT_GUI(text, text, e);
 			text.value = "animation";
 			static const char *options[] = {
 				"margins",
@@ -82,135 +82,135 @@ public:
 			};
 			for (uint32 i = 0; i < sizeof(options)/sizeof(options[0]); i++)
 			{
-				entityClass *ee = ents->createUnique();
-				GUI_GET_COMPONENT(parent, p, ee);
+				entity *ee = ents->createUnique();
+				CAGE_COMPONENT_GUI(parent, p, ee);
 				p.parent = 100;
 				p.order = i;
-				GUI_GET_COMPONENT(text, text, ee);
+				CAGE_COMPONENT_GUI(text, text, ee);
 				text.value = options[i];
 			}
 		}
 		{ // main
-			entityClass *panel = ents->get(3);
+			entity *panel = ents->get(3);
 			//panel->remove(gui()->components().layoutTable);
-			GUI_GET_COMPONENT(layoutLine, ll, panel);
-			GUI_GET_COMPONENT(scrollbars, sc, panel);
+			CAGE_COMPONENT_GUI(layoutLine, ll, panel);
+			CAGE_COMPONENT_GUI(scrollbars, sc, panel);
 			sc.alignment = vec2(0.5, 0);
 		}
 		{ // left panel
-			entityClass *panel = ents->create(4);
-			GUI_GET_COMPONENT(parent, p, panel);
+			entity *panel = ents->create(4);
+			CAGE_COMPONENT_GUI(parent, p, panel);
 			p.parent = 3;
 			p.order = 1;
-			GUI_GET_COMPONENT(panel, gp, panel);
-			GUI_GET_COMPONENT(layoutLine, ll, panel);
+			CAGE_COMPONENT_GUI(panel, gp, panel);
+			CAGE_COMPONENT_GUI(layoutLine, ll, panel);
 			ll.vertical = true;
 		}
 		{ // right panel
-			entityClass *panel = ents->create(5);
-			GUI_GET_COMPONENT(parent, p, panel);
+			entity *panel = ents->create(5);
+			CAGE_COMPONENT_GUI(parent, p, panel);
 			p.parent = 3;
 			p.order = 2;
-			GUI_GET_COMPONENT(panel, gp, panel);
-			GUI_GET_COMPONENT(layoutLine, ll, panel);
+			CAGE_COMPONENT_GUI(panel, gp, panel);
+			CAGE_COMPONENT_GUI(layoutLine, ll, panel);
 			ll.vertical = true;
-			GUI_GET_COMPONENT(widgetState, ws, panel);
+			CAGE_COMPONENT_GUI(widgetState, ws, panel);
 			ws.skinIndex = 1;
 		}
 		for (uint32 side = 4; side < 6; side++)
 		{
 			uint32 index = 0;
 			{ // label
-				entityClass *e = ents->createUnique();
-				GUI_GET_COMPONENT(parent, p, e);
+				entity *e = ents->createUnique();
+				CAGE_COMPONENT_GUI(parent, p, e);
 				p.parent = side;
 				p.order = index++;
-				GUI_GET_COMPONENT(label, label, e);
-				GUI_GET_COMPONENT(text, text, e);
+				CAGE_COMPONENT_GUI(label, label, e);
+				CAGE_COMPONENT_GUI(text, text, e);
 				text.value = "People shouldn't be afraid of their government.\nGovernments should be afraid of their people.";
-				GUI_GET_COMPONENT(textFormat, format, e);
+				CAGE_COMPONENT_GUI(textFormat, format, e);
 				format.align = textAlignEnum::Left;
 			}
 			{ // button
-				entityClass *e = ents->createUnique();
-				GUI_GET_COMPONENT(parent, p, e);
+				entity *e = ents->createUnique();
+				CAGE_COMPONENT_GUI(parent, p, e);
 				p.parent = side;
 				p.order = index++;
-				GUI_GET_COMPONENT(button, button, e);
-				GUI_GET_COMPONENT(text, text, e);
+				CAGE_COMPONENT_GUI(button, button, e);
+				CAGE_COMPONENT_GUI(text, text, e);
 				text.value = "button";
 			}
 			{ // text input box
-				entityClass *e = ents->createUnique();
-				GUI_GET_COMPONENT(parent, p, e);
+				entity *e = ents->createUnique();
+				CAGE_COMPONENT_GUI(parent, p, e);
 				p.parent = side;
 				p.order = index++;
-				GUI_GET_COMPONENT(input, input, e);
-				GUI_GET_COMPONENT(text, text, e);
+				CAGE_COMPONENT_GUI(input, input, e);
+				CAGE_COMPONENT_GUI(text, text, e);
 				text.value = "text input box";
 			}
 			{ // real input box
-				entityClass *e = ents->createUnique();
-				GUI_GET_COMPONENT(parent, p, e);
+				entity *e = ents->createUnique();
+				CAGE_COMPONENT_GUI(parent, p, e);
 				p.parent = side;
 				p.order = index++;
-				GUI_GET_COMPONENT(input, input, e);
+				CAGE_COMPONENT_GUI(input, input, e);
 				input.type = inputTypeEnum::Real;
 				input.min.f = -5;
 				input.max.f = 5;
 				input.step.f = 0.1;
-				GUI_GET_COMPONENT(text, text, e);
+				CAGE_COMPONENT_GUI(text, text, e);
 				text.value = "real input box";
 			}
 			{ // checkbox
-				entityClass *e = ents->createUnique();
-				GUI_GET_COMPONENT(parent, p, e);
+				entity *e = ents->createUnique();
+				CAGE_COMPONENT_GUI(parent, p, e);
 				p.parent = side;
 				p.order = index++;
-				GUI_GET_COMPONENT(checkBox, box, e);
-				GUI_GET_COMPONENT(text, text, e);
+				CAGE_COMPONENT_GUI(checkBox, box, e);
+				CAGE_COMPONENT_GUI(text, text, e);
 				text.value = "checkbox";
 			}
 			{ // radiobox
-				entityClass *e = ents->createUnique();
-				GUI_GET_COMPONENT(parent, p, e);
+				entity *e = ents->createUnique();
+				CAGE_COMPONENT_GUI(parent, p, e);
 				p.parent = side;
 				p.order = index++;
-				GUI_GET_COMPONENT(radioBox, box, e);
-				GUI_GET_COMPONENT(text, text, e);
+				CAGE_COMPONENT_GUI(radioBox, box, e);
+				CAGE_COMPONENT_GUI(text, text, e);
 				text.value = "radiobox";
 			}
 			{ // combo box
-				entityClass *e = ents->createUnique();
-				GUI_GET_COMPONENT(parent, p, e);
+				entity *e = ents->createUnique();
+				CAGE_COMPONENT_GUI(parent, p, e);
 				p.parent = side;
 				p.order = index++;
-				GUI_GET_COMPONENT(comboBox, input, e);
-				GUI_GET_COMPONENT(text, text, e);
+				CAGE_COMPONENT_GUI(comboBox, input, e);
+				CAGE_COMPONENT_GUI(text, text, e);
 				text.value = "combo box";
 				for (uint32 i = 0; i < 5; i++)
 				{
-					entityClass *ee = ents->createUnique();
-					GUI_GET_COMPONENT(parent, p, ee);
+					entity *ee = ents->createUnique();
+					CAGE_COMPONENT_GUI(parent, p, ee);
 					p.parent = e->name();
 					p.order = i;
-					GUI_GET_COMPONENT(text, text, ee);
+					CAGE_COMPONENT_GUI(text, text, ee);
 					text.value = i;
 				}
 			}
 			{ // slider
-				entityClass *e = ents->createUnique();
-				GUI_GET_COMPONENT(parent, p, e);
+				entity *e = ents->createUnique();
+				CAGE_COMPONENT_GUI(parent, p, e);
 				p.parent = side;
 				p.order = index++;
-				GUI_GET_COMPONENT(sliderBar, slider, e);
+				CAGE_COMPONENT_GUI(sliderBar, slider, e);
 			}
 			{ // color picker
-				entityClass *e = ents->createUnique();
-				GUI_GET_COMPONENT(parent, p, e);
+				entity *e = ents->createUnique();
+				CAGE_COMPONENT_GUI(parent, p, e);
 				p.parent = side;
 				p.order = index++;
-				GUI_GET_COMPONENT(colorPicker, picker, e);
+				CAGE_COMPONENT_GUI(colorPicker, picker, e);
 			}
 		}
 	}

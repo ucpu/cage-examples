@@ -5,21 +5,22 @@
 #include <cage-core/timer.h>
 #include <cage-client/core.h>
 #include <cage-client/sound.h>
+#include <cage-client/speakerList.h>
 
 using namespace cage;
 
 void testDevice(const string &deviceId, uint32 sampleRate, bool raw)
 {
-	holder<soundContextClass> sndContext = newSoundContext(soundContextCreateConfig(), "testAudio:Context");
-	holder<busClass> sndBus = newBus(sndContext.get());
-	holder<sourceClass> sndSource = newSource(sndContext.get());
+	holder<soundContext> sndContext = newSoundContext(soundContextCreateConfig(), "testAudio:Context");
+	holder<mixingBus> sndBus = newMixingBus(sndContext.get());
+	holder<soundSource> sndSource = newSoundSource(sndContext.get());
 	sndSource->addOutput(sndBus.get());
 	sndSource->setDataTone();
-	speakerCreateConfig cnf;
+	speakerOutputCreateConfig cnf;
 	cnf.deviceId = deviceId;
 	cnf.sampleRate = sampleRate;
 	cnf.deviceRaw = raw;
-	holder<speakerClass> sndSpeaker = newSpeaker(sndContext.get(), cnf, "testAudio:Speaker");
+	holder<speakerOutput> sndSpeaker = newSpeakerOutput(sndContext.get(), cnf, "testAudio:Speaker");
 	sndSpeaker->setInput(sndBus.get());
 
 	CAGE_LOG(severityEnum::Info, "speaker", string() + "stream: '" + sndSpeaker->getStreamName() + "'");
@@ -31,7 +32,7 @@ void testDevice(const string &deviceId, uint32 sampleRate, bool raw)
 	CAGE_LOG(severityEnum::Info, "speaker", string() + "sample rate: " + sndSpeaker->getOutputSampleRate());
 
 	CAGE_LOG(severityEnum::Info, "speaker", "play start");
-	holder<timerClass> tmr = newTimer();
+	holder<timer> tmr = newTimer();
 	while (true)
 	{
 		uint64 t = tmr->microsSinceStart();
@@ -48,33 +49,40 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder <loggerClass> log1 = newLogger();
-		log1->format.bind <logFormatPolicyConsole>();
-		log1->output.bind <logOutputPolicyStdOut>();
+		holder<logger> log1 = newLogger();
+		log1->format.bind <logFormatConsole>();
+		log1->output.bind <logOutputStdOut>();
 
-		holder<speakerListClass> list = newSpeakerList();
-		uint32 dc = list->deviceCount(), dd = list->deviceDefault();
-		for (uint32 d = 0; d < dc; d++)
+		holder<speakerList> list = newSpeakerList();
+		uint32 dc = list->devicesCount(), dd = list->defaultDevice();
+		for (uint32 di = 0; di < dc; di++)
 		{
-			CAGE_LOG(severityEnum::Info, "listing", string() + "device" + (list->deviceRaw(d) ? ", raw" : "") + (dd == d ? ", default" : ""));
-			CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "id: '" + list->deviceId(d) + "'");
-			CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "name: '" + list->deviceName(d) + "'");
+			const speakerDevice *d = list->device(di);
+			CAGE_LOG(severityEnum::Info, "listing", string() + "device" + (d->raw() ? ", raw" : "") + (dd == di ? ", default" : ""));
+			CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "id: '" + d->id() + "'");
+			CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "name: '" + d->name() + "'");
 			{
-				uint32 lc = list->layoutCount(d), ld = list->layoutCurrent(d);
-				for (uint32 l = 0; l < lc; l++)
-					CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "layout name: '" + list->layoutName(d, l) + "', channels: " + list->layoutChannels(d, l) + (l == ld ? ", current" : ""));
+				uint32 lc = d->layoutsCount(), ld = d->currentLayout();
+				for (uint32 li = 0; li < lc; li++)
+				{
+					const speakerLayout &l = d->layout(li);
+					CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "layout name: '" + l.name + "', channels: " + l.channels + (li == ld ? ", current" : ""));
+				}
 			}
 			{
-				uint32 sc = list->samplerateCount(d), sd = list->samplerateCurrent(d);
-				for (uint32 s = 0; s < sc; s++)
-					CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "samplerate min: " + list->samplerateMin(d, s) + ", max: " + list->samplerateMax(d, s));
+				uint32 sc = d->sampleratesCount(), sd = d->currentSamplerate();
+				for (uint32 si = 0; si < sc; si++)
+				{
+					const speakerSamplerate &s = d->samplerate(si);
+					CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "samplerate min: " + s.minimum + ", max: " + s.maximum);
+				}
 				CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "samplerate current: " + sd);
 			}
-			if (list->deviceRaw(d))
+			if (d->raw())
 				continue;
-			testDevice(list->deviceId(d), 32000, false);
-			testDevice(list->deviceId(d), 44100, false);
-			testDevice(list->deviceId(d), 48000, false);
+			testDevice(d->id(), 32000, false);
+			testDevice(d->id(), 44100, false);
+			testDevice(d->id(), 48000, false);
 		}
 
 		return 0;
