@@ -3,7 +3,6 @@
 #include <cage-core/log.h>
 #include <cage-core/concurrent.h>
 #include <cage-core/entities.h>
-#include <cage-core/config.h>
 #include <cage-core/hashString.h>
 #include <cage-client/core.h>
 #include <cage-client/window.h>
@@ -119,9 +118,6 @@ int main(int argc, char *args[])
 		// override breakpoints
 		detail::setGlobalBreakpointOverride(false);
 
-		// config
-		configSetBool("cage-client.engine.renderMissingMeshes", true);
-
 		// run
 		while (!fullStop)
 		{
@@ -162,7 +158,7 @@ int main(int argc, char *args[])
 				entity *e = entities()->create(2);
 				CAGE_COMPONENT_ENGINE(transform, t, e);
 				CAGE_COMPONENT_ENGINE(render, r, e);
-				r.object = 1; // something non-existing
+				r.object = hashString("cage/mesh/fake.obj");
 			}
 
 			holder<engineProfiling> profiling = newEngineProfiling();

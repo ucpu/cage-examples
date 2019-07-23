@@ -31,7 +31,7 @@ void sceneReload()
 {
 	CAGE_LOG(severityEnum::Info, "scenes", string() + "loading scene index: " + sceneIndexCurrent);
 	string scenePath = maps[sceneIndexCurrent];
-	CAGE_LOG(severityEnum::Info, "scenes", string() + "loading scene description from fileHandle: '" + scenePath + "'");
+	CAGE_LOG(severityEnum::Info, "scenes", string() + "loading scene description from file: '" + scenePath + "'");
 	window()->title(string() + "map: " + pathExtractFilename(scenePath));
 	entities()->destroy();
 	try
@@ -158,6 +158,20 @@ bool keyPress(uint32 a, uint32 b, modifiersFlags m)
 
 bool update()
 {
+#if 0
+	{ // automatic reloading -> used for engine testing
+		static uint64 last = 0;
+		uint64 now = getApplicationTime();
+		if (now > last + (sin(rads(now) * 2e-7) * 2.5 + 3) * 1000000)
+		{
+			sceneIndexCurrent++;
+			if (sceneIndexCurrent == maps.size())
+				sceneIndexCurrent = 0;
+			last = now;
+		}
+	}
+#endif
+
 	if (sceneIndexCurrent != sceneIndexLoaded)
 	{
 		sceneReload();

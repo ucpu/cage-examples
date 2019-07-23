@@ -5,7 +5,6 @@
 #include <cage-core/log.h>
 #include <cage-core/concurrent.h>
 #include <cage-core/entities.h>
-#include <cage-core/config.h>
 #include <cage-core/hashString.h>
 #include <cage-core/noiseFunction.h>
 #include <cage-core/threadPool.h>
@@ -104,7 +103,7 @@ bool update()
 				t.scale = 0.15 * 0.49;
 				t.position = vec3((x - side * 0.5) * 0.15, 0, (y - side * 0.5) * 0.15);
 				CAGE_COMPONENT_ENGINE(render, r, e);
-				r.object = 1;
+				r.object = hashString("cage/mesh/fake.obj");
 			}
 		}
 	}
@@ -249,7 +248,7 @@ int main(int argc, char *args[])
 		log1->format.bind<logFormatConsole>();
 		log1->output.bind<logOutputStdOut>();
 
-		configSetBool("cage-client.engine.renderMissingMeshes", true);
+		//configSetBool("cage-client.engine.debugMissingMeshes", true);
 		engineInitialize(engineCreateConfig());
 
 		// events

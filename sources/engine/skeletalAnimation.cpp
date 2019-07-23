@@ -4,7 +4,6 @@
 #include <cage-core/math.h>
 #include <cage-core/log.h>
 #include <cage-core/entities.h>
-#include <cage-core/config.h>
 #include <cage-core/assetManager.h>
 #include <cage-core/hashString.h>
 #include <cage-core/color.h>
@@ -20,18 +19,14 @@ using namespace cage;
 
 static const uint32 assetsName = hashString("cage-tests/skeletons/skeletons.pack");
 
-configBool renderSkeletonBones("cage-client.engine.renderSkeletonBones", true);
-
 bool windowClose()
 {
 	engineStop();
 	return false;
 }
 
-bool keyPress(uint32 b, uint32, modifiersFlags modifiers)
+bool keyPress(uint32, uint32, modifiersFlags modifiers)
 {
-	if (b == 32)
-		renderSkeletonBones = !renderSkeletonBones;
 	return false;
 }
 
@@ -76,15 +71,27 @@ int main(int argc, char *args[])
 				CAGE_COMPONENT_ENGINE(skeletalAnimation, s, e);
 				s.name = animation;
 				CAGE_COMPONENT_ENGINE(transform, t, e);
-				t.position = vec3(i * 3 - 4.5f, 0, 3);
+				t.position = vec3(i * 3 - 6.f, 0, 3);
 				i++;
 			}
-			{
+			{ // no animation
 				entity *e = ents->create(1 + i);
 				CAGE_COMPONENT_ENGINE(render, r, e);
 				r.object = hashString("cage-tests/skeletons/lemur/lemur.x");
 				CAGE_COMPONENT_ENGINE(transform, t, e);
-				t.position = vec3(i * 3 - 4.5f, 0, 3);
+				t.position = vec3(i * 3 - 6.f, 0, 3);
+				i++;
+			}
+			{ // scaled
+				entity *e = ents->create(1 + i);
+				CAGE_COMPONENT_ENGINE(render, r, e);
+				r.object = hashString("cage-tests/skeletons/lemur/lemur.x");
+				CAGE_COMPONENT_ENGINE(skeletalAnimation, s, e);
+				s.name = hashString("cage-tests/skeletons/lemur/lemur.x?idle");
+				CAGE_COMPONENT_ENGINE(transform, t, e);
+				t.position = vec3(i * 3 - 6.f, 0, 3);
+				t.scale = 1.5;
+				i++;
 			}
 		}
 		{ // cylinders
@@ -98,15 +105,34 @@ int main(int argc, char *args[])
 				CAGE_COMPONENT_ENGINE(skeletalAnimation, s, e);
 				s.name = animation;
 				CAGE_COMPONENT_ENGINE(transform, t, e);
-				t.position = vec3(i * 3 - 3.f, 0, 0);
+				t.position = vec3(i * 3 - 6.f, 0, 0);
 				i++;
 			}
-			{
+			{ // no animation set
 				entity *e = ents->create(10 + i);
 				CAGE_COMPONENT_ENGINE(render, r, e);
 				r.object = hashString("cage-tests/skeletons/cylinder/cylinder.x");
 				CAGE_COMPONENT_ENGINE(transform, t, e);
-				t.position = vec3(i * 3 - 3.f, 0, 0);
+				t.position = vec3(i * 3 - 6.f, 0, 0);
+				i++;
+			}
+			{ // non-existent animation
+				entity *e = ents->create(10 + i);
+				CAGE_COMPONENT_ENGINE(render, r, e);
+				r.object = hashString("cage-tests/skeletons/cylinder/cylinder.x");
+				CAGE_COMPONENT_ENGINE(skeletalAnimation, s, e);
+				s.name = hashString("cage-tests/skeletons/cylinder/cylinder.x?non-existent");
+				CAGE_COMPONENT_ENGINE(transform, t, e);
+				t.position = vec3(i * 3 - 6.f, 0, 0);
+				i++;
+			}
+			{ // non-existent object
+				entity *e = ents->create(10 + i);
+				CAGE_COMPONENT_ENGINE(render, r, e);
+				r.object = hashString("cage-tests/skeletons/cylinder/non-existent.x");
+				CAGE_COMPONENT_ENGINE(transform, t, e);
+				t.position = vec3(i * 3 - 6.f, 0, 0);
+				i++;
 			}
 		}
 		{ // monks
@@ -120,15 +146,27 @@ int main(int argc, char *args[])
 				CAGE_COMPONENT_ENGINE(skeletalAnimation, s, e);
 				s.name = animation;
 				CAGE_COMPONENT_ENGINE(transform, t, e);
-				t.position = vec3(i * 3 - 4.5f, 0, -3);
+				t.position = vec3(i * 3 - 6.f, 0, -3);
 				i++;
 			}
-			{
+			{ // no animation
 				entity *e = ents->create(20 + i);
 				CAGE_COMPONENT_ENGINE(render, r, e);
 				r.object = hashString("cage-tests/skeletons/monk/monk.object");
 				CAGE_COMPONENT_ENGINE(transform, t, e);
-				t.position = vec3(i * 3 - 4.5f, 0, -3);
+				t.position = vec3(i * 3 - 6.f, 0, -3);
+				i++;
+			}
+			{ // rotated
+				entity *e = ents->create(20 + i);
+				CAGE_COMPONENT_ENGINE(render, r, e);
+				r.object = hashString("cage-tests/skeletons/monk/monk.object");
+				CAGE_COMPONENT_ENGINE(skeletalAnimation, s, e);
+				s.name = hashString("cage-tests/skeletons/monk/monk.x?Dance");
+				CAGE_COMPONENT_ENGINE(transform, t, e);
+				t.position = vec3(i * 3 - 6.f, 0, -3);
+				t.orientation = quat(degs(), degs(randomRange(45, 270)), degs());
+				i++;
 			}
 		}
 		{ // floor

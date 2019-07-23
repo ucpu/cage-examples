@@ -3,7 +3,6 @@
 #include <cage-core/math.h>
 #include <cage-core/log.h>
 #include <cage-core/entities.h>
-#include <cage-core/config.h>
 #include <cage-core/hashString.h>
 #include <cage-client/core.h>
 #include <cage-client/window.h>
@@ -47,7 +46,7 @@ void box(const vec3 &pos, const quat &rot)
 	CAGE_COMPONENT_ENGINE(render, r, e);
 	t.position = pos;
 	t.orientation = rot;
-	r.object = 1;
+	r.object = hashString("cage/mesh/fake.obj");
 	r.renderMask = 0b111 & ~(holes ? (1 << randomRange(0, 3)) : 0);
 }
 
@@ -206,7 +205,6 @@ int main(int argc, char *args[])
 		log1->format.bind<logFormatConsole>();
 		log1->output.bind<logOutputStdOut>();
 
-		configSetBool("cage-client.engine.renderMissingMeshes", true);
 		engineInitialize(engineCreateConfig());
 
 		// events

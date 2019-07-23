@@ -3,7 +3,6 @@
 #include <cage-core/log.h>
 #include <cage-core/concurrent.h>
 #include <cage-core/entities.h>
-#include <cage-core/config.h>
 #include <cage-core/hashString.h>
 #include <cage-client/core.h>
 #include <cage-client/window.h>
@@ -41,7 +40,7 @@ void controlInit()
 		CAGE_COMPONENT_ENGINE(transform, t, e);
 		(void)t;
 		CAGE_COMPONENT_ENGINE(render, r, e);
-		r.object = 1; // something non-existing
+		r.object = hashString("cage/mesh/fake.obj");
 	}
 }
 
@@ -162,7 +161,6 @@ int main(int argc, char *args[])
 		log1->format.bind<logFormatConsole>();
 		log1->output.bind<logOutputStdOut>();
 
-		configSetBool("cage-client.engine.renderMissingMeshes", true);
 		engineInitialize(engineCreateConfig());
 
 		// events
