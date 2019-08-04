@@ -94,11 +94,11 @@ bool update()
 			v.name = 0;
 		}
 	}
-	box = box.normalize();
+	box = normalize(box);
 	{ // listener
 		entity *e = ents->get(2);
 		CAGE_COMPONENT_ENGINE(transform, t, e);
-		t.orientation = quat(degs(90), degs(), degs()) * quat(degs(), aTan2(box[0], box[1]) - degs(90), degs());
+		t.orientation = quat(degs(90), degs(), degs()) * quat(degs(), atan2(box[0], box[1]) - degs(90), degs());
 	}
 	return false;
 }

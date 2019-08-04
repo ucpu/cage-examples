@@ -72,11 +72,11 @@ bool update()
 		entity *e = ents->get(100 + i);
 		CAGE_COMPONENT_ENGINE(transform, t, e);
 #if 1
-		if (t.position.distance(vec3(0, 3, 0)) > 10 || t.position[1] < -1)
+		if (distance(t.position, vec3(0, 3, 0)) > 10 || t.position[1] < -1)
 			t.position = randomDirection3() * randomRange(1, 5) + vec3(0, 3, 0);
 		vec3 &v = bulbsVelocities[i];
 		v += bulbChange(t.position) * 0.1;
-		v = v.normalize();
+		v = normalize(v);
 		t.position += v * 0.1;
 #else
 		rads angle = rads(degs(i * 360.0 / bulbsCount)) + degs(currentControlTime() * 5e-6);
