@@ -135,7 +135,7 @@ namespace
 		CAGE_COMPONENT_GUI(input, t, control);
 		if (t.valid)
 		{
-			CAGE_ASSERT_RUNTIME(t.value.isDigitsOnly() && !t.value.empty());
+			CAGE_ASSERT(t.value.isDigitsOnly() && !t.value.empty());
 			value = t.value.toUint32() * 1000;
 		}
 	}

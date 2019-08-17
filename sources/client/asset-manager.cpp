@@ -100,7 +100,7 @@ int main(int argc, char *args[])
 				if (randomChance() < 0.7)
 				{
 					uint32 i = randomRange((uint32)0, count);
-					CAGE_ASSERT_RUNTIME(i < count);
+					CAGE_ASSERT(i < count);
 					if (loaded[i])
 						assets->remove(names[i]);
 					else
