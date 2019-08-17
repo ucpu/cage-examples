@@ -169,6 +169,20 @@ int main(int argc, char *args[])
 				i++;
 			}
 		}
+		{ // gimbals/spawners
+			uint32 i = 0;
+			uint32 objects[] = { hashString("cage-tests/skeletons/gimbal/spawner_x.object"), hashString("cage-tests/skeletons/gimbal/spawner_fbx.object") };
+			for (uint32 object : objects)
+			{
+				entity *e = ents->create(30 + i);
+				CAGE_COMPONENT_ENGINE(render, r, e);
+				r.object = object;
+				CAGE_COMPONENT_ENGINE(transform, t, e);
+				t.position = vec3(i * 3 + 1.5f, 1, 0);
+				t.scale = 0.6;
+				i++;
+			}
+		}
 		{ // floor
 			entity *e = ents->create(100);
 			CAGE_COMPONENT_ENGINE(render, r, e);

@@ -1,0 +1,8 @@
+
+[skeletal_animation]
+name = spawner.fbx?spawner-armature|looping
+speed = 1
+offset = 0
+
+[]
+spawner.fbx

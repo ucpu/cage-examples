@@ -1,0 +1,44 @@
+
+[]
+scheme = mesh
+export_uv = false
+export_tangent = false
+export_bones = true
+override_material = spawner.cpm
+spawner.x
+
+[]
+scheme = mesh
+export_uv = false
+export_tangent = false
+export_bones = true
+override_material = spawner.cpm
+scale = 0.01
+spawner.fbx
+
+[]
+scheme = skeleton
+spawner.x;skeleton
+
+[]
+scheme = skeleton
+scale = 0.01
+spawner.fbx;skeleton
+
+[]
+scheme = animation
+spawner.x?looping
+
+[]
+scheme = animation
+#scale = 0.01
+spawner.fbx?spawner-armature|looping
+
+[]
+scheme = object
+spawner_x.object
+spawner_fbx.object
+
+[]
+scheme = pack
+spawner.pack
