@@ -98,7 +98,7 @@ int main(int argc, char *args[])
 			entity *e = ents->create(10);
 			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = roomName;
-			r.renderMask = 3;
+			r.sceneMask = 3;
 			CAGE_COMPONENT_ENGINE(transform, t, e);
 			(void)t;
 		}
@@ -112,12 +112,12 @@ int main(int argc, char *args[])
 			c.near = 0.2;
 			c.far = 100;
 			c.cameraOrder = 3;
-			c.renderMask = 1;
+			c.sceneMask = 1;
 			c.effects = cameraEffectsFlags::CombinedPass;
 			c.ssao.worldRadius = 0.05;
 			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/room/eye.obj");
-			r.renderMask = 2;
+			r.sceneMask = 2;
 		}
 		{ // camera stand
 			entity *e = ents->create(2);
@@ -126,7 +126,7 @@ int main(int argc, char *args[])
 			t.orientation = quat(degs(), degs(125), degs());
 			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/room/camera.obj?camera_stand");
-			r.renderMask = 1;
+			r.sceneMask = 1;
 		}
 		{ // camera lens
 			entity *e = ents->create(3);
@@ -134,7 +134,7 @@ int main(int argc, char *args[])
 			t.position = vec3(2.5, 2.5, -1.3);
 			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/room/camera.obj?lens");
-			r.renderMask = 1;
+			r.sceneMask = 1;
 		}
 		{ // camera body
 			entity *e = ents->create(4);
@@ -142,13 +142,13 @@ int main(int argc, char *args[])
 			t.position = vec3(2.5, 2.5, -1.3);
 			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/room/camera.obj?camera");
-			r.renderMask = 1;
+			r.sceneMask = 1;
 			CAGE_COMPONENT_ENGINE(camera, c, e);
 			c.ambientLight = vec3(0.7);
 			c.near = 0.2;
 			c.far = 100;
 			c.cameraOrder = 2;
-			c.renderMask = 2;
+			c.sceneMask = 2;
 			c.effects = cameraEffectsFlags::GeometryPass;
 			c.ssao.worldRadius = 0.05;
 		}

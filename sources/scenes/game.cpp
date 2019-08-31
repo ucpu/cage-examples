@@ -1,5 +1,8 @@
 #include "game.h"
 
+#include <cage-core/geometry.h>
+#include <cage-client/shadowmapHelpers.h>
+
 holder<cameraController> cameraCtrl;
 holder<engineProfiling> engineProfilingInstance;
 
@@ -9,9 +12,9 @@ uint32 sceneHashCurrent;
 uint32 sceneHashLoaded;
 
 static const uint32 directionalLightsCount = 1;
-entity *directionalLights[directionalLightsCount + 1];
+entity *directionalLights[directionalLightsCount];
 static const uint32 pointLightsCount = 50;
-entity *pointLights[pointLightsCount + 1];
+entity *pointLights[pointLightsCount];
 
 std::vector<string> maps;
 
@@ -34,8 +37,10 @@ void sceneReload()
 	CAGE_LOG(severityEnum::Info, "scenes", string() + "loading scene description from file: '" + scenePath + "'");
 	window()->title(string() + "map: " + pathExtractFilename(scenePath));
 	entities()->destroy();
+
+	// load new entities
 	try
-	{ // load new entities
+	{
 		holder<fileHandle> f = newFile(scenePath, fileMode(true, false));
 		string name;
 		f->readLine(name);
@@ -66,12 +71,13 @@ void sceneReload()
 	{
 		CAGE_LOG(severityEnum::Error, "scenes", "failed to load a scene description");
 	}
+
 	{ // camera
 		entity *cam = entities()->create(1);
 		CAGE_COMPONENT_ENGINE(transform, t, cam);
-		t.position = vec3(0, 10, 30);;
+		t.position = vec3(0, 10, 30);
 		CAGE_COMPONENT_ENGINE(camera, c, cam);
-		c.ambientLight = vec3(1,1,1) * 0.1;
+		c.ambientLight = vec3(0.1);
 		c.cameraOrder = 2;
 		c.near = 0.1;
 		c.far = 200;
@@ -79,13 +85,14 @@ void sceneReload()
 		c.effects = cameraEffectsFlags::CombinedPass;
 		cameraCtrl->setEntity(cam);
 	}
+
 	{ // skybox
 		entity *cam = entities()->create(2);
 		CAGE_COMPONENT_ENGINE(transform, tc, cam);
 		(void)tc;
 		CAGE_COMPONENT_ENGINE(camera, c, cam);
-		c.ambientLight = vec3(1, 1, 1);
-		c.renderMask = 2;
+		c.ambientLight = vec3(1);
+		c.sceneMask = 2;
 		c.cameraOrder = 1;
 		c.near = 0.5;
 		c.far = 2;
@@ -96,22 +103,25 @@ void sceneReload()
 		CAGE_COMPONENT_ENGINE(textureAnimation, a, sky);
 		(void)a;
 		r.object = hashString("scenes/common/skybox.obj");
-		r.renderMask = 2;
+		r.sceneMask = 2;
 	}
+	
+	// directional lights
 	for (int i = 0; i < directionalLightsCount; i++)
-	{ // directional lights
+	{
 		directionalLights[i] = entities()->createAnonymous();
 		CAGE_COMPONENT_ENGINE(transform, ts, directionalLights[i]);
 		ts.orientation = quat(degs(randomChance() * -20 - 30), degs(i * 360.0f / (float)directionalLightsCount + randomChance() * 180 / (float)directionalLightsCount), degs());
 		CAGE_COMPONENT_ENGINE(light, ls, directionalLights[i]);
-		ls.color = vec3(1, 1, 1) * 2.5;
+		ls.color = vec3(2.5);
 		ls.lightType = lightTypeEnum::Directional;
 		CAGE_COMPONENT_ENGINE(shadowmap, ss, directionalLights[i]);
-		ss.worldSize = vec3(50, 50, 50);
 		ss.resolution = 2048;
 	}
+	
+	// point lights
 	for (int i = 0; i < pointLightsCount; i++)
-	{ // point lights
+	{
 		pointLights[i] = entities()->createAnonymous();
 		CAGE_COMPONENT_ENGINE(transform, ts, pointLights[i]);
 		ts.position = (vec3(randomChance(), randomChance(), randomChance()) * 2 - 1) * 15;
@@ -119,7 +129,7 @@ void sceneReload()
 		ls.color = convertHsvToRgb(vec3(randomChance(), 1, 1));
 		ls.lightType = lightTypeEnum::Point;
 		//CAGE_COMPONENT_ENGINE(shadowmap, ss, pointLights[i]);
-		//ss.worldRadius = vec3(35, 35, 35);
+		//ss.worldRadius = vec3(35);
 		//ss.resolution = 1024;
 		CAGE_COMPONENT_ENGINE(render, r, pointLights[i]);
 		r.color = ls.color;
@@ -182,6 +192,15 @@ bool update()
 		CAGE_COMPONENT_ENGINE(transform, t1, entities()->get(1));
 		CAGE_COMPONENT_ENGINE(transform, t2, entities()->get(2));
 		t2.orientation = t1.orientation;
+	}
+
+	{ // update shadowmaps
+		if (*directionalLights)
+		{
+			aabb sceneBox = getBoxForRenderScene();
+			for (entity *e : directionalLights)
+				fitShadowmapForDirectionalLight(e, sceneBox);
+		}
 	}
 
 	return false;

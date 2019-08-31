@@ -47,7 +47,7 @@ void box(const vec3 &pos, const quat &rot)
 	t.position = pos;
 	t.orientation = rot;
 	r.object = hashString("cage/mesh/fake.obj");
-	r.renderMask = 0b111 & ~(holes ? (1 << randomRange(0, 3)) : 0);
+	r.sceneMask = 0b111 & ~(holes ? (1 << randomRange(0, 3)) : 0);
 }
 
 void letter(char c, const vec3 &pos)
@@ -108,8 +108,8 @@ void regenerate()
 		CAGE_COMPONENT_ENGINE(transform, t, e);
 		(void)t;
 		CAGE_COMPONENT_ENGINE(camera, c, e);
-		c.ambientLight = vec3(1, 1, 1) * 0.1;
-		c.renderMask = 1 << i;
+		c.ambientLight = vec3(0.1);
+		c.sceneMask = 1 << i;
 		c.cameraOrder = i;
 		switch ((uint32)camsLayout)
 		{
@@ -138,10 +138,10 @@ void regenerate()
 		t.orientation = randomDirectionQuat();
 		CAGE_COMPONENT_ENGINE(light, l, e);
 		l.lightType = lightTypeEnum::Directional;
-		l.color = vec3(1, 1, 1) * 0.9;
+		l.color = vec3(0.9);
 		CAGE_COMPONENT_ENGINE(shadowmap, s, e);
 		s.resolution = 512;
-		s.worldSize = vec3(50, 50, 50);
+		s.worldSize = vec3(50);
 	}
 }
 
@@ -164,7 +164,7 @@ bool update()
 			entity *e = ents->get(i + 1);
 			CAGE_COMPONENT_ENGINE(camera, c, e);
 			c.ambientLight = vec3(1, 1, 1) * 0.5;
-			c.renderMask = 1 << i;
+			c.sceneMask = 1 << i;
 			c.cameraOrder = i;
 			rads ang = degs(20 * time / 1e6 + i * 120);
 			c.viewportOrigin = vec2(0.5 + cos(ang) * 0.5, 0.5 + sin(ang) * 0.5) * 0.75;
