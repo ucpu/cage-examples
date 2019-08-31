@@ -76,6 +76,24 @@ class guiTestImpl : public guiTestClass
 			m.textureUvOffset = vec2(5 / 8.f, 2 / 8.f);
 			m.textureUvSize = vec2(1 / 8.f, 1 / 8.f);
 		}
+		{ // with custom event
+			guiLabel(3, index, "with custom event");
+			entity *e = ents->createUnique();
+			CAGE_COMPONENT_GUI(parent, p, e);
+			p.parent = 3;
+			p.order = index++;
+			CAGE_COMPONENT_GUI(button, b, e);
+			CAGE_COMPONENT_GUI(text, t, e);
+			t.value = "custom event";
+			CAGE_COMPONENT_GUI(event, ev, e);
+			ev.event.bind<guiTestImpl, &guiTestImpl::onButtonPressed>(this);
+		}
+	}
+
+	bool onButtonPressed(uint32 en)
+	{
+		CAGE_LOG(severityEnum::Info, "event", "button with custom event pressed");
+		return false;
 	}
 
 };
