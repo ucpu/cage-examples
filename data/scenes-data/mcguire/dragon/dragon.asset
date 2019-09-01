@@ -12,4 +12,5 @@ scheme = mesh
 scale = 50
 export_uv = false
 export_tangent = false
+pass_invalid_normal = true
 dragon.obj?1

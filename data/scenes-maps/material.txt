@@ -1,258 +1,725 @@
 scenes/material/material.pack
 
 scenes/common/ground.obj
-0 -1 0
+0 0 0
+0
+scenes/material/material.obj?mat_0_0
+-22 0 -18
 0
 
-scenes/material/material.obj?mat_0_0
--18 0 -10
-0
 scenes/material/material.obj?mat_0_1
--18 0 -7
+-22 0 -15
 0
+
 scenes/material/material.obj?mat_0_2
--18 0 -4
+-22 0 -12
 0
+
 scenes/material/material.obj?mat_0_3
--18 0 -1
+-22 0 -9
 0
+
 scenes/material/material.obj?mat_0_4
--18 0 2
+-22 0 -6
 0
+
 scenes/material/material.obj?mat_0_5
--18 0 5
+-22 0 -3
 0
+
 scenes/material/material.obj?mat_0_6
--18 0 8
+-22 0 0
 0
+
+scenes/material/material.obj?mat_0_7
+-22 0 3
+0
+
+scenes/material/material.obj?mat_0_8
+-22 0 6
+0
+
+scenes/material/material.obj?mat_0_9
+-22 0 9
+0
+
+scenes/material/material.obj?mat_0_10
+-22 0 12
+0
+
+scenes/material/material.obj?mat_0_11
+-22 0 15
+0
+
 scenes/material/material.obj?mat_1_0
--15 0 -10
+-19 0 -18
 0
+
 scenes/material/material.obj?mat_1_1
--15 0 -7
+-19 0 -15
 0
+
 scenes/material/material.obj?mat_1_2
--15 0 -4
+-19 0 -12
 0
+
 scenes/material/material.obj?mat_1_3
--15 0 -1
+-19 0 -9
 0
+
 scenes/material/material.obj?mat_1_4
--15 0 2
+-19 0 -6
 0
+
 scenes/material/material.obj?mat_1_5
--15 0 5
+-19 0 -3
 0
+
 scenes/material/material.obj?mat_1_6
--15 0 8
+-19 0 0
 0
+
+scenes/material/material.obj?mat_1_7
+-19 0 3
+0
+
+scenes/material/material.obj?mat_1_8
+-19 0 6
+0
+
+scenes/material/material.obj?mat_1_9
+-19 0 9
+0
+
+scenes/material/material.obj?mat_1_10
+-19 0 12
+0
+
+scenes/material/material.obj?mat_1_11
+-19 0 15
+0
+
 scenes/material/material.obj?mat_2_0
--12 0 -10
+-16 0 -18
 0
+
 scenes/material/material.obj?mat_2_1
--12 0 -7
+-16 0 -15
 0
+
 scenes/material/material.obj?mat_2_2
--12 0 -4
+-16 0 -12
 0
+
 scenes/material/material.obj?mat_2_3
--12 0 -1
+-16 0 -9
 0
+
 scenes/material/material.obj?mat_2_4
--12 0 2
+-16 0 -6
 0
+
 scenes/material/material.obj?mat_2_5
--12 0 5
+-16 0 -3
 0
+
 scenes/material/material.obj?mat_2_6
--12 0 8
+-16 0 0
 0
+
+scenes/material/material.obj?mat_2_7
+-16 0 3
+0
+
+scenes/material/material.obj?mat_2_8
+-16 0 6
+0
+
+scenes/material/material.obj?mat_2_9
+-16 0 9
+0
+
+scenes/material/material.obj?mat_2_10
+-16 0 12
+0
+
+scenes/material/material.obj?mat_2_11
+-16 0 15
+0
+
 scenes/material/material.obj?mat_3_0
--9 0 -10
+-13 0 -18
 0
+
 scenes/material/material.obj?mat_3_1
--9 0 -7
+-13 0 -15
 0
+
 scenes/material/material.obj?mat_3_2
--9 0 -4
+-13 0 -12
 0
+
 scenes/material/material.obj?mat_3_3
--9 0 -1
+-13 0 -9
 0
+
 scenes/material/material.obj?mat_3_4
--9 0 2
+-13 0 -6
 0
+
 scenes/material/material.obj?mat_3_5
--9 0 5
+-13 0 -3
 0
+
 scenes/material/material.obj?mat_3_6
--9 0 8
+-13 0 0
 0
+
+scenes/material/material.obj?mat_3_7
+-13 0 3
+0
+
+scenes/material/material.obj?mat_3_8
+-13 0 6
+0
+
+scenes/material/material.obj?mat_3_9
+-13 0 9
+0
+
+scenes/material/material.obj?mat_3_10
+-13 0 12
+0
+
+scenes/material/material.obj?mat_3_11
+-13 0 15
+0
+
 scenes/material/material.obj?mat_4_0
--6 0 -10
+-10 0 -18
 0
+
 scenes/material/material.obj?mat_4_1
--6 0 -7
+-10 0 -15
 0
+
 scenes/material/material.obj?mat_4_2
--6 0 -4
+-10 0 -12
 0
+
 scenes/material/material.obj?mat_4_3
--6 0 -1
+-10 0 -9
 0
+
 scenes/material/material.obj?mat_4_4
--6 0 2
+-10 0 -6
 0
+
 scenes/material/material.obj?mat_4_5
--6 0 5
+-10 0 -3
 0
+
 scenes/material/material.obj?mat_4_6
--6 0 8
+-10 0 0
 0
+
+scenes/material/material.obj?mat_4_7
+-10 0 3
+0
+
+scenes/material/material.obj?mat_4_8
+-10 0 6
+0
+
+scenes/material/material.obj?mat_4_9
+-10 0 9
+0
+
+scenes/material/material.obj?mat_4_10
+-10 0 12
+0
+
+scenes/material/material.obj?mat_4_11
+-10 0 15
+0
+
 scenes/material/material.obj?mat_5_0
--3 0 -10
+-7 0 -18
 0
+
 scenes/material/material.obj?mat_5_1
--3 0 -7
+-7 0 -15
 0
+
 scenes/material/material.obj?mat_5_2
--3 0 -4
+-7 0 -12
 0
+
 scenes/material/material.obj?mat_5_3
--3 0 -1
+-7 0 -9
 0
+
 scenes/material/material.obj?mat_5_4
--3 0 2
+-7 0 -6
 0
+
 scenes/material/material.obj?mat_5_5
--3 0 5
+-7 0 -3
 0
+
 scenes/material/material.obj?mat_5_6
--3 0 8
+-7 0 0
 0
+
+scenes/material/material.obj?mat_5_7
+-7 0 3
+0
+
+scenes/material/material.obj?mat_5_8
+-7 0 6
+0
+
+scenes/material/material.obj?mat_5_9
+-7 0 9
+0
+
+scenes/material/material.obj?mat_5_10
+-7 0 12
+0
+
+scenes/material/material.obj?mat_5_11
+-7 0 15
+0
+
 scenes/material/material.obj?mat_6_0
-0 0 -10
+-4 0 -18
 0
+
 scenes/material/material.obj?mat_6_1
-0 0 -7
+-4 0 -15
 0
+
 scenes/material/material.obj?mat_6_2
-0 0 -4
+-4 0 -12
 0
+
 scenes/material/material.obj?mat_6_3
-0 0 -1
+-4 0 -9
 0
+
 scenes/material/material.obj?mat_6_4
-0 0 2
+-4 0 -6
 0
+
 scenes/material/material.obj?mat_6_5
-0 0 5
+-4 0 -3
 0
+
 scenes/material/material.obj?mat_6_6
-0 0 8
+-4 0 0
 0
+
+scenes/material/material.obj?mat_6_7
+-4 0 3
+0
+
+scenes/material/material.obj?mat_6_8
+-4 0 6
+0
+
+scenes/material/material.obj?mat_6_9
+-4 0 9
+0
+
+scenes/material/material.obj?mat_6_10
+-4 0 12
+0
+
+scenes/material/material.obj?mat_6_11
+-4 0 15
+0
+
 scenes/material/material.obj?mat_7_0
-3 0 -10
+-1 0 -18
 0
+
 scenes/material/material.obj?mat_7_1
-3 0 -7
+-1 0 -15
 0
+
 scenes/material/material.obj?mat_7_2
-3 0 -4
+-1 0 -12
 0
+
 scenes/material/material.obj?mat_7_3
-3 0 -1
+-1 0 -9
 0
+
 scenes/material/material.obj?mat_7_4
-3 0 2
+-1 0 -6
 0
+
 scenes/material/material.obj?mat_7_5
-3 0 5
+-1 0 -3
 0
+
 scenes/material/material.obj?mat_7_6
-3 0 8
+-1 0 0
 0
+
+scenes/material/material.obj?mat_7_7
+-1 0 3
+0
+
+scenes/material/material.obj?mat_7_8
+-1 0 6
+0
+
+scenes/material/material.obj?mat_7_9
+-1 0 9
+0
+
+scenes/material/material.obj?mat_7_10
+-1 0 12
+0
+
+scenes/material/material.obj?mat_7_11
+-1 0 15
+0
+
 scenes/material/material.obj?mat_8_0
-6 0 -10
+2 0 -18
 0
+
 scenes/material/material.obj?mat_8_1
-6 0 -7
+2 0 -15
 0
+
 scenes/material/material.obj?mat_8_2
-6 0 -4
+2 0 -12
 0
+
 scenes/material/material.obj?mat_8_3
-6 0 -1
+2 0 -9
 0
+
 scenes/material/material.obj?mat_8_4
-6 0 2
+2 0 -6
 0
+
 scenes/material/material.obj?mat_8_5
-6 0 5
+2 0 -3
 0
+
 scenes/material/material.obj?mat_8_6
-6 0 8
+2 0 0
 0
+
+scenes/material/material.obj?mat_8_7
+2 0 3
+0
+
+scenes/material/material.obj?mat_8_8
+2 0 6
+0
+
+scenes/material/material.obj?mat_8_9
+2 0 9
+0
+
+scenes/material/material.obj?mat_8_10
+2 0 12
+0
+
+scenes/material/material.obj?mat_8_11
+2 0 15
+0
+
 scenes/material/material.obj?mat_9_0
-9 0 -10
+5 0 -18
 0
+
 scenes/material/material.obj?mat_9_1
-9 0 -7
+5 0 -15
 0
+
 scenes/material/material.obj?mat_9_2
-9 0 -4
+5 0 -12
 0
+
 scenes/material/material.obj?mat_9_3
-9 0 -1
+5 0 -9
 0
+
 scenes/material/material.obj?mat_9_4
-9 0 2
+5 0 -6
 0
+
 scenes/material/material.obj?mat_9_5
-9 0 5
+5 0 -3
 0
+
 scenes/material/material.obj?mat_9_6
-9 0 8
+5 0 0
 0
+
+scenes/material/material.obj?mat_9_7
+5 0 3
+0
+
+scenes/material/material.obj?mat_9_8
+5 0 6
+0
+
+scenes/material/material.obj?mat_9_9
+5 0 9
+0
+
+scenes/material/material.obj?mat_9_10
+5 0 12
+0
+
+scenes/material/material.obj?mat_9_11
+5 0 15
+0
+
 scenes/material/material.obj?mat_10_0
-12 0 -10
+8 0 -18
 0
+
 scenes/material/material.obj?mat_10_1
-12 0 -7
+8 0 -15
 0
+
 scenes/material/material.obj?mat_10_2
-12 0 -4
+8 0 -12
 0
+
 scenes/material/material.obj?mat_10_3
-12 0 -1
+8 0 -9
 0
+
 scenes/material/material.obj?mat_10_4
-12 0 2
+8 0 -6
 0
+
 scenes/material/material.obj?mat_10_5
-12 0 5
+8 0 -3
 0
+
 scenes/material/material.obj?mat_10_6
-12 0 8
+8 0 0
 0
+
+scenes/material/material.obj?mat_10_7
+8 0 3
+0
+
+scenes/material/material.obj?mat_10_8
+8 0 6
+0
+
+scenes/material/material.obj?mat_10_9
+8 0 9
+0
+
+scenes/material/material.obj?mat_10_10
+8 0 12
+0
+
+scenes/material/material.obj?mat_10_11
+8 0 15
+0
+
 scenes/material/material.obj?mat_11_0
-15 0 -10
+11 0 -18
 0
+
 scenes/material/material.obj?mat_11_1
-15 0 -7
+11 0 -15
 0
+
 scenes/material/material.obj?mat_11_2
-15 0 -4
+11 0 -12
 0
+
 scenes/material/material.obj?mat_11_3
-15 0 -1
+11 0 -9
 0
+
 scenes/material/material.obj?mat_11_4
-15 0 2
+11 0 -6
 0
+
 scenes/material/material.obj?mat_11_5
-15 0 5
+11 0 -3
 0
+
 scenes/material/material.obj?mat_11_6
-15 0 8
+11 0 0
 0
+
+scenes/material/material.obj?mat_11_7
+11 0 3
+0
+
+scenes/material/material.obj?mat_11_8
+11 0 6
+0
+
+scenes/material/material.obj?mat_11_9
+11 0 9
+0
+
+scenes/material/material.obj?mat_11_10
+11 0 12
+0
+
+scenes/material/material.obj?mat_11_11
+11 0 15
+0
+
+scenes/material/material.obj?mat_12_0
+14 0 -18
+0
+
+scenes/material/material.obj?mat_12_1
+14 0 -15
+0
+
+scenes/material/material.obj?mat_12_2
+14 0 -12
+0
+
+scenes/material/material.obj?mat_12_3
+14 0 -9
+0
+
+scenes/material/material.obj?mat_12_4
+14 0 -6
+0
+
+scenes/material/material.obj?mat_12_5
+14 0 -3
+0
+
+scenes/material/material.obj?mat_12_6
+14 0 0
+0
+
+scenes/material/material.obj?mat_12_7
+14 0 3
+0
+
+scenes/material/material.obj?mat_12_8
+14 0 6
+0
+
+scenes/material/material.obj?mat_12_9
+14 0 9
+0
+
+scenes/material/material.obj?mat_12_10
+14 0 12
+0
+
+scenes/material/material.obj?mat_12_11
+14 0 15
+0
+
+scenes/material/material.obj?mat_13_0
+17 0 -18
+0
+
+scenes/material/material.obj?mat_13_1
+17 0 -15
+0
+
+scenes/material/material.obj?mat_13_2
+17 0 -12
+0
+
+scenes/material/material.obj?mat_13_3
+17 0 -9
+0
+
+scenes/material/material.obj?mat_13_4
+17 0 -6
+0
+
+scenes/material/material.obj?mat_13_5
+17 0 -3
+0
+
+scenes/material/material.obj?mat_13_6
+17 0 0
+0
+
+scenes/material/material.obj?mat_13_7
+17 0 3
+0
+
+scenes/material/material.obj?mat_13_8
+17 0 6
+0
+
+scenes/material/material.obj?mat_13_9
+17 0 9
+0
+
+scenes/material/material.obj?mat_13_10
+17 0 12
+0
+
+scenes/material/material.obj?mat_13_11
+17 0 15
+0
+
+scenes/material/material.obj?mat_14_0
+20 0 -18
+0
+
+scenes/material/material.obj?mat_14_1
+20 0 -15
+0
+
+scenes/material/material.obj?mat_14_2
+20 0 -12
+0
+
+scenes/material/material.obj?mat_14_3
+20 0 -9
+0
+
+scenes/material/material.obj?mat_14_4
+20 0 -6
+0
+
+scenes/material/material.obj?mat_14_5
+20 0 -3
+0
+
+scenes/material/material.obj?mat_14_6
+20 0 0
+0
+
+scenes/material/material.obj?mat_14_7
+20 0 3
+0
+
+scenes/material/material.obj?mat_14_8
+20 0 6
+0
+
+scenes/material/material.obj?mat_14_9
+20 0 9
+0
+
+scenes/material/material.obj?mat_14_10
+20 0 12
+0
+
+scenes/material/material.obj?mat_14_11
+20 0 15
+0
+

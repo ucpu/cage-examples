@@ -2,6 +2,7 @@
 []
 scheme = mesh
 bake_model = true
+pass_invalid_normal = true
 
 sibenik.obj?0
 sibenik.obj?1

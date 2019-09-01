@@ -1,8 +1,7 @@
 #include <cage-core/core.h>
-#include <cage-core/filesystem.h>
+#include <cage-core/files.h>
+#include <cage-core/fileUtils.h>
 #include <cage-core/math.h>
-
-#pragma comment(lib, "cage-core.lib")
 
 using namespace cage;
 
@@ -144,7 +143,9 @@ static const uint32 M = 12;
 
 int main(int argc, const char *args[])
 {
-	holder<fileClass> fo = newFile("../material.obj", fileMode(false, true, true));
+	string basePath = pathJoin(pathSearchTowardsRoot("data", pathTypeFlags::Directory), "scenes/material");
+	string scenesPath = pathJoin(pathSearchTowardsRoot("scenes-maps", pathTypeFlags::Directory), "material.txt");
+	holder<fileHandle> fo = newFile(pathJoin(basePath, "material.obj"), fileMode(false, true));
 	{
 		fo->writeLine("mtllib material.mtl");
 		for (uint32 i = 0; i < coordsCount; i++)
@@ -153,34 +154,39 @@ int main(int argc, const char *args[])
 			fo->writeLine(string() + "vn " + sphereCoords[i][0] + " " + sphereCoords[i][1] + " " + sphereCoords[i][2]);
 		}
 	}
-	holder<fileClass> fm = newFile("../material.mtl", fileMode(false, true, true));
-	holder<fileClass> fa = newFile("../material.asset", fileMode(false, true, true));
+	holder<fileHandle> fm = newFile(pathJoin(basePath, "material.mtl"), fileMode(false, true));
+	holder<fileHandle> fa = newFile(pathJoin(basePath, "material.asset"), fileMode(false, true));
 	{
 		fa->writeLine(string() + "[]");
 		fa->writeLine(string() + "scheme = pack");
 		fa->writeLine(string() + "material.pack");
 		fa->writeLine(string() + "[]");
-		fa->writeLine(string() + "scheme = assimp-mesh");
+		fa->writeLine(string() + "scheme = mesh");
 		fa->writeLine(string() + "export_uv = false");
 		fa->writeLine(string() + "export_tangent = false");
 	}
-	holder<fileClass> fp = newFile("../material.pack", fileMode(false, true, true));
+	holder<fileHandle> fp = newFile(pathJoin(basePath, "material.pack"), fileMode(false, true));
 	{
 		fp->writeLine(string() + "[]");
 	}
-	holder<fileClass> fs = newFile("../material.txt", fileMode(false, true, true));
+	holder<fileHandle> fs = newFile(scenesPath, fileMode(false, true));
+	fs->writeLine("scenes/material/material.pack");
+	fs->writeLine("");
+	fs->writeLine("scenes/common/ground.obj");
+	fs->writeLine("0 0 0");
+	fs->writeLine("0");
 	for (uint32 r = 0; r < R; r++)
 	{
 		for (uint32 m = 0; m < M; m++)
 		{
 			string mat = string() + "mat_" + r + "_" + m;
 			fm->writeLine(string() + "newmtl " + mat);
-			fm->writeLine(string() + "Ns " + (r * M + m)); // this is only to prevent assimp from merging the materials
-			holder<fileClass> fc = newFile(string() + "../material.obj_" + mat + ".cpm", fileMode(false, true, true));
+			fm->writeLine(string() + "Ns " + (r * M + m)); // this is to prevent assimp from merging the materials
+			holder<fileHandle> fc = newFile(pathJoin(basePath, string() + "material.obj_" + mat + ".cpm"), fileMode(false, true));
 			fc->writeLine(string() + "[base]");
-			fc->writeLine(string() + "albedo = 0.8, 0.1, 0.1");
-			fc->writeLine(string() + "roughness = " + ((r + 0.5) / (float)R));
-			fc->writeLine(string() + "metalness = " + ((m + 0.5) / (float)M));
+			fc->writeLine(string() + "albedo = 0.95, 0.7, 0.2");
+			fc->writeLine(string() + "roughness = " + ((r + 0.5) / R));
+			fc->writeLine(string() + "metalness = " + ((m + 0.5) / M));
 			fo->writeLine(string() + "o " + mat);
 			fo->writeLine(string() + "usemtl " + mat);
 			for (uint32 i = 0; i < facesCount; i++)
@@ -190,9 +196,10 @@ int main(int argc, const char *args[])
 			}
 			fa->writeLine(string() + "material.obj?" + mat);
 			fp->writeLine(string() + "material.obj?" + mat);
-			fs->writeLine(string() + "blood/material/material.obj?" + mat);
+			fs->writeLine(string() + "scenes/material/material.obj?" + mat);
 			fs->writeLine(string() + (sint32)(r * 3 - R * 3 / 2) + " 0 " + (sint32)(m * 3 - M * 3 / 2));
 			fs->writeLine(string() + "0");
+			fs->writeLine("");
 		}
 	}
 	return 0;
