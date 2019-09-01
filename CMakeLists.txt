@@ -14,11 +14,15 @@ message(STATUS "----------------------------------------------------------------
 message(STATUS "scenes")
 message(STATUS "----------------------------------------------------------------")
 
-file(GLOB_RECURSE scenes-sources "sources/scenes/*")
-add_executable(scenes ${scenes-sources})
+add_executable(scenes "sources/scenes/game.h" "sources/scenes/game.cpp" "sources/scenes/main.cpp")
 target_link_libraries(scenes cage-client)
 cage_ide_category(scenes scenes)
 cage_ide_working_dir_in_place(scenes)
+
+add_executable(generateMaterialData "sources/scenes/generateMaterialData.cpp")
+target_link_libraries(generateMaterialData cage-core)
+cage_ide_category(generateMaterialData scenes)
+cage_ide_working_dir_in_place(generateMaterialData)
 
 message(STATUS "----------------------------------------------------------------")
 message(STATUS "cage-tests")
