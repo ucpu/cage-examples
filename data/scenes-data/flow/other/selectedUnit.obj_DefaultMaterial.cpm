@@ -1,4 +1,4 @@
 
 [base]
 albedo = 0,1,0
-emissive = 1
+emission = 1

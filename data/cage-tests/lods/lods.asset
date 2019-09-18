@@ -6,8 +6,8 @@ lods.pack
 []
 scheme = mesh
 scale = 5
-export_uv = false
-export_tangent = false
+uvs = false
+tangents = false
 lods.obj?sphere_3
 lods.obj?sphere_2
 lods.obj?sphere_1

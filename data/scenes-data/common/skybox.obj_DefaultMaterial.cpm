@@ -3,7 +3,7 @@
 albedo = skyboxes/$.png
 
 [flags]
-no-depth-test
-no-depth-write
-no-lighting
-no-shadow-cast
+noDepthTest
+noDepthWrite
+noLighting
+noShadowCast

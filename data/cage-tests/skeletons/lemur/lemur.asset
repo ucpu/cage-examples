@@ -8,7 +8,7 @@ lemur.x?run
 
 []
 scheme = mesh
-export_bones = true
+bones = true
 axes = +x-z+y
 scale = 0.01
 lemur.x

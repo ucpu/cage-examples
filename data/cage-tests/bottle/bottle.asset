@@ -5,19 +5,18 @@ bottle.pack
 
 []
 scheme = mesh
+tangents = true
 bottle.obj
 
 []
 scheme = mesh
-export_uv = false
-export_tangent = false
+uvs = false
 scale = 0.3
 other.obj?arrow
 
 []
 scheme = mesh
-export_uv = false
-export_tangent = false
+uvs = false
 scale = 5
 other.obj?plane
 

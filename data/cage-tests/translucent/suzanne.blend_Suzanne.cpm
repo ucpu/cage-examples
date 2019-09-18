@@ -5,12 +5,12 @@
 opacity = 0.6
 albedo = 0.26, 0.14, 0.04
 roughness = 0.5
-metalness = 0.9
+metallic = 0.9
 
 [flags]
-#two-sided
+#twoSided
 translucency
-no-depth-write
-no-velocity-write
+noDepthWrite
+noVelocityWrite
 
 

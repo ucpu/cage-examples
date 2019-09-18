@@ -10,7 +10,7 @@ house.pack
 []
 scheme = texture
 srgb = true
-premultiply_alpha = true
+premultiplyAlpha = true
 house-RGBA.png
 
 []

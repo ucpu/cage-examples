@@ -63,7 +63,7 @@ public:
 			format.font = hashString(fontNames[i]);
 			format.align = textAlignEnum::Center;
 			format.lineSpacing = 1;
-			format.color = convertHsvToRgb(vec3(randomChance(), 1, 1));
+			format.color = colorHsvToRgb(vec3(randomChance(), 1, 1));
 		}
 	}
 

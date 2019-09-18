@@ -1,18 +1,17 @@
 
 []
 scheme = mesh
-export_uv = false
-export_tangent = false
-export_bones = true
-override_material = spawner.cpm
+uvs = false
+bones = true
+material = spawner.cpm
 spawner.x
 
 []
 scheme = mesh
-export_uv = false
-export_tangent = false
-export_bones = true
-override_material = spawner.cpm
+uvs = false
+tangents = false
+bones = true
+material = spawner.cpm
 scale = 0.01
 spawner.fbx
 

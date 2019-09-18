@@ -1,10 +1,10 @@
 
 [base]
-emissive = 1
+emission = 1
 mask = 1
 
 [textures]
 
 [flags]
-no-lighting
-no-shadow-cast
+noLighting
+noShadowCast

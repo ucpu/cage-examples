@@ -8,6 +8,6 @@ roughness = 0.2
 
 [flags]
 translucency
-no-depth-write
-no-velocity-write
+noDepthWrite
+noVelocityWrite
 

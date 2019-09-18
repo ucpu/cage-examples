@@ -5,7 +5,7 @@ roughness = 0.8
 albedo = leaves.png
 
 [flags]
-two-sided
+twoSided
 transparency
-opacity-texture
+opacityTexture
 

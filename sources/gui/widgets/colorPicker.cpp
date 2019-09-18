@@ -25,7 +25,7 @@ class guiTestImpl : public guiTestClass
 			p.order = index++;
 			CAGE_COMPONENT_GUI(colorPicker, cp, e);
 			cp.collapsible = true;
-			cp.color = convertToRainbowColor(randomChance());
+			cp.color = colorValueToHeatmapRgb(randomChance());
 		}
 
 		{ // large
@@ -36,7 +36,7 @@ class guiTestImpl : public guiTestClass
 			p.order = index++;
 			CAGE_COMPONENT_GUI(colorPicker, cp, e);
 			cp.collapsible = false;
-			cp.color = convertToRainbowColor(randomChance());
+			cp.color = colorValueToHeatmapRgb(randomChance());
 		}
 	}
 

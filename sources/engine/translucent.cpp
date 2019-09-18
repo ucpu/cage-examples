@@ -229,7 +229,7 @@ int main(int argc, char *args[])
 			t.position = randomDirection3() * randomRange(1, 5) + vec3(0, 3, 0);
 			CAGE_COMPONENT_ENGINE(light, l, e);
 			l.lightType = lightTypeEnum::Point;
-			r.color = l.color = convertHsvToRgb(randomChance3() * vec3(1, .5, .5) + vec3(0, .5, .5));
+			r.color = l.color = colorHsvToRgb(randomChance3() * vec3(1, .5, .5) + vec3(0, .5, .5));
 			l.attenuation = vec3(0.5, 0, 0.07);
 		}
 		for (uint32 j = 0; j < 3; j++)

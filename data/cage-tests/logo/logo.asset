@@ -5,9 +5,9 @@ logo.pack
 
 []
 scheme = sound
-type = stream
-before = repeat
-after = repeat
+stream = true
+loopBefore = true
+loopAfter = true
 logo.ogg
 
 []

@@ -6,6 +6,7 @@ common.pack
 []
 scheme = mesh
 scale = 2
+tangents = true
 ground.obj
 
 []
@@ -15,8 +16,8 @@ ground.jpg;d
 
 []
 scheme = texture
-convert = height_to_normal
-normal_strength = 0.3
+convert = heightToNormal
+normalStrength = 0.3
 ground.jpg;n
 
 []
@@ -26,8 +27,8 @@ skybox.obj
 []
 scheme = texture
 srgb = true
-target = 2d_array
-animation_duration = 10000000
+target = 2dArray
+animationDuration = 10000000
 skyboxes/$.png
 
 []

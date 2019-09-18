@@ -126,7 +126,7 @@ void sceneReload()
 		CAGE_COMPONENT_ENGINE(transform, ts, pointLights[i]);
 		ts.position = (vec3(randomChance(), randomChance(), randomChance()) * 2 - 1) * 15;
 		CAGE_COMPONENT_ENGINE(light, ls, pointLights[i]);
-		ls.color = convertHsvToRgb(vec3(randomChance(), 1, 1));
+		ls.color = colorHsvToRgb(vec3(randomChance(), 1, 1));
 		ls.lightType = lightTypeEnum::Point;
 		//CAGE_COMPONENT_ENGINE(shadowmap, ss, pointLights[i]);
 		//ss.worldRadius = vec3(35);

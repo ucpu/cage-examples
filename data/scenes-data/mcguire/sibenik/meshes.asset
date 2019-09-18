@@ -1,17 +1,24 @@
 
 []
 scheme = mesh
-bake_model = true
-pass_invalid_normal = true
+bakeModel = true
+tangents = true
+passInvalidNormals = true
+sibenik.obj?2
+sibenik.obj?7
 
+[]
+scheme = mesh
+bakeModel = true
+passInvalidNormals = true
 sibenik.obj?0
 sibenik.obj?1
-sibenik.obj?2
 sibenik.obj?3
 sibenik.obj?4
 sibenik.obj?5
 sibenik.obj?6
-sibenik.obj?7
 sibenik.obj?8
 sibenik.obj?9
 sibenik.obj?10
+
+

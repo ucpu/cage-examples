@@ -6,9 +6,8 @@ cylinder.x?curve
 
 []
 scheme = mesh
-export_bones = true
-export_uv = false
-export_tangent = false
+bones = true
+uvs = false
 axes = +x-z+y
 scale = 0.5
 cylinder.x

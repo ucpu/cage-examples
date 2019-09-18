@@ -47,7 +47,7 @@ public:
 		window->processEvents();
 		ivec2 resolution = window->resolution();
 		glViewport(0, 0, resolution.x, resolution.y);
-		vec3 color = convertHsvToRgb(vec3(hue, 1, 1));
+		vec3 color = colorHsvToRgb(vec3(hue, 1, 1));
 		hue = (hue + 0.002) % 1;
 		glClearColor(color[0].value, color[1].value, color[2].value, 0);
 		glClear(GL_COLOR_BUFFER_BIT);

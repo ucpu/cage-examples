@@ -13,6 +13,11 @@ eye.obj
 
 []
 scheme = mesh
+tangents = true
+room.obj?door_front_Door
+
+[]
+scheme = mesh
 room.obj?9
 room.obj?49
 room.obj?13
@@ -42,7 +47,6 @@ room.obj?bed_Blanket
 room.obj?bowl_bowl
 room.obj?ceiling_ceiling
 room.obj?ceiling_lamp_Light_Black
-room.obj?door_front_Door
 room.obj?door_handle_Doorhandle
 room.obj?door_sides_door_sides
 room.obj?doorframe_doorframe
@@ -118,7 +122,7 @@ wallpaper.jpg
 
 []
 scheme = texture
-convert = height_to_normal
+convert = heightToNormal
 door.tif
 
 []

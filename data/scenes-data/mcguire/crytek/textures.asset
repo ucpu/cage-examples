@@ -32,14 +32,14 @@ textures/vase_round.png
 
 []
 scheme = texture
-convert = specular_to_special
+convert = specularToSpecial
 textures/sponza_thorn_spec.png
 textures/vase_plant_spec.png
 textures/vase_round_spec.png
 
 []
 scheme = texture
-convert = specular_to_special
+convert = specularToSpecial
 textures/sponza_details_spec.png
 textures/spnza_bricks_a_spec.png
 textures/sponza_arch_spec.png
@@ -59,7 +59,7 @@ textures/vase_plant_mask.png
 
 []
 scheme = texture
-convert = height_to_normal
+convert = heightToNormal
 textures/background_bump.png
 textures/chain_texture_bump.png
 textures/lion_bump.png

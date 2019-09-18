@@ -5,8 +5,8 @@ translucent.pack
 
 []
 scheme = mesh
-export_uv = false
-export_tangent = false
+uvs = false
+tangents = false
 axes = +x+z-y
 shapes.blend?Ground
 shapes.blend?Knot
@@ -20,8 +20,8 @@ shapes.blend?Plane
 
 []
 scheme = mesh
-export_uv = false
-export_tangent = false
+uvs = false
+tangents = false
 axes = +x+z-y
 scale = 0.5
 shapes.blend?Sphere
@@ -29,8 +29,8 @@ shapes.blend?Cube
 
 []
 scheme = mesh
-export_uv = false
-export_tangent = false
+uvs = false
+tangents = false
 axes = +x+z-y
 scale = 0.9
 suzanne.blend
@@ -38,5 +38,5 @@ suzanne.blend
 []
 scheme = texture
 srgb = true
-premultiply_alpha = true
+premultiplyAlpha = true
 Plane.png

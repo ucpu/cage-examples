@@ -1,34 +1,40 @@
 
 []
 scheme = mesh
-bake_model = true
-instances_limit = 1
+bakeModel = true
+instancesLimit = 1
+tangents = true
 scale = 0.01
-
 sponza.obj?0
-sponza.obj?1
 sponza.obj?2
 sponza.obj?3
 sponza.obj?4
 sponza.obj?5
+sponza.obj?8
+sponza.obj?13
+sponza.obj?14
+sponza.obj?20
+sponza.obj?22
+sponza.obj?23
+sponza.obj?24
+
+[]
+scheme = mesh
+bakeModel = true
+instancesLimit = 1
+scale = 0.01
+sponza.obj?1
 sponza.obj?6
 sponza.obj?7
-sponza.obj?8
 sponza.obj?9
 sponza.obj?10
 sponza.obj?11
 sponza.obj?12
-sponza.obj?13
-sponza.obj?14
 sponza.obj?15
 sponza.obj?16
 sponza.obj?17
 sponza.obj?18
 sponza.obj?19
-sponza.obj?20
 sponza.obj?21
-sponza.obj?22
-sponza.obj?23
-sponza.obj?24
 
 

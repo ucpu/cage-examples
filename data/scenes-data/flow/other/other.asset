@@ -5,9 +5,8 @@ other.pack
 
 []
 scheme = mesh
-export_uv = false
-export_normal = false
-export_tangent = false
+uvs = false
+normals = false
 selectedUnit.obj
 beam.obj
 lifebar.obj

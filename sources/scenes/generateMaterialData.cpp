@@ -162,8 +162,7 @@ int main(int argc, const char *args[])
 		fa->writeLine(string() + "material.pack");
 		fa->writeLine(string() + "[]");
 		fa->writeLine(string() + "scheme = mesh");
-		fa->writeLine(string() + "export_uv = false");
-		fa->writeLine(string() + "export_tangent = false");
+		fa->writeLine(string() + "uvs = false");
 	}
 	holder<fileHandle> fp = newFile(pathJoin(basePath, "material.pack"), fileMode(false, true));
 	{
@@ -186,7 +185,7 @@ int main(int argc, const char *args[])
 			fc->writeLine(string() + "[base]");
 			fc->writeLine(string() + "albedo = 0.95, 0.7, 0.2");
 			fc->writeLine(string() + "roughness = " + ((r + 0.5) / R));
-			fc->writeLine(string() + "metalness = " + ((m + 0.5) / M));
+			fc->writeLine(string() + "metallic = " + ((m + 0.5) / M));
 			fo->writeLine(string() + "o " + mat);
 			fo->writeLine(string() + "usemtl " + mat);
 			for (uint32 i = 0; i < facesCount; i++)
