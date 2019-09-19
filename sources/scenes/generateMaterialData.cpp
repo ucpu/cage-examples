@@ -155,7 +155,7 @@ int main(int argc, const char *args[])
 		}
 	}
 	holder<fileHandle> fm = newFile(pathJoin(basePath, "material.mtl"), fileMode(false, true));
-	holder<fileHandle> fa = newFile(pathJoin(basePath, "material.asset"), fileMode(false, true));
+	holder<fileHandle> fa = newFile(pathJoin(basePath, "material.assets"), fileMode(false, true));
 	{
 		fa->writeLine(string() + "[]");
 		fa->writeLine(string() + "scheme = pack");

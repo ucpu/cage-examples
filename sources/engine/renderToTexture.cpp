@@ -108,13 +108,17 @@ int main(int argc, char *args[])
 			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.position = vec3(0, 1.7, 0);
 			CAGE_COMPONENT_ENGINE(camera, c, e);
-			c.ambientLight = vec3(1, 1, 1) * 0.6;
+			c.ambientLight = vec3(0.3);
 			c.near = 0.2;
 			c.far = 100;
 			c.cameraOrder = 3;
 			c.sceneMask = 1;
 			c.effects = cameraEffectsFlags::CombinedPass;
 			c.ssao.worldRadius = 0.05;
+			CAGE_COMPONENT_ENGINE(light, l, e);
+			l.lightType = lightTypeEnum::Directional;
+			l.color = vec3(0.5);
+			l.sceneMask = 1;
 			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/room/eye.obj");
 			r.sceneMask = 2;
@@ -144,13 +148,17 @@ int main(int argc, char *args[])
 			r.object = hashString("cage-tests/room/camera.obj?camera");
 			r.sceneMask = 1;
 			CAGE_COMPONENT_ENGINE(camera, c, e);
-			c.ambientLight = vec3(0.7);
+			c.ambientLight = vec3(0.3);
 			c.near = 0.2;
 			c.far = 100;
 			c.cameraOrder = 2;
 			c.sceneMask = 2;
 			c.effects = cameraEffectsFlags::GeometryPass;
 			c.ssao.worldRadius = 0.05;
+			CAGE_COMPONENT_ENGINE(light, l, e);
+			l.lightType = lightTypeEnum::Directional;
+			l.color = vec3(0.5);
+			l.sceneMask = 2;
 		}
 
 		holder<cameraController> cameraController = newCameraController(eye);
