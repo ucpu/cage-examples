@@ -15,12 +15,12 @@
 #include <cage-core/hashString.h>
 #include <cage-core/color.h>
 
-#include <cage-client/core.h>
-#include <cage-client/window.h>
-#include <cage-client/sound.h>
-#include <cage-client/gui.h>
-#include <cage-client/engine.h>
-#include <cage-client/cameraController.h>
-#include <cage-client/engineProfiling.h>
+#include <cage-engine/core.h>
+#include <cage-engine/window.h>
+#include <cage-engine/sound.h>
+#include <cage-engine/gui.h>
+#include <cage-engine/engine.h>
+#include <cage-engine/cameraController.h>
+#include <cage-engine/engineProfiling.h>
 
 using namespace cage;

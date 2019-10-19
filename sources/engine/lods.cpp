@@ -7,13 +7,13 @@
 #include <cage-core/config.h>
 #include <cage-core/assetManager.h>
 #include <cage-core/hashString.h>
-#include <cage-client/core.h>
-#include <cage-client/window.h>
-#include <cage-client/gui.h>
-#include <cage-client/engine.h>
-#include <cage-client/engineProfiling.h>
-#include <cage-client/cameraController.h>
-#include <cage-client/highPerformanceGpuHint.h>
+#include <cage-engine/core.h>
+#include <cage-engine/window.h>
+#include <cage-engine/gui.h>
+#include <cage-engine/engine.h>
+#include <cage-engine/engineProfiling.h>
+#include <cage-engine/cameraController.h>
+#include <cage-engine/highPerformanceGpuHint.h>
 
 using namespace cage;
 static const uint32 assetsName = hashString("cage-tests/lods/lods.pack");
@@ -38,7 +38,7 @@ int main(int argc, char *args[])
 		log1->format.bind<logFormatConsole>();
 		log1->output.bind<logOutputStdOut>();
 
-		configSetBool("cage-client.engine.debugRenderMissingMeshes", true);
+		configSetBool("cage-engine.engine.debugRenderMissingMeshes", true);
 		engineInitialize(engineCreateConfig());
 
 		// events

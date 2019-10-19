@@ -1,5 +1,5 @@
 #include "game.h"
-#include <cage-client/highPerformanceGpuHint.h>
+#include <cage-engine/highPerformanceGpuHint.h>
 
 bool closeButton();
 bool keyPress(uint32 a, uint32 b, modifiersFlags m);

@@ -6,13 +6,13 @@
 #include <cage-core/assetManager.h>
 #include <cage-core/timer.h>
 #include <cage-core/hashString.h>
-#include <cage-client/core.h>
-#include <cage-client/window.h>
-#include <cage-client/graphics.h>
-#include <cage-client/sound.h>
-#include <cage-client/opengl.h>
-#include <cage-client/highPerformanceGpuHint.h>
-#include <cage-client/graphics/shaderConventions.h>
+#include <cage-engine/core.h>
+#include <cage-engine/window.h>
+#include <cage-engine/graphics.h>
+#include <cage-engine/sound.h>
+#include <cage-engine/opengl.h>
+#include <cage-engine/highPerformanceGpuHint.h>
+#include <cage-engine/graphics/shaderConventions.h>
 
 using namespace cage;
 

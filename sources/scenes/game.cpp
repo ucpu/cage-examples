@@ -1,7 +1,7 @@
 #include "game.h"
 
 #include <cage-core/geometry.h>
-#include <cage-client/shadowmapHelpers.h>
+#include <cage-engine/shadowmapHelpers.h>
 
 holder<cameraController> cameraCtrl;
 holder<engineProfiling> engineProfilingInstance;

@@ -4,11 +4,11 @@
 #include <cage-core/entities.h>
 #include <cage-core/config.h>
 #include <cage-core/hashString.h>
-#include <cage-client/core.h>
-#include <cage-client/window.h>
-#include <cage-client/sound.h>
-#include <cage-client/engine.h>
-#include <cage-client/highPerformanceGpuHint.h>
+#include <cage-engine/core.h>
+#include <cage-engine/window.h>
+#include <cage-engine/sound.h>
+#include <cage-engine/engine.h>
+#include <cage-engine/highPerformanceGpuHint.h>
 
 using namespace cage;
 
@@ -112,7 +112,7 @@ int main(int argc, char *args[])
 		log1->format.bind<logFormatConsole>();
 		log1->output.bind<logOutputStdOut>();
 
-		configSetBool("cage-client.engine.renderMissingMeshes", true);
+		configSetBool("cage-engine.engine.renderMissingMeshes", true);
 		engineInitialize(engineCreateConfig());
 
 		// events

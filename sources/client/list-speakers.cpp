@@ -3,9 +3,9 @@
 #include <cage-core/log.h>
 #include <cage-core/concurrent.h>
 #include <cage-core/timer.h>
-#include <cage-client/core.h>
-#include <cage-client/sound.h>
-#include <cage-client/speakerList.h>
+#include <cage-engine/core.h>
+#include <cage-engine/sound.h>
+#include <cage-engine/speakerList.h>
 
 using namespace cage;
 

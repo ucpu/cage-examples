@@ -5,12 +5,12 @@
 #include <cage-core/hashString.h>
 #include <cage-core/assetManager.h>
 #include <cage-core/noiseFunction.h>
-#include <cage-client/core.h>
-#include <cage-client/window.h>
-#include <cage-client/engine.h>
-#include <cage-client/engineProfiling.h>
-#include <cage-client/cameraController.h>
-#include <cage-client/highPerformanceGpuHint.h>
+#include <cage-engine/core.h>
+#include <cage-engine/window.h>
+#include <cage-engine/engine.h>
+#include <cage-engine/engineProfiling.h>
+#include <cage-engine/cameraController.h>
+#include <cage-engine/highPerformanceGpuHint.h>
 
 using namespace cage;
 static const uint32 assetsName = hashString("cage-tests/texts/texts.pack");
