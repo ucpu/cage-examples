@@ -1,4 +1,5 @@
 #include "game.h"
+#include <cage-core/logger.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 
 bool closeButton();

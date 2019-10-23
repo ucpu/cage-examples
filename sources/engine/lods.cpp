@@ -2,7 +2,7 @@
 
 #include <cage-core/core.h>
 #include <cage-core/math.h>
-#include <cage-core/log.h>
+#include <cage-core/logger.h>
 #include <cage-core/entities.h>
 #include <cage-core/config.h>
 #include <cage-core/assetManager.h>
