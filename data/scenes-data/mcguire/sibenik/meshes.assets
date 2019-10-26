@@ -3,16 +3,14 @@
 scheme = mesh
 bakeModel = true
 tangents = true
-passInvalidNormals = true
+sibenik.obj?0
+sibenik.obj?1
 sibenik.obj?2
 sibenik.obj?7
 
 []
 scheme = mesh
 bakeModel = true
-passInvalidNormals = true
-sibenik.obj?0
-sibenik.obj?1
 sibenik.obj?3
 sibenik.obj?4
 sibenik.obj?5
