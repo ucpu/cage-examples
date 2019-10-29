@@ -93,6 +93,19 @@ int main(int argc, char *args[])
 				t.scale = 1.5;
 				i++;
 			}
+#if (0)
+			// performance
+			for (sint32 i = 0; i < 32 * 32; i++)
+			{
+				entity *e = ents->createAnonymous();
+				CAGE_COMPONENT_ENGINE(render, r, e);
+				r.object = hashString("cage-tests/skeletons/lemur/lemur.x");
+				CAGE_COMPONENT_ENGINE(skeletalAnimation, s, e);
+				s.name = animations[1];
+				CAGE_COMPONENT_ENGINE(transform, t, e);
+				t.position = vec3((i % 32) * 2 - 32, 0, (i / 32) * 2 - 70);
+			}
+#endif
 		}
 		{ // cylinders
 			uint32 animations[] = { hashString("cage-tests/skeletons/cylinder/cylinder.x?bend"), hashString("cage-tests/skeletons/cylinder/cylinder.x?curve") };

@@ -248,7 +248,6 @@ int main(int argc, char *args[])
 		log1->format.bind<logFormatConsole>();
 		log1->output.bind<logOutputStdOut>();
 
-		//configSetBool("cage-engine.engine.debugMissingMeshes", true);
 		engineInitialize(engineCreateConfig());
 
 		// events
