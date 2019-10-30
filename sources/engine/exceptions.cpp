@@ -26,7 +26,7 @@ void windowClose()
 void maybeThrow(float chance, uint32 index)
 {
 	if (randomChance() < chance)
-		CAGE_THROW_WARNING(codeException, "intentionally thrown exception", index);
+		CAGE_THROW_SILENT(systemError, "intentionally thrown exception", index);
 }
 
 void controlInit()
