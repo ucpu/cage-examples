@@ -4,7 +4,7 @@ texts.pack
 
 []
 scheme = textpack
-internationalName = texts.textpack
+alias = texts.textpack
 czech.textpack
 english.textpack
 
