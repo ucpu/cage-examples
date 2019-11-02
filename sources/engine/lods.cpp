@@ -12,7 +12,7 @@
 #include <cage-engine/gui.h>
 #include <cage-engine/engine.h>
 #include <cage-engine/engineProfiling.h>
-#include <cage-engine/cameraController.h>
+#include <cage-engine/fpsCamera.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 
 using namespace cage;
@@ -38,7 +38,6 @@ int main(int argc, char *args[])
 		log1->format.bind<logFormatConsole>();
 		log1->output.bind<logOutputStdOut>();
 
-		configSetBool("cage-engine.engine.debugRenderMissingMeshes", true);
 		engineInitialize(engineCreateConfig());
 
 		// events
@@ -96,9 +95,9 @@ int main(int argc, char *args[])
 			c.far = 200;
 		}
 
-		holder<cameraController> cameraController = newCameraController(ents->get(10));
-		cameraController->mouseButton = mouseButtonsFlags::Left;
-		cameraController->movementSpeed = 1;
+		holder<fpsCamera> fpsCamera = newFpsCamera(ents->get(10));
+		fpsCamera->mouseButton = mouseButtonsFlags::Left;
+		fpsCamera->movementSpeed = 1;
 		holder<engineProfiling> engineProfiling = newEngineProfiling();
 
 		assets()->add(assetsName);

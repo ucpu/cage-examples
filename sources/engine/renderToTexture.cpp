@@ -14,7 +14,7 @@
 #include <cage-engine/engine.h>
 #include <cage-engine/opengl.h>
 #include <cage-engine/engineProfiling.h>
-#include <cage-engine/cameraController.h>
+#include <cage-engine/fpsCamera.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 
 using namespace cage;
@@ -73,7 +73,6 @@ int main(int argc, char *args[])
 		log1->format.bind<logFormatConsole>();
 		log1->output.bind<logOutputStdOut>();
 
-		configSetBool("cage-engine.engine.debugRenderMissingMeshes", true);
 		engineInitialize(engineCreateConfig());
 
 		// events
@@ -85,8 +84,7 @@ int main(int argc, char *args[])
 #undef GCHL_GENERATE
 
 		// window
-		window()->setWindowed();
-		window()->windowedSize(ivec2(800, 600));
+		window()->setMaximized();
 		window()->title("render to texture");
 
 		// screen
@@ -161,9 +159,9 @@ int main(int argc, char *args[])
 			l.sceneMask = 2;
 		}
 
-		holder<cameraController> cameraController = newCameraController(eye);
-		cameraController->mouseButton = mouseButtonsFlags::Left;
-		cameraController->movementSpeed = 0.1;
+		holder<fpsCamera> fpsCamera = newFpsCamera(eye);
+		fpsCamera->mouseButton = mouseButtonsFlags::Left;
+		fpsCamera->movementSpeed = 0.1;
 		holder<engineProfiling> engineProfiling = newEngineProfiling();
 
 		assets()->add(assetsName);

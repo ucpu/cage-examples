@@ -41,7 +41,7 @@ void controlInit()
 		CAGE_COMPONENT_ENGINE(transform, t, e);
 		t.orientation = quat(degs(90), degs(), degs());
 		CAGE_COMPONENT_ENGINE(render, r, e);
-		r.object = 1;
+		r.object = hashString("cage/mesh/fake.obj");
 		CAGE_COMPONENT_ENGINE(listener, l, e);
 		l.attenuation = vec3(0, 0.1, 0.005);
 	}
@@ -53,7 +53,7 @@ void controlInit()
 		CAGE_COMPONENT_ENGINE(transform, t, e);
 		t.position = boxPositions[i] * 30;
 		CAGE_COMPONENT_ENGINE(render, r, e);
-		r.object = 2;
+		r.object = hashString("cage/mesh/fake.obj");
 		CAGE_COMPONENT_ENGINE(voice, s, e);
 		s.name = assetsName;
 	}
@@ -82,7 +82,6 @@ int main(int argc, char *args[])
 		log1->format.bind <logFormatConsole>();
 		log1->output.bind <logOutputStdOut>();
 
-		configSetBool("cage-engine.engine.renderMissingMeshes", true);
 		engineInitialize(engineCreateConfig());
 
 		// events

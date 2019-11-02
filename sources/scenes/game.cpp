@@ -3,7 +3,7 @@
 #include <cage-core/geometry.h>
 #include <cage-engine/shadowmapHelpers.h>
 
-holder<cameraController> cameraCtrl;
+holder<fpsCamera> cameraCtrl;
 holder<engineProfiling> engineProfilingInstance;
 
 uint32 sceneIndexCurrent;
@@ -240,7 +240,7 @@ bool guiFunction(uint32 en)
 
 void cameraInitialize()
 {
-	cameraCtrl = newCameraController();
+	cameraCtrl = newFpsCamera();
 	cameraCtrl->movementSpeed = 0.5;
 	cameraCtrl->mouseButton = mouseButtonsFlags::Left;
 	engineProfilingInstance = newEngineProfiling();

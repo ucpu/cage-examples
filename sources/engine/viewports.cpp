@@ -109,6 +109,7 @@ void regenerate()
 		(void)t;
 		CAGE_COMPONENT_ENGINE(camera, c, e);
 		c.ambientLight = vec3(0.1);
+		c.ambientLight[i] = 0;
 		c.sceneMask = 1 << i;
 		c.cameraOrder = i;
 		switch ((uint32)camsLayout)
@@ -138,7 +139,7 @@ void regenerate()
 		t.orientation = randomDirectionQuat();
 		CAGE_COMPONENT_ENGINE(light, l, e);
 		l.lightType = lightTypeEnum::Directional;
-		l.color = vec3(0.9);
+		l.color = vec3(1);
 		CAGE_COMPONENT_ENGINE(shadowmap, s, e);
 		s.resolution = 512;
 		s.worldSize = vec3(50);
@@ -219,8 +220,7 @@ int main(int argc, char *args[])
 		keyPressListener.attach(window()->events.keyPress);
 		updateListener.attach(controlThread().update);
 
-		window()->setWindowed();
-		window()->windowedSize(ivec2(800, 600));
+		window()->setMaximized();
 		window()->title("multiple viewports");
 		dirty = true;
 		holder<engineProfiling> engineProfiling = newEngineProfiling();

@@ -12,13 +12,13 @@
 #include <cage-engine/window.h>
 #include <cage-engine/gui.h>
 #include <cage-engine/engine.h>
-#include <cage-engine/cameraController.h>
+#include <cage-engine/fpsCamera.h>
 #include <cage-engine/engineProfiling.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 
 using namespace cage;
 
-holder<cameraController> cameraCtrl;
+holder<fpsCamera> cameraCtrl;
 holder<threadPool> updateThreads;
 holder<noiseFunction> noise;
 uint32 boxesCount;
@@ -259,12 +259,11 @@ int main(int argc, char *args[])
 		windowCloseListener.bind<&windowClose>();
 		windowCloseListener.attach(window()->events.windowClose);
 
-		window()->setWindowed();
-		window()->windowedSize(ivec2(800, 600));
+		window()->setMaximized();
 		window()->title("performance");
 		regenerate = true;
 
-		cameraCtrl = newCameraController();
+		cameraCtrl = newFpsCamera();
 		cameraCtrl->movementSpeed = 0.1;
 		cameraCtrl->mouseButton = mouseButtonsFlags::Left;
 

@@ -19,7 +19,7 @@
 #include <cage-engine/sound.h>
 #include <cage-engine/gui.h>
 #include <cage-engine/engine.h>
-#include <cage-engine/cameraController.h>
+#include <cage-engine/fpsCamera.h>
 #include <cage-engine/engineProfiling.h>
 
 using namespace cage;

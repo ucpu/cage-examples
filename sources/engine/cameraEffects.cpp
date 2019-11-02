@@ -10,7 +10,7 @@
 #include <cage-engine/gui.h>
 #include <cage-engine/engine.h>
 #include <cage-engine/engineProfiling.h>
-#include <cage-engine/cameraController.h>
+#include <cage-engine/fpsCamera.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 
 using namespace cage;
@@ -478,9 +478,8 @@ int main(int argc, char *args[])
 #undef GCHL_GENERATE
 
 		// window
-		window()->setWindowed();
-		window()->windowedSize(ivec2(800, 600));
 		window()->title("camera effects");
+		window()->setMaximized();
 		initializeGui();
 
 		// entities
@@ -522,9 +521,9 @@ int main(int argc, char *args[])
 			CAGE_COMPONENT_ENGINE(transform, t, e);
 		}
 
-		holder<cameraController> cameraController = newCameraController(ents->get(1));
-		cameraController->mouseButton = mouseButtonsFlags::Left;
-		cameraController->movementSpeed = 0.3;
+		holder<fpsCamera> fpsCamera = newFpsCamera(ents->get(1));
+		fpsCamera->mouseButton = mouseButtonsFlags::Left;
+		fpsCamera->movementSpeed = 0.3;
 		holder<engineProfiling> engineProfiling = newEngineProfiling();
 
 		assets()->add(assetsName);

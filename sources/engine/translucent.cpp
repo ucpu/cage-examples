@@ -13,7 +13,7 @@
 #include <cage-engine/gui.h>
 #include <cage-engine/engine.h>
 #include <cage-engine/engineProfiling.h>
-#include <cage-engine/cameraController.h>
+#include <cage-engine/fpsCamera.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 
 using namespace cage;
@@ -105,8 +105,7 @@ int main(int argc, char *args[])
 #undef GCHL_GENERATE
 
 		// window
-		window()->setWindowed();
-		window()->windowedSize(ivec2(800, 600));
+		window()->setMaximized();
 		window()->title("translucent");
 
 		// entities
@@ -240,7 +239,7 @@ int main(int argc, char *args[])
 			bulbsNoise[j] = newNoiseFunction(cfg);
 		}
 
-		holder<cameraController> cameraCtrl = newCameraController(ents->get(1));
+		holder<fpsCamera> cameraCtrl = newFpsCamera(ents->get(1));
 		cameraCtrl->mouseButton = mouseButtonsFlags::Left;
 		cameraCtrl->movementSpeed = 0.3;
 		holder<engineProfiling> engineProfiling = newEngineProfiling();

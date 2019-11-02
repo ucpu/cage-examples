@@ -34,8 +34,7 @@ int main(int argc, const char *args[])
 
 	{
 		windowHandle *win = window();
-		win->setWindowed();
-		win->windowedSize(ivec2(800, 600));
+		win->setMaximized();
 		listeners.windowClose.bind<&closeButton>();
 		listeners.keyPress.bind<&keyPress>();
 		listeners.attachAll(window());

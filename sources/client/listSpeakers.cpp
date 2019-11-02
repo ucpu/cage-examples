@@ -50,11 +50,12 @@ int main(int argc, char *args[])
 	{
 		// log to console
 		holder<logger> log1 = newLogger();
-		log1->format.bind <logFormatConsole>();
-		log1->output.bind <logOutputStdOut>();
+		log1->format.bind<logFormatConsole>();
+		log1->output.bind<logOutputStdOut>();
 
 		holder<speakerList> list = newSpeakerList();
-		uint32 dc = list->devicesCount(), dd = list->defaultDevice();
+		uint32 dc = list->devicesCount();
+		uint32 dd = list->defaultDevice();
 		for (uint32 di = 0; di < dc; di++)
 		{
 			const speakerDevice *d = list->device(di);
@@ -80,7 +81,6 @@ int main(int argc, char *args[])
 			}
 			if (d->raw())
 				continue;
-			testDevice(d->id(), 32000, false);
 			testDevice(d->id(), 44100, false);
 			testDevice(d->id(), 48000, false);
 		}

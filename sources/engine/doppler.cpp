@@ -40,7 +40,7 @@ void controlInit()
 	{ // listener
 		entity *e = ents->create(2);
 		CAGE_COMPONENT_ENGINE(render, r, e);
-		r.object = 1;
+		r.object = hashString("cage/mesh/fake.obj");
 		CAGE_COMPONENT_ENGINE(listener, l, e);
 		l.attenuation = vec3(1, 0.01, 0);
 		l.dopplerEffect = true;
@@ -51,7 +51,7 @@ void controlInit()
 		CAGE_COMPONENT_ENGINE(transform, t, e);
 		(void)t;
 		CAGE_COMPONENT_ENGINE(render, r, e);
-		r.object = 2;
+		r.object = hashString("cage/mesh/fake.obj");
 		CAGE_COMPONENT_ENGINE(voice, s, e);
 		s.name = hashString("cage/sound/logo.ogg");
 	}
@@ -112,7 +112,6 @@ int main(int argc, char *args[])
 		log1->format.bind<logFormatConsole>();
 		log1->output.bind<logOutputStdOut>();
 
-		configSetBool("cage-engine.engine.renderMissingMeshes", true);
 		engineInitialize(engineCreateConfig());
 
 		// events
