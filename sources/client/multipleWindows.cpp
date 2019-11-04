@@ -32,7 +32,7 @@ public:
 		window->title(string() + "window " + index);
 		listeners.attachAll(window.get());
 #define GCHL_GENERATE(N) listeners.N.bind<windowTestClass, &windowTestClass::N>(this);
-		CAGE_EVAL_MEDIUM(CAGE_EXPAND_ARGS(GCHL_GENERATE, windowClose, windowShow, windowHide, windowPaint, windowMove, windowResize, mouseMove, mousePress, mouseDouble, mouseRelease, mouseWheel, focusGain, focusLose, keyPress, keyRelease, keyRepeat, keyChar))
+		CAGE_EVAL_MEDIUM(CAGE_EXPAND_ARGS(GCHL_GENERATE, windowClose, windowShow, windowHide, windowMove, windowResize, mouseMove, mousePress, mouseDouble, mouseRelease, mouseWheel, focusGain, focusLose, keyPress, keyRelease, keyRepeat, keyChar))
 #undef GCHL_GENERATE
 		CAGE_LOG(severityEnum::Info, "test", string() + "window " + index + " created");
 	}
@@ -74,12 +74,6 @@ public:
 		return true;
 	}
 
-	bool windowPaint()
-	{
-		CAGE_LOG(severityEnum::Info, "event", string() + "paint window " + index);
-		return true;
-	}
-
 	bool windowMove(const ivec2 &p)
 	{
 		CAGE_LOG(severityEnum::Info, "event", string() + "move window " + index + " to " + p.x + ", " + p.y);
@@ -116,7 +110,7 @@ public:
 		return true;
 	}
 
-	bool mouseWheel(sint8 v, modifiersFlags m, const ivec2 &p)
+	bool mouseWheel(sint32 v, modifiersFlags m, const ivec2 &p)
 	{
 		CAGE_LOG(severityEnum::Info, "event", string() + "mouse wheel " + v + ", mods " + (uint32)m + ", at " + p.x + ", " + p.y + " in window " + index);
 		return true;

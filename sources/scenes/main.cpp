@@ -1,6 +1,8 @@
 #include "game.h"
 #include <cage-core/logger.h>
 #include <cage-engine/highPerformanceGpuHint.h>
+#include <cage-engine/fullscreenSwitcher.h>
+#include <cage-core/config.h>
 
 bool closeButton();
 bool keyPress(uint32 a, uint32 b, modifiersFlags m);
@@ -19,6 +21,7 @@ int main(int argc, const char *args[])
 	log1->format.bind<logFormatConsole>();
 	log1->output.bind<logOutputStdOut>();
 
+	configSetBool("cage.config.autoSave", true);
 	engineInitialize(engineCreateConfig());
 	cameraInitialize();
 
@@ -26,25 +29,21 @@ int main(int argc, const char *args[])
 	eventListener<bool()> assetsUpdateListener;
 	windowEventListeners listeners;
 	eventListener<bool(uint32)> guiListener;
-
 	updateListener.bind<&update>();
 	assetsUpdateListener.bind<&assetsUpdate>();
 	controlThread().update.attach(updateListener);
 	controlThread().assets.attach(assetsUpdateListener);
-
-	{
-		windowHandle *win = window();
-		win->setMaximized();
-		listeners.windowClose.bind<&closeButton>();
-		listeners.keyPress.bind<&keyPress>();
-		listeners.attachAll(window());
-	}
-
+	listeners.windowClose.bind<&closeButton>();
+	listeners.keyPress.bind<&keyPress>();
+	listeners.attachAll(window());
 	guiListener.bind<&guiFunction>();
 	gui()->widgetEvent.attach(guiListener);
 
 	updateInitialize();
-	engineStart();
+	{
+		holder<fullscreenSwitcher> fullscreen = newFullscreenSwitcher(false);
+		engineStart();
+	}
 	updateFinalize();
 	engineFinalize();
 
