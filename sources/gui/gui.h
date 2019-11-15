@@ -73,49 +73,49 @@ public:
 
 	virtual void guiEvent(uint32 name)
 	{
-		CAGE_LOG(severityEnum::Info, "gui event", string() + "gui event on entity: " + name);
+		CAGE_LOG(severityEnum::Info, "gui event", stringizer() + "gui event on entity: " + name);
 
 		entity *e = gui()->entities()->get(name);
 
 		if (e->has(gui()->components().button))
 		{
-			CAGE_LOG(severityEnum::Info, "gui event", string() + "button press");
+			CAGE_LOG(severityEnum::Info, "gui event", stringizer() + "button press");
 		}
 
 		if (e->has(gui()->components().checkBox))
 		{
 			CAGE_COMPONENT_GUI(checkBox, c, e);
-			CAGE_LOG(severityEnum::Info, "gui event", string() + "check box state: " + (uint32)c.state);
+			CAGE_LOG(severityEnum::Info, "gui event", stringizer() + "check box state: " + (uint32)c.state);
 		}
 
 		if (e->has(gui()->components().radioBox))
 		{
 			CAGE_COMPONENT_GUI(radioBox, c, e);
-			CAGE_LOG(severityEnum::Info, "gui event", string() + "radio box state: " + (uint32)c.state);
+			CAGE_LOG(severityEnum::Info, "gui event", stringizer() + "radio box state: " + (uint32)c.state);
 		}
 
 		if (e->has(gui()->components().colorPicker))
 		{
 			CAGE_COMPONENT_GUI(colorPicker, c, e);
-			CAGE_LOG(severityEnum::Info, "gui event", string() + "color picker: " + c.color);
+			CAGE_LOG(severityEnum::Info, "gui event", stringizer() + "color picker: " + c.color);
 		}
 
 		if (e->has(gui()->components().comboBox))
 		{
 			CAGE_COMPONENT_GUI(comboBox, c, e);
-			CAGE_LOG(severityEnum::Info, "gui event", string() + "combo box selected: " + c.selected);
+			CAGE_LOG(severityEnum::Info, "gui event", stringizer() + "combo box selected: " + c.selected);
 		}
 
 		if (e->has(gui()->components().input))
 		{
 			CAGE_COMPONENT_GUI(input, c, e);
-			CAGE_LOG(severityEnum::Info, "gui event", string() + "input box valid: " + c.valid + ", value: " + c.value);
+			CAGE_LOG(severityEnum::Info, "gui event", stringizer() + "input box valid: " + c.valid + ", value: " + c.value);
 		}
 
 		if (e->has(gui()->components().sliderBar))
 		{
 			CAGE_COMPONENT_GUI(sliderBar, c, e);
-			CAGE_LOG(severityEnum::Info, "gui event", string() + "slider bar value: " + c.value);
+			CAGE_LOG(severityEnum::Info, "gui event", stringizer() + "slider bar value: " + c.value);
 		}
 	}
 

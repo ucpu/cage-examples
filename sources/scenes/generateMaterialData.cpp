@@ -150,23 +150,23 @@ int main(int argc, const char *args[])
 		fo->writeLine("mtllib material.mtl");
 		for (uint32 i = 0; i < coordsCount; i++)
 		{
-			fo->writeLine(string() + "v  " + sphereCoords[i][0] + " " + sphereCoords[i][1] + " " + sphereCoords[i][2]);
-			fo->writeLine(string() + "vn " + sphereCoords[i][0] + " " + sphereCoords[i][1] + " " + sphereCoords[i][2]);
+			fo->writeLine(stringizer() + "v  " + sphereCoords[i][0] + " " + sphereCoords[i][1] + " " + sphereCoords[i][2]);
+			fo->writeLine(stringizer() + "vn " + sphereCoords[i][0] + " " + sphereCoords[i][1] + " " + sphereCoords[i][2]);
 		}
 	}
 	holder<fileHandle> fm = newFile(pathJoin(basePath, "material.mtl"), fileMode(false, true));
 	holder<fileHandle> fa = newFile(pathJoin(basePath, "material.assets"), fileMode(false, true));
 	{
-		fa->writeLine(string() + "[]");
-		fa->writeLine(string() + "scheme = pack");
-		fa->writeLine(string() + "material.pack");
-		fa->writeLine(string() + "[]");
-		fa->writeLine(string() + "scheme = mesh");
-		fa->writeLine(string() + "uvs = false");
+		fa->writeLine(stringizer() + "[]");
+		fa->writeLine(stringizer() + "scheme = pack");
+		fa->writeLine(stringizer() + "material.pack");
+		fa->writeLine(stringizer() + "[]");
+		fa->writeLine(stringizer() + "scheme = mesh");
+		fa->writeLine(stringizer() + "uvs = false");
 	}
 	holder<fileHandle> fp = newFile(pathJoin(basePath, "material.pack"), fileMode(false, true));
 	{
-		fp->writeLine(string() + "[]");
+		fp->writeLine(stringizer() + "[]");
 	}
 	holder<fileHandle> fs = newFile(scenesPath, fileMode(false, true));
 	fs->writeLine("scenes/material/material.pack");
@@ -178,26 +178,26 @@ int main(int argc, const char *args[])
 	{
 		for (uint32 m = 0; m < M; m++)
 		{
-			string mat = string() + "mat_" + r + "_" + m;
-			fm->writeLine(string() + "newmtl " + mat);
-			fm->writeLine(string() + "Ns " + (r * M + m)); // this is to prevent assimp from merging the materials
+			string mat = stringizer() + "mat_" + r + "_" + m;
+			fm->writeLine(stringizer() + "newmtl " + mat);
+			fm->writeLine(stringizer() + "Ns " + (r * M + m)); // this is to prevent assimp from merging the materials
 			holder<fileHandle> fc = newFile(pathJoin(basePath, string() + "material.obj_" + mat + ".cpm"), fileMode(false, true));
-			fc->writeLine(string() + "[base]");
-			fc->writeLine(string() + "albedo = 0.95, 0.7, 0.2");
-			fc->writeLine(string() + "roughness = " + ((r + 0.5) / R));
-			fc->writeLine(string() + "metallic = " + ((m + 0.5) / M));
-			fo->writeLine(string() + "o " + mat);
-			fo->writeLine(string() + "usemtl " + mat);
+			fc->writeLine(stringizer() + "[base]");
+			fc->writeLine(stringizer() + "albedo = 0.95, 0.7, 0.2");
+			fc->writeLine(stringizer() + "roughness = " + ((r + 0.5) / R));
+			fc->writeLine(stringizer() + "metallic = " + ((m + 0.5) / M));
+			fo->writeLine(stringizer() + "o " + mat);
+			fo->writeLine(stringizer() + "usemtl " + mat);
 			for (uint32 i = 0; i < facesCount; i++)
 			{
 				const uint32 *n = &sphereIndexes[i * 3];
-				fo->writeLine(string() + "f " + n[0] + "//" + n[0] + " " + n[1] + "//" + n[1] + " " + n[2] + "//" + n[2]);
+				fo->writeLine(stringizer() + "f " + n[0] + "//" + n[0] + " " + n[1] + "//" + n[1] + " " + n[2] + "//" + n[2]);
 			}
-			fa->writeLine(string() + "material.obj?" + mat);
-			fp->writeLine(string() + "material.obj?" + mat);
-			fs->writeLine(string() + "scenes/material/material.obj?" + mat);
-			fs->writeLine(string() + (sint32)(r * 3 - R * 3 / 2) + " 0 " + (sint32)(m * 3 - M * 3 / 2));
-			fs->writeLine(string() + "0");
+			fa->writeLine(stringizer() + "material.obj?" + mat);
+			fp->writeLine(stringizer() + "material.obj?" + mat);
+			fs->writeLine(stringizer() + "scenes/material/material.obj?" + mat);
+			fs->writeLine(stringizer() + (sint32)(r * 3 - R * 3 / 2) + " 0 " + (sint32)(m * 3 - M * 3 / 2));
+			fs->writeLine(stringizer() + "0");
 			fs->writeLine("");
 		}
 	}

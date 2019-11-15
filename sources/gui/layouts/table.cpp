@@ -135,7 +135,7 @@ public:
 				b.max.i = 10;
 				b.step.i = 1;
 				b.type = inputTypeEnum::Integer;
-				b.value = 0;
+				b.value = "0";
 				CAGE_COMPONENT_GUI(text, t, e);
 				t.value = "sections";
 			}
@@ -171,7 +171,7 @@ public:
 				p.parent = o->name();
 				CAGE_COMPONENT_GUI(button, but, b);
 				CAGE_COMPONENT_GUI(text, t, b);
-				t.value = string("item ") + i;
+				t.value = stringizer() + "item " + i;
 				CAGE_COMPONENT_GUI(explicitSize, size, b);
 				size.size = randomRange2(50, 250);
 			}

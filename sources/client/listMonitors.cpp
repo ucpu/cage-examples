@@ -14,7 +14,7 @@ using namespace cage;
 
 void testScreen(const string &screenId, const ivec2 &resolution, uint32 frequency)
 {
-	CAGE_LOG(severityEnum::Info, "test", string() + "testing monitor: '" + screenId + "', resolution: " + resolution.x + " * " + resolution.y + ", frequency: " + frequency);
+	CAGE_LOG(severityEnum::Info, "test", stringizer() + "testing monitor: '" + screenId + "', resolution: " + resolution.x + " * " + resolution.y + ", frequency: " + frequency);
 	{
 		vec3 color = randomChance3();
 		holder<windowHandle> w = newWindow();
@@ -47,20 +47,20 @@ int main(int argc, char *args[])
 		holder<screenList> list = newScreenList();
 		for (uint32 i = 0; i < list->devicesCount(); i++)
 		{
-			CAGE_LOG(severityEnum::Info, "listing", string() + "monitor" + (list->defaultDevice() == i ? ", primary" : ""));
+			CAGE_LOG(severityEnum::Info, "listing", stringizer() + "monitor" + (list->defaultDevice() == i ? ", primary" : ""));
 			const screenDevice *d = list->device(i);
-			CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "monitor id: '" + d->id() + "'");
-			CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "monitor name: '" + d->name() + "'");
+			CAGE_LOG_CONTINUE(severityEnum::Info, "listing", stringizer() + "monitor id: '" + d->id() + "'");
+			CAGE_LOG_CONTINUE(severityEnum::Info, "listing", stringizer() + "monitor name: '" + d->name() + "'");
 
 			screenMode testmode;
 
 			for (uint32 j = 0; j < d->modesCount(); j++)
 			{
 				const screenMode &m = d->mode(j);
-				CAGE_LOG(severityEnum::Info, "listing", string() + "video mode " + j + (d->currentMode() == j ? ", current" : ""));
+				CAGE_LOG(severityEnum::Info, "listing", stringizer() + "video mode " + j + (d->currentMode() == j ? ", current" : ""));
 				ivec2 r = m.resolution;
-				CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "resolution: " + r.x + "*" + r.y);
-				CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "frequency: " + m.frequency);
+				CAGE_LOG_CONTINUE(severityEnum::Info, "listing", stringizer() + "resolution: " + r.x + "*" + r.y);
+				CAGE_LOG_CONTINUE(severityEnum::Info, "listing", stringizer() + "frequency: " + m.frequency);
 				if (d->currentMode() == j)
 					testmode = m;
 			}

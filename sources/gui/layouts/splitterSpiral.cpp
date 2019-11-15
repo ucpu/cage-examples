@@ -34,7 +34,7 @@ public:
 				p.order = s.inverse;
 				CAGE_COMPONENT_GUI(button, l, e);
 				CAGE_COMPONENT_GUI(text, t, e);
-				t.value = string() + "Item: " + (depth + 1);
+				t.value = stringizer() + "Item: " + (depth + 1);
 			}
 			{ // second
 				entity *e = makeSplitterRec(depth + 1);

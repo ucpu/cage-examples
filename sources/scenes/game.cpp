@@ -27,14 +27,14 @@ void loadMapsList()
 		maps.push_back(pathJoin(root, list->name()));
 		list->next();
 	}
-	CAGE_LOG(severityEnum::Info, "scenes", string() + "found " + maps.size() + " maps");
+	CAGE_LOG(severityEnum::Info, "scenes", stringizer() + "found " + maps.size() + " maps");
 }
 
 void sceneReload()
 {
-	CAGE_LOG(severityEnum::Info, "scenes", string() + "loading scene index: " + sceneIndexCurrent);
+	CAGE_LOG(severityEnum::Info, "scenes", stringizer() + "loading scene index: " + sceneIndexCurrent);
 	string scenePath = maps[sceneIndexCurrent];
-	CAGE_LOG(severityEnum::Info, "scenes", string() + "loading scene description from file: '" + scenePath + "'");
+	CAGE_LOG(severityEnum::Info, "scenes", stringizer() + "loading scene description from file: '" + scenePath + "'");
 	window()->title(string() + "map: " + pathExtractFilename(scenePath));
 	entities()->destroy();
 
@@ -54,7 +54,7 @@ void sceneReload()
 			rs.object = hashString(name.c_str());
 			if (!rs.object)
 			{
-				CAGE_LOG(severityEnum::Note, "exception", string() + "object: '" + name + "'");
+				CAGE_LOG(severityEnum::Note, "exception", stringizer() + "object: '" + name + "'");
 				CAGE_THROW_ERROR(exception, "object has invalid hash");
 			}
 			CAGE_COMPONENT_ENGINE(transform, ts, e);
@@ -65,7 +65,7 @@ void sceneReload()
 			f->readLine(rotLine);
 			ts.orientation = quat(rads(), rads(rotLine.toFloat()), rads());
 		}
-		CAGE_LOG(severityEnum::Info, "scenes", string() + "scene contains " + (entities()->group()->count()) + " entities");
+		CAGE_LOG(severityEnum::Info, "scenes", stringizer() + "scene contains " + (entities()->group()->count()) + " entities");
 	}
 	catch (...)
 	{

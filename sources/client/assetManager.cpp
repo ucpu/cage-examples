@@ -113,7 +113,7 @@ int main(int argc, char *args[])
 					threadSleep(1000);
 				}
 			}
-			CAGE_LOG(severityEnum::Info, "test", string() + "step " + (step + 1) + "/30 finished");
+			CAGE_LOG(severityEnum::Info, "test", stringizer() + "step " + (step + 1) + "/30 finished");
 		}
 
 		CAGE_LOG(severityEnum::Info, "test", "test finished");

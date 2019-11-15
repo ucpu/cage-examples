@@ -59,7 +59,7 @@ bool update()
 		CAGE_COMPONENT_ENGINE(transform, t, e);
 		t.position = vec3(noise1->evaluate(currentControlTime()) * 2, noise2->evaluate(currentControlTime()) * 2, 10);
 		CAGE_COMPONENT_ENGINE(renderText, r, e);
-		r.value = string() + t.position[0] + "|" + t.position[1] + "|" + t.position[2];
+		r.value = stringizer() + t.position[0] + "|" + t.position[1] + "|" + t.position[2];
 	}
 
 	{

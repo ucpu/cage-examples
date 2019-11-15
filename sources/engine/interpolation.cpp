@@ -120,7 +120,7 @@ bool guiInit()
 			c.min.i = i >= 2 ? 0 : 1;
 			c.max.i = 1000;
 			c.step.i = 1;
-			c.value = values[i];
+			c.value = string(values[i]);
 		}
 	}
 

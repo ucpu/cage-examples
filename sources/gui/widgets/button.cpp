@@ -41,7 +41,7 @@ class guiTestImpl : public guiTestClass
 				CAGE_COMPONENT_GUI(button, b, e);
 				//b.allowMerging = true;
 				CAGE_COMPONENT_GUI(text, t, e);
-				t.value = i;
+				t.value = string(i);
 			}
 		}
 		{ // vertical
@@ -61,7 +61,7 @@ class guiTestImpl : public guiTestClass
 				CAGE_COMPONENT_GUI(button, b, e);
 				//b.allowMerging = true;
 				CAGE_COMPONENT_GUI(text, t, e);
-				t.value = i;
+				t.value = string(i);
 			}
 		}
 		{ // with image

@@ -127,7 +127,7 @@ void initializeGui()
 			p.order = 5 + i;
 			CAGE_COMPONENT_GUI(spoiler, c, panel);
 			CAGE_COMPONENT_GUI(text, t, panel);
-			t.value = string() + "Spot light [" + i + "]:";
+			t.value = stringizer() + "Spot light [" + i + "]:";
 			CAGE_COMPONENT_GUI(layoutLine, l, panel);
 			l.vertical = true;
 		}

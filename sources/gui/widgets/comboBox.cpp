@@ -41,7 +41,7 @@ class guiTestImpl : public guiTestClass
 				p.parent = e->name();
 				p.order = index++;
 				CAGE_COMPONENT_GUI(text, t, o);
-				t.value = string("option ") + i;
+				t.value = stringizer() + "option " + i;
 			}
 		}
 		{ // preselected
@@ -61,7 +61,7 @@ class guiTestImpl : public guiTestClass
 				p.parent = e->name();
 				p.order = index++;
 				CAGE_COMPONENT_GUI(text, t, o);
-				t.value = string("option ") + i;
+				t.value = stringizer() + "option " + i;
 			}
 		}
 	}

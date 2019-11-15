@@ -51,7 +51,7 @@ int main(int argc, const char *args[])
 		holder<configList> l = newConfigList();
 		while (l->valid())
 		{
-			CAGE_LOG(severityEnum::Info, "config", string() + l->name() + " = " + l->getString() + " (" + l->typeName() + ")");
+			CAGE_LOG(severityEnum::Info, "config", stringizer() + l->name() + " = " + l->getString() + " (" + l->typeName() + ")");
 			l->next();
 		}
 	}

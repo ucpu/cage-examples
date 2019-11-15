@@ -23,13 +23,13 @@ void testDevice(const string &deviceId, uint32 sampleRate, bool raw)
 	holder<speakerOutput> sndSpeaker = newSpeakerOutput(sndContext.get(), cnf, "testAudio:Speaker");
 	sndSpeaker->setInput(sndBus.get());
 
-	CAGE_LOG(severityEnum::Info, "speaker", string() + "stream: '" + sndSpeaker->getStreamName() + "'");
-	CAGE_LOG(severityEnum::Info, "speaker", string() + "id: '" + sndSpeaker->getDeviceId() + "'");
-	CAGE_LOG(severityEnum::Info, "speaker", string() + "name: '" + sndSpeaker->getDeviceName() + "'");
-	CAGE_LOG(severityEnum::Info, "speaker", string() + "raw: " + sndSpeaker->getDeviceRaw());
-	CAGE_LOG(severityEnum::Info, "speaker", string() + "layout: '" + sndSpeaker->getLayoutName() + "'");
-	CAGE_LOG(severityEnum::Info, "speaker", string() + "channels: " + sndSpeaker->getChannelsCount());
-	CAGE_LOG(severityEnum::Info, "speaker", string() + "sample rate: " + sndSpeaker->getOutputSampleRate());
+	CAGE_LOG(severityEnum::Info, "speaker", stringizer() + "stream: '" + sndSpeaker->getStreamName() + "'");
+	CAGE_LOG(severityEnum::Info, "speaker", stringizer() + "id: '" + sndSpeaker->getDeviceId() + "'");
+	CAGE_LOG(severityEnum::Info, "speaker", stringizer() + "name: '" + sndSpeaker->getDeviceName() + "'");
+	CAGE_LOG(severityEnum::Info, "speaker", stringizer() + "raw: " + sndSpeaker->getDeviceRaw());
+	CAGE_LOG(severityEnum::Info, "speaker", stringizer() + "layout: '" + sndSpeaker->getLayoutName() + "'");
+	CAGE_LOG(severityEnum::Info, "speaker", stringizer() + "channels: " + sndSpeaker->getChannelsCount());
+	CAGE_LOG(severityEnum::Info, "speaker", stringizer() + "sample rate: " + sndSpeaker->getOutputSampleRate());
 
 	CAGE_LOG(severityEnum::Info, "speaker", "play start");
 	holder<timer> tmr = newTimer();
@@ -59,15 +59,15 @@ int main(int argc, char *args[])
 		for (uint32 di = 0; di < dc; di++)
 		{
 			const speakerDevice *d = list->device(di);
-			CAGE_LOG(severityEnum::Info, "listing", string() + "device" + (d->raw() ? ", raw" : "") + (dd == di ? ", default" : ""));
-			CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "id: '" + d->id() + "'");
-			CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "name: '" + d->name() + "'");
+			CAGE_LOG(severityEnum::Info, "listing", stringizer() + "device" + (d->raw() ? ", raw" : "") + (dd == di ? ", default" : ""));
+			CAGE_LOG_CONTINUE(severityEnum::Info, "listing", stringizer() + "id: '" + d->id() + "'");
+			CAGE_LOG_CONTINUE(severityEnum::Info, "listing", stringizer() + "name: '" + d->name() + "'");
 			{
 				uint32 lc = d->layoutsCount(), ld = d->currentLayout();
 				for (uint32 li = 0; li < lc; li++)
 				{
 					const speakerLayout &l = d->layout(li);
-					CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "layout name: '" + l.name + "', channels: " + l.channels + (li == ld ? ", current" : ""));
+					CAGE_LOG_CONTINUE(severityEnum::Info, "listing", stringizer() + "layout name: '" + l.name + "', channels: " + l.channels + (li == ld ? ", current" : ""));
 				}
 			}
 			{
@@ -75,9 +75,9 @@ int main(int argc, char *args[])
 				for (uint32 si = 0; si < sc; si++)
 				{
 					const speakerSamplerate &s = d->samplerate(si);
-					CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "samplerate min: " + s.minimum + ", max: " + s.maximum);
+					CAGE_LOG_CONTINUE(severityEnum::Info, "listing", stringizer() + "samplerate min: " + s.minimum + ", max: " + s.maximum);
 				}
-				CAGE_LOG_CONTINUE(severityEnum::Info, "listing", string() + "samplerate current: " + sd);
+				CAGE_LOG_CONTINUE(severityEnum::Info, "listing", stringizer() + "samplerate current: " + sd);
 			}
 			if (d->raw())
 				continue;

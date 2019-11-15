@@ -21,7 +21,7 @@ class windowTestClass
 public:
 	windowTestClass() : index(globalWindowIndex++), hue(index * 0.33), closing(false)
 	{
-		CAGE_LOG(severityEnum::Info, "test", string() + "creating window " + index);
+		CAGE_LOG(severityEnum::Info, "test", stringizer() + "creating window " + index);
 		window = newWindow();
 		window->setWindowed();
 		window->windowedSize(ivec2(400, 300));
@@ -29,17 +29,17 @@ public:
 			scopeLock<syncMutex> l(openglInitMut);
 			detail::initializeOpengl();
 		}
-		window->title(string() + "window " + index);
+		window->title(stringizer() + "window " + index);
 		listeners.attachAll(window.get());
 #define GCHL_GENERATE(N) listeners.N.bind<windowTestClass, &windowTestClass::N>(this);
 		CAGE_EVAL_MEDIUM(CAGE_EXPAND_ARGS(GCHL_GENERATE, windowClose, windowShow, windowHide, windowMove, windowResize, mouseMove, mousePress, mouseDouble, mouseRelease, mouseWheel, focusGain, focusLose, keyPress, keyRelease, keyRepeat, keyChar))
 #undef GCHL_GENERATE
-		CAGE_LOG(severityEnum::Info, "test", string() + "window " + index + " created");
+		CAGE_LOG(severityEnum::Info, "test", stringizer() + "window " + index + " created");
 	}
 
 	~windowTestClass()
 	{
-		CAGE_LOG(severityEnum::Info, "test", string() + "destroying window " + index);
+		CAGE_LOG(severityEnum::Info, "test", stringizer() + "destroying window " + index);
 	}
 
 	void tick()
@@ -57,98 +57,98 @@ public:
 
 	bool windowClose()
 	{
-		CAGE_LOG(severityEnum::Info, "event", string() + "close window " + index);
+		CAGE_LOG(severityEnum::Info, "event", stringizer() + "close window " + index);
 		closing = true;
 		return true;
 	}
 
 	bool windowShow()
 	{
-		CAGE_LOG(severityEnum::Info, "event", string() + "show window " + index);
+		CAGE_LOG(severityEnum::Info, "event", stringizer() + "show window " + index);
 		return true;
 	}
 
 	bool windowHide()
 	{
-		CAGE_LOG(severityEnum::Info, "event", string() + "hide window " + index);
+		CAGE_LOG(severityEnum::Info, "event", stringizer() + "hide window " + index);
 		return true;
 	}
 
 	bool windowMove(const ivec2 &p)
 	{
-		CAGE_LOG(severityEnum::Info, "event", string() + "move window " + index + " to " + p.x + ", " + p.y);
+		CAGE_LOG(severityEnum::Info, "event", stringizer() + "move window " + index + " to " + p.x + ", " + p.y);
 		return true;
 	}
 
 	bool windowResize(const ivec2 &p)
 	{
-		CAGE_LOG(severityEnum::Info, "event", string() + "resize window " + index + " to " + p.x + ", " + p.y);
+		CAGE_LOG(severityEnum::Info, "event", stringizer() + "resize window " + index + " to " + p.x + ", " + p.y);
 		return true;
 	}
 
 	bool mousePress(mouseButtonsFlags b, modifiersFlags m, const ivec2 &p)
 	{
-		CAGE_LOG(severityEnum::Info, "event", string() + "mouse press button " + (uint32)b + ", mods " + (uint32)m + ", at " + p.x + ", " + p.y + " in window " + index);
+		CAGE_LOG(severityEnum::Info, "event", stringizer() + "mouse press button " + (uint32)b + ", mods " + (uint32)m + ", at " + p.x + ", " + p.y + " in window " + index);
 		return true;
 	}
 
 	bool mouseDouble(mouseButtonsFlags b, modifiersFlags m, const ivec2 &p)
 	{
-		CAGE_LOG(severityEnum::Info, "event", string() + "mouse double click button " + (uint32)b + ", mods " + (uint32)m + ", at " + p.x + ", " + p.y + " in window " + index);
+		CAGE_LOG(severityEnum::Info, "event", stringizer() + "mouse double click button " + (uint32)b + ", mods " + (uint32)m + ", at " + p.x + ", " + p.y + " in window " + index);
 		return true;
 	}
 
 	bool mouseRelease(mouseButtonsFlags b, modifiersFlags m, const ivec2 &p)
 	{
-		CAGE_LOG(severityEnum::Info, "event", string() + "mouse release button " + (uint32)b + ", mods " + (uint32)m + ", at " + p.x + ", " + p.y + " in window " + index);
+		CAGE_LOG(severityEnum::Info, "event", stringizer() + "mouse release button " + (uint32)b + ", mods " + (uint32)m + ", at " + p.x + ", " + p.y + " in window " + index);
 		return true;
 	}
 
 	bool mouseMove(mouseButtonsFlags b, modifiersFlags m, const ivec2 &p)
 	{
-		CAGE_LOG(severityEnum::Info, "event", string() + "mouse move button " + (uint32)b + ", mods " + (uint32)m + ", to " + p.x + ", " + p.y + " in window " + index);
+		CAGE_LOG(severityEnum::Info, "event", stringizer() + "mouse move button " + (uint32)b + ", mods " + (uint32)m + ", to " + p.x + ", " + p.y + " in window " + index);
 		return true;
 	}
 
 	bool mouseWheel(sint32 v, modifiersFlags m, const ivec2 &p)
 	{
-		CAGE_LOG(severityEnum::Info, "event", string() + "mouse wheel " + v + ", mods " + (uint32)m + ", at " + p.x + ", " + p.y + " in window " + index);
+		CAGE_LOG(severityEnum::Info, "event", stringizer() + "mouse wheel " + v + ", mods " + (uint32)m + ", at " + p.x + ", " + p.y + " in window " + index);
 		return true;
 	}
 
 	bool focusGain()
 	{
-		CAGE_LOG(severityEnum::Info, "event", string() + "focus gain in window " + index);
+		CAGE_LOG(severityEnum::Info, "event", stringizer() + "focus gain in window " + index);
 		return true;
 	}
 
 	bool focusLose()
 	{
-		CAGE_LOG(severityEnum::Info, "event", string() + "focus lost in window " + index);
+		CAGE_LOG(severityEnum::Info, "event", stringizer() + "focus lost in window " + index);
 		return true;
 	}
 
 	bool keyPress(uint32 a, uint32 b, modifiersFlags m)
 	{
-		CAGE_LOG(severityEnum::Info, "event", string() + "key " + a + ", scancode " + b + ", mods " + (uint32)m + ", pressed in window " + index);
+		CAGE_LOG(severityEnum::Info, "event", stringizer() + "key " + a + ", scancode " + b + ", mods " + (uint32)m + ", pressed in window " + index);
 		return true;
 	}
 
 	bool keyRepeat(uint32 a, uint32 b, modifiersFlags m)
 	{
-		CAGE_LOG(severityEnum::Info, "event", string() + "key " + a + ", scancode " + b + ", mods " + (uint32)m + ", repeated in window " + index);
+		CAGE_LOG(severityEnum::Info, "event", stringizer() + "key " + a + ", scancode " + b + ", mods " + (uint32)m + ", repeated in window " + index);
 		return true;
 	}
 
 	bool keyRelease(uint32 a, uint32 b, modifiersFlags m)
 	{
-		CAGE_LOG(severityEnum::Info, "event", string() + "key " + a + ", scancode " + b + ", mods " + (uint32)m + ", released in window " + index);
+		CAGE_LOG(severityEnum::Info, "event", stringizer() + "key " + a + ", scancode " + b + ", mods " + (uint32)m + ", released in window " + index);
 		return true;
 	}
 
 	bool keyChar(uint32 c)
 	{
-		CAGE_LOG(severityEnum::Info, "event", string() + "character " + c + " in window " + index);
+		CAGE_LOG(severityEnum::Info, "event", stringizer() + "character " + c + " in window " + index);
 		return true;
 	}
 
@@ -180,7 +180,7 @@ int main(int argc, char *args[])
 
 		holder<threadHandle> thrs[3];
 		for (uint32 i = 0; i < 3; i++)
-			thrs[i] = newThread(delegate<void()>().bind<&windowThread>(), string("threadHandle ") + i);
+			thrs[i] = newThread(delegate<void()>().bind<&windowThread>(), stringizer() + "threadHandle " + i);
 
 		return 0;
 	}

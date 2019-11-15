@@ -211,7 +211,7 @@ entity *genInput(entity *table, sint32 &childIndex, uint32 nameBase, const strin
 		in.min.f = rangeMin;
 		in.max.f = rangeMax;
 		in.step.f = step;
-		in.value = current;
+		in.value = string(current.value);
 		return e;
 	}
 }
@@ -268,7 +268,7 @@ void initializeGui()
 			in.min.i = 1;
 			in.max.i = 128;
 			in.step.i = 1;
-			in.value = cameraEffects().ssao.samplesCount;
+			in.value = string(cameraEffects().ssao.samplesCount);
 		}
 	}
 
@@ -335,7 +335,7 @@ void initializeGui()
 			in.min.i = 0;
 			in.max.i = 10;
 			in.step.i = 1;
-			in.value = cameraEffects().bloom.blurPasses;
+			in.value = string(cameraEffects().bloom.blurPasses);
 		}
 	}
 

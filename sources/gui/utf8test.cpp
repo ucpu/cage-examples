@@ -32,7 +32,7 @@ public:
 			CAGE_COMPONENT_GUI(label, label, e);
 			CAGE_COMPONENT_GUI(text, text, e);
 			text.assetName = hashString("cage-tests/gui/utf8test.textpack");
-			text.textName = hashString((string() + "utf8test/" + i).c_str());
+			text.textName = hashString(string(stringizer() + "utf8test/" + i));
 			CAGE_COMPONENT_GUI(textFormat, format, e);
 			format.font = hashString("cage-tests/gui/DroidSansMono.ttf");
 		}
