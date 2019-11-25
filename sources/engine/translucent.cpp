@@ -119,7 +119,8 @@ int main(int argc, char *args[])
 			c.near = 0.1;
 			c.far = 1000;
 			c.effects = cameraEffectsFlags::CombinedPass;
-			c.ambientLight = vec3(0.02);
+			c.ambientLight = vec3(0.1);
+			c.ambientDirectionalLight = vec3(0.2);
 		}
 		{ // sun
 			entity *e = ents->create(2);

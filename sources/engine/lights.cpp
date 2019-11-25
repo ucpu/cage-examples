@@ -53,6 +53,7 @@ bool update()
 		entity *e = ents->get(10);
 		CAGE_COMPONENT_ENGINE(camera, c, e);
 		c.ambientLight = getGuiColor(27);
+		c.ambientDirectionalLight = getGuiColor(28);
 	}
 
 	for (uint32 i = 0; i < 3; i++)
@@ -80,7 +81,7 @@ void initializeGuiColors(uint32 parentId, uint32 id, const vec3 &hsv)
 	entity *e = gui()->entities()->create(id);
 	CAGE_COMPONENT_GUI(parent, p, e);
 	p.parent = parentId;
-	p.order = 5;
+	p.order = id;
 	CAGE_COMPONENT_GUI(colorPicker, c, e);
 	c.color = colorHsvToRgb(hsv);
 	c.collapsible = true;
@@ -109,6 +110,7 @@ void initializeGui()
 			l.vertical = true;
 		}
 		initializeGuiColors(panel->name(), 27, vec3(0, 0, 0.02));
+		initializeGuiColors(panel->name(), 28, vec3(0, 0, 0.02));
 	}
 
 	vec3 colors[3] = {

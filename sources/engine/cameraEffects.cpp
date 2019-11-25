@@ -76,6 +76,12 @@ bool update()
 			if (in.valid)
 				cam.ssao.samplesCount = in.value.toUint32();
 		}
+		{ // blur passes
+			entity *e = ents->get(8);
+			CAGE_COMPONENT_GUI(input, in, e);
+			if (in.valid)
+				cam.ssao.blurPasses = in.value.toUint32();
+		}
 	}
 
 	{ // motion blur
@@ -256,11 +262,11 @@ void initializeGui()
 			CAGE_COMPONENT_GUI(layoutTable, t, table);
 		}
 		sint32 childIndex = 1;
-		genInput(table, childIndex, 1, "World Radius:", 0.2, 5, 0.05, cameraEffects().ssao.worldRadius);
+		genInput(table, childIndex, 1, "World Radius:", 0.1, 3, 0.05, cameraEffects().ssao.worldRadius);
 		childIndex += 2;
-		genInput(table, childIndex, 1, "Strength:", 0.2, 5, 0.2, cameraEffects().ssao.strength);
-		genInput(table, childIndex, 1, "Bias:", 0, 1, 0.01, cameraEffects().ssao.bias);
-		genInput(table, childIndex, 1, "Power:", 0.1, 1, 0.02, cameraEffects().ssao.power);
+		genInput(table, childIndex, 1, "Strength:", 0, 3, 0.1, cameraEffects().ssao.strength);
+		genInput(table, childIndex, 1, "Bias:", -0.5, 0.5, 0.01, cameraEffects().ssao.bias);
+		genInput(table, childIndex, 1, "Power:", 0.1, 2, 0.02, cameraEffects().ssao.power);
 		{
 			entity *e = genInput(table, childIndex, 1, "Samples:", 0, 0, 0, 0);
 			CAGE_COMPONENT_GUI(input, in, e);
@@ -269,6 +275,15 @@ void initializeGui()
 			in.max.i = 128;
 			in.step.i = 1;
 			in.value = string(cameraEffects().ssao.samplesCount);
+		}
+		{
+			entity *e = genInput(table, childIndex, 1, "Blur Passes:", 0, 0, 0, 0);
+			CAGE_COMPONENT_GUI(input, in, e);
+			in.type = inputTypeEnum::Integer;
+			in.min.i = 0;
+			in.max.i = 10;
+			in.step.i = 1;
+			in.value = string(cameraEffects().ssao.blurPasses);
 		}
 	}
 
@@ -332,7 +347,7 @@ void initializeGui()
 			entity *e = genInput(table, childIndex, 21, "Blur Passes:", 0, 0, 0, 0);
 			CAGE_COMPONENT_GUI(input, in, e);
 			in.type = inputTypeEnum::Integer;
-			in.min.i = 0;
+			in.min.i = 1;
 			in.max.i = 10;
 			in.step.i = 1;
 			in.value = string(cameraEffects().bloom.blurPasses);
@@ -490,7 +505,8 @@ int main(int argc, char *args[])
 			t.position = vec3(11.5, 1, -1);
 			t.orientation = quat(degs(10), degs(110), degs());
 			CAGE_COMPONENT_ENGINE(camera, c, e);
-			c.ambientLight = vec3(0.02);
+			c.ambientLight = vec3(0.01);
+			c.ambientDirectionalLight = vec3(0.03);
 			c.near = 0.1;
 			c.far = 100;
 			c.effects = cameraEffectsFlags::CombinedPass;

@@ -77,7 +77,8 @@ void sceneReload()
 		CAGE_COMPONENT_ENGINE(transform, t, cam);
 		t.position = vec3(0, 10, 30);
 		CAGE_COMPONENT_ENGINE(camera, c, cam);
-		c.ambientLight = vec3(0.1);
+		c.ambientLight = vec3(0.03);
+		c.ambientDirectionalLight = vec3(0.07);
 		c.cameraOrder = 2;
 		c.near = 0.1;
 		c.far = 200;
@@ -91,11 +92,10 @@ void sceneReload()
 		CAGE_COMPONENT_ENGINE(transform, tc, cam);
 		(void)tc;
 		CAGE_COMPONENT_ENGINE(camera, c, cam);
-		c.ambientLight = vec3(1);
 		c.sceneMask = 2;
 		c.cameraOrder = 1;
-		c.near = 0.5;
-		c.far = 2;
+		c.near = 0.1;
+		c.far = 50;
 		entity *sky = entities()->create(3);
 		CAGE_COMPONENT_ENGINE(transform, ts, sky);
 		(void)ts;

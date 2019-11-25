@@ -33,7 +33,7 @@ bool windowClose()
 bool graphicsInitialize()
 {
 	fabScreenTex = newRenderTexture();
-	fabScreenTex->image2d(1920, 1080, GL_RGB16F);
+	fabScreenTex->image2d(800, 500, GL_RGB16F);
 	fabScreenTex->filters(GL_LINEAR, GL_LINEAR, 16);
 	fabScreenTex->wraps(GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);
 	fabScreenTex->setDebugName("fabScreenTex");
@@ -107,16 +107,12 @@ int main(int argc, char *args[])
 			t.position = vec3(0, 1.7, 0);
 			CAGE_COMPONENT_ENGINE(camera, c, e);
 			c.ambientLight = vec3(0.3);
+			c.ambientDirectionalLight = vec3(0.5);
 			c.near = 0.2;
 			c.far = 100;
 			c.cameraOrder = 3;
 			c.sceneMask = 1;
 			c.effects = cameraEffectsFlags::CombinedPass;
-			c.ssao.worldRadius = 0.05;
-			CAGE_COMPONENT_ENGINE(light, l, e);
-			l.lightType = lightTypeEnum::Directional;
-			l.color = vec3(0.5);
-			l.sceneMask = 1;
 			CAGE_COMPONENT_ENGINE(render, r, e);
 			r.object = hashString("cage-tests/room/eye.obj");
 			r.sceneMask = 2;
@@ -147,16 +143,12 @@ int main(int argc, char *args[])
 			r.sceneMask = 1;
 			CAGE_COMPONENT_ENGINE(camera, c, e);
 			c.ambientLight = vec3(0.3);
+			c.ambientDirectionalLight = vec3(0.5);
 			c.near = 0.2;
 			c.far = 100;
 			c.cameraOrder = 2;
 			c.sceneMask = 2;
 			c.effects = cameraEffectsFlags::GeometryPass;
-			c.ssao.worldRadius = 0.05;
-			CAGE_COMPONENT_ENGINE(light, l, e);
-			l.lightType = lightTypeEnum::Directional;
-			l.color = vec3(0.5);
-			l.sceneMask = 2;
 		}
 
 		holder<fpsCamera> fpsCamera = newFpsCamera(eye);

@@ -68,7 +68,8 @@ bool update()
 			CAGE_COMPONENT_ENGINE(transform, t, e);
 			t.orientation = quat(degs(-30), degs(), degs());
 			CAGE_COMPONENT_ENGINE(camera, c, e);
-			c.ambientLight = vec3(1, 1, 1) * 0.01;
+			c.ambientLight = vec3(0.1);
+			c.ambientDirectionalLight = vec3(0.2);
 			c.effects = cameraEffectsFlags::CombinedPass;
 			cameraCtrl->setEntity(e);
 		}
@@ -76,15 +77,15 @@ bool update()
 		{ // light
 			entity *e = ents->create(2);
 			CAGE_COMPONENT_ENGINE(transform, t, e);
-			t.orientation = quat(degs(-30), degs(-110), degs());
+			t.orientation = quat(degs(-20), degs(-110), degs());
 			CAGE_COMPONENT_ENGINE(light, l, e);
 			l.lightType = lightTypeEnum::Directional;
-			l.color = vec3(1, 1, 1) * 0.6;
+			l.color = vec3(0.9);
 			if (shadowEnabled)
 			{
 				CAGE_COMPONENT_ENGINE(shadowmap, s, e);
-				s.worldSize = vec3(20, 20, 20);
-				s.resolution = 2048;
+				s.worldSize = vec3(20);
+				s.resolution = 4096;
 			}
 		}
 
