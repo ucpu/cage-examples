@@ -18,7 +18,7 @@ const string labelTexts[] = {
 };
 
 const uint32 fontsCount = sizeof(fontNames) / sizeof(fontNames[0]);
-CAGE_ASSERT_COMPILE(sizeof(fontNames) / sizeof(fontNames[0]) == sizeof(labelTexts) / sizeof(labelTexts[0]), arrays_must_have_same_number_of_elements);
+static_assert(sizeof(fontNames) / sizeof(fontNames[0]) == sizeof(labelTexts) / sizeof(labelTexts[0]), "arrays must have same number of elements");
 
 class guiTestImpl : public guiTestClass
 {
