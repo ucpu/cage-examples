@@ -21,7 +21,7 @@ int main(int argc, const char *args[])
 	log1->format.bind<logFormatConsole>();
 	log1->output.bind<logOutputStdOut>();
 
-	configSetBool("cage.config.autoSave", true);
+	configSetBool("cage/config/autoSave", true);
 	engineInitialize(engineCreateConfig());
 	cameraInitialize();
 
