@@ -4,41 +4,41 @@ class guiTestImpl : public guiTestClass
 {
 public:
 
-	entity *makeSplitterRec(uint32 depth)
+	Entity *makeSplitterRec(uint32 depth)
 	{
-		entityManager *ents = gui()->entities();
+		EntityManager *ents = gui()->entities();
 
-		entity *cell = ents->createUnique();
+		Entity *cell = ents->createUnique();
 		{
-			CAGE_COMPONENT_GUI(panel, b, cell);
+			CAGE_COMPONENT_GUI(Panel, b, cell);
 		}
 
 		if (depth == 15)
 		{
-			entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(parent, p, e);
+			Entity *e = ents->createUnique();
+			CAGE_COMPONENT_GUI(Parent, p, e);
 			p.parent = cell->name();
-			CAGE_COMPONENT_GUI(label, l, e);
-			CAGE_COMPONENT_GUI(text, t, e);
+			CAGE_COMPONENT_GUI(Label, l, e);
+			CAGE_COMPONENT_GUI(Text, t, e);
 			t.value = "Hi";
 		}
 		else
 		{
-			CAGE_COMPONENT_GUI(layoutSplitter, s, cell);
+			CAGE_COMPONENT_GUI(LayoutSplitter, s, cell);
 			s.vertical = (depth % 2) == 1;
 			s.inverse = ((depth / 2) % 2) == 1;
 			{ // first
-				entity *e = ents->createUnique();
-				CAGE_COMPONENT_GUI(parent, p, e);
+				Entity *e = ents->createUnique();
+				CAGE_COMPONENT_GUI(Parent, p, e);
 				p.parent = cell->name();
 				p.order = s.inverse;
-				CAGE_COMPONENT_GUI(button, l, e);
-				CAGE_COMPONENT_GUI(text, t, e);
+				CAGE_COMPONENT_GUI(Button, l, e);
+				CAGE_COMPONENT_GUI(Text, t, e);
 				t.value = stringizer() + "Item: " + (depth + 1);
 			}
 			{ // second
-				entity *e = makeSplitterRec(depth + 1);
-				CAGE_COMPONENT_GUI(parent, p, e);
+				Entity *e = makeSplitterRec(depth + 1);
+				CAGE_COMPONENT_GUI(Parent, p, e);
 				p.parent = cell->name();
 				p.order = !s.inverse;
 			}
@@ -49,8 +49,8 @@ public:
 
 	void initialize() override
 	{
-		entityManager *ents = gui()->entities();
-		entity *e = makeSplitterRec(0);
+		EntityManager *ents = gui()->entities();
+		Entity *e = makeSplitterRec(0);
 	}
 
 };

@@ -5,7 +5,7 @@
 #include <cage-core/config.h>
 
 bool closeButton();
-bool keyPress(uint32 a, uint32 b, modifiersFlags m);
+bool keyPress(uint32 a, uint32 b, ModifiersFlags m);
 bool guiFunction(uint32 en);
 bool update();
 bool assetsUpdate();
@@ -17,18 +17,18 @@ void updateFinalize();
 int main(int argc, const char *args[])
 {
 	// log to console
-	holder<logger> log1 = newLogger();
+	Holder<Logger> log1 = newLogger();
 	log1->format.bind<logFormatConsole>();
 	log1->output.bind<logOutputStdOut>();
 
 	configSetBool("cage/config/autoSave", true);
-	engineInitialize(engineCreateConfig());
+	engineInitialize(EngineCreateConfig());
 	cameraInitialize();
 
-	eventListener<bool()> updateListener;
-	eventListener<bool()> assetsUpdateListener;
-	windowEventListeners listeners;
-	eventListener<bool(uint32)> guiListener;
+	EventListener<bool()> updateListener;
+	EventListener<bool()> assetsUpdateListener;
+	WindowEventListeners listeners;
+	EventListener<bool(uint32)> guiListener;
 	updateListener.bind<&update>();
 	assetsUpdateListener.bind<&assetsUpdate>();
 	controlThread().update.attach(updateListener);
@@ -41,17 +41,17 @@ int main(int argc, const char *args[])
 
 	updateInitialize();
 	{
-		holder<fullscreenSwitcher> fullscreen = newFullscreenSwitcher(false);
+		Holder<FullscreenSwitcher> fullscreen = newFullscreenSwitcher(false);
 		engineStart();
 	}
 	updateFinalize();
 	engineFinalize();
 
 	{
-		holder<configList> l = newConfigList();
+		Holder<ConfigList> l = newConfigList();
 		while (l->valid())
 		{
-			CAGE_LOG(severityEnum::Info, "config", stringizer() + l->name() + " = " + l->getString() + " (" + l->typeName() + ")");
+			CAGE_LOG(SeverityEnum::Info, "config", stringizer() + l->name() + " = " + l->getString() + " (" + l->typeName() + ")");
 			l->next();
 		}
 	}

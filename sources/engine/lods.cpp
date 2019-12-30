@@ -16,7 +16,7 @@
 #include <cage-engine/highPerformanceGpuHint.h>
 
 using namespace cage;
-static const uint32 assetsName = hashString("cage-tests/lods/lods.pack");
+static const uint32 assetsName = HashString("cage-tests/lods/lods.pack");
 
 bool windowClose()
 {
@@ -34,14 +34,14 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder<logger> log1 = newLogger();
+		Holder<Logger> log1 = newLogger();
 		log1->format.bind<logFormatConsole>();
 		log1->output.bind<logOutputStdOut>();
 
-		engineInitialize(engineCreateConfig());
+		engineInitialize(EngineCreateConfig());
 
 		// events
-#define GCHL_GENERATE(TYPE, FUNC, EVENT) eventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
+#define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
 		GCHL_GENERATE((), windowClose, window()->events.windowClose);
 		GCHL_GENERATE((), update, controlThread().update);
 #undef GCHL_GENERATE
@@ -52,53 +52,53 @@ int main(int argc, char *args[])
 		window()->title("levels of details");
 
 		// entities
-		entityManager *ents = entities();
+		EntityManager *ents = entities();
 		{ // cube
-			entity *e = ents->create(1);
-			CAGE_COMPONENT_ENGINE(render, r, e);
-			r.object = hashString("cage-tests/lods/cube.object");
-			CAGE_COMPONENT_ENGINE(transform, t, e);
+			Entity *e = ents->create(1);
+			CAGE_COMPONENT_ENGINE(Render, r, e);
+			r.object = HashString("cage-tests/lods/cube.object");
+			CAGE_COMPONENT_ENGINE(Transform, t, e);
 			t.position = vec3(-8, 0, 0);
 		}
 		{ // sphere
-			entity *e = ents->create(2);
-			CAGE_COMPONENT_ENGINE(render, r, e);
-			r.object = hashString("cage-tests/lods/sphere.object");
-			CAGE_COMPONENT_ENGINE(transform, t, e);
+			Entity *e = ents->create(2);
+			CAGE_COMPONENT_ENGINE(Render, r, e);
+			r.object = HashString("cage-tests/lods/sphere.object");
+			CAGE_COMPONENT_ENGINE(Transform, t, e);
 			t.position = vec3(8, 0, 0);
 		}
 		{ // floor
-			entity *e = ents->create(3);
-			CAGE_COMPONENT_ENGINE(render, r, e);
-			r.object = hashString("cage-tests/lods/floor.object");
-			CAGE_COMPONENT_ENGINE(transform, t, e);
+			Entity *e = ents->create(3);
+			CAGE_COMPONENT_ENGINE(Render, r, e);
+			r.object = HashString("cage-tests/lods/floor.object");
+			CAGE_COMPONENT_ENGINE(Transform, t, e);
 			t.position = vec3(0, -5, 0);
 		}
 		{ // sun
-			entity *e = ents->create(9);
-			CAGE_COMPONENT_ENGINE(transform, t, e);
+			Entity *e = ents->create(9);
+			CAGE_COMPONENT_ENGINE(Transform, t, e);
 			t.orientation = quat(degs(-60), degs(20), degs());
-			CAGE_COMPONENT_ENGINE(light, l, e);
-			l.lightType = lightTypeEnum::Directional;
-			CAGE_COMPONENT_ENGINE(shadowmap, s, e);
+			CAGE_COMPONENT_ENGINE(Light, l, e);
+			l.lightType = LightTypeEnum::Directional;
+			CAGE_COMPONENT_ENGINE(Shadowmap, s, e);
 			s.resolution = 1024;
 			s.worldSize = vec3(20, 20, 20);
 		}
 		{ // camera
-			entity *e = ents->create(10);
-			CAGE_COMPONENT_ENGINE(transform, t, e);
+			Entity *e = ents->create(10);
+			CAGE_COMPONENT_ENGINE(Transform, t, e);
 			t.position = vec3(0, 3, 30);
 			t.orientation = quat(degs(-10), degs(), degs());
-			CAGE_COMPONENT_ENGINE(camera, c, e);
+			CAGE_COMPONENT_ENGINE(Camera, c, e);
 			c.ambientLight = vec3(1, 1, 1) * 0.5;
 			c.near = 0.1;
 			c.far = 200;
 		}
 
-		holder<fpsCamera> fpsCamera = newFpsCamera(ents->get(10));
-		fpsCamera->mouseButton = mouseButtonsFlags::Left;
+		Holder<FpsCamera> fpsCamera = newFpsCamera(ents->get(10));
+		fpsCamera->mouseButton = MouseButtonsFlags::Left;
 		fpsCamera->movementSpeed = 1;
-		holder<engineProfiling> engineProfiling = newEngineProfiling();
+		Holder<EngineProfiling> EngineProfiling = newEngineProfiling();
 
 		assets()->add(assetsName);
 		engineStart();
@@ -109,7 +109,7 @@ int main(int argc, char *args[])
 	}
 	catch (...)
 	{
-		CAGE_LOG(severityEnum::Error, "test", "caught exception");
+		CAGE_LOG(SeverityEnum::Error, "test", "caught exception");
 		return 1;
 	}
 }

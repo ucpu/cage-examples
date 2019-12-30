@@ -23,7 +23,7 @@ bool windowClose()
 	return false;
 }
 
-bool keyPress(uint32, uint32 b, modifiersFlags modifiers)
+bool keyPress(uint32, uint32 b, ModifiersFlags modifiers)
 {
 	switch (b)
 	{
@@ -41,12 +41,12 @@ bool keyPress(uint32, uint32 b, modifiersFlags modifiers)
 
 void box(const vec3 &pos, const quat &rot)
 {
-	entity *e = entities()->createAnonymous();
-	CAGE_COMPONENT_ENGINE(transform, t, e);
-	CAGE_COMPONENT_ENGINE(render, r, e);
+	Entity *e = entities()->createAnonymous();
+	CAGE_COMPONENT_ENGINE(Transform, t, e);
+	CAGE_COMPONENT_ENGINE(Render, r, e);
 	t.position = pos;
 	t.orientation = rot;
-	r.object = hashString("cage/mesh/fake.obj");
+	r.object = HashString("cage/mesh/fake.obj");
 	r.sceneMask = 0b111 & ~(holes ? (1 << randomRange(0, 3)) : 0);
 }
 
@@ -99,15 +99,15 @@ void letter(char c, const vec3 &pos)
 
 void regenerate()
 {
-	entityManager *ents = entities();
+	EntityManager *ents = entities();
 	ents->destroy();
 
 	for (uint32 i = 0; i < 3; i++)
 	{ // camera
-		entity *e = ents->create(i + 1);
-		CAGE_COMPONENT_ENGINE(transform, t, e);
+		Entity *e = ents->create(i + 1);
+		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		(void)t;
-		CAGE_COMPONENT_ENGINE(camera, c, e);
+		CAGE_COMPONENT_ENGINE(Camera, c, e);
 		c.ambientLight = vec3(0.1);
 		c.ambientLight[i] = 0;
 		c.sceneMask = 1 << i;
@@ -125,7 +125,7 @@ void regenerate()
 		case 2: // rotating
 			break;
 		}
-		c.effects = cameraEffectsFlags::CombinedPass;
+		c.effects = CameraEffectsFlags::CombinedPass;
 	}
 
 	letter('C', vec3(-3, 0, +0) * 10);
@@ -134,13 +134,13 @@ void regenerate()
 	letter('E', vec3(+3, 0, +0) * 10);
 
 	{ // light
-		entity *e = ents->create(10);
-		CAGE_COMPONENT_ENGINE(transform, t, e);
+		Entity *e = ents->create(10);
+		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		t.orientation = randomDirectionQuat();
-		CAGE_COMPONENT_ENGINE(light, l, e);
-		l.lightType = lightTypeEnum::Directional;
+		CAGE_COMPONENT_ENGINE(Light, l, e);
+		l.lightType = LightTypeEnum::Directional;
 		l.color = vec3(1);
-		CAGE_COMPONENT_ENGINE(shadowmap, s, e);
+		CAGE_COMPONENT_ENGINE(Shadowmap, s, e);
 		s.resolution = 512;
 		s.worldSize = vec3(50);
 	}
@@ -156,14 +156,14 @@ bool update()
 		regenerate();
 	}
 
-	entityManager *ents = entities();
+	EntityManager *ents = entities();
 
 	if (camsLayout == 2)
 	{ // rotating viewports
 		for (uint32 i = 0; i < 3; i++)
 		{
-			entity *e = ents->get(i + 1);
-			CAGE_COMPONENT_ENGINE(camera, c, e);
+			Entity *e = ents->get(i + 1);
+			CAGE_COMPONENT_ENGINE(Camera, c, e);
 			c.ambientLight = vec3(1, 1, 1) * 0.5;
 			c.sceneMask = 1 << i;
 			c.cameraOrder = i;
@@ -175,8 +175,8 @@ bool update()
 
 	for (uint32 i = 0; i < 3; i++)
 	{ // transformations of cameras
-		entity *e = ents->get(i + 1);
-		CAGE_COMPONENT_ENGINE(transform, t, e);
+		Entity *e = ents->get(i + 1);
+		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		switch (i)
 		{
 		case 0:
@@ -202,17 +202,17 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder<logger> log1 = newLogger();
+		Holder<Logger> log1 = newLogger();
 		log1->format.bind<logFormatConsole>();
 		log1->output.bind<logOutputStdOut>();
 
-		engineInitialize(engineCreateConfig());
+		engineInitialize(EngineCreateConfig());
 
 		// events
-		eventListener<bool()> applicationQuitListener;
-		eventListener<bool()> windowCloseListener;
-		eventListener<bool(uint32 key, uint32, modifiersFlags modifiers)> keyPressListener;
-		eventListener<bool()> updateListener;
+		EventListener<bool()> applicationQuitListener;
+		EventListener<bool()> windowCloseListener;
+		EventListener<bool(uint32 key, uint32, ModifiersFlags modifiers)> keyPressListener;
+		EventListener<bool()> updateListener;
 		windowCloseListener.bind<&windowClose>();
 		keyPressListener.bind<&keyPress>();
 		updateListener.bind<&update>();
@@ -223,7 +223,7 @@ int main(int argc, char *args[])
 		window()->setMaximized();
 		window()->title("multiple viewports");
 		dirty = true;
-		holder<engineProfiling> engineProfiling = newEngineProfiling();
+		Holder<EngineProfiling> EngineProfiling = newEngineProfiling();
 
 		engineStart();
 		engineFinalize();
@@ -232,7 +232,7 @@ int main(int argc, char *args[])
 	}
 	catch (...)
 	{
-		CAGE_LOG(severityEnum::Error, "test", "caught exception");
+		CAGE_LOG(SeverityEnum::Error, "test", "caught exception");
 		return 1;
 	}
 }

@@ -10,6 +10,7 @@
 #include <cage-engine/engine.h>
 #include <cage-engine/engineProfiling.h>
 #include <cage-engine/highPerformanceGpuHint.h>
+#include <optick.h>
 
 using namespace cage;
 
@@ -26,21 +27,19 @@ bool windowClose()
 
 void controlInit()
 {
-	entityManager *ents = entities();
+	EntityManager *ents = entities();
 	{ // camera
-		entity *e = ents->create(1);
-		CAGE_COMPONENT_ENGINE(transform, t, e);
-		(void)t;
-		CAGE_COMPONENT_ENGINE(camera, c, e);
-		c.ambientLight = vec3(1, 1, 1);
-		c.effects = cameraEffectsFlags::CombinedPass;
+		Entity *e = ents->create(1);
+		CAGE_COMPONENT_ENGINE(Transform, t, e);
+		CAGE_COMPONENT_ENGINE(Camera, c, e);
+		c.ambientLight = vec3(1);
+		c.effects = CameraEffectsFlags::CombinedPass;
 	}
 	{ // box 1
-		entity *e = ents->create(2);
-		CAGE_COMPONENT_ENGINE(transform, t, e);
-		(void)t;
-		CAGE_COMPONENT_ENGINE(render, r, e);
-		r.object = hashString("cage/mesh/fake.obj");
+		Entity *e = ents->create(2);
+		CAGE_COMPONENT_ENGINE(Transform, t, e);
+		CAGE_COMPONENT_ENGINE(Render, r, e);
+		r.object = HashString("cage/mesh/fake.obj");
 	}
 }
 
@@ -48,50 +47,57 @@ bool guiUpdate();
 
 bool update()
 {
+	OPTICK_EVENT();
 	uint64 time = currentControlTime();
-	entityManager *ents = entities();
+	EntityManager *ents = entities();
 	{ // box 1
-		entity *e = ents->get(2);
-		CAGE_COMPONENT_ENGINE(transform, t, e);
+		Entity *e = ents->get(2);
+		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		t.position = vec3(sin(rads(time * 1e-6)) * 10, cos(rads(time * 1e-6)) * 10, -20);
 	}
-	threadSleep(updateDelay);
+	{
+		OPTICK_EVENT("sleep");
+		threadSleep(updateDelay);
+	}
 	guiUpdate();
 	return false;
 }
 
 bool prepare()
 {
+	OPTICK_EVENT();
 	threadSleep(prepareDelay);
 	return false;
 }
 
 bool render()
 {
+	OPTICK_EVENT();
 	threadSleep(renderDelay);
 	return false;
 }
 
 bool soundUpdate()
 {
+	OPTICK_EVENT();
 	threadSleep(soundDelay);
 	return false;
 }
 
 bool guiInit()
 {
-	guiManager *g = cage::gui();
+	Gui *g = cage::gui();
 
-	entity *panel = g->entities()->createUnique();
+	Entity *panel = g->entities()->createUnique();
 	{
-		CAGE_COMPONENT_GUI(scrollbars, sc, panel);
+		CAGE_COMPONENT_GUI(Scrollbars, sc, panel);
 	}
 
-	entity *layout = g->entities()->createUnique();
+	Entity *layout = g->entities()->createUnique();
 	{
-		CAGE_COMPONENT_GUI(panel, c, layout);
-		CAGE_COMPONENT_GUI(layoutTable, l, layout);
-		CAGE_COMPONENT_GUI(parent, child, layout);
+		CAGE_COMPONENT_GUI(Panel, c, layout);
+		CAGE_COMPONENT_GUI(LayoutTable, l, layout);
+		CAGE_COMPONENT_GUI(Parent, child, layout);
 		child.parent = panel->name();
 	}
 
@@ -101,22 +107,22 @@ bool guiInit()
 	static_assert(sizeof(names) / sizeof(names[0]) == sizeof(values) / sizeof(values[0]), "arrays must have same length");
 	for (uint32 i = 0; i < sizeof(names) / sizeof(names[0]); i++)
 	{
-		entity *lab = g->entities()->createUnique();
+		Entity *lab = g->entities()->createUnique();
 		{
-			CAGE_COMPONENT_GUI(parent, child, lab);
+			CAGE_COMPONENT_GUI(Parent, child, lab);
 			child.parent = layout->name();
 			child.order = i * 2 + 0;
-			CAGE_COMPONENT_GUI(label, c, lab);
-			CAGE_COMPONENT_GUI(text, t, lab);
+			CAGE_COMPONENT_GUI(Label, c, lab);
+			CAGE_COMPONENT_GUI(Text, t, lab);
 			t.value = names[i];
 		}
-		entity *con = g->entities()->create(20 + i);
+		Entity *con = g->entities()->create(20 + i);
 		{
-			CAGE_COMPONENT_GUI(parent, child, con);
+			CAGE_COMPONENT_GUI(Parent, child, con);
 			child.parent = layout->name();
 			child.order = i * 2 + 1;
-			CAGE_COMPONENT_GUI(input, c, con);
-			c.type = inputTypeEnum::Integer;
+			CAGE_COMPONENT_GUI(Input, c, con);
+			c.type = InputTypeEnum::Integer;
 			c.min.i = i >= 2 ? 0 : 1;
 			c.max.i = 1000;
 			c.step.i = 1;
@@ -131,8 +137,8 @@ namespace
 {
 	void setIntValue(uint32 index, uint64 &value, bool allowZero)
 	{
-		entity *control = cage::gui()->entities()->get(20 + index);
-		CAGE_COMPONENT_GUI(input, t, control);
+		Entity *control = cage::gui()->entities()->get(20 + index);
+		CAGE_COMPONENT_GUI(Input, t, control);
 		if (t.valid)
 		{
 			CAGE_ASSERT(t.value.isDigitsOnly() && !t.value.empty());
@@ -157,29 +163,29 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder<logger> log1 = newLogger();
+		Holder<Logger> log1 = newLogger();
 		log1->format.bind<logFormatConsole>();
 		log1->output.bind<logOutputStdOut>();
 
-		engineInitialize(engineCreateConfig());
+		engineInitialize(EngineCreateConfig());
 
 		// events
-#define GCHL_GENERATE(TYPE, FUNC, EVENT) eventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
+#define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
 		GCHL_GENERATE((), update, controlThread().update);
 		GCHL_GENERATE((), prepare, graphicsPrepareThread().prepare);
 		GCHL_GENERATE((), render, graphicsDispatchThread().render);
 		GCHL_GENERATE((), soundUpdate, soundThread().sound);
 		GCHL_GENERATE((), guiInit, controlThread().initialize);
 #undef GCHL_GENERATE
-		eventListener<bool()> windowCloseListener;
+		EventListener<bool()> windowCloseListener;
 		windowCloseListener.bind<&windowClose>();
 		windowCloseListener.attach(window()->events.windowClose);
 
 		window()->setWindowed();
 		window()->windowedSize(ivec2(800, 600));
-		window()->title("interpolation");
+		window()->title("timing frames");
 		controlInit();
-		holder<engineProfiling> engineProfiling = newEngineProfiling();
+		Holder<EngineProfiling> EngineProfiling = newEngineProfiling();
 
 		engineStart();
 		engineFinalize();
@@ -188,7 +194,7 @@ int main(int argc, char *args[])
 	}
 	catch (...)
 	{
-		CAGE_LOG(severityEnum::Error, "test", "caught exception");
+		CAGE_LOG(SeverityEnum::Error, "test", "caught exception");
 		return 1;
 	}
 }

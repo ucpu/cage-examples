@@ -12,8 +12,8 @@
 
 using namespace cage;
 
-holder<soundSource> toneSource;
-holder<mixingBus> toneBus;
+Holder<SoundSource> toneSource;
+Holder<MixingBus> toneBus;
 
 bool windowClose()
 {
@@ -23,37 +23,37 @@ bool windowClose()
 
 void controlInit()
 {
-	entityManager *ents = entities();
+	EntityManager *ents = entities();
 
 	{ // camera
-		entity *e = ents->create(1);
-		CAGE_COMPONENT_ENGINE(transform, t, e);
+		Entity *e = ents->create(1);
+		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		(void)t;
-		CAGE_COMPONENT_ENGINE(camera, c, e);
+		CAGE_COMPONENT_ENGINE(Camera, c, e);
 		c.ambientLight = vec3(1, 1, 1);
-		c.cameraType = cameraTypeEnum::Orthographic;
+		c.cameraType = CameraTypeEnum::Orthographic;
 		c.camera.orthographicSize = vec2(50, 50);
 		c.near = -5;
 		c.far = 5;
 	}
 
 	{ // listener
-		entity *e = ents->create(2);
-		CAGE_COMPONENT_ENGINE(render, r, e);
-		r.object = hashString("cage/mesh/fake.obj");
-		CAGE_COMPONENT_ENGINE(listener, l, e);
+		Entity *e = ents->create(2);
+		CAGE_COMPONENT_ENGINE(Render, r, e);
+		r.object = HashString("cage/mesh/fake.obj");
+		CAGE_COMPONENT_ENGINE(Listener, l, e);
 		l.attenuation = vec3(1, 0.01, 0);
 		l.dopplerEffect = true;
 	}
 
 	{ // moving voice
-		entity *e = ents->create(3);
-		CAGE_COMPONENT_ENGINE(transform, t, e);
+		Entity *e = ents->create(3);
+		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		(void)t;
-		CAGE_COMPONENT_ENGINE(render, r, e);
-		r.object = hashString("cage/mesh/fake.obj");
-		CAGE_COMPONENT_ENGINE(voice, s, e);
-		s.name = hashString("cage/sound/logo.ogg");
+		CAGE_COMPONENT_ENGINE(Render, r, e);
+		r.object = HashString("cage/mesh/fake.obj");
+		CAGE_COMPONENT_ENGINE(Sound, s, e);
+		s.name = HashString("cage/sound/logo.ogg");
 	}
 }
 
@@ -76,11 +76,11 @@ bool soundFinish()
 bool update()
 {
 	uint64 time = currentControlTime();
-	entityManager *ents = entities();
+	EntityManager *ents = entities();
 	vec3 box;
 	{ // moving voice
-		entity *e = ents->get(3);
-		CAGE_COMPONENT_ENGINE(transform, t, e);
+		Entity *e = ents->get(3);
+		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		static const uint64 duration = 8000000;
 		bool odd = (time / duration) % 2 == 1;
 		real x = ((real)time % duration) / duration;
@@ -89,15 +89,15 @@ bool update()
 		box = t.position = vec3(100 * (x - 0.5), 10, 0);
 		if (toneBus)
 		{
-			CAGE_COMPONENT_ENGINE(voice, v, e);
+			CAGE_COMPONENT_ENGINE(Sound, v, e);
 			v.input = toneBus.get();
 			v.name = 0;
 		}
 	}
 	box = normalize(box);
 	{ // listener
-		entity *e = ents->get(2);
-		CAGE_COMPONENT_ENGINE(transform, t, e);
+		Entity *e = ents->get(2);
+		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		t.orientation = quat(degs(90), degs(), degs()) * quat(degs(), atan2(box[0], box[1]) - degs(90), degs());
 	}
 	return false;
@@ -108,14 +108,14 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder<logger> log1 = newLogger();
+		Holder<Logger> log1 = newLogger();
 		log1->format.bind<logFormatConsole>();
 		log1->output.bind<logOutputStdOut>();
 
-		engineInitialize(engineCreateConfig());
+		engineInitialize(EngineCreateConfig());
 
 		// events
-#define GCHL_GENERATE(TYPE, FUNC, EVENT) eventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
+#define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
 		GCHL_GENERATE((), soundInit, soundThread().initialize);
 		GCHL_GENERATE((), soundFinish, soundThread().finalize);
 		GCHL_GENERATE((), update, controlThread().update);
@@ -134,7 +134,7 @@ int main(int argc, char *args[])
 	}
 	catch (...)
 	{
-		CAGE_LOG(severityEnum::Error, "test", "caught exception");
+		CAGE_LOG(SeverityEnum::Error, "test", "caught exception");
 		return 1;
 	}
 }

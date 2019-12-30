@@ -13,7 +13,7 @@
 #include <cage-engine/highPerformanceGpuHint.h>
 
 using namespace cage;
-static const uint32 assetsName = hashString("cage-tests/texts/texts.pack");
+static const uint32 assetsName = HashString("cage-tests/texts/texts.pack");
 
 const char *fontNames[] = {
 	"cage-tests/gui/DroidSansMono.ttf",
@@ -39,32 +39,32 @@ bool windowClose()
 	return false;
 }
 
-noiseFunctionCreateConfig noiseInit(uint32 seed)
+NoiseFunctionCreateConfig noiseInit(uint32 seed)
 {
-	noiseFunctionCreateConfig cfg;
+	NoiseFunctionCreateConfig cfg;
 	cfg.seed = seed;
-	cfg.type = noiseTypeEnum::Cellular;
+	cfg.type = NoiseTypeEnum::Cellular;
 	cfg.frequency = 1e-7;
 	return cfg;
 }
 
 bool update()
 {
-	entityManager *ents = entities();
+	EntityManager *ents = entities();
 
 	{
-		static holder<noiseFunction> noise1 = newNoiseFunction(noiseInit(42));
-		static holder<noiseFunction> noise2 = newNoiseFunction(noiseInit(13));
-		entity *e = ents->get(10);
-		CAGE_COMPONENT_ENGINE(transform, t, e);
+		static Holder<NoiseFunction> noise1 = newNoiseFunction(noiseInit(42));
+		static Holder<NoiseFunction> noise2 = newNoiseFunction(noiseInit(13));
+		Entity *e = ents->get(10);
+		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		t.position = vec3(noise1->evaluate(currentControlTime()) * 2, noise2->evaluate(currentControlTime()) * 2, 10);
-		CAGE_COMPONENT_ENGINE(renderText, r, e);
+		CAGE_COMPONENT_ENGINE(Text, r, e);
 		r.value = stringizer() + t.position[0] + "|" + t.position[1] + "|" + t.position[2];
 	}
 
 	{
-		entity *e = ents->get(11);
-		CAGE_COMPONENT_ENGINE(transform, t, e);
+		Entity *e = ents->get(11);
+		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		t.orientation = quat(degs(), degs(currentControlTime() * 1e-5), degs());
 	}
 
@@ -76,14 +76,14 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder<logger> log1 = newLogger();
+		Holder<Logger> log1 = newLogger();
 		log1->format.bind<logFormatConsole>();
 		log1->output.bind<logOutputStdOut>();
 
-		engineInitialize(engineCreateConfig());
+		engineInitialize(EngineCreateConfig());
 
 		// events
-#define GCHL_GENERATE(TYPE, FUNC, EVENT) eventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
+#define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
 		GCHL_GENERATE((), windowClose, window()->events.windowClose);
 		GCHL_GENERATE((), update, controlThread().update);
 #undef GCHL_GENERATE
@@ -93,90 +93,90 @@ int main(int argc, char *args[])
 		window()->title("texts");
 
 		// entities
-		entityManager *ents = entities();
+		EntityManager *ents = entities();
 		{ // floor
-			entity *e = ents->create(1);
-			CAGE_COMPONENT_ENGINE(render, r, e);
-			r.object = hashString("cage-tests/skeletons/floor/floor.obj");
-			CAGE_COMPONENT_ENGINE(transform, t, e);
+			Entity *e = ents->create(1);
+			CAGE_COMPONENT_ENGINE(Render, r, e);
+			r.object = HashString("cage-tests/skeletons/floor/floor.obj");
+			CAGE_COMPONENT_ENGINE(Transform, t, e);
 			t.position = vec3(0, -5, 0);
 		}
 		{ // sun
-			entity *e = ents->create(2);
-			CAGE_COMPONENT_ENGINE(transform, t, e);
+			Entity *e = ents->create(2);
+			CAGE_COMPONENT_ENGINE(Transform, t, e);
 			t.orientation = quat(degs(-50), degs(-42 + 180), degs());
-			CAGE_COMPONENT_ENGINE(light, l, e);
-			l.lightType = lightTypeEnum::Directional;
+			CAGE_COMPONENT_ENGINE(Light, l, e);
+			l.lightType = LightTypeEnum::Directional;
 			l.color = vec3(1, 1, 1) * 3;
-			//CAGE_COMPONENT_ENGINE(shadowmap, s, e);
+			//CAGE_COMPONENT_ENGINE(Shadowmap, s, e);
 			//s.resolution = 2048;
 			//s.worldSize = vec3(12, 12, 10);
 		}
 		{ // camera
-			entity *e = ents->create(3);
-			CAGE_COMPONENT_ENGINE(transform, t, e);
+			Entity *e = ents->create(3);
+			CAGE_COMPONENT_ENGINE(Transform, t, e);
 			t.orientation = quat(degs(-10), degs(), degs());
-			CAGE_COMPONENT_ENGINE(camera, c, e);
+			CAGE_COMPONENT_ENGINE(Camera, c, e);
 			c.ambientLight = vec3(1, 1, 1) * 0.02;
 			c.near = 0.1;
 			c.far = 100;
-			c.effects = cameraEffectsFlags::CombinedPass;
+			c.effects = CameraEffectsFlags::CombinedPass;
 		}
 		{ // text hello
-			entity *e = ents->create(11);
-			CAGE_COMPONENT_ENGINE(renderText, r, e);
-			r.assetName = hashString("cage-tests/texts/texts.textpack");
-			r.textName = hashString("short/hello");
-			CAGE_COMPONENT_ENGINE(transform, t, e);
+			Entity *e = ents->create(11);
+			CAGE_COMPONENT_ENGINE(Text, r, e);
+			r.assetName = HashString("cage-tests/texts/texts.textpack");
+			r.textName = HashString("short/hello");
+			CAGE_COMPONENT_ENGINE(Transform, t, e);
 			t.position = vec3(0, 0, -10);
 			t.scale = 3;
 		}
 		{ // text long a
-			entity *e = ents->createAnonymous();
-			CAGE_COMPONENT_ENGINE(renderText, r, e);
-			r.assetName = hashString("cage-tests/texts/texts.textpack");
-			r.textName = hashString("long/a");
+			Entity *e = ents->createAnonymous();
+			CAGE_COMPONENT_ENGINE(Text, r, e);
+			r.assetName = HashString("cage-tests/texts/texts.textpack");
+			r.textName = HashString("long/a");
 			r.color = vec3(1, 0, 0);
-			CAGE_COMPONENT_ENGINE(transform, t, e);
+			CAGE_COMPONENT_ENGINE(Transform, t, e);
 			t.position = vec3(-10, 0, 0);
 			t.orientation = quat(degs(), degs(90), degs());
 		}
 		{ // text long b
-			entity *e = ents->createAnonymous();
-			CAGE_COMPONENT_ENGINE(renderText, r, e);
-			r.assetName = hashString("cage-tests/texts/texts.textpack");
-			r.textName = hashString("long/b");
+			Entity *e = ents->createAnonymous();
+			CAGE_COMPONENT_ENGINE(Text, r, e);
+			r.assetName = HashString("cage-tests/texts/texts.textpack");
+			r.textName = HashString("long/b");
 			r.color = vec3(0, 0, 1);
-			CAGE_COMPONENT_ENGINE(transform, t, e);
+			CAGE_COMPONENT_ENGINE(Transform, t, e);
 			t.position = vec3(10, 0, 0);
 			t.orientation = quat(degs(), degs(-90), degs());
 		}
 		{ // text params
-			entity *e = ents->create(10);
-			CAGE_COMPONENT_ENGINE(renderText, r, e);
-			r.assetName = hashString("cage-tests/texts/texts.textpack");
-			r.textName = hashString("params/a");
-			CAGE_COMPONENT_ENGINE(transform, t, e);
+			Entity *e = ents->create(10);
+			CAGE_COMPONENT_ENGINE(Text, r, e);
+			r.assetName = HashString("cage-tests/texts/texts.textpack");
+			r.textName = HashString("params/a");
+			CAGE_COMPONENT_ENGINE(Transform, t, e);
 			t.position = vec3(0, 0, 10);
 			t.orientation = quat(degs(), degs(180), degs());
 		}
 		{ // fonts
 			for (uint32 i = 0; i < fontsCount; i++)
 			{
-				entity *e = ents->createAnonymous();
-				CAGE_COMPONENT_ENGINE(renderText, r, e);
+				Entity *e = ents->createAnonymous();
+				CAGE_COMPONENT_ENGINE(Text, r, e);
 				r.value = labelTexts[i];
-				r.font = hashString(fontNames[i]);
-				CAGE_COMPONENT_ENGINE(transform, t, e);
+				r.font = HashString(fontNames[i]);
+				CAGE_COMPONENT_ENGINE(Transform, t, e);
 				t.position = vec3(0, -3, 2.0 * i - fontsCount);
 				t.orientation = quat(degs(-90), degs(), degs());
 			}
 		}
 
-		holder<fpsCamera> cameraCtrl = newFpsCamera(ents->get(3));
-		cameraCtrl->mouseButton = mouseButtonsFlags::Left;
+		Holder<FpsCamera> cameraCtrl = newFpsCamera(ents->get(3));
+		cameraCtrl->mouseButton = MouseButtonsFlags::Left;
 		cameraCtrl->movementSpeed = 0.3;
-		holder<engineProfiling> engineProfiling = newEngineProfiling();
+		Holder<EngineProfiling> EngineProfiling = newEngineProfiling();
 
 		assets()->add(assetsName);
 		engineStart();
@@ -187,7 +187,7 @@ int main(int argc, char *args[])
 	}
 	catch (...)
 	{
-		CAGE_LOG(severityEnum::Error, "test", "caught exception");
+		CAGE_LOG(SeverityEnum::Error, "test", "caught exception");
 		return 1;
 	}
 }

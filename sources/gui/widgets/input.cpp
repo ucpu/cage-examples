@@ -5,33 +5,33 @@ class guiTestImpl : public guiTestClass
 
 	void initialize() override
 	{
-		entityManager *ents = gui()->entities();
+		EntityManager *ents = gui()->entities();
 
 		guiBasicLayout();
 		{
-			entity *e = ents->get(3);
-			CAGE_COMPONENT_GUI(layoutTable, layout, e);
+			Entity *e = ents->get(3);
+			CAGE_COMPONENT_GUI(LayoutTable, layout, e);
 		}
 
 		uint32 index = 1;
 
 		{ // default
 			guiLabel(3, index, "default");
-			entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(parent, p, e);
+			Entity *e = ents->createUnique();
+			CAGE_COMPONENT_GUI(Parent, p, e);
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(input, ib, e);
+			CAGE_COMPONENT_GUI(Input, ib, e);
 		}
 
 		{ // integer
 			guiLabel(3, index, "integer");
-			entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(parent, p, e);
+			Entity *e = ents->createUnique();
+			CAGE_COMPONENT_GUI(Parent, p, e);
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(input, ib, e);
-			ib.type = inputTypeEnum::Integer;
+			CAGE_COMPONENT_GUI(Input, ib, e);
+			ib.type = InputTypeEnum::Integer;
 			ib.min.i = -13;
 			ib.max.i = 42;
 			ib.step.i = 5;
@@ -39,12 +39,12 @@ class guiTestImpl : public guiTestClass
 
 		{ // real
 			guiLabel(3, index, "real");
-			entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(parent, p, e);
+			Entity *e = ents->createUnique();
+			CAGE_COMPONENT_GUI(Parent, p, e);
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(input, ib, e);
-			ib.type = inputTypeEnum::Real;
+			CAGE_COMPONENT_GUI(Input, ib, e);
+			ib.type = InputTypeEnum::Real;
 			ib.min.f = -1;
 			ib.max.f = 1;
 			ib.step.f = 0.1;
@@ -52,37 +52,37 @@ class guiTestImpl : public guiTestClass
 
 		{ // password
 			guiLabel(3, index, "password");
-			entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(parent, p, e);
+			Entity *e = ents->createUnique();
+			CAGE_COMPONENT_GUI(Parent, p, e);
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(input, ib, e);
-			ib.type = inputTypeEnum::Password;
-			CAGE_COMPONENT_GUI(text, t, e);
+			CAGE_COMPONENT_GUI(Input, ib, e);
+			ib.type = InputTypeEnum::Password;
+			CAGE_COMPONENT_GUI(Text, t, e);
 			t.value = "password";
 		}
 
 		{ // email
 			guiLabel(3, index, "email");
-			entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(parent, p, e);
+			Entity *e = ents->createUnique();
+			CAGE_COMPONENT_GUI(Parent, p, e);
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(input, ib, e);
-			ib.type = inputTypeEnum::Email;
-			CAGE_COMPONENT_GUI(text, t, e);
+			CAGE_COMPONENT_GUI(Input, ib, e);
+			ib.type = InputTypeEnum::Email;
+			CAGE_COMPONENT_GUI(Text, t, e);
 			t.value = "@";
 		}
 
 		{ // url
 			guiLabel(3, index, "url");
-			entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(parent, p, e);
+			Entity *e = ents->createUnique();
+			CAGE_COMPONENT_GUI(Parent, p, e);
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(input, ib, e);
-			ib.type = inputTypeEnum::Url;
-			CAGE_COMPONENT_GUI(text, t, e);
+			CAGE_COMPONENT_GUI(Input, ib, e);
+			ib.type = InputTypeEnum::Url;
+			CAGE_COMPONENT_GUI(Text, t, e);
 			t.value = "http://";
 		}
 	}

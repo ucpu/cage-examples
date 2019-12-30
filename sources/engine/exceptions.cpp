@@ -26,7 +26,7 @@ void windowClose()
 void maybeThrow(float chance, uint32 index)
 {
 	if (randomChance() < chance)
-		CAGE_THROW_SILENT(systemError, "intentionally thrown exception", index);
+		CAGE_THROW_SILENT(SystemError, "intentionally thrown exception", index);
 }
 
 void controlInit()
@@ -42,10 +42,10 @@ void controlFinish()
 void controlUpdate()
 {
 	uint64 time = currentControlTime();
-	entityManager *ents = entities();
+	EntityManager *ents = entities();
 	{
-		entity *e = ents->get(2);
-		CAGE_COMPONENT_ENGINE(transform, t, e);
+		Entity *e = ents->get(2);
+		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		t.position = vec3(sin(rads(time * 1e-6)) * 10, cos(rads(time * 1e-6)) * 10, -20);
 	}
 	maybeThrow(probLoop, 3);
@@ -111,7 +111,7 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder<logger> log1 = newLogger();
+		Holder<Logger> log1 = newLogger();
 		log1->format.bind<logFormatConsole>();
 		log1->output.bind<logOutputStdOut>();
 
@@ -121,10 +121,10 @@ int main(int argc, char *args[])
 		// run
 		while (!fullStop)
 		{
-			engineInitialize(engineCreateConfig());
+			engineInitialize(EngineCreateConfig());
 
 			// events
-#define GCHL_GENERATE(FUNC, EVENT) eventListener<void()> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
+#define GCHL_GENERATE(FUNC, EVENT) EventListener<void()> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
 			GCHL_GENERATE(controlUpdate, controlThread().update);
 			GCHL_GENERATE(controlInit, controlThread().initialize);
 			GCHL_GENERATE(controlFinish, controlThread().finalize);
@@ -140,7 +140,7 @@ int main(int argc, char *args[])
 			GCHL_GENERATE(soundFinish, soundThread().finalize);
 			GCHL_GENERATE(soundSound, soundThread().sound);
 #undef GCHL_GENERATE
-			eventListener<void()> windowCloseListener;
+			EventListener<void()> windowCloseListener;
 			windowCloseListener.bind<&windowClose>();
 			windowCloseListener.attach(window()->events.windowClose);
 
@@ -149,19 +149,19 @@ int main(int argc, char *args[])
 			window()->title("exceptions");
 
 			{ // camera
-				entity *e = entities()->create(1);
-				CAGE_COMPONENT_ENGINE(transform, t, e);
-				CAGE_COMPONENT_ENGINE(camera, c, e);
+				Entity *e = entities()->create(1);
+				CAGE_COMPONENT_ENGINE(Transform, t, e);
+				CAGE_COMPONENT_ENGINE(Camera, c, e);
 				c.ambientLight = vec3(1, 1, 1);
 			}
 			{ // box 1
-				entity *e = entities()->create(2);
-				CAGE_COMPONENT_ENGINE(transform, t, e);
-				CAGE_COMPONENT_ENGINE(render, r, e);
-				r.object = hashString("cage/mesh/fake.obj");
+				Entity *e = entities()->create(2);
+				CAGE_COMPONENT_ENGINE(Transform, t, e);
+				CAGE_COMPONENT_ENGINE(Render, r, e);
+				r.object = HashString("cage/mesh/fake.obj");
 			}
 
-			holder<engineProfiling> profiling = newEngineProfiling();
+			Holder<EngineProfiling> profiling = newEngineProfiling();
 
 			engineStart();
 			engineFinalize();
@@ -171,7 +171,7 @@ int main(int argc, char *args[])
 	}
 	catch (...)
 	{
-		CAGE_LOG(severityEnum::Error, "test", "caught exception");
+		CAGE_LOG(SeverityEnum::Error, "test", "caught exception");
 		return 1;
 	}
 }

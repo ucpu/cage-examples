@@ -7,34 +7,34 @@ class guiTestImpl : public guiTestClass
 
 	void initialize() override
 	{
-		entityManager *ents = gui()->entities();
+		EntityManager *ents = gui()->entities();
 
 		guiBasicLayout();
 		{
-			entity *e = ents->get(3);
-			CAGE_COMPONENT_GUI(layoutTable, layout, e);
+			Entity *e = ents->get(3);
+			CAGE_COMPONENT_GUI(LayoutTable, layout, e);
 		}
 
 		uint32 index = 1;
 
 		{ // small
 			guiLabel(3, index, "small");
-			entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(parent, p, e);
+			Entity *e = ents->createUnique();
+			CAGE_COMPONENT_GUI(Parent, p, e);
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(colorPicker, cp, e);
+			CAGE_COMPONENT_GUI(ColorPicker, cp, e);
 			cp.collapsible = true;
 			cp.color = colorValueToHeatmapRgb(randomChance());
 		}
 
 		{ // large
 			guiLabel(3, index, "large");
-			entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(parent, p, e);
+			Entity *e = ents->createUnique();
+			CAGE_COMPONENT_GUI(Parent, p, e);
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(colorPicker, cp, e);
+			CAGE_COMPONENT_GUI(ColorPicker, cp, e);
 			cp.collapsible = false;
 			cp.color = colorValueToHeatmapRgb(randomChance());
 		}

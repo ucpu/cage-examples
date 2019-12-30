@@ -23,42 +23,42 @@ public:
 
 	static void guiLabel(uint32 parentName, uint32 &index, const string &name)
 	{
-		entityManager *ents = gui()->entities();
-		entity *e = ents->createUnique();
-		CAGE_COMPONENT_GUI(parent, p, e);
+		EntityManager *ents = gui()->entities();
+		Entity *e = ents->createUnique();
+		CAGE_COMPONENT_GUI(Parent, p, e);
 		p.parent = parentName;
 		p.order = index++;
-		CAGE_COMPONENT_GUI(label, l, e);
-		CAGE_COMPONENT_GUI(text, t, e);
+		CAGE_COMPONENT_GUI(Label, l, e);
+		CAGE_COMPONENT_GUI(Text, t, e);
 		t.value = name;
 	}
 
 	static void guiBasicLayout()
 	{
-		entityManager *ents = gui()->entities();
+		EntityManager *ents = gui()->entities();
 
 		{ // splitter
-			entity *split = ents->create(1);
-			CAGE_COMPONENT_GUI(layoutSplitter, ls, split);
+			Entity *split = ents->create(1);
+			CAGE_COMPONENT_GUI(LayoutSplitter, ls, split);
 			ls.vertical = true;
 		}
 		{ // top panel
-			entity *panel = ents->create(2);
-			CAGE_COMPONENT_GUI(parent, p, panel);
+			Entity *panel = ents->create(2);
+			CAGE_COMPONENT_GUI(Parent, p, panel);
 			p.parent = 1;
 			p.order = 1;
-			CAGE_COMPONENT_GUI(panel, gp, panel);
-			CAGE_COMPONENT_GUI(scrollbars, sc, panel);
+			CAGE_COMPONENT_GUI(Panel, gp, panel);
+			CAGE_COMPONENT_GUI(Scrollbars, sc, panel);
 		}
 		{ // bottom panel
-			entity *panel = ents->create(3);
-			CAGE_COMPONENT_GUI(parent, p, panel);
+			Entity *panel = ents->create(3);
+			CAGE_COMPONENT_GUI(Parent, p, panel);
 			p.parent = 1;
 			p.order = 2;
-			CAGE_COMPONENT_GUI(panel, pan, panel);
-			//CAGE_COMPONENT_GUI(layoutTable, lt, panel);
+			CAGE_COMPONENT_GUI(Panel, pan, panel);
+			//CAGE_COMPONENT_GUI(LayoutTable, lt, panel);
 			//lt.vertical = true;
-			CAGE_COMPONENT_GUI(scrollbars, sc, panel);
+			CAGE_COMPONENT_GUI(Scrollbars, sc, panel);
 			sc.alignment = vec2(0.5, 0);
 		}
 	}
@@ -73,55 +73,55 @@ public:
 
 	virtual void guiEvent(uint32 name)
 	{
-		CAGE_LOG(severityEnum::Info, "gui event", stringizer() + "gui event on entity: " + name);
+		CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "gui event on entity: " + name);
 
-		entity *e = gui()->entities()->get(name);
+		Entity *e = gui()->entities()->get(name);
 
-		if (e->has(gui()->components().button))
+		if (e->has(gui()->components().Button))
 		{
-			CAGE_LOG(severityEnum::Info, "gui event", stringizer() + "button press");
+			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "button press");
 		}
 
-		if (e->has(gui()->components().checkBox))
+		if (e->has(gui()->components().CheckBox))
 		{
-			CAGE_COMPONENT_GUI(checkBox, c, e);
-			CAGE_LOG(severityEnum::Info, "gui event", stringizer() + "check box state: " + (uint32)c.state);
+			CAGE_COMPONENT_GUI(CheckBox, c, e);
+			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "check box state: " + (uint32)c.state);
 		}
 
-		if (e->has(gui()->components().radioBox))
+		if (e->has(gui()->components().RadioBox))
 		{
-			CAGE_COMPONENT_GUI(radioBox, c, e);
-			CAGE_LOG(severityEnum::Info, "gui event", stringizer() + "radio box state: " + (uint32)c.state);
+			CAGE_COMPONENT_GUI(RadioBox, c, e);
+			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "radio box state: " + (uint32)c.state);
 		}
 
-		if (e->has(gui()->components().colorPicker))
+		if (e->has(gui()->components().ColorPicker))
 		{
-			CAGE_COMPONENT_GUI(colorPicker, c, e);
-			CAGE_LOG(severityEnum::Info, "gui event", stringizer() + "color picker: " + c.color);
+			CAGE_COMPONENT_GUI(ColorPicker, c, e);
+			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "color picker: " + c.color);
 		}
 
-		if (e->has(gui()->components().comboBox))
+		if (e->has(gui()->components().ComboBox))
 		{
-			CAGE_COMPONENT_GUI(comboBox, c, e);
-			CAGE_LOG(severityEnum::Info, "gui event", stringizer() + "combo box selected: " + c.selected);
+			CAGE_COMPONENT_GUI(ComboBox, c, e);
+			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "combo box selected: " + c.selected);
 		}
 
-		if (e->has(gui()->components().input))
+		if (e->has(gui()->components().Input))
 		{
-			CAGE_COMPONENT_GUI(input, c, e);
-			CAGE_LOG(severityEnum::Info, "gui event", stringizer() + "input box valid: " + c.valid + ", value: " + c.value);
+			CAGE_COMPONENT_GUI(Input, c, e);
+			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "input box valid: " + c.valid + ", value: " + c.value);
 		}
 
-		if (e->has(gui()->components().sliderBar))
+		if (e->has(gui()->components().SliderBar))
 		{
-			CAGE_COMPONENT_GUI(sliderBar, c, e);
-			CAGE_LOG(severityEnum::Info, "gui event", stringizer() + "slider bar value: " + c.value);
+			CAGE_COMPONENT_GUI(SliderBar, c, e);
+			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "slider bar value: " + c.value);
 		}
 	}
 
 	virtual void initializeEngine()
 	{
-		engineInitialize(engineCreateConfig());
+		engineInitialize(EngineCreateConfig());
 	}
 
 	virtual void initialize() = 0;
@@ -131,7 +131,7 @@ public:
 		try
 		{
 			// log to console
-			holder<logger> log1 = newLogger();
+			Holder<Logger> log1 = newLogger();
 			log1->format.bind<logFormatConsole>();
 			log1->output.bind<logOutputStdOut>();
 
@@ -152,7 +152,7 @@ public:
 
 			// run
 			initialize();
-			static const uint32 assetsName = hashString("cage-tests/gui/gui.pack");
+			static const uint32 assetsName = HashString("cage-tests/gui/gui.pack");
 			assets()->add(assetsName);
 			engineStart();
 			assets()->remove(assetsName);
@@ -162,14 +162,14 @@ public:
 		}
 		catch (...)
 		{
-			CAGE_LOG(severityEnum::Error, "test", "caught exception");
+			CAGE_LOG(SeverityEnum::Error, "test", "caught exception");
 			return 1;
 		}
 	}
 
-	eventListener<void()> windowCloseListener;
-	eventListener<void()> updateListener;
-	eventListener<void(uint32)> guiListener;
+	EventListener<void()> windowCloseListener;
+	EventListener<void()> updateListener;
+	EventListener<void(uint32)> guiListener;
 
 };
 

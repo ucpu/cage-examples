@@ -143,9 +143,9 @@ static const uint32 M = 12;
 
 int main(int argc, const char *args[])
 {
-	string basePath = pathJoin(pathSearchTowardsRoot("data", pathTypeFlags::Directory), "scenes/material");
-	string scenesPath = pathJoin(pathSearchTowardsRoot("scenes-maps", pathTypeFlags::Directory), "material.txt");
-	holder<fileHandle> fo = newFile(pathJoin(basePath, "material.obj"), fileMode(false, true));
+	string basePath = pathJoin(pathSearchTowardsRoot("data", PathTypeFlags::Directory), "scenes/material");
+	string scenesPath = pathJoin(pathSearchTowardsRoot("scenes-maps", PathTypeFlags::Directory), "material.txt");
+	Holder<File> fo = newFile(pathJoin(basePath, "material.obj"), FileMode(false, true));
 	{
 		fo->writeLine("mtllib material.mtl");
 		for (uint32 i = 0; i < coordsCount; i++)
@@ -154,8 +154,8 @@ int main(int argc, const char *args[])
 			fo->writeLine(stringizer() + "vn " + sphereCoords[i][0] + " " + sphereCoords[i][1] + " " + sphereCoords[i][2]);
 		}
 	}
-	holder<fileHandle> fm = newFile(pathJoin(basePath, "material.mtl"), fileMode(false, true));
-	holder<fileHandle> fa = newFile(pathJoin(basePath, "material.assets"), fileMode(false, true));
+	Holder<File> fm = newFile(pathJoin(basePath, "material.mtl"), FileMode(false, true));
+	Holder<File> fa = newFile(pathJoin(basePath, "material.assets"), FileMode(false, true));
 	{
 		fa->writeLine(stringizer() + "[]");
 		fa->writeLine(stringizer() + "scheme = pack");
@@ -164,11 +164,11 @@ int main(int argc, const char *args[])
 		fa->writeLine(stringizer() + "scheme = mesh");
 		fa->writeLine(stringizer() + "uvs = false");
 	}
-	holder<fileHandle> fp = newFile(pathJoin(basePath, "material.pack"), fileMode(false, true));
+	Holder<File> fp = newFile(pathJoin(basePath, "material.pack"), FileMode(false, true));
 	{
 		fp->writeLine(stringizer() + "[]");
 	}
-	holder<fileHandle> fs = newFile(scenesPath, fileMode(false, true));
+	Holder<File> fs = newFile(scenesPath, FileMode(false, true));
 	fs->writeLine("scenes/material/material.pack");
 	fs->writeLine("");
 	fs->writeLine("scenes/common/ground.obj");
@@ -181,7 +181,7 @@ int main(int argc, const char *args[])
 			string mat = stringizer() + "mat_" + r + "_" + m;
 			fm->writeLine(stringizer() + "newmtl " + mat);
 			fm->writeLine(stringizer() + "Ns " + (r * M + m)); // this is to prevent assimp from merging the materials
-			holder<fileHandle> fc = newFile(pathJoin(basePath, string() + "material.obj_" + mat + ".cpm"), fileMode(false, true));
+			Holder<File> fc = newFile(pathJoin(basePath, string() + "material.obj_" + mat + ".cpm"), FileMode(false, true));
 			fc->writeLine(stringizer() + "[base]");
 			fc->writeLine(stringizer() + "albedo = 0.95, 0.7, 0.2");
 			fc->writeLine(stringizer() + "roughness = " + ((r + 0.5) / R));

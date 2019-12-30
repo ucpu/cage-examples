@@ -15,9 +15,9 @@
 using namespace cage;
 
 volatile bool destroying;
-holder<windowHandle> window;
-holder<soundContext> sound;
-holder<assetManager> assets;
+Holder<Window> window;
+Holder<SoundContext> sound;
+Holder<AssetManager> assets;
 
 void glThread()
 {
@@ -44,42 +44,42 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder<logger> log1 = newLogger();
+		Holder<Logger> log1 = newLogger();
 		log1->format.bind<logFormatConsole>();
 		log1->output.bind<logOutputStdOut>();
 
 		// contexts
 		window = newWindow();
 		window->makeNotCurrent();
-		sound = newSoundContext(soundContextCreateConfig(), "cage");
+		sound = newSoundContext(SoundContextCreateConfig(), "cage");
 
 		// asset schemes
-		assets = newAssetManager(assetManagerCreateConfig());
+		assets = newAssetManager(AssetManagerCreateConfig());
 		assets->defineScheme<void>(assetSchemeIndexPack, genAssetSchemePack(0));
-		assets->defineScheme<shaderProgram>(assetSchemeIndexShaderProgram, genAssetSchemeShaderProgram(1, window.get()));
-		assets->defineScheme<renderTexture>(assetSchemeIndexRenderTexture, genAssetSchemeRenderTexture(1, window.get()));
-		assets->defineScheme<renderMesh>(assetSchemeIndexMesh, genAssetSchemeRenderMesh(1, window.get()));
-		assets->defineScheme<fontFace>(assetSchemeIndexFontFace, genAssetSchemeFontFace(1, window.get()));
-		assets->defineScheme<soundSource>(assetSchemeIndexSoundSource, genAssetSchemeSoundSource(2, sound.get()));
+		assets->defineScheme<ShaderProgram>(assetSchemeIndexShaderProgram, genAssetSchemeShaderProgram(1, window.get()));
+		assets->defineScheme<Texture>(assetSchemeIndexTexture, genAssetSchemeTexture(1, window.get()));
+		assets->defineScheme<Mesh>(assetSchemeIndexMesh, genAssetSchemeMesh(1, window.get()));
+		assets->defineScheme<Font>(assetSchemeIndexFont, genAssetSchemeFont(1, window.get()));
+		assets->defineScheme<SoundSource>(assetSchemeIndexSoundSource, genAssetSchemeSoundSource(2, sound.get()));
 
 		// threads
-		holder<threadHandle> thrGl = newThread(delegate<void()>().bind<&glThread>(), "opengl");
-		holder<threadHandle> thrSl = newThread(delegate<void()>().bind<&slThread>(), "sound");
+		Holder<Thread> thrGl = newThread(Delegate<void()>().bind<&glThread>(), "opengl");
+		Holder<Thread> thrSl = newThread(Delegate<void()>().bind<&slThread>(), "sound");
 
 		// asset names
 		uint32 names[] = {
-			hashString("cage/cage.pack"),
-			hashString("cage/texture/texture.pack"),
-			hashString("cage/sound/sound.pack"),
-			hashString("cage/shader/shader.pack"),
-			hashString("cage/mesh/mesh.pack"),
-			hashString("cage/font/font.pack"),
-			hashString("cage/cage.pack"),
-			hashString("cage/texture/texture.pack"),
-			hashString("cage/sound/sound.pack"),
-			hashString("cage/shader/shader.pack"),
-			hashString("cage/mesh/mesh.pack"),
-			hashString("cage/font/font.pack"),
+			HashString("cage/cage.pack"),
+			HashString("cage/texture/texture.pack"),
+			HashString("cage/sound/sound.pack"),
+			HashString("cage/shader/shader.pack"),
+			HashString("cage/mesh/mesh.pack"),
+			HashString("cage/font/font.pack"),
+			HashString("cage/cage.pack"),
+			HashString("cage/texture/texture.pack"),
+			HashString("cage/sound/sound.pack"),
+			HashString("cage/shader/shader.pack"),
+			HashString("cage/mesh/mesh.pack"),
+			HashString("cage/font/font.pack"),
 			42,
 		};
 		static const uint32 count = sizeof(names) / sizeof(names[0]);
@@ -87,9 +87,9 @@ int main(int argc, char *args[])
 		for (uint32 i = 0; i < count; i++)
 			loaded[i] = false;
 
-		assets->fabricate(assetSchemeIndexRenderTexture, 42, "fabricated texture");
+		assets->fabricate(assetSchemeIndexTexture, 42, "fabricated texture");
 
-		CAGE_LOG(severityEnum::Info, "test", "starting the test, please wait");
+		CAGE_LOG(SeverityEnum::Info, "test", "starting the test, please wait");
 
 		// loop
 		for (uint32 step = 0; step < 30; step++)
@@ -113,10 +113,10 @@ int main(int argc, char *args[])
 					threadSleep(1000);
 				}
 			}
-			CAGE_LOG(severityEnum::Info, "test", stringizer() + "step " + (step + 1) + "/30 finished");
+			CAGE_LOG(SeverityEnum::Info, "test", stringizer() + "step " + (step + 1) + "/30 finished");
 		}
 
-		CAGE_LOG(severityEnum::Info, "test", "test finished");
+		CAGE_LOG(SeverityEnum::Info, "test", "test finished");
 
 		// clean up
 		assets->remove(42);
@@ -137,7 +137,7 @@ int main(int argc, char *args[])
 	}
 	catch (...)
 	{
-		CAGE_LOG(severityEnum::Error, "test", "caught exception");
+		CAGE_LOG(SeverityEnum::Error, "test", "caught exception");
 		return 1;
 	}
 }

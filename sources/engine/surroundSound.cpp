@@ -12,7 +12,7 @@
 
 using namespace cage;
 
-const uint32 assetsName = hashString("cage-tests/logo/logo.ogg");
+const uint32 assetsName = HashString("cage-tests/logo/logo.ogg");
 
 bool windowClose()
 {
@@ -22,49 +22,49 @@ bool windowClose()
 
 void controlInit()
 {
-	entityManager *ents = entities();
+	EntityManager *ents = entities();
 
 	{ // camera
-		entity *e = ents->create(1);
-		CAGE_COMPONENT_ENGINE(transform, t, e);
+		Entity *e = ents->create(1);
+		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		(void)t;
-		CAGE_COMPONENT_ENGINE(camera, c, e);
+		CAGE_COMPONENT_ENGINE(Camera, c, e);
 		c.ambientLight = vec3(1, 1, 1);
-		c.cameraType = cameraTypeEnum::Orthographic;
+		c.cameraType = CameraTypeEnum::Orthographic;
 		c.camera.orthographicSize = vec2(50, 50);
 		c.near = -5;
 		c.far = 5;
 	}
 
 	{ // listener
-		entity *e = ents->create(2);
-		CAGE_COMPONENT_ENGINE(transform, t, e);
+		Entity *e = ents->create(2);
+		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		t.orientation = quat(degs(90), degs(), degs());
-		CAGE_COMPONENT_ENGINE(render, r, e);
-		r.object = hashString("cage/mesh/fake.obj");
-		CAGE_COMPONENT_ENGINE(listener, l, e);
+		CAGE_COMPONENT_ENGINE(Render, r, e);
+		r.object = HashString("cage/mesh/fake.obj");
+		CAGE_COMPONENT_ENGINE(Listener, l, e);
 		l.attenuation = vec3(0, 0.1, 0.005);
 	}
 
 	static const vec3 boxPositions[] = { vec3(-1, -1, 0), vec3(1, -1, 0), vec3(-1, 1, 0), vec3(1, 1, 0) };
 	for (uint32 i = 0; i < sizeof(boxPositions) / sizeof(boxPositions[0]); i++)
 	{ // box
-		entity *e = ents->create(10 + i);
-		CAGE_COMPONENT_ENGINE(transform, t, e);
+		Entity *e = ents->create(10 + i);
+		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		t.position = boxPositions[i] * 30;
-		CAGE_COMPONENT_ENGINE(render, r, e);
-		r.object = hashString("cage/mesh/fake.obj");
-		CAGE_COMPONENT_ENGINE(voice, s, e);
+		CAGE_COMPONENT_ENGINE(Render, r, e);
+		r.object = HashString("cage/mesh/fake.obj");
+		CAGE_COMPONENT_ENGINE(Sound, s, e);
 		s.name = assetsName;
 	}
 }
 
 bool update()
 {
-	entityManager *ents = entities();
+	EntityManager *ents = entities();
 	{ // listener
-		entity *e = ents->get(2);
-		CAGE_COMPONENT_ENGINE(transform, t, e);
+		Entity *e = ents->get(2);
+		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		ivec2 cursor = window()->mousePosition();
 		ivec2 resolution = window()->resolution();
 		vec3 cur = vec3((real)cursor.x / (real)resolution.x, (real)1 - (real)cursor.y / (real)resolution.y, 0);
@@ -78,17 +78,17 @@ int main(int argc, char *args[])
 	try
 	{
 		// log to console
-		holder<logger> log1 = newLogger();
+		Holder<Logger> log1 = newLogger();
 		log1->format.bind <logFormatConsole>();
 		log1->output.bind <logOutputStdOut>();
 
-		engineInitialize(engineCreateConfig());
+		engineInitialize(EngineCreateConfig());
 
 		// events
-#define GCHL_GENERATE(TYPE, FUNC, EVENT) eventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
+#define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
 		GCHL_GENERATE((), update, controlThread().update);
 #undef GCHL_GENERATE
-		eventListener<bool()> windowCloseListener;
+		EventListener<bool()> windowCloseListener;
 		windowCloseListener.bind<&windowClose>();
 		windowCloseListener.attach(window()->events.windowClose);
 
@@ -106,7 +106,7 @@ int main(int argc, char *args[])
 	}
 	catch (...)
 	{
-		CAGE_LOG(severityEnum::Error, "test", "caught exception");
+		CAGE_LOG(SeverityEnum::Error, "test", "caught exception");
 		return 1;
 	}
 }

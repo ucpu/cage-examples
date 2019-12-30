@@ -5,54 +5,54 @@ class guiTestImpl : public guiTestClass
 
 	void initialize() override
 	{
-		entityManager *ents = gui()->entities();
+		EntityManager *ents = gui()->entities();
 
 		guiBasicLayout();
 		{
-			entity *e = ents->get(3);
-			CAGE_COMPONENT_GUI(layoutTable, layout, e);
+			Entity *e = ents->get(3);
+			CAGE_COMPONENT_GUI(LayoutTable, layout, e);
 		}
 
 		uint32 index = 1;
 
 		{ // default
 			guiLabel(3, index, "default");
-			entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(parent, p, e);
+			Entity *e = ents->createUnique();
+			CAGE_COMPONENT_GUI(Parent, p, e);
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(checkBox, cb, e);
+			CAGE_COMPONENT_GUI(CheckBox, cb, e);
 		}
 
 		{ // with label
 			guiLabel(3, index, "with label");
-			entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(parent, p, e);
+			Entity *e = ents->createUnique();
+			CAGE_COMPONENT_GUI(Parent, p, e);
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(checkBox, cb, e);
-			CAGE_COMPONENT_GUI(text, t, e);
+			CAGE_COMPONENT_GUI(CheckBox, cb, e);
+			CAGE_COMPONENT_GUI(Text, t, e);
 			t.value = "label";
 		}
 
 		{ // checked
 			guiLabel(3, index, "checked");
-			entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(parent, p, e);
+			Entity *e = ents->createUnique();
+			CAGE_COMPONENT_GUI(Parent, p, e);
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(checkBox, cb, e);
-			cb.state = checkBoxStateEnum::Checked;
+			CAGE_COMPONENT_GUI(CheckBox, cb, e);
+			cb.state = CheckBoxStateEnum::Checked;
 		}
 
 		{ // indeterminate
 			guiLabel(3, index, "indeterminate");
-			entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(parent, p, e);
+			Entity *e = ents->createUnique();
+			CAGE_COMPONENT_GUI(Parent, p, e);
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(checkBox, cb, e);
-			cb.state = checkBoxStateEnum::Indeterminate;
+			CAGE_COMPONENT_GUI(CheckBox, cb, e);
+			cb.state = CheckBoxStateEnum::Indeterminate;
 		}
 	}
 

@@ -3,58 +3,58 @@
 class guiTestImpl : public guiTestClass
 {
 
-	entity *envelopeInScrollbars(entity *e)
+	Entity *envelopeInScrollbars(Entity *e)
 	{
-		entity *r = gui()->entities()->createUnique();
-		CAGE_COMPONENT_GUI(parent, pr, r);
-		CAGE_COMPONENT_GUI(parent, pe, e);
+		Entity *r = gui()->entities()->createUnique();
+		CAGE_COMPONENT_GUI(Parent, pr, r);
+		CAGE_COMPONENT_GUI(Parent, pe, e);
 		pr = pe;
 		pe.parent = r->name();
 		pe.order = 0;
-		CAGE_COMPONENT_GUI(scrollbars, sc, r);
+		CAGE_COMPONENT_GUI(Scrollbars, sc, r);
 		return r;
 	}
 
 	void initialize() override
 	{
-		entityManager *ents = gui()->entities();
+		EntityManager *ents = gui()->entities();
 
 		guiBasicLayout();
 		{
-			entity *e = ents->get(3);
-			CAGE_COMPONENT_GUI(layoutTable, layout, e);
+			Entity *e = ents->get(3);
+			CAGE_COMPONENT_GUI(LayoutTable, layout, e);
 		}
 
 		uint32 index = 1;
 
 		{ // default
 			guiLabel(3, index, "default");
-			entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(parent, p, e);
+			Entity *e = ents->createUnique();
+			CAGE_COMPONENT_GUI(Parent, p, e);
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(sliderBar, s, e);
+			CAGE_COMPONENT_GUI(SliderBar, s, e);
 			envelopeInScrollbars(e);
 		}
 
 		{ // vertical
 			guiLabel(3, index, "vertical");
-			entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(parent, p, e);
+			Entity *e = ents->createUnique();
+			CAGE_COMPONENT_GUI(Parent, p, e);
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(sliderBar, s, e);
+			CAGE_COMPONENT_GUI(SliderBar, s, e);
 			s.vertical = true;
 			envelopeInScrollbars(e);
 		}
 
 		{ // range
 			guiLabel(3, index, "range");
-			entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(parent, p, e);
+			Entity *e = ents->createUnique();
+			CAGE_COMPONENT_GUI(Parent, p, e);
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(sliderBar, s, e);
+			CAGE_COMPONENT_GUI(SliderBar, s, e);
 			s.min = 13;
 			s.max = 42;
 			s.value = 21;
