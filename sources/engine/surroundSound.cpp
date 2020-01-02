@@ -29,7 +29,7 @@ void controlInit()
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		(void)t;
 		CAGE_COMPONENT_ENGINE(Camera, c, e);
-		c.ambientLight = vec3(1, 1, 1);
+		c.ambientLight = vec3(1);
 		c.cameraType = CameraTypeEnum::Orthographic;
 		c.camera.orthographicSize = vec2(50, 50);
 		c.near = -5;
@@ -43,7 +43,7 @@ void controlInit()
 		CAGE_COMPONENT_ENGINE(Render, r, e);
 		r.object = HashString("cage/mesh/fake.obj");
 		CAGE_COMPONENT_ENGINE(Listener, l, e);
-		l.attenuation = vec3(0, 0.1, 0.005);
+		l.attenuation = vec3(0, 0.01, 0.0);
 	}
 
 	static const vec3 boxPositions[] = { vec3(-1, -1, 0), vec3(1, -1, 0), vec3(-1, 1, 0), vec3(1, 1, 0) };
@@ -51,7 +51,7 @@ void controlInit()
 	{ // box
 		Entity *e = ents->create(10 + i);
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
-		t.position = boxPositions[i] * 30;
+		t.position = boxPositions[i] * 25;
 		CAGE_COMPONENT_ENGINE(Render, r, e);
 		r.object = HashString("cage/mesh/fake.obj");
 		CAGE_COMPONENT_ENGINE(Sound, s, e);
@@ -79,8 +79,8 @@ int main(int argc, char *args[])
 	{
 		// log to console
 		Holder<Logger> log1 = newLogger();
-		log1->format.bind <logFormatConsole>();
-		log1->output.bind <logOutputStdOut>();
+		log1->format.bind<logFormatConsole>();
+		log1->output.bind<logOutputStdOut>();
 
 		engineInitialize(EngineCreateConfig());
 

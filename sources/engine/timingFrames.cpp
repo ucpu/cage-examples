@@ -32,7 +32,8 @@ void controlInit()
 		Entity *e = ents->create(1);
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		CAGE_COMPONENT_ENGINE(Camera, c, e);
-		c.ambientLight = vec3(1);
+		c.ambientLight = vec3(0.5);
+		c.ambientDirectionalLight = vec3(0.5);
 		c.effects = CameraEffectsFlags::CombinedPass;
 	}
 	{ // box 1
@@ -47,7 +48,6 @@ bool guiUpdate();
 
 bool update()
 {
-	OPTICK_EVENT();
 	uint64 time = engineControlTime();
 	EntityManager *ents = engineEntities();
 	{ // box 1
@@ -55,8 +55,10 @@ bool update()
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		t.position = vec3(sin(rads(time * 1e-6)) * 10, cos(rads(time * 1e-6)) * 10, -20);
 	}
+	if (updateDelay)
 	{
-		OPTICK_EVENT("sleep");
+		OPTICK_EVENT("updateDelay");
+		OPTICK_TAG("updateDelay", updateDelay);
 		threadSleep(updateDelay);
 	}
 	guiUpdate();
@@ -65,21 +67,30 @@ bool update()
 
 bool prepare()
 {
-	OPTICK_EVENT();
+	if (!prepareDelay)
+		return false;
+	OPTICK_EVENT("prepareDelay");
+	OPTICK_TAG("prepareDelay", prepareDelay);
 	threadSleep(prepareDelay);
 	return false;
 }
 
 bool render()
 {
-	OPTICK_EVENT();
+	if (!renderDelay)
+		return false;
+	OPTICK_EVENT("renderDelay");
+	OPTICK_TAG("renderDelay", renderDelay);
 	threadSleep(renderDelay);
 	return false;
 }
 
 bool soundUpdate()
 {
-	OPTICK_EVENT();
+	if (!soundDelay)
+		return false;
+	OPTICK_EVENT("soundDelay");
+	OPTICK_TAG("soundDelay", soundDelay);
 	threadSleep(soundDelay);
 	return false;
 }
@@ -135,7 +146,7 @@ bool guiInit()
 
 namespace
 {
-	void setIntValue(uint32 index, uint64 &value, bool allowZero)
+	void setIntValue(uint32 index, uint64 &value)
 	{
 		Entity *control = cage::engineGui()->entities()->get(20 + index);
 		CAGE_COMPONENT_GUI(Input, t, control);
@@ -149,12 +160,28 @@ namespace
 
 bool guiUpdate()
 {
-	setIntValue(0, controlThread().timePerTick, false);
-	setIntValue(1, soundThread().timePerTick, false);
-	setIntValue(2, updateDelay, true);
-	setIntValue(3, prepareDelay, true);
-	setIntValue(4, renderDelay, true);
-	setIntValue(5, soundDelay, true);
+	{
+		Entity *control = cage::engineGui()->entities()->get(20 + 0);
+		CAGE_COMPONENT_GUI(Input, t, control);
+		if (t.valid)
+		{
+			CAGE_ASSERT(t.value.isDigitsOnly() && !t.value.empty());
+			controlThread().updatePeriod(t.value.toUint32() * 1000);
+		}
+	}
+	{
+		Entity *control = cage::engineGui()->entities()->get(20 + 1);
+		CAGE_COMPONENT_GUI(Input, t, control);
+		if (t.valid)
+		{
+			CAGE_ASSERT(t.value.isDigitsOnly() && !t.value.empty());
+			soundThread().updatePeriod(t.value.toUint32() * 1000);
+		}
+	}
+	setIntValue(2, updateDelay);
+	setIntValue(3, prepareDelay);
+	setIntValue(4, renderDelay);
+	setIntValue(5, soundDelay);
 	return false;
 }
 

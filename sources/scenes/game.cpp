@@ -35,7 +35,7 @@ void sceneReload()
 	CAGE_LOG(SeverityEnum::Info, "scenes", stringizer() + "loading scene index: " + sceneIndexCurrent);
 	string scenePath = maps[sceneIndexCurrent];
 	CAGE_LOG(SeverityEnum::Info, "scenes", stringizer() + "loading scene description from file: '" + scenePath + "'");
-	engineWindow()->title(string() + "map: " + pathExtractFilename(scenePath));
+	engineWindow()->title(string() + "scene: " + pathExtractFilename(scenePath));
 	engineEntities()->destroy();
 
 	// load new entities

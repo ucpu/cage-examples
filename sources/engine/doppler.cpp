@@ -4,6 +4,7 @@
 #include <cage-core/entities.h>
 #include <cage-core/config.h>
 #include <cage-core/hashString.h>
+#include <cage-core/assetManager.h>
 #include <cage-engine/core.h>
 #include <cage-engine/window.h>
 #include <cage-engine/sound.h>
@@ -12,6 +13,7 @@
 
 using namespace cage;
 
+const uint32 assetsName = HashString("cage-tests/logo/logo.ogg");
 Holder<SoundSource> toneSource;
 Holder<MixingBus> toneBus;
 
@@ -30,7 +32,7 @@ void controlInit()
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		(void)t;
 		CAGE_COMPONENT_ENGINE(Camera, c, e);
-		c.ambientLight = vec3(1, 1, 1);
+		c.ambientLight = vec3(1);
 		c.cameraType = CameraTypeEnum::Orthographic;
 		c.camera.orthographicSize = vec2(50, 50);
 		c.near = -5;
@@ -42,18 +44,17 @@ void controlInit()
 		CAGE_COMPONENT_ENGINE(Render, r, e);
 		r.object = HashString("cage/mesh/fake.obj");
 		CAGE_COMPONENT_ENGINE(Listener, l, e);
-		l.attenuation = vec3(1, 0.01, 0);
+		l.attenuation = vec3(0, 0.01, 0);
 		l.dopplerEffect = true;
 	}
 
 	{ // moving voice
 		Entity *e = ents->create(3);
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
-		(void)t;
 		CAGE_COMPONENT_ENGINE(Render, r, e);
 		r.object = HashString("cage/mesh/fake.obj");
 		CAGE_COMPONENT_ENGINE(Sound, s, e);
-		s.name = HashString("cage/sound/logo.ogg");
+		s.name = HashString("cage-tests/logo/logo.ogg");
 	}
 }
 
@@ -86,19 +87,21 @@ bool update()
 		real x = ((real)time % duration) / duration;
 		if (odd)
 			x = 1 - x;
-		box = t.position = vec3(100 * (x - 0.5), 10, 0);
+		box = t.position = vec3(100 * (x - 0.5), 5, 0);
+		/*
 		if (toneBus)
 		{
 			CAGE_COMPONENT_ENGINE(Sound, v, e);
 			v.input = toneBus.get();
 			v.name = 0;
 		}
+		*/
 	}
 	box = normalize(box);
 	{ // listener
 		Entity *e = ents->get(2);
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
-		t.orientation = quat(degs(90), degs(), degs()) * quat(degs(), atan2(box[0], box[1]) - degs(90), degs());
+		t.orientation = quat(box, vec3(0, 0, 1), false);
 	}
 	return false;
 }
@@ -127,7 +130,9 @@ int main(int argc, char *args[])
 		engineWindow()->title("doppler [WIP]");
 		controlInit();
 
+		engineAssets()->add(assetsName);
 		engineStart();
+		engineAssets()->remove(assetsName);
 		engineFinalize();
 
 		return 0;
