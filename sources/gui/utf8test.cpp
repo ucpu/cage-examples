@@ -12,7 +12,7 @@ public:
 
 	void initialize() override
 	{
-		EntityManager *ents = gui()->entities();
+		EntityManager *ents = engineGui()->entities();
 
 		Entity *panel = ents->create(2);
 		{

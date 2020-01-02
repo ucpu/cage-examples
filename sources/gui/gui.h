@@ -23,7 +23,7 @@ public:
 
 	static void guiLabel(uint32 parentName, uint32 &index, const string &name)
 	{
-		EntityManager *ents = gui()->entities();
+		EntityManager *ents = engineGui()->entities();
 		Entity *e = ents->createUnique();
 		CAGE_COMPONENT_GUI(Parent, p, e);
 		p.parent = parentName;
@@ -35,7 +35,7 @@ public:
 
 	static void guiBasicLayout()
 	{
-		EntityManager *ents = gui()->entities();
+		EntityManager *ents = engineGui()->entities();
 
 		{ // splitter
 			Entity *split = ents->create(1);
@@ -75,44 +75,44 @@ public:
 	{
 		CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "gui event on entity: " + name);
 
-		Entity *e = gui()->entities()->get(name);
+		Entity *e = engineGui()->entities()->get(name);
 
-		if (e->has(gui()->components().Button))
+		if (e->has(engineGui()->components().Button))
 		{
 			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "button press");
 		}
 
-		if (e->has(gui()->components().CheckBox))
+		if (e->has(engineGui()->components().CheckBox))
 		{
 			CAGE_COMPONENT_GUI(CheckBox, c, e);
 			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "check box state: " + (uint32)c.state);
 		}
 
-		if (e->has(gui()->components().RadioBox))
+		if (e->has(engineGui()->components().RadioBox))
 		{
 			CAGE_COMPONENT_GUI(RadioBox, c, e);
 			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "radio box state: " + (uint32)c.state);
 		}
 
-		if (e->has(gui()->components().ColorPicker))
+		if (e->has(engineGui()->components().ColorPicker))
 		{
 			CAGE_COMPONENT_GUI(ColorPicker, c, e);
 			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "color picker: " + c.color);
 		}
 
-		if (e->has(gui()->components().ComboBox))
+		if (e->has(engineGui()->components().ComboBox))
 		{
 			CAGE_COMPONENT_GUI(ComboBox, c, e);
 			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "combo box selected: " + c.selected);
 		}
 
-		if (e->has(gui()->components().Input))
+		if (e->has(engineGui()->components().Input))
 		{
 			CAGE_COMPONENT_GUI(Input, c, e);
 			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "input box valid: " + c.valid + ", value: " + c.value);
 		}
 
-		if (e->has(gui()->components().SliderBar))
+		if (e->has(engineGui()->components().SliderBar))
 		{
 			CAGE_COMPONENT_GUI(SliderBar, c, e);
 			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "slider bar value: " + c.value);
@@ -138,24 +138,24 @@ public:
 			initializeEngine();
 
 			// events
-			windowCloseListener.attach(window()->events.windowClose);
+			windowCloseListener.attach(engineWindow()->events.windowClose);
 			windowCloseListener.bind<guiTestClass, &guiTestClass::windowClose>(this);
 			updateListener.attach(controlThread().update);
 			updateListener.bind<guiTestClass, &guiTestClass::update>(this);
-			guiListener.attach(gui()->widgetEvent);
+			guiListener.attach(engineGui()->widgetEvent);
 			guiListener.bind<guiTestClass, &guiTestClass::guiEvent>(this);
 
 			// window
-			window()->setWindowed();
-			window()->windowedSize(ivec2(800, 600));
-			window()->title(title);
+			engineWindow()->setWindowed();
+			engineWindow()->windowedSize(ivec2(800, 600));
+			engineWindow()->title(title);
 
 			// run
 			initialize();
 			static const uint32 assetsName = HashString("cage-tests/gui/gui.pack");
-			assets()->add(assetsName);
+			engineAssets()->add(assetsName);
 			engineStart();
-			assets()->remove(assetsName);
+			engineAssets()->remove(assetsName);
 			engineFinalize();
 
 			return 0;

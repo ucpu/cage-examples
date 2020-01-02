@@ -25,7 +25,7 @@ bool windowClose()
 
 void enableEffect(CameraEffectsFlags effect, bool enable)
 {
-	Entity *camera = entities()->get(1);
+	Entity *camera = engineEntities()->get(1);
 	CAGE_COMPONENT_ENGINE(Camera, cam, camera);
 	if (enable)
 		cam.effects = cam.effects | effect;
@@ -35,9 +35,9 @@ void enableEffect(CameraEffectsFlags effect, bool enable)
 
 bool update()
 {
-	EntityManager *ents = gui()->entities();
+	EntityManager *ents = engineGui()->entities();
 
-	Entity *camera = entities()->get(1);
+	Entity *camera = engineEntities()->get(1);
 	CAGE_COMPONENT_ENGINE(Camera, cam, camera);
 
 	{ // ambient occlusion
@@ -197,7 +197,7 @@ bool update()
 
 Entity *genInput(Entity *table, sint32 &childIndex, uint32 nameBase, const string &labelText, real rangeMin, real rangeMax, real step, real current)
 {
-	EntityManager *ents = gui()->entities();
+	EntityManager *ents = engineGui()->entities();
 	{
 		Entity *e = ents->createUnique();
 		CAGE_COMPONENT_GUI(Parent, p, e);
@@ -224,7 +224,7 @@ Entity *genInput(Entity *table, sint32 &childIndex, uint32 nameBase, const strin
 
 void initializeGui()
 {
-	EntityManager *ents = gui()->entities();
+	EntityManager *ents = engineGui()->entities();
 	Entity *layout = ents->createUnique();
 	{ // layout
 		CAGE_COMPONENT_GUI(Scrollbars, sc, layout);
@@ -488,17 +488,17 @@ int main(int argc, char *args[])
 
 		// events
 #define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
-		GCHL_GENERATE((), windowClose, window()->events.windowClose);
+		GCHL_GENERATE((), windowClose, engineWindow()->events.windowClose);
 		GCHL_GENERATE((), update, controlThread().update);
 #undef GCHL_GENERATE
 
 		// window
-		window()->title("camera effects");
-		window()->setMaximized();
+		engineWindow()->title("camera effects");
+		engineWindow()->setMaximized();
 		initializeGui();
 
 		// entities
-		EntityManager *ents = entities();
+		EntityManager *ents = engineEntities();
 		{ // camera
 			Entity *e = ents->create(1);
 			CAGE_COMPONENT_ENGINE(Transform, t, e);
@@ -542,9 +542,9 @@ int main(int argc, char *args[])
 		fpsCamera->movementSpeed = 0.3;
 		Holder<EngineProfiling> EngineProfiling = newEngineProfiling();
 
-		assets()->add(assetsName);
+		engineAssets()->add(assetsName);
 		engineStart();
-		assets()->remove(assetsName);
+		engineAssets()->remove(assetsName);
 		engineFinalize();
 
 		return 0;

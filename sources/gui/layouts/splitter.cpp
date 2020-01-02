@@ -7,7 +7,7 @@ public:
 	void guiEvent(uint32 name) override
 	{
 		guiTestClass::guiEvent(name);
-		EntityManager *ents = gui()->entities();
+		EntityManager *ents = engineGui()->entities();
 		CAGE_COMPONENT_GUI(LayoutSplitter, s, ents->get(42));
 		switch (name)
 		{
@@ -26,7 +26,7 @@ public:
 
 	void genContent(sint32 order)
 	{
-		EntityManager *ents = gui()->entities();
+		EntityManager *ents = engineGui()->entities();
 		Entity *e = ents->createUnique();
 		{
 			CAGE_COMPONENT_GUI(Parent, p, e);
@@ -57,7 +57,7 @@ public:
 
 	void initialize() override
 	{
-		EntityManager *ents = gui()->entities();
+		EntityManager *ents = engineGui()->entities();
 
 		Entity *mainSplitter = ents->createUnique();
 		{

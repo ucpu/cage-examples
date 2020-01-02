@@ -5,7 +5,7 @@ class guiTestImpl : public guiTestClass
 
 	Entity *envelopeInScrollbars(Entity *e)
 	{
-		Entity *r = gui()->entities()->createUnique();
+		Entity *r = engineGui()->entities()->createUnique();
 		CAGE_COMPONENT_GUI(Parent, pr, r);
 		CAGE_COMPONENT_GUI(Parent, pe, e);
 		pr = pe;
@@ -17,7 +17,7 @@ class guiTestImpl : public guiTestClass
 
 	void initialize() override
 	{
-		EntityManager *ents = gui()->entities();
+		EntityManager *ents = engineGui()->entities();
 
 		guiBasicLayout();
 		{

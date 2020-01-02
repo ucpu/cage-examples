@@ -22,7 +22,7 @@ bool windowClose()
 
 void controlInit()
 {
-	EntityManager *ents = entities();
+	EntityManager *ents = engineEntities();
 
 	{ // camera
 		Entity *e = ents->create(1);
@@ -61,12 +61,12 @@ void controlInit()
 
 bool update()
 {
-	EntityManager *ents = entities();
+	EntityManager *ents = engineEntities();
 	{ // listener
 		Entity *e = ents->get(2);
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
-		ivec2 cursor = window()->mousePosition();
-		ivec2 resolution = window()->resolution();
+		ivec2 cursor = engineWindow()->mousePosition();
+		ivec2 resolution = engineWindow()->resolution();
 		vec3 cur = vec3((real)cursor.x / (real)resolution.x, (real)1 - (real)cursor.y / (real)resolution.y, 0);
 		t.position = 50 * (cur * 2 - 1) * vec3(1, 1, 0);
 	}
@@ -90,16 +90,16 @@ int main(int argc, char *args[])
 #undef GCHL_GENERATE
 		EventListener<bool()> windowCloseListener;
 		windowCloseListener.bind<&windowClose>();
-		windowCloseListener.attach(window()->events.windowClose);
+		windowCloseListener.attach(engineWindow()->events.windowClose);
 
-		window()->setWindowed();
-		window()->windowedSize(ivec2(600, 600));
-		window()->title("surround sound");
+		engineWindow()->setWindowed();
+		engineWindow()->windowedSize(ivec2(600, 600));
+		engineWindow()->title("surround sound");
 		controlInit();
 
-		assets()->add(assetsName);
+		engineAssets()->add(assetsName);
 		engineStart();
-		assets()->remove(assetsName);
+		engineAssets()->remove(assetsName);
 		engineFinalize();
 
 		return 0;

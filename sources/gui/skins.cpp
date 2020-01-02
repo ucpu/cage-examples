@@ -6,7 +6,7 @@ public:
 
 	void update() override
 	{
-		EntityManager *ents = gui()->entities();
+		EntityManager *ents = engineGui()->entities();
 
 		uint32 animateOption = -1;
 		{
@@ -48,8 +48,8 @@ public:
 			skin.defaults.sliderBar.horizontal.padding = a4;
 			break;
 		}
-		gui()->skin(0) = gui()->skin(1) = skin;
-		gui()->skin(1).textureName = HashString("cage-tests/gui/skin.png");
+		engineGui()->skin(0) = engineGui()->skin(1) = skin;
+		engineGui()->skin(1).textureName = HashString("cage-tests/gui/skin.png");
 	}
 
 	void initializeEngine() override
@@ -65,7 +65,7 @@ public:
 	{
 		guiBasicLayout();
 
-		EntityManager *ents = gui()->entities();
+		EntityManager *ents = engineGui()->entities();
 
 		{ // animate option
 			Entity *e = ents->create(100);

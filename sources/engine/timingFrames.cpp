@@ -27,7 +27,7 @@ bool windowClose()
 
 void controlInit()
 {
-	EntityManager *ents = entities();
+	EntityManager *ents = engineEntities();
 	{ // camera
 		Entity *e = ents->create(1);
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
@@ -48,8 +48,8 @@ bool guiUpdate();
 bool update()
 {
 	OPTICK_EVENT();
-	uint64 time = currentControlTime();
-	EntityManager *ents = entities();
+	uint64 time = engineControlTime();
+	EntityManager *ents = engineEntities();
 	{ // box 1
 		Entity *e = ents->get(2);
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
@@ -86,7 +86,7 @@ bool soundUpdate()
 
 bool guiInit()
 {
-	Gui *g = cage::gui();
+	Gui *g = cage::engineGui();
 
 	Entity *panel = g->entities()->createUnique();
 	{
@@ -137,7 +137,7 @@ namespace
 {
 	void setIntValue(uint32 index, uint64 &value, bool allowZero)
 	{
-		Entity *control = cage::gui()->entities()->get(20 + index);
+		Entity *control = cage::engineGui()->entities()->get(20 + index);
 		CAGE_COMPONENT_GUI(Input, t, control);
 		if (t.valid)
 		{
@@ -179,11 +179,11 @@ int main(int argc, char *args[])
 #undef GCHL_GENERATE
 		EventListener<bool()> windowCloseListener;
 		windowCloseListener.bind<&windowClose>();
-		windowCloseListener.attach(window()->events.windowClose);
+		windowCloseListener.attach(engineWindow()->events.windowClose);
 
-		window()->setWindowed();
-		window()->windowedSize(ivec2(800, 600));
-		window()->title("timing frames");
+		engineWindow()->setWindowed();
+		engineWindow()->windowedSize(ivec2(800, 600));
+		engineWindow()->title("timing frames");
 		controlInit();
 		Holder<EngineProfiling> EngineProfiling = newEngineProfiling();
 

@@ -27,7 +27,7 @@ bool windowClose()
 
 vec3 getGuiColor(uint32 id)
 {
-	Entity *e = gui()->entities()->get(id);
+	Entity *e = engineGui()->entities()->get(id);
 	CAGE_COMPONENT_GUI(ColorPicker, c, e);
 	return c.color;
 }
@@ -35,7 +35,7 @@ vec3 getGuiColor(uint32 id)
 vec3 getGuiOrientation(uint32 id)
 {
 	vec3 result;
-	EntityManager *ents = gui()->entities();
+	EntityManager *ents = engineGui()->entities();
 	for (uint32 i = 0; i < 2; i++)
 	{
 		Entity *e = ents->get(id + i);
@@ -47,7 +47,7 @@ vec3 getGuiOrientation(uint32 id)
 
 bool update()
 {
-	EntityManager *ents = entities();
+	EntityManager *ents = engineEntities();
 
 	{ // update ambient light
 		Entity *e = ents->get(10);
@@ -78,7 +78,7 @@ bool update()
 
 void initializeGuiColors(uint32 parentId, uint32 id, const vec3 &hsv)
 {
-	Entity *e = gui()->entities()->create(id);
+	Entity *e = engineGui()->entities()->create(id);
 	CAGE_COMPONENT_GUI(Parent, p, e);
 	p.parent = parentId;
 	p.order = id;
@@ -89,7 +89,7 @@ void initializeGuiColors(uint32 parentId, uint32 id, const vec3 &hsv)
 
 void initializeGui()
 {
-	EntityManager *ents = gui()->entities();
+	EntityManager *ents = engineGui()->entities();
 	Entity *layout = ents->create(1);
 	{ // layout
 		CAGE_COMPONENT_GUI(Scrollbars, sc, layout);
@@ -170,17 +170,17 @@ int main(int argc, char *args[])
 
 		// events
 #define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
-		GCHL_GENERATE((), windowClose, window()->events.windowClose);
+		GCHL_GENERATE((), windowClose, engineWindow()->events.windowClose);
 		GCHL_GENERATE((), update, controlThread().update);
 #undef GCHL_GENERATE
 
 		// window
-		window()->setMaximized();
-		window()->title("lights");
+		engineWindow()->setMaximized();
+		engineWindow()->title("lights");
 		initializeGui();
 
 		// entities
-		EntityManager *ents = entities();
+		EntityManager *ents = engineEntities();
 		{ // floor
 			Entity *e = ents->create(1);
 			CAGE_COMPONENT_ENGINE(Render, r, e);
@@ -225,9 +225,9 @@ int main(int argc, char *args[])
 		fpsCamera->movementSpeed = 0.3;
 		Holder<EngineProfiling> EngineProfiling = newEngineProfiling();
 
-		assets()->add(assetsName);
+		engineAssets()->add(assetsName);
 		engineStart();
-		assets()->remove(assetsName);
+		engineAssets()->remove(assetsName);
 		engineFinalize();
 
 		return 0;

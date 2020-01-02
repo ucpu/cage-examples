@@ -36,7 +36,7 @@ bool guiUpdate();
 
 void updateBoxes(uint32 thrIndex, uint32 thrCount)
 {
-	uint64 time = currentControlTime();
+	uint64 time = engineControlTime();
 	uint32 boxesCount = RenderComponent::component->group()->count();
 	Entity *const *boxesEntities = RenderComponent::component->group()->array();
 
@@ -56,7 +56,7 @@ void updateBoxes(uint32 thrIndex, uint32 thrCount)
 
 bool update()
 {
-	EntityManager *ents = entities();
+	EntityManager *ents = engineEntities();
 
 	if (regenerate)
 	{
@@ -126,7 +126,7 @@ bool update()
 
 bool guiInit()
 {
-	Gui *g = cage::gui();
+	Gui *g = cage::engineGui();
 
 	Entity *root = g->entities()->createUnique();
 	{
@@ -211,7 +211,7 @@ bool guiInit()
 bool guiUpdate()
 {
 	{ // update boxes count
-		Entity *e = cage::gui()->entities()->get(1);
+		Entity *e = cage::engineGui()->entities()->get(1);
 		CAGE_COMPONENT_GUI(Input, c, e);
 		if (c.valid && c.value.toUint32() != boxesCount)
 		{
@@ -221,13 +221,13 @@ bool guiUpdate()
 	}
 
 	{ // update camera range
-		Entity *e = cage::gui()->entities()->get(2);
+		Entity *e = cage::engineGui()->entities()->get(2);
 		CAGE_COMPONENT_GUI(SliderBar, c, e);
 		cameraRange = c.value;
 	}
 
 	{ // update enable shadow
-		Entity *e = cage::gui()->entities()->get(4);
+		Entity *e = cage::engineGui()->entities()->get(4);
 		CAGE_COMPONENT_GUI(CheckBox, c, e);
 		bool checked = c.state == CheckBoxStateEnum::Checked;
 		if (checked != shadowEnabled)
@@ -258,10 +258,10 @@ int main(int argc, char *args[])
 #undef GCHL_GENERATE
 		EventListener<bool()> windowCloseListener;
 		windowCloseListener.bind<&windowClose>();
-		windowCloseListener.attach(window()->events.windowClose);
+		windowCloseListener.attach(engineWindow()->events.windowClose);
 
-		window()->setMaximized();
-		window()->title("performance");
+		engineWindow()->setMaximized();
+		engineWindow()->title("performance");
 		regenerate = true;
 
 		cameraCtrl = newFpsCamera();

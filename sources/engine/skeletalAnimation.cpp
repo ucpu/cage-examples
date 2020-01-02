@@ -48,17 +48,17 @@ int main(int argc, char *args[])
 
 		// events
 #define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
-		GCHL_GENERATE((), windowClose, window()->events.windowClose);
-		GCHL_GENERATE((uint32, uint32, ModifiersFlags), keyPress, window()->events.keyPress);
+		GCHL_GENERATE((), windowClose, engineWindow()->events.windowClose);
+		GCHL_GENERATE((uint32, uint32, ModifiersFlags), keyPress, engineWindow()->events.keyPress);
 		GCHL_GENERATE((), update, controlThread().update);
 #undef GCHL_GENERATE
 
 		// window
-		window()->setMaximized();
-		window()->title("skeletal animation");
+		engineWindow()->setMaximized();
+		engineWindow()->title("skeletal animation");
 
 		// entities
-		EntityManager *ents = entities();
+		EntityManager *ents = engineEntities();
 		{ // lemurs
 			uint32 animations[] = { HashString("cage-tests/skeletons/lemur/lemur.x?AttackMelee"), HashString("cage-tests/skeletons/lemur/lemur.x?idle"), HashString("cage-tests/skeletons/lemur/lemur.x?run") };
 			uint32 i = 0;
@@ -231,9 +231,9 @@ int main(int argc, char *args[])
 		cameraCtrl->movementSpeed = 0.3;
 		Holder<EngineProfiling> EngineProfiling = newEngineProfiling();
 
-		assets()->add(assetsName);
+		engineAssets()->add(assetsName);
 		engineStart();
-		assets()->remove(assetsName);
+		engineAssets()->remove(assetsName);
 		engineFinalize();
 
 		return 0;

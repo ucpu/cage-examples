@@ -50,14 +50,14 @@ NoiseFunctionCreateConfig noiseInit(uint32 seed)
 
 bool update()
 {
-	EntityManager *ents = entities();
+	EntityManager *ents = engineEntities();
 
 	{
 		static Holder<NoiseFunction> noise1 = newNoiseFunction(noiseInit(42));
 		static Holder<NoiseFunction> noise2 = newNoiseFunction(noiseInit(13));
 		Entity *e = ents->get(10);
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
-		t.position = vec3(noise1->evaluate(currentControlTime()) * 2, noise2->evaluate(currentControlTime()) * 2, 10);
+		t.position = vec3(noise1->evaluate(engineControlTime()) * 2, noise2->evaluate(engineControlTime()) * 2, 10);
 		CAGE_COMPONENT_ENGINE(Text, r, e);
 		r.value = stringizer() + t.position[0] + "|" + t.position[1] + "|" + t.position[2];
 	}
@@ -65,7 +65,7 @@ bool update()
 	{
 		Entity *e = ents->get(11);
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
-		t.orientation = quat(degs(), degs(currentControlTime() * 1e-5), degs());
+		t.orientation = quat(degs(), degs(engineControlTime() * 1e-5), degs());
 	}
 
 	return false;
@@ -84,16 +84,16 @@ int main(int argc, char *args[])
 
 		// events
 #define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
-		GCHL_GENERATE((), windowClose, window()->events.windowClose);
+		GCHL_GENERATE((), windowClose, engineWindow()->events.windowClose);
 		GCHL_GENERATE((), update, controlThread().update);
 #undef GCHL_GENERATE
 
 		// window
-		window()->setMaximized();
-		window()->title("texts");
+		engineWindow()->setMaximized();
+		engineWindow()->title("texts");
 
 		// entities
-		EntityManager *ents = entities();
+		EntityManager *ents = engineEntities();
 		{ // floor
 			Entity *e = ents->create(1);
 			CAGE_COMPONENT_ENGINE(Render, r, e);
@@ -178,9 +178,9 @@ int main(int argc, char *args[])
 		cameraCtrl->movementSpeed = 0.3;
 		Holder<EngineProfiling> EngineProfiling = newEngineProfiling();
 
-		assets()->add(assetsName);
+		engineAssets()->add(assetsName);
 		engineStart();
-		assets()->remove(assetsName);
+		engineAssets()->remove(assetsName);
 		engineFinalize();
 
 		return 0;

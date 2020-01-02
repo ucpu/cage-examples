@@ -40,13 +40,13 @@ bool windowClose()
 
 bool update()
 {
-	EntityManager *ents = entities();
+	EntityManager *ents = engineEntities();
 
 	{ // flying knot
 		Entity *e = ents->get(6);
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		t.orientation = quat(degs(), degs(0.5), degs()) * t.orientation;
-		t.position[1] += sin(degs(currentControlTime() * 1e-5)) * 0.05;
+		t.position[1] += sin(degs(engineControlTime() * 1e-5)) * 0.05;
 	}
 
 	// rotate cube, sphere and suzanne
@@ -62,7 +62,7 @@ bool update()
 	{
 		Entity *e = ents->get(20 + i);
 		CAGE_COMPONENT_ENGINE(Render, r, e);
-		real p = ((real(i) + currentControlTime() * 3e-6) % knotsCount) / knotsCount;
+		real p = ((real(i) + engineControlTime() * 3e-6) % knotsCount) / knotsCount;
 		r.opacity = smootherstep(clamp(p * 2, 0, 1));
 	}
 
@@ -79,7 +79,7 @@ bool update()
 		v = normalize(v);
 		t.position += v * 0.1;
 #else
-		rads angle = rads(degs(i * 360.0 / bulbsCount)) + degs(currentControlTime() * 5e-6);
+		rads angle = rads(degs(i * 360.0 / bulbsCount)) + degs(engineControlTime() * 5e-6);
 		t.position = vec3(sin(angle) * 5, 1, cos(angle) * 5);
 #endif
 	}
@@ -100,16 +100,16 @@ int main(int argc, char *args[])
 
 		// events
 #define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
-		GCHL_GENERATE((), windowClose, window()->events.windowClose);
+		GCHL_GENERATE((), windowClose, engineWindow()->events.windowClose);
 		GCHL_GENERATE((), update, controlThread().update);
 #undef GCHL_GENERATE
 
 		// window
-		window()->setMaximized();
-		window()->title("translucent");
+		engineWindow()->setMaximized();
+		engineWindow()->title("translucent");
 
 		// entities
-		EntityManager *ents = entities();
+		EntityManager *ents = engineEntities();
 		{ // camera
 			Entity *e = ents->create(1);
 			CAGE_COMPONENT_ENGINE(Transform, t, e);
@@ -245,9 +245,9 @@ int main(int argc, char *args[])
 		cameraCtrl->movementSpeed = 0.3;
 		Holder<EngineProfiling> EngineProfiling = newEngineProfiling();
 
-		assets()->add(assetsName);
+		engineAssets()->add(assetsName);
 		engineStart();
-		assets()->remove(assetsName);
+		engineAssets()->remove(assetsName);
 		engineFinalize();
 
 		return 0;

@@ -41,8 +41,8 @@ void controlFinish()
 
 void controlUpdate()
 {
-	uint64 time = currentControlTime();
-	EntityManager *ents = entities();
+	uint64 time = engineControlTime();
+	EntityManager *ents = engineEntities();
 	{
 		Entity *e = ents->get(2);
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
@@ -142,20 +142,20 @@ int main(int argc, char *args[])
 #undef GCHL_GENERATE
 			EventListener<void()> windowCloseListener;
 			windowCloseListener.bind<&windowClose>();
-			windowCloseListener.attach(window()->events.windowClose);
+			windowCloseListener.attach(engineWindow()->events.windowClose);
 
-			window()->setWindowed();
-			window()->windowedSize(ivec2(800, 600));
-			window()->title("exceptions");
+			engineWindow()->setWindowed();
+			engineWindow()->windowedSize(ivec2(800, 600));
+			engineWindow()->title("exceptions");
 
 			{ // camera
-				Entity *e = entities()->create(1);
+				Entity *e = engineEntities()->create(1);
 				CAGE_COMPONENT_ENGINE(Transform, t, e);
 				CAGE_COMPONENT_ENGINE(Camera, c, e);
 				c.ambientLight = vec3(1, 1, 1);
 			}
 			{ // box 1
-				Entity *e = entities()->create(2);
+				Entity *e = engineEntities()->create(2);
 				CAGE_COMPONENT_ENGINE(Transform, t, e);
 				CAGE_COMPONENT_ENGINE(Render, r, e);
 				r.object = HashString("cage/mesh/fake.obj");

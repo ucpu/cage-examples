@@ -8,7 +8,7 @@ public:
 
 	void initialize() override
 	{
-		detail::guiSkinTemplateExport(gui()->skin(0), 2048)->encodeFile("guiSkinTemplate.png");
+		detail::guiSkinTemplateExport(engineGui()->skin(0), 2048)->encodeFile("guiSkinTemplate.png");
 		engineStop();
 	}
 

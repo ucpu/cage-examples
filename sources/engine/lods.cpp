@@ -42,17 +42,17 @@ int main(int argc, char *args[])
 
 		// events
 #define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
-		GCHL_GENERATE((), windowClose, window()->events.windowClose);
+		GCHL_GENERATE((), windowClose, engineWindow()->events.windowClose);
 		GCHL_GENERATE((), update, controlThread().update);
 #undef GCHL_GENERATE
 
 		// window
-		window()->setWindowed();
-		window()->windowedSize(ivec2(800, 600));
-		window()->title("levels of details");
+		engineWindow()->setWindowed();
+		engineWindow()->windowedSize(ivec2(800, 600));
+		engineWindow()->title("levels of details");
 
 		// entities
-		EntityManager *ents = entities();
+		EntityManager *ents = engineEntities();
 		{ // cube
 			Entity *e = ents->create(1);
 			CAGE_COMPONENT_ENGINE(Render, r, e);
@@ -100,9 +100,9 @@ int main(int argc, char *args[])
 		fpsCamera->movementSpeed = 1;
 		Holder<EngineProfiling> EngineProfiling = newEngineProfiling();
 
-		assets()->add(assetsName);
+		engineAssets()->add(assetsName);
 		engineStart();
-		assets()->remove(assetsName);
+		engineAssets()->remove(assetsName);
 		engineFinalize();
 
 		return 0;

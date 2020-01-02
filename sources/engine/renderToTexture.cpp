@@ -37,9 +37,9 @@ bool graphicsInitialize()
 	fabScreenTex->filters(GL_LINEAR, GL_LINEAR, 16);
 	fabScreenTex->wraps(GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);
 	fabScreenTex->setDebugName("fabScreenTex");
-	assets()->set<assetSchemeIndexTexture>(screenName, fabScreenTex.get());
+	engineAssets()->set<assetSchemeIndexTexture>(screenName, fabScreenTex.get());
 	{
-		Entity *e = entities()->get(4);
+		Entity *e = engineEntities()->get(4);
 		CAGE_COMPONENT_ENGINE(Camera, c, e);
 		c.target = fabScreenTex.get();
 	}
@@ -48,17 +48,17 @@ bool graphicsInitialize()
 
 bool graphicsFinalize()
 {
-	assets()->set<assetSchemeIndexTexture>(screenName, (Texture*)nullptr);
+	engineAssets()->set<assetSchemeIndexTexture>(screenName, (Texture*)nullptr);
 	fabScreenTex.clear();
 	return false;
 }
 
 bool update()
 {
-	uint64 time = currentControlTime();
+	uint64 time = engineControlTime();
 
-	CAGE_COMPONENT_ENGINE(Transform, t1, entities()->get(3));
-	CAGE_COMPONENT_ENGINE(Transform, t2, entities()->get(4));
+	CAGE_COMPONENT_ENGINE(Transform, t1, engineEntities()->get(3));
+	CAGE_COMPONENT_ENGINE(Transform, t2, engineEntities()->get(4));
 	t1.orientation = t2.orientation = quat(degs(-25), degs(sin(degs(time * 3e-5)) * 20 + 125), degs());
 
 	return false;
@@ -77,21 +77,21 @@ int main(int argc, char *args[])
 
 		// events
 #define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
-		GCHL_GENERATE((), windowClose, window()->events.windowClose);
+		GCHL_GENERATE((), windowClose, engineWindow()->events.windowClose);
 		GCHL_GENERATE((), graphicsInitialize, graphicsDispatchThread().initialize);
 		GCHL_GENERATE((), graphicsFinalize, graphicsDispatchThread().finalize);
 		GCHL_GENERATE((), update, controlThread().update);
 #undef GCHL_GENERATE
 
 		// window
-		window()->setMaximized();
-		window()->title("render to texture");
+		engineWindow()->setMaximized();
+		engineWindow()->title("render to texture");
 
 		// screen
-		assets()->fabricate(assetSchemeIndexTexture, screenName, "fab tv screen");
+		engineAssets()->fabricate(assetSchemeIndexTexture, screenName, "fab tv screen");
 
 		// entities
-		EntityManager *ents = entities();
+		EntityManager *ents = engineEntities();
 		{ // room
 			Entity *e = ents->create(10);
 			CAGE_COMPONENT_ENGINE(Render, r, e);
@@ -156,10 +156,10 @@ int main(int argc, char *args[])
 		fpsCamera->movementSpeed = 0.1;
 		Holder<EngineProfiling> EngineProfiling = newEngineProfiling();
 
-		assets()->add(assetsName);
+		engineAssets()->add(assetsName);
 		engineStart();
-		assets()->remove(assetsName);
-		assets()->remove(screenName);
+		engineAssets()->remove(assetsName);
+		engineAssets()->remove(screenName);
 		engineFinalize();
 
 		return 0;

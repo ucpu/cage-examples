@@ -35,9 +35,9 @@ int main(int argc, const char *args[])
 	controlThread().assets.attach(assetsUpdateListener);
 	listeners.windowClose.bind<&closeButton>();
 	listeners.keyPress.bind<&keyPress>();
-	listeners.attachAll(window());
+	listeners.attachAll(engineWindow());
 	guiListener.bind<&guiFunction>();
-	gui()->widgetEvent.attach(guiListener);
+	engineGui()->widgetEvent.attach(guiListener);
 
 	updateInitialize();
 	{

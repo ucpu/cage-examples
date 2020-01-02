@@ -6,7 +6,7 @@ public:
 
 	Entity *makeSplitterRec(uint32 depth)
 	{
-		EntityManager *ents = gui()->entities();
+		EntityManager *ents = engineGui()->entities();
 
 		Entity *cell = ents->createUnique();
 		{
@@ -49,7 +49,7 @@ public:
 
 	void initialize() override
 	{
-		EntityManager *ents = gui()->entities();
+		EntityManager *ents = engineGui()->entities();
 		Entity *e = makeSplitterRec(0);
 	}
 

@@ -11,7 +11,7 @@ public:
 
 	void generateList(uint32 parent)
 	{
-		EntityManager *ents = gui()->entities();
+		EntityManager *ents = engineGui()->entities();
 		uint32 cnt = randomRange(1u, 3u);
 		for (uint32 i = 0; i < cnt; i++)
 		{
@@ -27,7 +27,7 @@ public:
 
 	void removeOrphanedWidgets()
 	{
-		EntityManager *ents = gui()->entities();
+		EntityManager *ents = engineGui()->entities();
 		widgets.erase(std::remove_if(widgets.begin(), widgets.end(), [&](uint32 n)
 		{
 			Entity *e = ents->get(n);
@@ -41,7 +41,7 @@ public:
 
 	void update() override
 	{
-		EntityManager *ents = gui()->entities();
+		EntityManager *ents = engineGui()->entities();
 
 		// remove widget
 		if (widgets.size() > 10 || (widgets.size() > 3 && randomChance() < 0.1))
@@ -140,7 +140,7 @@ public:
 	{
 		guiBasicLayout();
 
-		EntityManager *ents = gui()->entities();
+		EntityManager *ents = engineGui()->entities();
 
 		{
 			Entity *e = ents->create(10);

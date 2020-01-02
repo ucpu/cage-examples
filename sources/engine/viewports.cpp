@@ -41,7 +41,7 @@ bool keyPress(uint32, uint32 b, ModifiersFlags modifiers)
 
 void box(const vec3 &pos, const quat &rot)
 {
-	Entity *e = entities()->createAnonymous();
+	Entity *e = engineEntities()->createAnonymous();
 	CAGE_COMPONENT_ENGINE(Transform, t, e);
 	CAGE_COMPONENT_ENGINE(Render, r, e);
 	t.position = pos;
@@ -99,7 +99,7 @@ void letter(char c, const vec3 &pos)
 
 void regenerate()
 {
-	EntityManager *ents = entities();
+	EntityManager *ents = engineEntities();
 	ents->destroy();
 
 	for (uint32 i = 0; i < 3; i++)
@@ -148,7 +148,7 @@ void regenerate()
 
 bool update()
 {
-	uint64 time = currentControlTime();
+	uint64 time = engineControlTime();
 
 	if (dirty)
 	{
@@ -156,7 +156,7 @@ bool update()
 		regenerate();
 	}
 
-	EntityManager *ents = entities();
+	EntityManager *ents = engineEntities();
 
 	if (camsLayout == 2)
 	{ // rotating viewports
@@ -216,12 +216,12 @@ int main(int argc, char *args[])
 		windowCloseListener.bind<&windowClose>();
 		keyPressListener.bind<&keyPress>();
 		updateListener.bind<&update>();
-		windowCloseListener.attach(window()->events.windowClose);
-		keyPressListener.attach(window()->events.keyPress);
+		windowCloseListener.attach(engineWindow()->events.windowClose);
+		keyPressListener.attach(engineWindow()->events.keyPress);
 		updateListener.attach(controlThread().update);
 
-		window()->setMaximized();
-		window()->title("multiple viewports");
+		engineWindow()->setMaximized();
+		engineWindow()->title("multiple viewports");
 		dirty = true;
 		Holder<EngineProfiling> EngineProfiling = newEngineProfiling();
 

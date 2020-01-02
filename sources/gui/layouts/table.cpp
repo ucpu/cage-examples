@@ -11,7 +11,7 @@ public:
 	void guiEvent(uint32 name) override
 	{
 		guiTestClass::guiEvent(name);
-		EntityManager *ents = gui()->entities();
+		EntityManager *ents = engineGui()->entities();
 		CAGE_COMPONENT_GUI(LayoutTable, s, ents->get(42));
 		switch (name)
 		{
@@ -23,7 +23,7 @@ public:
 				CAGE_COMPONENT_GUI(Scrollbars, sc, ents->get(42));
 			}
 			else
-				ents->get(42)->remove(gui()->components().Scrollbars);
+				ents->get(42)->remove(engineGui()->components().Scrollbars);
 		} break;
 		case 3:
 		{
@@ -50,7 +50,7 @@ public:
 			{ // remove scrollbars
 				for (auto e : items)
 				{
-					e->remove(gui()->components().Scrollbars);
+					e->remove(engineGui()->components().Scrollbars);
 				}
 			}
 		} break;
@@ -65,7 +65,7 @@ public:
 
 	void initialize() override
 	{
-		EntityManager *ents = gui()->entities();
+		EntityManager *ents = engineGui()->entities();
 
 		Entity *mainSplitter = ents->createUnique();
 		{

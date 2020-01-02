@@ -35,8 +35,8 @@ void sceneReload()
 	CAGE_LOG(SeverityEnum::Info, "scenes", stringizer() + "loading scene index: " + sceneIndexCurrent);
 	string scenePath = maps[sceneIndexCurrent];
 	CAGE_LOG(SeverityEnum::Info, "scenes", stringizer() + "loading scene description from file: '" + scenePath + "'");
-	window()->title(string() + "map: " + pathExtractFilename(scenePath));
-	entities()->destroy();
+	engineWindow()->title(string() + "map: " + pathExtractFilename(scenePath));
+	engineEntities()->destroy();
 
 	// load new entities
 	try
@@ -49,7 +49,7 @@ void sceneReload()
 		{
 			if (name.empty())
 				continue;
-			Entity *e = entities()->createAnonymous();
+			Entity *e = engineEntities()->createAnonymous();
 			CAGE_COMPONENT_ENGINE(Render, rs, e);
 			rs.object = HashString(name.c_str());
 			if (!rs.object)
@@ -65,7 +65,7 @@ void sceneReload()
 			f->readLine(rotLine);
 			ts.orientation = quat(rads(), rads(rotLine.toFloat()), rads());
 		}
-		CAGE_LOG(SeverityEnum::Info, "scenes", stringizer() + "scene contains " + (entities()->group()->count()) + " entities");
+		CAGE_LOG(SeverityEnum::Info, "scenes", stringizer() + "scene contains " + (engineEntities()->group()->count()) + " entities");
 	}
 	catch (...)
 	{
@@ -73,7 +73,7 @@ void sceneReload()
 	}
 
 	{ // camera
-		Entity *cam = entities()->create(1);
+		Entity *cam = engineEntities()->create(1);
 		CAGE_COMPONENT_ENGINE(Transform, t, cam);
 		t.position = vec3(0, 10, 30);
 		CAGE_COMPONENT_ENGINE(Camera, c, cam);
@@ -88,7 +88,7 @@ void sceneReload()
 	}
 
 	{ // skybox
-		Entity *cam = entities()->create(2);
+		Entity *cam = engineEntities()->create(2);
 		CAGE_COMPONENT_ENGINE(Transform, tc, cam);
 		(void)tc;
 		CAGE_COMPONENT_ENGINE(Camera, c, cam);
@@ -96,7 +96,7 @@ void sceneReload()
 		c.cameraOrder = 1;
 		c.near = 0.1;
 		c.far = 50;
-		Entity *sky = entities()->create(3);
+		Entity *sky = engineEntities()->create(3);
 		CAGE_COMPONENT_ENGINE(Transform, ts, sky);
 		(void)ts;
 		CAGE_COMPONENT_ENGINE(Render, r, sky);
@@ -109,7 +109,7 @@ void sceneReload()
 	// directional lights
 	for (int i = 0; i < directionalLightsCount; i++)
 	{
-		directionalLights[i] = entities()->createAnonymous();
+		directionalLights[i] = engineEntities()->createAnonymous();
 		CAGE_COMPONENT_ENGINE(Transform, ts, directionalLights[i]);
 		ts.orientation = quat(degs(randomChance() * -20 - 30), degs(i * 360.0f / (float)directionalLightsCount + randomChance() * 180 / (float)directionalLightsCount), degs());
 		CAGE_COMPONENT_ENGINE(Light, ls, directionalLights[i]);
@@ -122,7 +122,7 @@ void sceneReload()
 	// point lights
 	for (int i = 0; i < pointLightsCount; i++)
 	{
-		pointLights[i] = entities()->createAnonymous();
+		pointLights[i] = engineEntities()->createAnonymous();
 		CAGE_COMPONENT_ENGINE(Transform, ts, pointLights[i]);
 		ts.position = (vec3(randomChance(), randomChance(), randomChance()) * 2 - 1) * 15;
 		CAGE_COMPONENT_ENGINE(Light, ls, pointLights[i]);
@@ -189,8 +189,8 @@ bool update()
 	}
 
 	{ // update camera for skybox
-		CAGE_COMPONENT_ENGINE(Transform, t1, entities()->get(1));
-		CAGE_COMPONENT_ENGINE(Transform, t2, entities()->get(2));
+		CAGE_COMPONENT_ENGINE(Transform, t1, engineEntities()->get(1));
+		CAGE_COMPONENT_ENGINE(Transform, t2, engineEntities()->get(2));
 		t2.orientation = t1.orientation;
 	}
 
@@ -211,9 +211,9 @@ bool assetsUpdate()
 	if (sceneHashCurrent != sceneHashLoaded)
 	{
 		if (sceneHashLoaded)
-			assets()->remove(sceneHashLoaded);
+			engineAssets()->remove(sceneHashLoaded);
 		sceneHashLoaded = sceneHashCurrent;
-		assets()->add(sceneHashLoaded);
+		engineAssets()->add(sceneHashLoaded);
 	}
 	return false;
 }
@@ -250,15 +250,15 @@ void updateInitialize()
 {
 	loadMapsList();
 	sceneReload();
-	assets()->add(HashString("scenes/common/common.pack"));
+	engineAssets()->add(HashString("scenes/common/common.pack"));
 
 	{ // prev
-		Entity *a = cage::gui()->entities()->createUnique();
+		Entity *a = cage::engineGui()->entities()->createUnique();
 		{ // a
 			CAGE_COMPONENT_GUI(Scrollbars, sc, a);
 			sc.alignment = vec2(0, 1);
 		}
-		Entity *e = cage::gui()->entities()->create(1);
+		Entity *e = cage::engineGui()->entities()->create(1);
 		CAGE_COMPONENT_GUI(Parent, parent, e);
 		parent.parent = a->name();
 		CAGE_COMPONENT_GUI(Button, c, e);
@@ -266,12 +266,12 @@ void updateInitialize()
 		t.value = "< prev";
 	}
 	{ // next
-		Entity *a = cage::gui()->entities()->createUnique();
+		Entity *a = cage::engineGui()->entities()->createUnique();
 		{ // a
 			CAGE_COMPONENT_GUI(Scrollbars, sc, a);
 			sc.alignment = vec2(1, 1);
 		}
-		Entity *e = cage::gui()->entities()->create(2);
+		Entity *e = cage::engineGui()->entities()->create(2);
 		CAGE_COMPONENT_GUI(Parent, parent, e);
 		parent.parent = a->name();
 		CAGE_COMPONENT_GUI(Button, c, e);
@@ -284,9 +284,9 @@ void updateFinalize()
 {
 	engineProfilingInstance.clear();
 	cameraCtrl.clear();
-	assets()->remove(HashString("scenes/common/common.pack"));
+	engineAssets()->remove(HashString("scenes/common/common.pack"));
 	if (sceneHashLoaded)
-		assets()->remove(sceneHashLoaded);
+		engineAssets()->remove(sceneHashLoaded);
 	sceneHashLoaded = 0;
 	sceneHashCurrent = 0;
 }

@@ -23,7 +23,7 @@ bool windowClose()
 
 void controlInit()
 {
-	EntityManager *ents = entities();
+	EntityManager *ents = engineEntities();
 
 	{ // camera
 		Entity *e = ents->create(1);
@@ -59,8 +59,8 @@ void controlInit()
 
 bool soundInit()
 {
-	toneBus = newMixingBus(sound());
-	toneSource = newSoundSource(sound());
+	toneBus = newMixingBus(engineSound());
+	toneSource = newSoundSource(engineSound());
 	toneSource->setDataTone();
 	toneSource->addOutput(toneBus.get());
 	return false;
@@ -75,8 +75,8 @@ bool soundFinish()
 
 bool update()
 {
-	uint64 time = currentControlTime();
-	EntityManager *ents = entities();
+	uint64 time = engineControlTime();
+	EntityManager *ents = engineEntities();
 	vec3 box;
 	{ // moving voice
 		Entity *e = ents->get(3);
@@ -119,12 +119,12 @@ int main(int argc, char *args[])
 		GCHL_GENERATE((), soundInit, soundThread().initialize);
 		GCHL_GENERATE((), soundFinish, soundThread().finalize);
 		GCHL_GENERATE((), update, controlThread().update);
-		GCHL_GENERATE((), windowClose, window()->events.windowClose);
+		GCHL_GENERATE((), windowClose, engineWindow()->events.windowClose);
 #undef GCHL_GENERATE
 
-		window()->setWindowed();
-		window()->windowedSize(ivec2(600, 600));
-		window()->title("doppler [WIP]");
+		engineWindow()->setWindowed();
+		engineWindow()->windowedSize(ivec2(600, 600));
+		engineWindow()->title("doppler [WIP]");
 		controlInit();
 
 		engineStart();
