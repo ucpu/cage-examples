@@ -1,2 +1,0 @@
-# prevent all data to be considered as programming language
-/data/* linguist-generated=true
