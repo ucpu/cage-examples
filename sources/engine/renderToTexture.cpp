@@ -1,5 +1,3 @@
-#include <vector>
-
 #include <cage-core/core.h>
 #include <cage-core/math.h>
 #include <cage-core/logger.h>
@@ -17,12 +15,11 @@
 #include <cage-engine/fpsCamera.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 
+#include <vector>
+
 using namespace cage;
 static const uint32 assetsName = HashString("cage-tests/room/room.pack");
 static const uint32 screenName = HashString("cage-tests/room/tvscreen.jpg");
-static const uint32 roomName = HashString("cage-tests/room/room.object");
-
-Holder<Texture> fabScreenTex;
 
 bool windowClose()
 {
@@ -32,24 +29,23 @@ bool windowClose()
 
 bool graphicsInitialize()
 {
-	fabScreenTex = newTexture();
+	Holder<Texture> fabScreenTex = newTexture();
 	fabScreenTex->image2d(800, 500, GL_RGB16F);
 	fabScreenTex->filters(GL_LINEAR, GL_LINEAR, 16);
 	fabScreenTex->wraps(GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);
 	fabScreenTex->setDebugName("fabScreenTex");
-	engineAssets()->set<assetSchemeIndexTexture>(screenName, fabScreenTex.get());
 	{
 		Entity *e = engineEntities()->get(4);
 		CAGE_COMPONENT_ENGINE(Camera, c, e);
 		c.target = fabScreenTex.get();
 	}
+	engineAssets()->fabricate<AssetSchemeIndexTexture, Texture>(screenName, templates::move(fabScreenTex), "fabricated tv screen");
 	return false;
 }
 
 bool graphicsFinalize()
 {
-	engineAssets()->set<assetSchemeIndexTexture>(screenName, (Texture*)nullptr);
-	fabScreenTex.clear();
+	engineAssets()->remove(screenName);
 	return false;
 }
 
@@ -87,15 +83,12 @@ int main(int argc, char *args[])
 		engineWindow()->setMaximized();
 		engineWindow()->title("render to texture");
 
-		// screen
-		engineAssets()->fabricate(assetSchemeIndexTexture, screenName, "fab tv screen");
-
 		// entities
 		EntityManager *ents = engineEntities();
 		{ // room
 			Entity *e = ents->create(10);
 			CAGE_COMPONENT_ENGINE(Render, r, e);
-			r.object = roomName;
+			r.object = HashString("cage-tests/room/room.object");
 			r.sceneMask = 3;
 			CAGE_COMPONENT_ENGINE(Transform, t, e);
 			(void)t;
@@ -159,7 +152,6 @@ int main(int argc, char *args[])
 		engineAssets()->add(assetsName);
 		engineStart();
 		engineAssets()->remove(assetsName);
-		engineAssets()->remove(screenName);
 		engineFinalize();
 
 		return 0;

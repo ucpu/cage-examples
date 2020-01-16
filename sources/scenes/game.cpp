@@ -3,20 +3,22 @@
 #include <cage-core/geometry.h>
 #include <cage-engine/shadowmapHelpers.h>
 
-Holder<FpsCamera> cameraCtrl;
-Holder<EngineProfiling> engineProfilingInstance;
+namespace
+{
+	Holder<FpsCamera> cameraCtrl;
+	Holder<EngineProfiling> engineProfilingInstance;
 
-uint32 sceneIndexCurrent;
-uint32 sceneIndexLoaded;
-uint32 sceneHashCurrent;
-uint32 sceneHashLoaded;
+	uint32 sceneIndexCurrent;
+	uint32 sceneIndexLoaded;
+	uint32 sceneHashCurrent;
 
-static const uint32 directionalLightsCount = 1;
-Entity *directionalLights[directionalLightsCount];
-static const uint32 pointLightsCount = 50;
-Entity *pointLights[pointLightsCount];
+	static const uint32 directionalLightsCount = 1;
+	Entity *directionalLights[directionalLightsCount];
+	static const uint32 pointLightsCount = 50;
+	Entity *pointLights[pointLightsCount];
 
-std::vector<string> maps;
+	std::vector<string> maps;
+}
 
 void loadMapsList()
 {
@@ -44,7 +46,11 @@ void sceneReload()
 		Holder<File> f = newFile(scenePath, FileMode(true, false));
 		string name;
 		f->readLine(name);
+		if (sceneHashCurrent)
+			engineAssets()->remove(sceneHashCurrent);
 		sceneHashCurrent = HashString(name.c_str());
+		engineAssets()->add(sceneHashCurrent);
+
 		while (f->readLine(name))
 		{
 			if (name.empty())
@@ -206,18 +212,6 @@ bool update()
 	return false;
 }
 
-bool assetsUpdate()
-{
-	if (sceneHashCurrent != sceneHashLoaded)
-	{
-		if (sceneHashLoaded)
-			engineAssets()->remove(sceneHashLoaded);
-		sceneHashLoaded = sceneHashCurrent;
-		engineAssets()->add(sceneHashLoaded);
-	}
-	return false;
-}
-
 bool guiFunction(uint32 en)
 {
 	switch (en)
@@ -285,8 +279,7 @@ void updateFinalize()
 	engineProfilingInstance.clear();
 	cameraCtrl.clear();
 	engineAssets()->remove(HashString("scenes/common/common.pack"));
-	if (sceneHashLoaded)
-		engineAssets()->remove(sceneHashLoaded);
-	sceneHashLoaded = 0;
+	if (sceneHashCurrent)
+		engineAssets()->remove(sceneHashCurrent);
 	sceneHashCurrent = 0;
 }
