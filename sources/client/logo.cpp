@@ -64,13 +64,13 @@ int main(int argc, char *args[])
 			threadSleep(1000);
 		}
 
-		// fetch assets
-		Mesh *mesh = assets->get<AssetSchemeIndexMesh, Mesh>(HashString("cage/mesh/square.obj"));
-		Texture *texture = assets->get<AssetSchemeIndexTexture, Texture>(HashString("cage-tests/logo/logo.png"));
-		ShaderProgram *shader = assets->get<AssetSchemeIndexShaderProgram, ShaderProgram>(HashString("cage/shader/engine/blit.glsl"));
-		SoundSource *source = assets->get<AssetSchemeIndexSoundSource, SoundSource>(HashString("cage-tests/logo/logo.ogg"));
-
 		{
+			// fetch assets
+			Holder<Mesh> mesh = assets->get<AssetSchemeIndexMesh, Mesh>(HashString("cage/mesh/square.obj"));
+			Holder<Texture> texture = assets->get<AssetSchemeIndexTexture, Texture>(HashString("cage-tests/logo/logo.png"));
+			Holder<ShaderProgram> shader = assets->get<AssetSchemeIndexShaderProgram, ShaderProgram>(HashString("cage/shader/engine/blit.glsl"));
+			Holder<SoundSource> source = assets->get<AssetSchemeIndexSoundSource, SoundSource>(HashString("cage-tests/logo/logo.ogg"));
+
 			// initialize graphics
 			mesh->bind();
 			glActiveTexture(GL_TEXTURE0 + CAGE_SHADER_TEXTURE_COLOR);

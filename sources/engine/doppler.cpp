@@ -9,11 +9,12 @@
 #include <cage-engine/window.h>
 #include <cage-engine/sound.h>
 #include <cage-engine/engine.h>
+#include <cage-engine/engineProfiling.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 
 using namespace cage;
 
-const uint32 assetsName = HashString("cage-tests/logo/logo.ogg");
+const uint32 assetsName = HashString("cage-tests/sounds/sounds.pack");
 Holder<SoundSource> toneSource;
 Holder<MixingBus> toneBus;
 
@@ -30,19 +31,21 @@ void controlInit()
 	{ // camera
 		Entity *e = ents->create(1);
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
-		(void)t;
 		CAGE_COMPONENT_ENGINE(Camera, c, e);
-		c.ambientLight = vec3(1);
+		c.ambientLight = vec3(0.5);
+		c.ambientDirectionalLight = vec3(0.5);
 		c.cameraType = CameraTypeEnum::Orthographic;
 		c.camera.orthographicSize = vec2(50, 50);
-		c.near = -5;
-		c.far = 5;
+		c.near = -50;
+		c.far = 50;
 	}
 
 	{ // listener
 		Entity *e = ents->create(2);
+		CAGE_COMPONENT_ENGINE(Transform, t, e);
+		t.scale = 2;
 		CAGE_COMPONENT_ENGINE(Render, r, e);
-		r.object = HashString("cage/mesh/fake.obj");
+		r.object = HashString("cage-tests/sounds/listener.obj");
 		CAGE_COMPONENT_ENGINE(Listener, l, e);
 		l.attenuation = vec3(0, 0.01, 0);
 		l.dopplerEffect = true;
@@ -51,8 +54,9 @@ void controlInit()
 	{ // moving voice
 		Entity *e = ents->create(3);
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
+		t.orientation = quat(degs(-90), degs(), degs());
 		CAGE_COMPONENT_ENGINE(Render, r, e);
-		r.object = HashString("cage/mesh/fake.obj");
+		r.object = HashString("cage-tests/sounds/speaker.obj");
 		CAGE_COMPONENT_ENGINE(Sound, s, e);
 		s.name = HashString("cage-tests/logo/logo.ogg");
 	}
@@ -131,7 +135,10 @@ int main(int argc, char *args[])
 		controlInit();
 
 		engineAssets()->add(assetsName);
-		engineStart();
+		{
+			Holder<EngineProfiling> profiling = newEngineProfiling();
+			engineStart();
+		}
 		engineAssets()->remove(assetsName);
 		engineFinalize();
 

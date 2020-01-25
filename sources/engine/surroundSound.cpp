@@ -12,7 +12,7 @@
 
 using namespace cage;
 
-const uint32 assetsName = HashString("cage-tests/logo/logo.ogg");
+const uint32 assetsName = HashString("cage-tests/sounds/sounds.pack");
 
 bool windowClose()
 {
@@ -29,19 +29,21 @@ void controlInit()
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		(void)t;
 		CAGE_COMPONENT_ENGINE(Camera, c, e);
-		c.ambientLight = vec3(1);
+		c.ambientLight = vec3(0.5);
+		c.ambientDirectionalLight = vec3(0.5);
 		c.cameraType = CameraTypeEnum::Orthographic;
 		c.camera.orthographicSize = vec2(50, 50);
-		c.near = -5;
-		c.far = 5;
+		c.near = -50;
+		c.far = 50;
 	}
 
 	{ // listener
 		Entity *e = ents->create(2);
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
+		t.scale = 2;
 		t.orientation = quat(degs(90), degs(), degs());
 		CAGE_COMPONENT_ENGINE(Render, r, e);
-		r.object = HashString("cage/mesh/fake.obj");
+		r.object = HashString("cage-tests/sounds/listener.obj");
 		CAGE_COMPONENT_ENGINE(Listener, l, e);
 		l.attenuation = vec3(0, 0.01, 0.0);
 	}
@@ -51,11 +53,12 @@ void controlInit()
 	{ // box
 		Entity *e = ents->create(10 + i);
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
+		t.orientation = quat(degs(-90), degs(), degs());
 		t.position = boxPositions[i] * 25;
 		CAGE_COMPONENT_ENGINE(Render, r, e);
-		r.object = HashString("cage/mesh/fake.obj");
+		r.object = HashString("cage-tests/sounds/speaker.obj");
 		CAGE_COMPONENT_ENGINE(Sound, s, e);
-		s.name = assetsName;
+		s.name = HashString("cage-tests/logo/logo.ogg");
 	}
 }
 
