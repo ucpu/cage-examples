@@ -1,0 +1,10 @@
+
+[]
+scheme = pack
+sounds.pack
+
+[]
+scheme = mesh
+uvs = false
+listener.obj
+speaker.obj

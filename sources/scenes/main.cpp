@@ -8,7 +8,6 @@ bool closeButton();
 bool keyPress(uint32 a, uint32 b, ModifiersFlags m);
 bool guiFunction(uint32 en);
 bool update();
-bool assetsUpdate();
 
 void cameraInitialize();
 void updateInitialize();
@@ -26,13 +25,10 @@ int main(int argc, const char *args[])
 	cameraInitialize();
 
 	EventListener<bool()> updateListener;
-	EventListener<bool()> assetsUpdateListener;
 	WindowEventListeners listeners;
 	EventListener<bool(uint32)> guiListener;
 	updateListener.bind<&update>();
-	assetsUpdateListener.bind<&assetsUpdate>();
 	controlThread().update.attach(updateListener);
-	controlThread().assets.attach(assetsUpdateListener);
 	listeners.windowClose.bind<&closeButton>();
 	listeners.keyPress.bind<&keyPress>();
 	listeners.attachAll(engineWindow());

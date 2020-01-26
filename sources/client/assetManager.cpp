@@ -12,9 +12,11 @@
 #include <cage-engine/sound.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 
+#include <atomic>
+
 using namespace cage;
 
-volatile bool destroying;
+std::atomic<bool> destroying;
 Holder<Window> window;
 Holder<SoundContext> sound;
 Holder<AssetManager> assets;
@@ -25,8 +27,9 @@ void glThread()
 	while (!destroying)
 	{
 		while (assets->processCustomThread(1));
-		threadSleep(5000);
+		threadSleep(1000);
 	}
+	assets->unloadCustomThread(1);
 	window->makeNotCurrent();
 }
 
@@ -35,8 +38,9 @@ void slThread()
 	while (!destroying)
 	{
 		while (assets->processCustomThread(2));
-		threadSleep(5000);
+		threadSleep(1000);
 	}
+	assets->unloadCustomThread(2);
 }
 
 int main(int argc, char *args[])
@@ -55,12 +59,12 @@ int main(int argc, char *args[])
 
 		// asset schemes
 		assets = newAssetManager(AssetManagerCreateConfig());
-		assets->defineScheme<void>(assetSchemeIndexPack, genAssetSchemePack(0));
-		assets->defineScheme<ShaderProgram>(assetSchemeIndexShaderProgram, genAssetSchemeShaderProgram(1, window.get()));
-		assets->defineScheme<Texture>(assetSchemeIndexTexture, genAssetSchemeTexture(1, window.get()));
-		assets->defineScheme<Mesh>(assetSchemeIndexMesh, genAssetSchemeMesh(1, window.get()));
-		assets->defineScheme<Font>(assetSchemeIndexFont, genAssetSchemeFont(1, window.get()));
-		assets->defineScheme<SoundSource>(assetSchemeIndexSoundSource, genAssetSchemeSoundSource(2, sound.get()));
+		assets->defineScheme<AssetPack>(AssetSchemeIndexPack, genAssetSchemePack());
+		assets->defineScheme<ShaderProgram>(AssetSchemeIndexShaderProgram, genAssetSchemeShaderProgram(1, window.get()));
+		assets->defineScheme<Texture>(AssetSchemeIndexTexture, genAssetSchemeTexture(1, window.get()));
+		assets->defineScheme<Mesh>(AssetSchemeIndexMesh, genAssetSchemeMesh(1, window.get()));
+		assets->defineScheme<Font>(AssetSchemeIndexFont, genAssetSchemeFont(1, window.get()));
+		assets->defineScheme<SoundSource>(AssetSchemeIndexSoundSource, genAssetSchemeSoundSource(2, sound.get()));
 
 		// threads
 		Holder<Thread> thrGl = newThread(Delegate<void()>().bind<&glThread>(), "opengl");
@@ -80,14 +84,11 @@ int main(int argc, char *args[])
 			HashString("cage/shader/shader.pack"),
 			HashString("cage/mesh/mesh.pack"),
 			HashString("cage/font/font.pack"),
-			42,
 		};
 		static const uint32 count = sizeof(names) / sizeof(names[0]);
 		bool loaded[count];
 		for (uint32 i = 0; i < count; i++)
 			loaded[i] = false;
-
-		assets->fabricate(assetSchemeIndexTexture, 42, "fabricated texture");
 
 		CAGE_LOG(SeverityEnum::Info, "test", "starting the test, please wait");
 
@@ -99,7 +100,7 @@ int main(int argc, char *args[])
 			{
 				if (randomChance() < 0.7)
 				{
-					uint32 i = randomRange((uint32)0, count);
+					uint32 i = randomRange(0u, count);
 					CAGE_ASSERT(i < count);
 					if (loaded[i])
 						assets->remove(names[i]);
@@ -108,31 +109,24 @@ int main(int argc, char *args[])
 					loaded[i] = !loaded[i];
 				}
 				else
-				{
-					while (assets->processControlThread() || assets->processCustomThread(0));
 					threadSleep(1000);
-				}
 			}
 			CAGE_LOG(SeverityEnum::Info, "test", stringizer() + "step " + (step + 1) + "/30 finished");
 		}
 
-		CAGE_LOG(SeverityEnum::Info, "test", "test finished");
-
 		// clean up
-		assets->remove(42);
+		CAGE_LOG(SeverityEnum::Info, "test", "cleaning");
 		for (uint32 i = 0; i < count; i++)
 			if (loaded[i])
 				assets->remove(names[i]);
-		while (assets->countTotal())
-		{
-			while (assets->processControlThread() || assets->processCustomThread(0));
-			threadSleep(5000);
-		}
+		assets->unloadWait();
 		destroying = true;
 		thrGl->wait();
 		thrSl->wait();
 		sound.clear();
 		window.clear();
+
+		CAGE_LOG(SeverityEnum::Info, "test", "done");
 		return 0;
 	}
 	catch (...)

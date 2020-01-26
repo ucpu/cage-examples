@@ -51,11 +51,6 @@ void controlUpdate()
 	maybeThrow(probLoop, 3);
 }
 
-void controlAssets()
-{
-	maybeThrow(probLoop, 4);
-}
-
 void prepareInit()
 {
 	maybeThrow(probInit, 5);
@@ -128,13 +123,12 @@ int main(int argc, char *args[])
 			GCHL_GENERATE(controlUpdate, controlThread().update);
 			GCHL_GENERATE(controlInit, controlThread().initialize);
 			GCHL_GENERATE(controlFinish, controlThread().finalize);
-			GCHL_GENERATE(controlAssets, controlThread().assets);
 			GCHL_GENERATE(prepareInit, graphicsPrepareThread().initialize);
 			GCHL_GENERATE(prepareFinish, graphicsPrepareThread().finalize);
 			GCHL_GENERATE(preparePrepare, graphicsPrepareThread().prepare);
 			GCHL_GENERATE(dispatchInit, graphicsDispatchThread().initialize);
 			GCHL_GENERATE(dispatchFinish, graphicsDispatchThread().finalize);
-			GCHL_GENERATE(dispatchRender, graphicsDispatchThread().render);
+			GCHL_GENERATE(dispatchRender, graphicsDispatchThread().dispatch);
 			GCHL_GENERATE(dispatchSwap, graphicsDispatchThread().swap);
 			GCHL_GENERATE(soundInit, soundThread().initialize);
 			GCHL_GENERATE(soundFinish, soundThread().finalize);

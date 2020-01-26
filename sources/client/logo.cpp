@@ -47,30 +47,30 @@ int main(int argc, char *args[])
 
 		// assets
 		Holder<AssetManager> assets = newAssetManager(AssetManagerCreateConfig());
-		assets->defineScheme<void>(assetSchemeIndexPack, genAssetSchemePack(0));
-		assets->defineScheme<ShaderProgram>(assetSchemeIndexShaderProgram, genAssetSchemeShaderProgram(0, window.get()));
-		assets->defineScheme<Texture>(assetSchemeIndexTexture, genAssetSchemeTexture(0, window.get()));
-		assets->defineScheme<Mesh>(assetSchemeIndexMesh, genAssetSchemeMesh(0, window.get()));
-		assets->defineScheme<Font>(assetSchemeIndexFont, genAssetSchemeFont(0, window.get()));
-		assets->defineScheme<SoundSource>(assetSchemeIndexSoundSource, genAssetSchemeSoundSource(0, sl.get()));
+		assets->defineScheme<AssetPack>(AssetSchemeIndexPack, genAssetSchemePack());
+		assets->defineScheme<ShaderProgram>(AssetSchemeIndexShaderProgram, genAssetSchemeShaderProgram(0, window.get()));
+		assets->defineScheme<Texture>(AssetSchemeIndexTexture, genAssetSchemeTexture(0, window.get()));
+		assets->defineScheme<Mesh>(AssetSchemeIndexMesh, genAssetSchemeMesh(0, window.get()));
+		assets->defineScheme<Font>(AssetSchemeIndexFont, genAssetSchemeFont(0, window.get()));
+		assets->defineScheme<SoundSource>(AssetSchemeIndexSoundSource, genAssetSchemeSoundSource(0, sl.get()));
 
 		// load assets
 		assets->add(assetsName);
 		while (true)
 		{
-			if (assets->ready(assetsName))
+			if (assets->get<AssetSchemeIndexPack, AssetPack>(assetsName))
 				break;
-			assets->processControlThread();
 			assets->processCustomThread(0);
+			threadSleep(1000);
 		}
 
-		// fetch assets
-		Mesh *mesh = assets->get<assetSchemeIndexMesh, Mesh>(HashString("cage/mesh/square.obj"));
-		Texture *texture = assets->get<assetSchemeIndexTexture, Texture>(HashString("cage-tests/logo/logo.png"));
-		ShaderProgram *shader = assets->get<assetSchemeIndexShaderProgram, ShaderProgram>(HashString("cage/shader/engine/blit.glsl"));
-		SoundSource *source = assets->get<assetSchemeIndexSoundSource, SoundSource>(HashString("cage-tests/logo/logo.ogg"));
-
 		{
+			// fetch assets
+			Holder<Mesh> mesh = assets->get<AssetSchemeIndexMesh, Mesh>(HashString("cage/mesh/square.obj"));
+			Holder<Texture> texture = assets->get<AssetSchemeIndexTexture, Texture>(HashString("cage-tests/logo/logo.png"));
+			Holder<ShaderProgram> shader = assets->get<AssetSchemeIndexShaderProgram, ShaderProgram>(HashString("cage/shader/engine/blit.glsl"));
+			Holder<SoundSource> source = assets->get<AssetSchemeIndexSoundSource, SoundSource>(HashString("cage-tests/logo/logo.ogg"));
+
 			// initialize graphics
 			mesh->bind();
 			glActiveTexture(GL_TEXTURE0 + CAGE_SHADER_TEXTURE_COLOR);
@@ -103,11 +103,7 @@ int main(int argc, char *args[])
 
 		// unload assets
 		assets->remove(assetsName);
-		while (assets->countTotal())
-		{
-			assets->processControlThread();
-			assets->processCustomThread(0);
-		}
+		assets->unloadCustomThread(0);
 
 		return 0;
 	}
