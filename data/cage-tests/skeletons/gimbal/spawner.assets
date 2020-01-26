@@ -30,7 +30,6 @@ spawner.x?looping
 
 []
 scheme = animation
-#scale = 0.01
 spawner.fbx?spawner-armature|looping
 
 []

@@ -35,6 +35,17 @@ bool update()
 	return false;
 }
 
+void label(const string &name, const vec3 &position)
+{
+	Entity *e = engineEntities()->createAnonymous();
+	CAGE_COMPONENT_ENGINE(Text, txt, e);
+	txt.value = name;
+	CAGE_COMPONENT_ENGINE(Transform, t, e);
+	t.position = position;
+	t.scale = 0.2;
+	t.orientation = quat(degs(), degs(180), degs());
+}
+
 int main(int argc, char *args[])
 {
 	try
@@ -60,17 +71,18 @@ int main(int argc, char *args[])
 		// entities
 		EntityManager *ents = engineEntities();
 		{ // lemurs
-			uint32 animations[] = { HashString("cage-tests/skeletons/lemur/lemur.x?AttackMelee"), HashString("cage-tests/skeletons/lemur/lemur.x?idle"), HashString("cage-tests/skeletons/lemur/lemur.x?run") };
+			const char *animations[] = { "cage-tests/skeletons/lemur/lemur.x?AttackMelee", "cage-tests/skeletons/lemur/lemur.x?idle", "cage-tests/skeletons/lemur/lemur.x?run" };
 			uint32 i = 0;
-			for (uint32 animation : animations)
+			for (const char *animation : animations)
 			{
 				Entity *e = ents->create(1 + i);
 				CAGE_COMPONENT_ENGINE(Render, r, e);
 				r.object = HashString("cage-tests/skeletons/lemur/lemur.x");
 				CAGE_COMPONENT_ENGINE(SkeletalAnimation, s, e);
-				s.name = animation;
+				s.name = HashString(animation);
 				CAGE_COMPONENT_ENGINE(Transform, t, e);
 				t.position = vec3(i * 3 - 6.f, 0, 3);
+				label(string(animation).remove(0, 35), t.position + vec3(0, 2, 0));
 				i++;
 			}
 			{ // no animation
@@ -79,6 +91,7 @@ int main(int argc, char *args[])
 				r.object = HashString("cage-tests/skeletons/lemur/lemur.x");
 				CAGE_COMPONENT_ENGINE(Transform, t, e);
 				t.position = vec3(i * 3 - 6.f, 0, 3);
+				label("no animation", t.position + vec3(0, 2, 0));
 				i++;
 			}
 			{ // scaled
@@ -90,9 +103,10 @@ int main(int argc, char *args[])
 				CAGE_COMPONENT_ENGINE(Transform, t, e);
 				t.position = vec3(i * 3 - 6.f, 0, 3);
 				t.scale = 1.5;
+				label("scaled", t.position + vec3(0, 3, 0));
 				i++;
 			}
-#if (0)
+#if 0
 			// performance
 			for (sint32 i = 0; i < 32 * 32; i++)
 			{
@@ -100,24 +114,25 @@ int main(int argc, char *args[])
 				CAGE_COMPONENT_ENGINE(Render, r, e);
 				r.object = HashString("cage-tests/skeletons/lemur/lemur.x");
 				CAGE_COMPONENT_ENGINE(SkeletalAnimation, s, e);
-				s.name = animations[1];
+				s.name = HashString(animations[1]);
 				CAGE_COMPONENT_ENGINE(Transform, t, e);
 				t.position = vec3((i % 32) * 2 - 32, 0, (i / 32) * 2 - 70);
 			}
 #endif
 		}
 		{ // cylinders
-			uint32 animations[] = { HashString("cage-tests/skeletons/cylinder/cylinder.x?bend"), HashString("cage-tests/skeletons/cylinder/cylinder.x?curve") };
+			const char *animations[] = { "cage-tests/skeletons/cylinder/cylinder.x?bend", "cage-tests/skeletons/cylinder/cylinder.x?curve" };
 			uint32 i = 0;
-			for (uint32 animation : animations)
+			for (const char *animation : animations)
 			{
 				Entity *e = ents->create(10 + i);
 				CAGE_COMPONENT_ENGINE(Render, r, e);
 				r.object = HashString("cage-tests/skeletons/cylinder/cylinder.x");
 				CAGE_COMPONENT_ENGINE(SkeletalAnimation, s, e);
-				s.name = animation;
+				s.name = HashString(animation);
 				CAGE_COMPONENT_ENGINE(Transform, t, e);
 				t.position = vec3(i * 3 - 6.f, 0, 0);
+				label(string(animation).remove(0, 41), t.position + vec3(0, 3.3, 0));
 				i++;
 			}
 			{ // no animation set
@@ -126,6 +141,7 @@ int main(int argc, char *args[])
 				r.object = HashString("cage-tests/skeletons/cylinder/cylinder.x");
 				CAGE_COMPONENT_ENGINE(Transform, t, e);
 				t.position = vec3(i * 3 - 6.f, 0, 0);
+				label("no anim set", t.position + vec3(0, 3.3, 0));
 				i++;
 			}
 			{ // non-existent animation
@@ -136,6 +152,7 @@ int main(int argc, char *args[])
 				s.name = HashString("cage-tests/skeletons/cylinder/cylinder.x?non-existent");
 				CAGE_COMPONENT_ENGINE(Transform, t, e);
 				t.position = vec3(i * 3 - 6.f, 0, 0);
+				label("invalid anim", t.position + vec3(0, 3.3, 0));
 				i++;
 			}
 			{ // non-existent object
@@ -144,21 +161,23 @@ int main(int argc, char *args[])
 				r.object = HashString("cage-tests/skeletons/cylinder/non-existent.x");
 				CAGE_COMPONENT_ENGINE(Transform, t, e);
 				t.position = vec3(i * 3 - 6.f, 0, 0);
+				label("invalid object", t.position + vec3(0, 3.3, 0));
 				i++;
 			}
 		}
 		{ // monks
-			uint32 animations[] = { HashString("cage-tests/skeletons/monk/monk.x?Attack1"), HashString("cage-tests/skeletons/monk/monk.x?Dance"), HashString("cage-tests/skeletons/monk/monk.x?Die") };
+			const char *animations[] = { "cage-tests/skeletons/monk/monk.x?Attack1", "cage-tests/skeletons/monk/monk.x?Dance", "cage-tests/skeletons/monk/monk.x?Die" };
 			uint32 i = 0;
-			for (uint32 animation : animations)
+			for (const char *animation : animations)
 			{
 				Entity *e = ents->create(20 + i);
 				CAGE_COMPONENT_ENGINE(Render, r, e);
 				r.object = HashString("cage-tests/skeletons/monk/monk.object");
 				CAGE_COMPONENT_ENGINE(SkeletalAnimation, s, e);
-				s.name = animation;
+				s.name = HashString(animation);
 				CAGE_COMPONENT_ENGINE(Transform, t, e);
 				t.position = vec3(i * 3 - 6.f, 0, -3);
+				label(string(animation).remove(0, 33), t.position + vec3(0, 2, 0));
 				i++;
 			}
 			{ // no animation
@@ -167,6 +186,7 @@ int main(int argc, char *args[])
 				r.object = HashString("cage-tests/skeletons/monk/monk.object");
 				CAGE_COMPONENT_ENGINE(Transform, t, e);
 				t.position = vec3(i * 3 - 6.f, 0, -3);
+				label("no anim", t.position + vec3(0, 2, 0));
 				i++;
 			}
 			{ // rotated
@@ -178,20 +198,22 @@ int main(int argc, char *args[])
 				CAGE_COMPONENT_ENGINE(Transform, t, e);
 				t.position = vec3(i * 3 - 6.f, 0, -3);
 				t.orientation = quat(degs(), degs(randomRange(45, 270)), degs());
+				label("rotated", t.position + vec3(0, 2, 0));
 				i++;
 			}
 		}
 		{ // gimbals/spawners
 			uint32 i = 0;
-			uint32 objects[] = { HashString("cage-tests/skeletons/gimbal/spawner_x.object"), HashString("cage-tests/skeletons/gimbal/spawner_fbx.object") };
-			for (uint32 object : objects)
+			const char *objects[] = { "cage-tests/skeletons/gimbal/spawner_x.object", "cage-tests/skeletons/gimbal/spawner_fbx.object" };
+			for (const char *object : objects)
 			{
 				Entity *e = ents->create(30 + i);
 				CAGE_COMPONENT_ENGINE(Render, r, e);
-				r.object = object;
+				r.object = HashString(object);
 				CAGE_COMPONENT_ENGINE(Transform, t, e);
 				t.position = vec3(i * 3 + 1.5f, 1, 0);
 				t.scale = 0.6;
+				label(string(object).remove(0, 28), t.position + vec3(0, 1, 0));
 				i++;
 			}
 		}
@@ -216,8 +238,8 @@ int main(int argc, char *args[])
 		{ // camera
 			Entity *e = ents->create(102);
 			CAGE_COMPONENT_ENGINE(Transform, t, e);
-			t.position = vec3(0, 5, 10);
-			t.orientation = quat(degs(-10), degs(), degs());
+			t.position = vec3(0, 5, -10);
+			t.orientation = quat(degs(-15), degs(180), degs());
 			CAGE_COMPONENT_ENGINE(Camera, c, e);
 			c.ambientLight = vec3(0.1);
 			c.ambientDirectionalLight = vec3(0.2);
