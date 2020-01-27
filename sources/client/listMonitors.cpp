@@ -1,9 +1,7 @@
-#include <cage-core/core.h>
-#include <cage-core/math.h>
 #include <cage-core/logger.h>
 #include <cage-core/concurrent.h>
 #include <cage-core/timer.h>
-#include <cage-engine/core.h>
+
 #include <cage-engine/window.h>
 #include <cage-engine/graphics.h>
 #include <cage-engine/screenList.h>

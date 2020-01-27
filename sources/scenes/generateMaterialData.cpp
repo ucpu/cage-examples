@@ -1,4 +1,3 @@
-#include <cage-core/core.h>
 #include <cage-core/files.h>
 #include <cage-core/fileUtils.h>
 #include <cage-core/math.h>

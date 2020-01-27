@@ -1,14 +1,12 @@
-#include <atomic>
-
-#include <cage-core/core.h>
-#include <cage-core/math.h>
 #include <cage-core/logger.h>
 #include <cage-core/concurrent.h>
 #include <cage-core/color.h>
-#include <cage-engine/core.h>
+
 #include <cage-engine/window.h>
 #include <cage-engine/opengl.h>
 #include <cage-engine/highPerformanceGpuHint.h>
+
+#include <atomic>
 
 using namespace cage;
 

@@ -1,6 +1,3 @@
-
-#include <cage-core/core.h>
-#include <cage-core/math.h>
 #include <cage-core/logger.h>
 #include <cage-core/entities.h>
 #include <cage-core/config.h>
@@ -8,7 +5,7 @@
 #include <cage-core/hashString.h>
 #include <cage-core/color.h>
 #include <cage-core/noiseFunction.h>
-#include <cage-engine/core.h>
+
 #include <cage-engine/window.h>
 #include <cage-engine/gui.h>
 #include <cage-engine/engine.h>

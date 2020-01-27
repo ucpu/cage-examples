@@ -1,18 +1,16 @@
-#include <cage-core/core.h>
-#include <cage-core/math.h>
 #include <cage-core/logger.h>
 #include <cage-core/concurrent.h>
 #include <cage-core/assetStructs.h>
 #include <cage-core/assetManager.h>
 #include <cage-core/timer.h>
 #include <cage-core/hashString.h>
-#include <cage-engine/core.h>
+
 #include <cage-engine/window.h>
 #include <cage-engine/graphics.h>
 #include <cage-engine/sound.h>
 #include <cage-engine/opengl.h>
 #include <cage-engine/highPerformanceGpuHint.h>
-#include <cage-engine/graphics/shaderConventions.h>
+#include <cage-engine/shaderConventions.h>
 
 using namespace cage;
 

@@ -1,20 +1,18 @@
-#include <vector>
-
-#include <cage-core/core.h>
-#include <cage-core/math.h>
 #include <cage-core/logger.h>
 #include <cage-core/entities.h>
 #include <cage-core/config.h>
 #include <cage-core/assetManager.h>
 #include <cage-core/hashString.h>
 #include <cage-core/color.h>
-#include <cage-engine/core.h>
+
 #include <cage-engine/window.h>
 #include <cage-engine/gui.h>
 #include <cage-engine/engine.h>
 #include <cage-engine/engineProfiling.h>
 #include <cage-engine/fpsCamera.h>
 #include <cage-engine/highPerformanceGpuHint.h>
+
+#include <vector>
 
 using namespace cage;
 static const uint32 assetsName = HashString("cage-tests/bottle/bottle.pack");
