@@ -5,6 +5,14 @@ message(STATUS "----------------------------------------------------------------
 
 file(GLOB cage-headers-list "../../externals/cage/include/*/*.h")
 add_executable(cage-headers main.cpp ${cage-headers-list})
-set_source_files_properties(${cage-headers-list} PROPERTIES LANGUAGE CXX)
+set(counter 0)
+foreach(item IN LISTS cage-headers-list)
+	get_filename_component(cpp "${item}" NAME)
+	set(cpp "${cpp}.${counter}.cpp")
+	configure_file("header.cpp.in" "${cpp}" @ONLY)
+	target_sources(cage-headers PRIVATE "${cpp}")
+	math(EXPR counter "${counter}+1")
+endforeach()
 target_link_libraries(cage-headers cage-engine)
 cage_ide_working_dir_in_place(cage-headers)
+
