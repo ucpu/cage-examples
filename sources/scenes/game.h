@@ -1,5 +1,4 @@
 #include <cage-core/files.h>
-#include <cage-core/fileUtils.h>
 #include <cage-core/entities.h>
 #include <cage-core/config.h>
 #include <cage-core/assetManager.h>

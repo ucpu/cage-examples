@@ -1,5 +1,4 @@
 #include <cage-core/files.h>
-#include <cage-core/fileUtils.h>
 #include <cage-core/math.h>
 
 using namespace cage;
