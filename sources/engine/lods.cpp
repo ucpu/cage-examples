@@ -3,6 +3,7 @@
 #include <cage-core/config.h>
 #include <cage-core/assetManager.h>
 #include <cage-core/hashString.h>
+#include <cage-core/macros.h>
 
 #include <cage-engine/window.h>
 #include <cage-engine/gui.h>

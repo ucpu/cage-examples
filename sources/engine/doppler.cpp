@@ -120,7 +120,7 @@ int main(int argc, char *args[])
 		engineInitialize(EngineCreateConfig());
 
 		// events
-#define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
+#define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> FUNC##Listener; FUNC##Listener.bind<&FUNC>(); FUNC##Listener.attach(EVENT);
 		GCHL_GENERATE((), soundInit, soundThread().initialize);
 		GCHL_GENERATE((), soundFinish, soundThread().finalize);
 		GCHL_GENERATE((), update, controlThread().update);

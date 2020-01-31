@@ -86,9 +86,9 @@ int main(int argc, char *args[])
 		engineInitialize(EngineCreateConfig());
 
 		// events
-#define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
-		GCHL_GENERATE((), update, controlThread().update);
-#undef GCHL_GENERATE
+		EventListener<bool()> updateListener;
+		updateListener.bind<&update>();
+		updateListener.attach(controlThread().update);
 		EventListener<bool()> windowCloseListener;
 		windowCloseListener.bind<&windowClose>();
 		windowCloseListener.attach(engineWindow()->events.windowClose);

@@ -2,6 +2,7 @@
 #include <cage-core/concurrent.h>
 #include <cage-core/entities.h>
 #include <cage-core/hashString.h>
+#include <cage-core/debug.h>
 
 #include <cage-engine/window.h>
 #include <cage-engine/engine.h>
@@ -117,7 +118,7 @@ int main(int argc, char *args[])
 			engineInitialize(EngineCreateConfig());
 
 			// events
-#define GCHL_GENERATE(FUNC, EVENT) EventListener<void()> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
+#define GCHL_GENERATE(FUNC, EVENT) EventListener<void()> FUNC##Listener; FUNC##Listener.bind<&FUNC>(); FUNC##Listener.attach(EVENT);
 			GCHL_GENERATE(controlUpdate, controlThread().update);
 			GCHL_GENERATE(controlInit, controlThread().initialize);
 			GCHL_GENERATE(controlFinish, controlThread().finalize);
