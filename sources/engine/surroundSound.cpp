@@ -27,8 +27,10 @@ void controlInit()
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		(void)t;
 		CAGE_COMPONENT_ENGINE(Camera, c, e);
-		c.ambientLight = vec3(0.5);
-		c.ambientDirectionalLight = vec3(0.5);
+		c.ambientColor = vec3(1);
+		c.ambientIntensity = 0.5;
+		c.ambientDirectionalColor = vec3(1);
+		c.ambientDirectionalIntensity = 0.5;
 		c.cameraType = CameraTypeEnum::Orthographic;
 		c.camera.orthographicSize = vec2(50, 50);
 		c.near = -50;

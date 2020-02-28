@@ -32,8 +32,10 @@ void controlInit()
 		Entity *e = ents->create(1);
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		CAGE_COMPONENT_ENGINE(Camera, c, e);
-		c.ambientLight = vec3(0.5);
-		c.ambientDirectionalLight = vec3(0.5);
+		c.ambientColor = vec3(1);
+		c.ambientIntensity = 0.5;
+		c.ambientDirectionalColor = vec3(1);
+		c.ambientDirectionalIntensity = 0.5;
 		c.effects = CameraEffectsFlags::CombinedPass;
 	}
 	{ // box 1

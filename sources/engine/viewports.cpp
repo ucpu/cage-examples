@@ -105,10 +105,9 @@ void regenerate()
 	{ // camera
 		Entity *e = ents->create(i + 1);
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
-		(void)t;
 		CAGE_COMPONENT_ENGINE(Camera, c, e);
-		c.ambientLight = vec3(0.1);
-		c.ambientLight[i] = 0;
+		c.ambientColor = vec3(0.1);
+		c.ambientColor[i] = 0;
 		c.sceneMask = 1 << i;
 		c.cameraOrder = i;
 		switch ((uint32)camsLayout)
@@ -163,7 +162,8 @@ bool update()
 		{
 			Entity *e = ents->get(i + 1);
 			CAGE_COMPONENT_ENGINE(Camera, c, e);
-			c.ambientLight = vec3(1, 1, 1) * 0.5;
+			c.ambientColor = vec3(1);
+			c.ambientIntensity = 0.5;
 			c.sceneMask = 1 << i;
 			c.cameraOrder = i;
 			rads ang = degs(20 * time / 1e6 + i * 120);

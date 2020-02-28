@@ -89,7 +89,8 @@ int main(int argc, char *args[])
 			t.position = vec3(0, 3, 30);
 			t.orientation = quat(degs(-10), degs(), degs());
 			CAGE_COMPONENT_ENGINE(Camera, c, e);
-			c.ambientLight = vec3(1, 1, 1) * 0.5;
+			c.ambientColor = vec3(1);
+			c.ambientIntensity = 0.5;
 			c.near = 0.1;
 			c.far = 200;
 		}

@@ -503,8 +503,10 @@ int main(int argc, char *args[])
 			t.position = vec3(11.5, 1, -1);
 			t.orientation = quat(degs(10), degs(110), degs());
 			CAGE_COMPONENT_ENGINE(Camera, c, e);
-			c.ambientLight = vec3(0.01);
-			c.ambientDirectionalLight = vec3(0.03);
+			c.ambientColor = vec3(1);
+			c.ambientIntensity = 0.01;
+			c.ambientDirectionalColor = vec3(1);
+			c.ambientDirectionalIntensity = 0.03;
 			c.near = 0.1;
 			c.far = 100;
 			c.effects = CameraEffectsFlags::CombinedPass;
@@ -516,7 +518,8 @@ int main(int argc, char *args[])
 			t.orientation = quat(degs(-75), degs(-120), degs());
 			CAGE_COMPONENT_ENGINE(Light, l, e);
 			l.lightType = LightTypeEnum::Directional;
-			l.color = vec3(3);
+			l.color = vec3(1);
+			l.intensity = 3;
 			CAGE_COMPONENT_ENGINE(Shadowmap, s, e);
 			s.resolution = 2048;
 			s.worldSize = vec3(30);

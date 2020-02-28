@@ -98,8 +98,10 @@ int main(int argc, char *args[])
 			CAGE_COMPONENT_ENGINE(Transform, t, e);
 			t.position = vec3(0, 1.7, 0);
 			CAGE_COMPONENT_ENGINE(Camera, c, e);
-			c.ambientLight = vec3(0.3);
-			c.ambientDirectionalLight = vec3(0.5);
+			c.ambientColor = vec3(1);
+			c.ambientIntensity = 0.3;
+			c.ambientDirectionalColor = vec3(1);
+			c.ambientDirectionalIntensity = 0.5;
 			c.near = 0.2;
 			c.far = 100;
 			c.cameraOrder = 3;
@@ -134,8 +136,10 @@ int main(int argc, char *args[])
 			r.object = HashString("cage-tests/room/camera.obj?camera");
 			r.sceneMask = 1;
 			CAGE_COMPONENT_ENGINE(Camera, c, e);
-			c.ambientLight = vec3(0.3);
-			c.ambientDirectionalLight = vec3(0.5);
+			c.ambientColor = vec3(1);
+			c.ambientIntensity = 0.3;
+			c.ambientDirectionalColor = vec3(1);
+			c.ambientDirectionalIntensity = 0.5;
 			c.near = 0.2;
 			c.far = 100;
 			c.cameraOrder = 2;

@@ -145,7 +145,7 @@ int main(int argc, char *args[])
 				Entity *e = engineEntities()->create(1);
 				CAGE_COMPONENT_ENGINE(Transform, t, e);
 				CAGE_COMPONENT_ENGINE(Camera, c, e);
-				c.ambientLight = vec3(1, 1, 1);
+				c.ambientColor = vec3(1);
 			}
 			{ // box 1
 				Entity *e = engineEntities()->create(2);

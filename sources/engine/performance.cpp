@@ -67,8 +67,10 @@ bool update()
 			CAGE_COMPONENT_ENGINE(Transform, t, e);
 			t.orientation = quat(degs(-30), degs(), degs());
 			CAGE_COMPONENT_ENGINE(Camera, c, e);
-			c.ambientLight = vec3(0.1);
-			c.ambientDirectionalLight = vec3(0.2);
+			c.ambientColor = vec3(1);
+			c.ambientIntensity = 0.1;
+			c.ambientDirectionalColor = vec3(1);
+			c.ambientDirectionalIntensity = 0.2;
 			c.effects = CameraEffectsFlags::CombinedPass;
 			cameraCtrl->setEntity(e);
 		}

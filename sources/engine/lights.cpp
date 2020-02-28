@@ -51,8 +51,8 @@ bool update()
 	{ // update ambient light
 		Entity *e = ents->get(10);
 		CAGE_COMPONENT_ENGINE(Camera, c, e);
-		c.ambientLight = getGuiColor(27);
-		c.ambientDirectionalLight = getGuiColor(28);
+		c.ambientColor = getGuiColor(27);
+		c.ambientDirectionalColor = getGuiColor(28);
 	}
 
 	for (uint32 i = 0; i < 3; i++)

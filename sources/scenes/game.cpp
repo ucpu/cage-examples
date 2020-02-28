@@ -83,8 +83,10 @@ void sceneReload()
 		CAGE_COMPONENT_ENGINE(Transform, t, cam);
 		t.position = vec3(0, 10, 30);
 		CAGE_COMPONENT_ENGINE(Camera, c, cam);
-		c.ambientLight = vec3(0.03);
-		c.ambientDirectionalLight = vec3(0.07);
+		c.ambientColor = vec3(1);
+		c.ambientIntensity = 0.03;
+		c.ambientDirectionalColor = vec3(1);
+		c.ambientDirectionalIntensity = 0.07;
 		c.cameraOrder = 2;
 		c.near = 0.1;
 		c.far = 200;
@@ -119,7 +121,8 @@ void sceneReload()
 		CAGE_COMPONENT_ENGINE(Transform, ts, directionalLights[i]);
 		ts.orientation = quat(degs(randomChance() * -20 - 30), degs(i * 360.0f / (float)directionalLightsCount + randomChance() * 180 / (float)directionalLightsCount), degs());
 		CAGE_COMPONENT_ENGINE(Light, ls, directionalLights[i]);
-		ls.color = vec3(2.5);
+		ls.color = vec3(1);
+		ls.intensity = 2.5;
 		ls.lightType = LightTypeEnum::Directional;
 		CAGE_COMPONENT_ENGINE(Shadowmap, ss, directionalLights[i]);
 		ss.resolution = 2048;

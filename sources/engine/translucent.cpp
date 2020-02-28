@@ -117,8 +117,10 @@ int main(int argc, char *args[])
 			c.near = 0.1;
 			c.far = 1000;
 			c.effects = CameraEffectsFlags::CombinedPass;
-			c.ambientLight = vec3(0.1);
-			c.ambientDirectionalLight = vec3(0.2);
+			c.ambientColor = vec3(1);
+			c.ambientIntensity = 0.1;
+			c.ambientDirectionalColor = vec3(1);
+			c.ambientDirectionalIntensity = 0.2;
 		}
 		{ // sun
 			Entity *e = ents->create(2);
@@ -127,7 +129,8 @@ int main(int argc, char *args[])
 			t.position = vec3(0, 5, 0);
 			CAGE_COMPONENT_ENGINE(Light, l, e);
 			l.lightType = LightTypeEnum::Directional;
-			l.color = vec3(2, 2, 1);
+			l.color = vec3(1, 1, 0.5);
+			l.intensity = 2;
 			CAGE_COMPONENT_ENGINE(Shadowmap, s, e);
 			s.resolution = 2048;
 			s.worldSize = vec3(15);
@@ -140,12 +143,14 @@ int main(int argc, char *args[])
 			CAGE_COMPONENT_ENGINE(Render, r, e);
 			r.object = HashString("cage-tests/bottle/other.obj?arrow");
 			r.color = vec3(1);
+			r.intensity = 2;
 			CAGE_COMPONENT_ENGINE(Light, l, e);
 			l.lightType = LightTypeEnum::Spot;
 			l.spotAngle = degs(60);
 			l.spotExponent = 40;
 			l.attenuation = vec3(0, 0, 0.03);
-			l.color = vec3(15);
+			l.color = vec3(1);
+			l.intensity = 15;
 			CAGE_COMPONENT_ENGINE(Shadowmap, s, e);
 			s.resolution = 1024;
 			s.worldSize = vec3(3, 50, 0);
