@@ -19,6 +19,23 @@ Holder<Window> window;
 Holder<SoundContext> sound;
 Holder<AssetManager> assets;
 
+// asset names
+const uint32 names[] = {
+	HashString("cage/cage.pack"),
+	HashString("cage/texture/texture.pack"),
+	HashString("cage/sound/sound.pack"),
+	HashString("cage/shader/shader.pack"),
+	HashString("cage/mesh/mesh.pack"),
+	HashString("cage/font/font.pack"),
+	HashString("cage/cage.pack"),
+	HashString("cage/texture/texture.pack"),
+	HashString("cage/sound/sound.pack"),
+	HashString("cage/shader/shader.pack"),
+	HashString("cage/mesh/mesh.pack"),
+	HashString("cage/font/font.pack"),
+};
+const uint32 count = sizeof(names) / sizeof(names[0]);
+
 void glThread()
 {
 	window->makeCurrent();
@@ -26,6 +43,8 @@ void glThread()
 	{
 		while (assets->processCustomThread(1));
 		threadSleep(1000);
+		for (uint32 i = 0; i < 50; i++)
+			assets->get<AssetSchemeIndexPack, AssetPack>(names[randomRange(0u, count)]);
 	}
 	assets->unloadCustomThread(1);
 	window->makeNotCurrent();
@@ -37,6 +56,8 @@ void slThread()
 	{
 		while (assets->processCustomThread(2));
 		threadSleep(1000);
+		for (uint32 i = 0; i < 50; i++)
+			assets->get<AssetSchemeIndexPack, AssetPack>(names[randomRange(0u, count)]);
 	}
 	assets->unloadCustomThread(2);
 }
@@ -56,7 +77,9 @@ int main(int argc, char *args[])
 		sound = newSoundContext(SoundContextCreateConfig(), "cage");
 
 		// asset schemes
-		assets = newAssetManager(AssetManagerCreateConfig());
+		AssetManagerCreateConfig cfg;
+		cfg.maintenancePeriod = 1000;
+		assets = newAssetManager(cfg);
 		assets->defineScheme<AssetPack>(AssetSchemeIndexPack, genAssetSchemePack());
 		assets->defineScheme<ShaderProgram>(AssetSchemeIndexShaderProgram, genAssetSchemeShaderProgram(1, window.get()));
 		assets->defineScheme<Texture>(AssetSchemeIndexTexture, genAssetSchemeTexture(1, window.get()));
@@ -68,22 +91,7 @@ int main(int argc, char *args[])
 		Holder<Thread> thrGl = newThread(Delegate<void()>().bind<&glThread>(), "opengl");
 		Holder<Thread> thrSl = newThread(Delegate<void()>().bind<&slThread>(), "sound");
 
-		// asset names
-		uint32 names[] = {
-			HashString("cage/cage.pack"),
-			HashString("cage/texture/texture.pack"),
-			HashString("cage/sound/sound.pack"),
-			HashString("cage/shader/shader.pack"),
-			HashString("cage/mesh/mesh.pack"),
-			HashString("cage/font/font.pack"),
-			HashString("cage/cage.pack"),
-			HashString("cage/texture/texture.pack"),
-			HashString("cage/sound/sound.pack"),
-			HashString("cage/shader/shader.pack"),
-			HashString("cage/mesh/mesh.pack"),
-			HashString("cage/font/font.pack"),
-		};
-		static const uint32 count = sizeof(names) / sizeof(names[0]);
+		// assets
 		bool loaded[count];
 		for (uint32 i = 0; i < count; i++)
 			loaded[i] = false;
@@ -108,6 +116,8 @@ int main(int argc, char *args[])
 				}
 				else
 					threadSleep(1000);
+				for (uint32 i = 0; i < 50; i++)
+					assets->get<AssetSchemeIndexPack, AssetPack>(names[randomRange(0u, count)]);
 			}
 			CAGE_LOG(SeverityEnum::Info, "test", stringizer() + "step " + (step + 1) + "/30 finished");
 		}
