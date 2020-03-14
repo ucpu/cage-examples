@@ -1,2 +1,6 @@
 
 #include "@item@"
+
+// second include to verify that the header has a header guard
+
+#include "@item@"

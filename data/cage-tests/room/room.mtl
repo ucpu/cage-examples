@@ -90,7 +90,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Bump door.tif
+map_Bump door.png
 
 newmtl Doorhandle
 Ns 309.803922
@@ -101,7 +101,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd door.tif
+map_Kd door.png
 
 newmtl Light
 Ns 94.117647
@@ -263,7 +263,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd door.tif
+map_Kd door.png
 
 newmtl doorframe
 Ns 180.392157

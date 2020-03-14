@@ -123,7 +123,7 @@ wallpaper.jpg
 []
 scheme = texture
 convert = heightToNormal
-door.tif
+door.png
 
 []
 scheme = pack
