@@ -150,7 +150,7 @@ int main(int argc, char *args[])
 		Holder<FpsCamera> fpsCamera = newFpsCamera(eye);
 		fpsCamera->mouseButton = MouseButtonsFlags::Left;
 		fpsCamera->movementSpeed = 0.1;
-		Holder<EngineProfiling> EngineProfiling = newEngineProfiling();
+		Holder<EngineProfiling> engineProfiling = newEngineProfiling();
 
 		engineAssets()->add(assetsName);
 		engineStart();
@@ -161,7 +161,7 @@ int main(int argc, char *args[])
 	}
 	catch (...)
 	{
-		CAGE_LOG(SeverityEnum::Error, "test", "caught exception");
+		detail::logCurrentCaughtException();
 		return 1;
 	}
 }

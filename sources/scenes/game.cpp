@@ -206,7 +206,7 @@ bool update()
 	{ // update shadowmaps
 		if (*directionalLights)
 		{
-			aabb sceneBox = getBoxForRenderScene();
+			aabb sceneBox = getBoxForScene(1);
 			for (Entity *e : directionalLights)
 				fitShadowmapForDirectionalLight(e, sceneBox);
 		}

@@ -160,7 +160,7 @@ public:
 		}
 		catch (...)
 		{
-			CAGE_LOG(SeverityEnum::Error, "test", "caught exception");
+			detail::logCurrentCaughtException();
 			return 1;
 		}
 	}

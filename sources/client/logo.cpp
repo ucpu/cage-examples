@@ -107,7 +107,7 @@ int main(int argc, char *args[])
 	}
 	catch (...)
 	{
-		CAGE_LOG(SeverityEnum::Error, "test", "caught exception");
+		detail::logCurrentCaughtException();
 		return 1;
 	}
 }

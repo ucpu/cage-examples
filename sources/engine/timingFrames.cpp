@@ -214,7 +214,7 @@ int main(int argc, char *args[])
 		engineWindow()->windowedSize(ivec2(800, 600));
 		engineWindow()->title("timing frames");
 		controlInit();
-		Holder<EngineProfiling> EngineProfiling = newEngineProfiling();
+		Holder<EngineProfiling> engineProfiling = newEngineProfiling();
 
 		engineStart();
 		engineFinalize();
@@ -223,7 +223,7 @@ int main(int argc, char *args[])
 	}
 	catch (...)
 	{
-		CAGE_LOG(SeverityEnum::Error, "test", "caught exception");
+		detail::logCurrentCaughtException();
 		return 1;
 	}
 }

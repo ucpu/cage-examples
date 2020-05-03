@@ -222,7 +222,7 @@ int main(int argc, char *args[])
 		engineWindow()->setMaximized();
 		engineWindow()->title("multiple viewports");
 		dirty = true;
-		Holder<EngineProfiling> EngineProfiling = newEngineProfiling();
+		Holder<EngineProfiling> engineProfiling = newEngineProfiling();
 
 		engineStart();
 		engineFinalize();
@@ -231,7 +231,7 @@ int main(int argc, char *args[])
 	}
 	catch (...)
 	{
-		CAGE_LOG(SeverityEnum::Error, "test", "caught exception");
+		detail::logCurrentCaughtException();
 		return 1;
 	}
 }

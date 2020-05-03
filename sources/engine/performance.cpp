@@ -269,7 +269,7 @@ int main(int argc, char *args[])
 		cameraCtrl->movementSpeed = 0.1;
 		cameraCtrl->mouseButton = MouseButtonsFlags::Left;
 
-		Holder<EngineProfiling> EngineProfiling = newEngineProfiling();
+		Holder<EngineProfiling> engineProfiling = newEngineProfiling();
 
 		updateThreads = newThreadPool();
 		updateThreads->function.bind<&updateBoxes>();
@@ -292,7 +292,7 @@ int main(int argc, char *args[])
 	}
 	catch (...)
 	{
-		CAGE_LOG(SeverityEnum::Error, "test", "caught exception");
+		detail::logCurrentCaughtException();
 		return 1;
 	}
 }
