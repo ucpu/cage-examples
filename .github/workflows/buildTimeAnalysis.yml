@@ -1,0 +1,61 @@
+name: Build Time Analysis
+on: [push]
+
+jobs:
+  Analysis:
+    runs-on: ubuntu-latest
+    env:
+      CC: clang
+      CXX: clang++
+      CFLAGS: -ftime-trace
+      CXXFLAGS: -ftime-trace
+    strategy:
+      fail-fast: false
+
+    steps:
+    - name: Install packages
+      run: |
+        sudo apt-get install -y xorg-dev clang-9
+
+    - name: Versions
+      run: |
+        cmake --version
+        clang --version
+        git --version
+
+    - name: Prepare Build Analyzer
+      run: |
+        cd
+        git clone --recursive https://github.com/aras-p/ClangBuildAnalyzer.git buildAnalyzer
+        cd buildAnalyzer
+        mkdir build
+        cd build
+        cmake -DCMAKE_BUILD_TYPE=RELEASE ..
+        cmake --build . -- -j3
+        echo "::add-path::$PWD"
+
+    - uses: actions/checkout@v1
+
+    - name: Checkout submodules
+      run: |
+        git submodule update --init --recursive
+
+    - name: Configure
+      run: |
+        mkdir build
+        cd build
+        cmake -DCMAKE_BUILD_TYPE=RELEASE ..
+
+    - name: Build
+      run: |
+        cd build
+        ClangBuildAnalyzer --start .
+        cmake --build . -- -j3
+        ClangBuildAnalyzer --stop . buildAnalysis
+
+    - name: Analyze
+      run: |
+        cd build
+        ClangBuildAnalyzer --analyze buildAnalysis
+
+
