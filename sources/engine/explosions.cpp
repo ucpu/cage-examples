@@ -181,7 +181,7 @@ bool update()
 			l.intensity *= 1 - p.dimming;
 		}
 		if (randomChance() < p.smoking)
-			newSmokes.push_back(vec4(t.position + randomDirection3() * (randomChance() * t.scale * 0.5), (randomChance() + 0.5) * t.scale));
+			newSmokes.emplace_back(vec4(t.position + randomDirection3() * (randomChance() * t.scale * 0.5), (randomChance() + 0.5) * t.scale));
 	}
 	for (const vec4 &s : newSmokes)
 		makeSmoke(vec3(s), s[3]);

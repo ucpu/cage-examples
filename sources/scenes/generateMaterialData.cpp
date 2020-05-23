@@ -136,8 +136,8 @@ namespace
 	static const uint32 facesCount = sizeof(sphereIndexes) / sizeof(sphereIndexes[0]) / 3;
 }
 
-static const uint32 R = 15;
-static const uint32 M = 12;
+constexpr uint32 RoughnessSteps = 15;
+constexpr uint32 MetallicSteps = 12;
 
 int main(int argc, const char *args[])
 {
@@ -172,18 +172,18 @@ int main(int argc, const char *args[])
 	fs->writeLine("scenes/common/ground.obj");
 	fs->writeLine("0 0 0");
 	fs->writeLine("0");
-	for (uint32 r = 0; r < R; r++)
+	for (uint32 r = 0; r < RoughnessSteps; r++)
 	{
-		for (uint32 m = 0; m < M; m++)
+		for (uint32 m = 0; m < MetallicSteps; m++)
 		{
 			string mat = stringizer() + "mat_" + r + "_" + m;
 			fm->writeLine(stringizer() + "newmtl " + mat);
-			fm->writeLine(stringizer() + "Ns " + (r * M + m)); // this is to prevent assimp from merging the materials
+			fm->writeLine(stringizer() + "Ns " + (r * MetallicSteps + m)); // this is to prevent assimp from merging the materials
 			Holder<File> fc = newFile(pathJoin(basePath, string() + "material.obj_" + mat + ".cpm"), FileMode(false, true));
 			fc->writeLine(stringizer() + "[base]");
 			fc->writeLine(stringizer() + "albedo = 0.95, 0.7, 0.2");
-			fc->writeLine(stringizer() + "roughness = " + ((r + 0.5) / R));
-			fc->writeLine(stringizer() + "metallic = " + ((m + 0.5) / M));
+			fc->writeLine(stringizer() + "roughness = " + ((r + 0.5) / RoughnessSteps));
+			fc->writeLine(stringizer() + "metallic = " + ((m + 0.5) / MetallicSteps));
 			fo->writeLine(stringizer() + "o " + mat);
 			fo->writeLine(stringizer() + "usemtl " + mat);
 			for (uint32 i = 0; i < facesCount; i++)
@@ -194,7 +194,7 @@ int main(int argc, const char *args[])
 			fa->writeLine(stringizer() + "material.obj?" + mat);
 			fp->writeLine(stringizer() + "material.obj?" + mat);
 			fs->writeLine(stringizer() + "scenes/material/material.obj?" + mat);
-			fs->writeLine(stringizer() + (sint32)(r * 3 - R * 3 / 2) + " 0 " + (sint32)(m * 3 - M * 3 / 2));
+			fs->writeLine(stringizer() + (sint32)(r * 3 - RoughnessSteps * 3 / 2) + " 0 " + (sint32)(m * 3 - MetallicSteps * 3 / 2));
 			fs->writeLine(stringizer() + "0");
 			fs->writeLine("");
 		}
