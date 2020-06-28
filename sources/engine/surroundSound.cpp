@@ -70,7 +70,7 @@ bool update()
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
 		ivec2 cursor = engineWindow()->mousePosition();
 		ivec2 resolution = engineWindow()->resolution();
-		vec3 cur = vec3((real)cursor.x / (real)resolution.x, (real)1 - (real)cursor.y / (real)resolution.y, 0);
+		vec3 cur = vec3((real)cursor[0] / (real)resolution[0], (real)1 - (real)cursor[1] / (real)resolution[1], 0);
 		t.position = 50 * (cur * 2 - 1) * vec3(1, 1, 0);
 	}
 	return false;

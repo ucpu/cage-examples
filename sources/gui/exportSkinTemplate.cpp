@@ -6,13 +6,11 @@
 class guiTestImpl : public guiTestClass
 {
 public:
-
 	void initialize() override
 	{
-		detail::guiSkinTemplateExport(engineGui()->skin(0), 2048)->encodeFile("guiSkinTemplate.png");
+		detail::guiSkinTemplateExport(engineGui()->skin(0), 2048)->exportFile("guiSkinTemplate.png");
 		engineStop();
 	}
-
 };
 
 MAIN(guiTestImpl, "export skin template")

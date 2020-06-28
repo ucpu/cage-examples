@@ -46,10 +46,10 @@ int main(int argc, char *args[])
 		// assets
 		Holder<AssetManager> assets = newAssetManager(AssetManagerCreateConfig());
 		assets->defineScheme<AssetPack>(AssetSchemeIndexPack, genAssetSchemePack());
-		assets->defineScheme<ShaderProgram>(AssetSchemeIndexShaderProgram, genAssetSchemeShaderProgram(0, window.get()));
-		assets->defineScheme<Texture>(AssetSchemeIndexTexture, genAssetSchemeTexture(0, window.get()));
-		assets->defineScheme<Mesh>(AssetSchemeIndexMesh, genAssetSchemeMesh(0, window.get()));
-		assets->defineScheme<Font>(AssetSchemeIndexFont, genAssetSchemeFont(0, window.get()));
+		assets->defineScheme<ShaderProgram>(AssetSchemeIndexShaderProgram, genAssetSchemeShaderProgram(0));
+		assets->defineScheme<Texture>(AssetSchemeIndexTexture, genAssetSchemeTexture(0));
+		assets->defineScheme<Mesh>(AssetSchemeIndexMesh, genAssetSchemeMesh(0));
+		assets->defineScheme<Font>(AssetSchemeIndexFont, genAssetSchemeFont(0));
 		assets->defineScheme<SoundSource>(AssetSchemeIndexSoundSource, genAssetSchemeSoundSource(0, sl.get()));
 
 		// load assets
@@ -90,7 +90,7 @@ int main(int argc, char *args[])
 			while (!closing)
 			{
 				res = window->resolution();
-				glViewport(0, 0, res.x, res.y);
+				glViewport(0, 0, res[0], res[1]);
 				mesh->dispatch();
 				speaker->update(getApplicationTime());
 				threadSleep(10000);

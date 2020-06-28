@@ -12,7 +12,7 @@ using namespace cage;
 
 void testScreen(const string &screenId, const ivec2 &resolution, uint32 frequency)
 {
-	CAGE_LOG(SeverityEnum::Info, "test", stringizer() + "testing monitor: '" + screenId + "', resolution: " + resolution.x + " * " + resolution.y + ", frequency: " + frequency);
+	CAGE_LOG(SeverityEnum::Info, "test", stringizer() + "testing monitor: '" + screenId + "', resolution: " + resolution[0] + " * " + resolution[1] + ", frequency: " + frequency);
 	{
 		vec3 color = randomChance3();
 		Holder<Window> w = newWindow();
@@ -22,7 +22,7 @@ void testScreen(const string &screenId, const ivec2 &resolution, uint32 frequenc
 		detail::initializeOpengl();
 		for (int i = 0; i < 20; i++)
 		{
-			glViewport(0, 0, resolution.x, resolution.y);
+			glViewport(0, 0, resolution[0], resolution[1]);
 			glClearColor(color[0].value, color[1].value, color[2].value, 0);
 			glClear(GL_COLOR_BUFFER_BIT);
 			w->swapBuffers();
@@ -43,24 +43,24 @@ int main(int argc, char *args[])
 		log1->output.bind<logOutputStdOut>();
 
 		Holder<ScreenList> list = newScreenList();
-		for (uint32 i = 0; i < list->devicesCount(); i++)
+		uint32 defaultIndex = list->defaultDevice();
+		for (const ScreenDevice *d : list->devices())
 		{
-			CAGE_LOG(SeverityEnum::Info, "listing", stringizer() + "monitor" + (list->defaultDevice() == i ? ", primary" : ""));
-			const ScreenDevice *d = list->device(i);
+			CAGE_LOG(SeverityEnum::Info, "listing", stringizer() + "monitor" + (defaultIndex-- == 0 ? ", primary" : "") + ":");
 			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "monitor id: '" + d->id() + "'");
 			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "monitor name: '" + d->name() + "'");
 
 			ScreenMode testmode;
 
-			for (uint32 j = 0; j < d->modesCount(); j++)
+			uint32 currentIndex = d->currentMode();
+			for (const ScreenMode &m : d->modes())
 			{
-				const ScreenMode &m = d->mode(j);
-				CAGE_LOG(SeverityEnum::Info, "listing", stringizer() + "video mode " + j + (d->currentMode() == j ? ", current" : ""));
-				ivec2 r = m.resolution;
-				CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "resolution: " + r.x + "*" + r.y);
-				CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "frequency: " + m.frequency);
-				if (d->currentMode() == j)
+				if (currentIndex == 0)
 					testmode = m;
+				CAGE_LOG(SeverityEnum::Info, "listing", stringizer() + "video mode " + (currentIndex-- == 0 ? ", current" : "") + ":");
+				ivec2 r = m.resolution;
+				CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "resolution: " + r[0] + "*" + r[1]);
+				CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "frequency: " + m.frequency);
 			}
 
 			testScreen(d->id(), testmode.resolution, testmode.frequency);

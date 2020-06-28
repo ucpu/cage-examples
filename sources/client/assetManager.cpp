@@ -81,10 +81,10 @@ int main(int argc, char *args[])
 		cfg.maintenancePeriod = 1000;
 		assets = newAssetManager(cfg);
 		assets->defineScheme<AssetPack>(AssetSchemeIndexPack, genAssetSchemePack());
-		assets->defineScheme<ShaderProgram>(AssetSchemeIndexShaderProgram, genAssetSchemeShaderProgram(1, window.get()));
-		assets->defineScheme<Texture>(AssetSchemeIndexTexture, genAssetSchemeTexture(1, window.get()));
-		assets->defineScheme<Mesh>(AssetSchemeIndexMesh, genAssetSchemeMesh(1, window.get()));
-		assets->defineScheme<Font>(AssetSchemeIndexFont, genAssetSchemeFont(1, window.get()));
+		assets->defineScheme<ShaderProgram>(AssetSchemeIndexShaderProgram, genAssetSchemeShaderProgram(1));
+		assets->defineScheme<Texture>(AssetSchemeIndexTexture, genAssetSchemeTexture(1));
+		assets->defineScheme<Mesh>(AssetSchemeIndexMesh, genAssetSchemeMesh(1));
+		assets->defineScheme<Font>(AssetSchemeIndexFont, genAssetSchemeFont(1));
 		assets->defineScheme<SoundSource>(AssetSchemeIndexSoundSource, genAssetSchemeSoundSource(2, sound.get()));
 
 		// threads

@@ -45,7 +45,7 @@ public:
 	{
 		window->processEvents();
 		ivec2 resolution = window->resolution();
-		glViewport(0, 0, resolution.x, resolution.y);
+		glViewport(0, 0, resolution[0], resolution[1]);
 		vec3 color = colorHsvToRgb(vec3(hue, 1, 1));
 		hue = (hue + 0.002) % 1;
 		glClearColor(color[0].value, color[1].value, color[2].value, 0);
@@ -75,43 +75,43 @@ public:
 
 	bool windowMove(const ivec2 &p)
 	{
-		CAGE_LOG(SeverityEnum::Info, "event", stringizer() + "move window " + index + " to " + p.x + ", " + p.y);
+		CAGE_LOG(SeverityEnum::Info, "event", stringizer() + "move window " + index + " to " + p[0] + ", " + p[1]);
 		return true;
 	}
 
 	bool windowResize(const ivec2 &p)
 	{
-		CAGE_LOG(SeverityEnum::Info, "event", stringizer() + "resize window " + index + " to " + p.x + ", " + p.y);
+		CAGE_LOG(SeverityEnum::Info, "event", stringizer() + "resize window " + index + " to " + p[0] + ", " + p[1]);
 		return true;
 	}
 
 	bool mousePress(MouseButtonsFlags b, ModifiersFlags m, const ivec2 &p)
 	{
-		CAGE_LOG(SeverityEnum::Info, "event", stringizer() + "mouse press button " + (uint32)b + ", mods " + (uint32)m + ", at " + p.x + ", " + p.y + " in window " + index);
+		CAGE_LOG(SeverityEnum::Info, "event", stringizer() + "mouse press button " + (uint32)b + ", mods " + (uint32)m + ", at " + p[0] + ", " + p[1] + " in window " + index);
 		return true;
 	}
 
 	bool mouseDouble(MouseButtonsFlags b, ModifiersFlags m, const ivec2 &p)
 	{
-		CAGE_LOG(SeverityEnum::Info, "event", stringizer() + "mouse double click button " + (uint32)b + ", mods " + (uint32)m + ", at " + p.x + ", " + p.y + " in window " + index);
+		CAGE_LOG(SeverityEnum::Info, "event", stringizer() + "mouse double click button " + (uint32)b + ", mods " + (uint32)m + ", at " + p[0] + ", " + p[1] + " in window " + index);
 		return true;
 	}
 
 	bool mouseRelease(MouseButtonsFlags b, ModifiersFlags m, const ivec2 &p)
 	{
-		CAGE_LOG(SeverityEnum::Info, "event", stringizer() + "mouse release button " + (uint32)b + ", mods " + (uint32)m + ", at " + p.x + ", " + p.y + " in window " + index);
+		CAGE_LOG(SeverityEnum::Info, "event", stringizer() + "mouse release button " + (uint32)b + ", mods " + (uint32)m + ", at " + p[0] + ", " + p[1] + " in window " + index);
 		return true;
 	}
 
 	bool mouseMove(MouseButtonsFlags b, ModifiersFlags m, const ivec2 &p)
 	{
-		CAGE_LOG(SeverityEnum::Info, "event", stringizer() + "mouse move button " + (uint32)b + ", mods " + (uint32)m + ", to " + p.x + ", " + p.y + " in window " + index);
+		CAGE_LOG(SeverityEnum::Info, "event", stringizer() + "mouse move button " + (uint32)b + ", mods " + (uint32)m + ", to " + p[0] + ", " + p[1] + " in window " + index);
 		return true;
 	}
 
 	bool mouseWheel(sint32 v, ModifiersFlags m, const ivec2 &p)
 	{
-		CAGE_LOG(SeverityEnum::Info, "event", stringizer() + "mouse wheel " + v + ", mods " + (uint32)m + ", at " + p.x + ", " + p.y + " in window " + index);
+		CAGE_LOG(SeverityEnum::Info, "event", stringizer() + "mouse wheel " + v + ", mods " + (uint32)m + ", at " + p[0] + ", " + p[1] + " in window " + index);
 		return true;
 	}
 

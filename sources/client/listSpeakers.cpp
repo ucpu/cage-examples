@@ -52,30 +52,21 @@ int main(int argc, char *args[])
 		log1->output.bind<logOutputStdOut>();
 
 		Holder<SpeakerList> list = newSpeakerList();
-		uint32 dc = list->devicesCount();
-		uint32 dd = list->defaultDevice();
-		for (uint32 di = 0; di < dc; di++)
+		uint32 defaultDevice = list->defaultDevice();
+		for (const SpeakerDevice *d : list->devices())
 		{
-			const SpeakerDevice *d = list->device(di);
-			CAGE_LOG(SeverityEnum::Info, "listing", stringizer() + "device" + (d->raw() ? ", raw" : "") + (dd == di ? ", default" : ""));
+			CAGE_LOG(SeverityEnum::Info, "listing", stringizer() + "device" + (d->raw() ? ", raw" : "") + (defaultDevice-- == 0 ? ", default" : ""));
 			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "id: '" + d->id() + "'");
 			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "name: '" + d->name() + "'");
 			{
-				uint32 lc = d->layoutsCount(), ld = d->currentLayout();
-				for (uint32 li = 0; li < lc; li++)
-				{
-					const SpeakerLayout &l = d->layout(li);
-					CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "layout name: '" + l.name + "', channels: " + l.channels + (li == ld ? ", current" : ""));
-				}
+				uint32 currentLayout = d->currentLayout();
+				for (const SpeakerLayout &l : d->layouts())
+					CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "layout name: '" + l.name + "', channels: " + l.channels + (currentLayout-- == 0 ? ", current" : ""));
 			}
 			{
-				uint32 sc = d->sampleratesCount(), sd = d->currentSamplerate();
-				for (uint32 si = 0; si < sc; si++)
-				{
-					const SpeakerSamplerate &s = d->samplerate(si);
+				for (const SpeakerSamplerate &s : d->samplerates())
 					CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "samplerate min: " + s.minimum + ", max: " + s.maximum);
-				}
-				CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "samplerate current: " + sd);
+				CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "samplerate current: " + d->currentSamplerate());
 			}
 			if (d->raw())
 				continue;
