@@ -1,6 +1,6 @@
 #include <cage-core/logger.h>
 #include <cage-core/concurrent.h>
-#include <cage-core/assetStructs.h>
+#include <cage-core/assetContext.h>
 #include <cage-core/assetManager.h>
 #include <cage-core/timer.h>
 #include <cage-core/hashString.h>
@@ -15,7 +15,7 @@
 using namespace cage;
 
 bool closing = false;
-const uint32 assetsName = HashString("cage-tests/logo/logo.pack");
+constexpr uint32 assetsName = HashString("cage-tests/logo/logo.pack");
 
 bool windowClose()
 {

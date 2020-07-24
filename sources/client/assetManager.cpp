@@ -1,6 +1,6 @@
 #include <cage-core/logger.h>
 #include <cage-core/concurrent.h>
-#include <cage-core/assetStructs.h>
+#include <cage-core/assetContext.h>
 #include <cage-core/assetManager.h>
 #include <cage-core/timer.h>
 #include <cage-core/hashString.h>
@@ -20,7 +20,7 @@ Holder<SoundContext> sound;
 Holder<AssetManager> assets;
 
 // asset names
-const uint32 names[] = {
+constexpr const uint32 names[] = {
 	HashString("cage/cage.pack"),
 	HashString("cage/texture/texture.pack"),
 	HashString("cage/sound/sound.pack"),
@@ -34,7 +34,7 @@ const uint32 names[] = {
 	HashString("cage/mesh/mesh.pack"),
 	HashString("cage/font/font.pack"),
 };
-const uint32 count = sizeof(names) / sizeof(names[0]);
+constexpr uint32 count = sizeof(names) / sizeof(names[0]);
 
 void glThread()
 {
