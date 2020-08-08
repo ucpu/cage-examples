@@ -7,9 +7,11 @@
 
 using namespace cage;
 
-void testDevice(const string &deviceId, uint32 sampleRate, bool raw)
+void testDevice(const string &deviceId, uint32 sampleRate)
 {
 	Holder<SoundContext> sndContext = newSoundContext(SoundContextCreateConfig(), "testAudio:Context");
+	CAGE_LOG(SeverityEnum::Info, "speaker", stringizer() + "backend: '" + sndContext->getBackendName() + "'");
+
 	Holder<MixingBus> sndBus = newMixingBus(sndContext.get());
 	Holder<SoundSource> sndSource = newSoundSource(sndContext.get());
 	sndSource->addOutput(sndBus.get());
@@ -17,17 +19,14 @@ void testDevice(const string &deviceId, uint32 sampleRate, bool raw)
 	SpeakerCreateConfig cnf;
 	cnf.deviceId = deviceId;
 	cnf.sampleRate = sampleRate;
-	cnf.deviceRaw = raw;
 	Holder<Speaker> sndSpeaker = newSpeakerOutput(sndContext.get(), cnf, "testAudio:Speaker");
 	sndSpeaker->setInput(sndBus.get());
 
-	CAGE_LOG(SeverityEnum::Info, "speaker", stringizer() + "stream: '" + sndSpeaker->getStreamName() + "'");
-	CAGE_LOG(SeverityEnum::Info, "speaker", stringizer() + "id: '" + sndSpeaker->getDeviceId() + "'");
-	CAGE_LOG(SeverityEnum::Info, "speaker", stringizer() + "name: '" + sndSpeaker->getDeviceName() + "'");
-	CAGE_LOG(SeverityEnum::Info, "speaker", stringizer() + "raw: " + sndSpeaker->getDeviceRaw());
-	CAGE_LOG(SeverityEnum::Info, "speaker", stringizer() + "layout: '" + sndSpeaker->getLayoutName() + "'");
-	CAGE_LOG(SeverityEnum::Info, "speaker", stringizer() + "channels: " + sndSpeaker->getChannelsCount());
-	CAGE_LOG(SeverityEnum::Info, "speaker", stringizer() + "sample rate: " + sndSpeaker->getOutputSampleRate());
+	CAGE_LOG(SeverityEnum::Info, "speaker", stringizer() + "stream name: '" + sndSpeaker->getStreamName() + "'");
+	CAGE_LOG(SeverityEnum::Info, "speaker", stringizer() + "device id: '" + sndSpeaker->getDeviceId() + "'");
+	CAGE_LOG(SeverityEnum::Info, "speaker", stringizer() + "channels: " + sndSpeaker->getChannels());
+	CAGE_LOG(SeverityEnum::Info, "speaker", stringizer() + "sample rate: " + sndSpeaker->getSamplerate());
+	CAGE_LOG(SeverityEnum::Info, "speaker", stringizer() + "latency: " + sndSpeaker->getLatency());
 
 	CAGE_LOG(SeverityEnum::Info, "speaker", "play start");
 	Holder<Timer> tmr = newTimer();
@@ -53,25 +52,20 @@ int main(int argc, char *args[])
 
 		Holder<SpeakerList> list = newSpeakerList();
 		uint32 defaultDevice = list->defaultDevice();
-		for (const SpeakerDevice *d : list->devices())
+		for (const SpeakerDevice &d : list->devices())
 		{
-			CAGE_LOG(SeverityEnum::Info, "listing", stringizer() + "device" + (d->raw() ? ", raw" : "") + (defaultDevice-- == 0 ? ", default" : ""));
-			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "id: '" + d->id() + "'");
-			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "name: '" + d->name() + "'");
+			CAGE_LOG(SeverityEnum::Info, "listing", "-------------------------------------");
+			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "id: '" + d.id + "'");
+			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "name: '" + d.name + "'");
+			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "group: '" + d.group + "'");
+			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "vendor: '" + d.vendor + "'");
+			if (d.channels)
 			{
-				uint32 currentLayout = d->currentLayout();
-				for (const SpeakerLayout &l : d->layouts())
-					CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "layout name: '" + l.name + "', channels: " + l.channels + (currentLayout-- == 0 ? ", current" : ""));
+				CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "channels: " + d.channels);
+				CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "sample rate min: " + d.minSamplerate + ", max: " + d.maxSamplerate + ", default: " + d.defaultSamplerate);
+				testDevice(d.id, 44100);
+				testDevice(d.id, 48000);
 			}
-			{
-				for (const SpeakerSamplerate &s : d->samplerates())
-					CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "samplerate min: " + s.minimum + ", max: " + s.maximum);
-				CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "samplerate current: " + d->currentSamplerate());
-			}
-			if (d->raw())
-				continue;
-			testDevice(d->id(), 44100, false);
-			testDevice(d->id(), 48000, false);
 		}
 
 		return 0;
