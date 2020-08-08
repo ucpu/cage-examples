@@ -39,11 +39,9 @@ void updateBoxes(uint32 thrIndex, uint32 thrCount)
 	uint32 boxesCount = RenderComponent::component->group()->count();
 	Entity *const *boxesEntities = RenderComponent::component->group()->array();
 
-	uint32 myCount = boxesCount / thrCount;
-	uint32 start = thrIndex * myCount;
-	uint32 end = start + myCount;
-	if (thrIndex == thrCount - 1)
-		end = boxesCount;
+	const uint32 myCount = boxesCount / thrCount;
+	const uint32 start = thrIndex * myCount;
+	const uint32 end = thrIndex == thrCount - 1 ? boxesCount : start + myCount;
 
 	for (uint32 i = start; i != end; i++)
 	{
