@@ -78,7 +78,6 @@ int main(int argc, char *args[])
 
 		// asset schemes
 		AssetManagerCreateConfig cfg;
-		cfg.maintenancePeriod = 1000;
 		assets = newAssetManager(cfg);
 		assets->defineScheme<AssetPack>(AssetSchemeIndexPack, genAssetSchemePack());
 		assets->defineScheme<ShaderProgram>(AssetSchemeIndexShaderProgram, genAssetSchemeShaderProgram(1));
