@@ -4,6 +4,15 @@ scheme = pack
 explosion.pack
 
 
+[]
+scheme = mesh
+uvs = false
+floor.obj
+
+[]
+scheme = collider
+floor.obj;collider
+
 
 []
 scheme = mesh

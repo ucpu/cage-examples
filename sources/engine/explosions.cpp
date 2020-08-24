@@ -7,6 +7,7 @@
 #include <cage-core/macros.h>
 #include <cage-core/camera.h>
 #include <cage-core/geometry.h>
+#include <cage-core/collider.h>
 
 #include <cage-engine/window.h>
 #include <cage-engine/gui.h>
@@ -110,16 +111,15 @@ void makeExplosion(const vec3 &position)
 	}
 }
 
-bool windowClose()
+void windowClose()
 {
 	engineStop();
-	return false;
 }
 
-bool mousePress(MouseButtonsFlags buttons, ModifiersFlags, const ivec2 &iPoint)
+void mousePress(MouseButtonsFlags buttons, ModifiersFlags, const ivec2 &iPoint)
 {
 	if (none(buttons & MouseButtonsFlags::Left))
-		return false;
+		return;
 
 	vec3 position;
 	{
@@ -142,15 +142,32 @@ bool mousePress(MouseButtonsFlags buttons, ModifiersFlags, const ivec2 &iPoint)
 		plane floor = plane(vec3(), vec3(0, 1, 0));
 		position = intersection(ray, floor);
 		if (!position.valid())
-			return true; // click outside floor
+			return; // click outside floor
 	}
 
 	makeExplosion(position);
-	return true;
 }
 
-bool update()
+void reflectParticleVelocity(Particle &p, TransformComponent &t, Collider *collider)
 {
+	if (lengthSquared(p.velocity) < 1e-3)
+		return;
+	uint32 ti = m;
+	if (intersection(makeSegment(t.position, t.position + p.velocity), collider, transform(), ti).valid())
+	{
+		const vec3 n = collider->triangles()[ti].normal();
+		real d = dot(n, p.velocity);
+		if (d < 0)
+			p.velocity = p.velocity - 2 * d * n;
+	}
+}
+
+void update()
+{
+	Holder<Collider> collider = engineAssets()->get<AssetSchemeIndexCollider, Collider>(HashString("cage-tests/explosion/floor.obj;collider"));
+	if (!collider)
+		return;
+	
 	EntityManager *ents = engineEntities();
 
 	vec3 cameraCenter;
@@ -171,8 +188,9 @@ bool update()
 			continue;
 		}
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
-		p.velocity += vec3(0, -p.gravity, 0);
 		p.velocity *= 1 - p.drag;
+		p.velocity += vec3(0, -p.gravity, 0);
+		reflectParticleVelocity(p, t, collider.get());
 		t.position += p.velocity;
 		t.orientation = quat(t.position - cameraCenter, vec3(0, 1, 0));
 		if (p.dimming.valid())
@@ -187,7 +205,6 @@ bool update()
 		makeSmoke(vec3(s), s[3]);
 
 	entitiesToDestroy->destroy();
-	return false;
 }
 
 int main(int argc, char *args[])
@@ -202,11 +219,15 @@ int main(int argc, char *args[])
 		engineInitialize(EngineCreateConfig());
 
 		// events
-#define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
-		GCHL_GENERATE((), windowClose, engineWindow()->events.windowClose);
-		GCHL_GENERATE((MouseButtonsFlags, ModifiersFlags, const ivec2 &), mousePress, engineWindow()->events.mousePress);
-		GCHL_GENERATE((), update, controlThread().update);
-#undef GCHL_GENERATE
+		EventListener<void()> closeListener;
+		closeListener.attach(engineWindow()->events.windowClose);
+		closeListener.bind<&windowClose>();
+		EventListener<void()> updateListener;
+		updateListener.attach(controlThread().update);
+		updateListener.bind<&update>();
+		EventListener<void(MouseButtonsFlags, ModifiersFlags, const ivec2 &)> mouseListener;
+		mouseListener.attach(engineWindow()->events.mousePress);
+		mouseListener.bind<&mousePress>();
 
 		// window
 		engineWindow()->setMaximized();
@@ -245,7 +266,7 @@ int main(int argc, char *args[])
 		{ // floor
 			Entity *e = ents->create(3);
 			CAGE_COMPONENT_ENGINE(Render, r, e);
-			r.object = HashString("cage-tests/skeletons/floor/floor.obj");
+			r.object = HashString("cage-tests/explosion/floor.obj");
 			CAGE_COMPONENT_ENGINE(Transform, t, e);
 			t.position[1] = -0.5;
 		}

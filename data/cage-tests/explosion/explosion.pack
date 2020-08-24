@@ -1,6 +1,7 @@
 
 []
-../skeletons/floor/floor.pack
+floor.obj
+floor.obj;collider
 
 []
 sprite.obj;explosion_1
