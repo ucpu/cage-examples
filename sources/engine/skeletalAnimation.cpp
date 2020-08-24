@@ -15,8 +15,7 @@
 #include <vector>
 
 using namespace cage;
-
-static const uint32 assetsName = HashString("cage-tests/skeletons/skeletons.pack");
+constexpr uint32 assetsName = HashString("cage-tests/skeletons/skeletons.pack");
 
 bool windowClose()
 {
@@ -70,7 +69,7 @@ int main(int argc, char *args[])
 		// entities
 		EntityManager *ents = engineEntities();
 		{ // lemurs
-			const char *animations[] = { "cage-tests/skeletons/lemur/lemur.x?AttackMelee", "cage-tests/skeletons/lemur/lemur.x?idle", "cage-tests/skeletons/lemur/lemur.x?run" };
+			constexpr const char *animations[] = { "cage-tests/skeletons/lemur/lemur.x?AttackMelee", "cage-tests/skeletons/lemur/lemur.x?idle", "cage-tests/skeletons/lemur/lemur.x?run" };
 			uint32 i = 0;
 			for (const char *animation : animations)
 			{
@@ -120,7 +119,7 @@ int main(int argc, char *args[])
 #endif
 		}
 		{ // cylinders
-			const char *animations[] = { "cage-tests/skeletons/cylinder/cylinder.x?bend", "cage-tests/skeletons/cylinder/cylinder.x?curve" };
+			constexpr const char *animations[] = { "cage-tests/skeletons/cylinder/cylinder.x?bend", "cage-tests/skeletons/cylinder/cylinder.x?curve" };
 			uint32 i = 0;
 			for (const char *animation : animations)
 			{
@@ -165,7 +164,7 @@ int main(int argc, char *args[])
 			}
 		}
 		{ // monks
-			const char *animations[] = { "cage-tests/skeletons/monk/monk.x?Attack1", "cage-tests/skeletons/monk/monk.x?Dance", "cage-tests/skeletons/monk/monk.x?Die" };
+			constexpr const char *animations[] = { "cage-tests/skeletons/monk/monk.x?Attack1", "cage-tests/skeletons/monk/monk.x?Dance", "cage-tests/skeletons/monk/monk.x?Die" };
 			uint32 i = 0;
 			for (const char *animation : animations)
 			{
@@ -203,7 +202,7 @@ int main(int argc, char *args[])
 		}
 		{ // gimbals/spawners
 			uint32 i = 0;
-			const char *objects[] = { "cage-tests/skeletons/gimbal/spawner_x.object", "cage-tests/skeletons/gimbal/spawner_fbx.object" };
+			constexpr const char *objects[] = { "cage-tests/skeletons/gimbal/spawner_x.object", "cage-tests/skeletons/gimbal/spawner_fbx.object" };
 			for (const char *object : objects)
 			{
 				Entity *e = ents->create(30 + i);

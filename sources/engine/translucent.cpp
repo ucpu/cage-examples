@@ -15,9 +15,9 @@
 #include <cage-engine/highPerformanceGpuHint.h>
 
 using namespace cage;
-static const uint32 assetsName = HashString("cage-tests/translucent/translucent.pack");
-static const uint32 knotsCount = 40;
-static const uint32 bulbsCount = 5;
+constexpr uint32 assetsName = HashString("cage-tests/translucent/translucent.pack");
+constexpr uint32 knotsCount = 40;
+constexpr uint32 bulbsCount = 5;
 
 Holder<NoiseFunction> bulbsNoise[3];
 vec3 bulbsVelocities[bulbsCount];

@@ -17,8 +17,8 @@
 #include <vector>
 
 using namespace cage;
-static const uint32 assetsName = HashString("cage-tests/room/room.pack");
-static const uint32 screenName = HashString("cage-tests/room/tvscreen.jpg");
+constexpr uint32 assetsName = HashString("cage-tests/room/room.pack");
+constexpr uint32 screenName = HashString("cage-tests/room/tvscreen.jpg");
 
 bool windowClose()
 {

@@ -12,7 +12,7 @@
 
 using namespace cage;
 
-const uint32 assetsName = HashString("cage-tests/sounds/sounds.pack");
+constexpr uint32 assetsName = HashString("cage-tests/sounds/sounds.pack");
 Holder<SoundSource> toneSource;
 Holder<MixingBus> toneBus;
 

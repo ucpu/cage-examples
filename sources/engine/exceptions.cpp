@@ -12,9 +12,9 @@
 using namespace cage;
 volatile bool fullStop = false;
 
-static const float probInit = 0.05f;
-static const float probLoop = 0.001f;
-static const float probFinish = 0.1f;
+constexpr float probInit = 0.05f;
+constexpr float probLoop = 0.001f;
+constexpr float probFinish = 0.1f;
 
 void windowClose()
 {

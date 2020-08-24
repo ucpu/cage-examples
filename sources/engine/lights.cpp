@@ -16,7 +16,7 @@
 #include <vector>
 
 using namespace cage;
-static const uint32 assetsName = HashString("cage-tests/bottle/bottle.pack");
+constexpr uint32 assetsName = HashString("cage-tests/bottle/bottle.pack");
 
 bool windowClose()
 {

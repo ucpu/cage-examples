@@ -1,0 +1,8 @@
+
+[base]
+mask = 1
+
+[textures]
+special = special.png
+
+[flags]

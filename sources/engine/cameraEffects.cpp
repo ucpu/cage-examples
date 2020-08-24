@@ -13,7 +13,7 @@
 
 using namespace cage;
 
-static const uint32 assetsName = HashString("cage-tests/camera-effects/effects.pack");
+constexpr uint32 assetsName = HashString("cage-tests/camera-effects/effects.pack");
 
 bool windowClose()
 {

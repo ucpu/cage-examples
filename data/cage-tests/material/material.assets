@@ -1,0 +1,13 @@
+
+[]
+scheme = pack
+material.pack
+
+[]
+scheme = texture
+special.png
+
+[]
+scheme = mesh
+material = plane.cpm
+plane.obj

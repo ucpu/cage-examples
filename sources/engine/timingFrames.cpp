@@ -115,8 +115,8 @@ bool guiInit()
 	}
 
 	// controls
-	static const string names[] = { "control tick", "sound tick", "control delay", "prepare delay", "dispatch delay", "sound delay" };
-	static const uint64 values[] = { 1000 / 30, 1000 / 60, 0, 0, 0, 0 };
+	constexpr const char *names[] = { "control tick", "sound tick", "control delay", "prepare delay", "dispatch delay", "sound delay" };
+	constexpr const uint64 values[] = { 1000 / 30, 1000 / 60, 0, 0, 0, 0 };
 	static_assert(sizeof(names) / sizeof(names[0]) == sizeof(values) / sizeof(values[0]), "arrays must have same length");
 	for (uint32 i = 0; i < sizeof(names) / sizeof(names[0]); i++)
 	{

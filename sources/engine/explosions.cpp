@@ -18,10 +18,10 @@
 #include <vector>
 
 using namespace cage;
-static const uint32 assetsName = HashString("cage-tests/explosion/explosion.pack");
-static const uint32 assetsExplosions[] = { HashString("cage-tests/explosion/sprite.obj;explosion_1"), HashString("cage-tests/explosion/sprite.obj;explosion_2"), HashString("cage-tests/explosion/sprite.obj;explosion_3") };
-static const uint32 assetsSmokes[] = { HashString("cage-tests/explosion/sprite.obj;smoke_1"), HashString("cage-tests/explosion/sprite.obj;smoke_2") };
-static const uint32 assetsSparks[] = { HashString("cage-tests/explosion/sprite.obj;spark_1") };
+constexpr uint32 assetsName = HashString("cage-tests/explosion/explosion.pack");
+constexpr const uint32 assetsExplosions[] = { HashString("cage-tests/explosion/sprite.obj;explosion_1"), HashString("cage-tests/explosion/sprite.obj;explosion_2"), HashString("cage-tests/explosion/sprite.obj;explosion_3") };
+constexpr const uint32 assetsSmokes[] = { HashString("cage-tests/explosion/sprite.obj;smoke_1"), HashString("cage-tests/explosion/sprite.obj;smoke_2") };
+constexpr const uint32 assetsSparks[] = { HashString("cage-tests/explosion/sprite.obj;spark_1") };
 EntityGroup *entitiesToDestroy;
 
 uint32 pickExplosion()

@@ -12,16 +12,16 @@
 #include <cage-engine/highPerformanceGpuHint.h>
 
 using namespace cage;
-static const uint32 assetsName = HashString("cage-tests/texts/texts.pack");
+constexpr uint32 assetsName = HashString("cage-tests/texts/texts.pack");
 
-const char *fontNames[] = {
+constexpr const char *fontNames[] = {
 	"cage-tests/gui/DroidSansMono.ttf",
 	"cage-tests/gui/immortal.ttf",
 	"cage-tests/gui/roboto.ttf",
 	"cage-tests/gui/asimov.otf",
 	"cage/font/ubuntu/Ubuntu-R.ttf",
 };
-const string labelTexts[] = {
+constexpr const char *labelTexts[] = {
 	"Droid Sans Mono",
 	"Immortal",
 	"Roboto",
@@ -29,7 +29,7 @@ const string labelTexts[] = {
 	"Ubuntu",
 };
 
-const uint32 fontsCount = sizeof(fontNames) / sizeof(fontNames[0]);
+constexpr uint32 fontsCount = sizeof(fontNames) / sizeof(fontNames[0]);
 static_assert(sizeof(fontNames) / sizeof(fontNames[0]) == sizeof(labelTexts) / sizeof(labelTexts[0]), "arrays must have same number of elements");
 
 bool windowClose()
