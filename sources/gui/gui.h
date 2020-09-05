@@ -144,8 +144,8 @@ public:
 			guiListener.bind<guiTestClass, &guiTestClass::guiEvent>(this);
 
 			// window
-			engineWindow()->setWindowed();
 			engineWindow()->windowedSize(ivec2(800, 600));
+			engineWindow()->setMaximized();
 			engineWindow()->title(title);
 
 			// run
