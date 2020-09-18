@@ -5,6 +5,7 @@
 #include <cage-core/noiseFunction.h>
 #include <cage-core/threadPool.h>
 #include <cage-core/macros.h>
+#include <cage-core/string.h>
 
 #include <cage-engine/window.h>
 #include <cage-engine/gui.h>

@@ -21,7 +21,7 @@ public:
 			p.parent = parent;
 			p.order = i;
 			CAGE_COMPONENT_GUI(Text, t, e);
-			t.value = string(e->name());
+			t.value = stringizer() + e->name();
 		}
 	}
 
@@ -68,7 +68,7 @@ public:
 			{
 				CAGE_COMPONENT_GUI(Button, b, e);
 				CAGE_COMPONENT_GUI(Text, t, e);
-				t.value = string(e->name());
+				t.value = stringizer() + e->name();
 			} break;
 			case 1:
 			{
@@ -88,13 +88,13 @@ public:
 			case 4:
 			{
 				CAGE_COMPONENT_GUI(Input, i, e);
-				i.value = string(e->name());
+				i.value = stringizer() + e->name();
 			} break;
 			case 5:
 			{
 				CAGE_COMPONENT_GUI(Label, l, e);
 				CAGE_COMPONENT_GUI(Text, t, e);
-				t.value = string(e->name());
+				t.value = stringizer() + e->name();
 			} break;
 			case 6:
 			{
@@ -105,7 +105,7 @@ public:
 			{
 				CAGE_COMPONENT_GUI(Panel, p, e);
 				CAGE_COMPONENT_GUI(Text, t, e);
-				t.value = string(e->name());
+				t.value = stringizer() + e->name();
 			} break;
 			case 8:
 			{
@@ -126,7 +126,7 @@ public:
 			{
 				CAGE_COMPONENT_GUI(Spoiler, s, e);
 				CAGE_COMPONENT_GUI(Text, t, e);
-				t.value = string(e->name());
+				t.value = stringizer() + e->name();
 			} break;
 			case 12:
 			{

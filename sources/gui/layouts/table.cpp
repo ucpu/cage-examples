@@ -1,4 +1,5 @@
 #include "../gui.h"
+#include <cage-core/string.h>
 
 #include <vector>
 

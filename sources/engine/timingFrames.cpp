@@ -3,6 +3,7 @@
 #include <cage-core/entities.h>
 #include <cage-core/hashString.h>
 #include <cage-core/macros.h>
+#include <cage-core/string.h>
 
 #include <cage-engine/window.h>
 #include <cage-engine/gui.h>
@@ -139,7 +140,7 @@ bool guiInit()
 			c.min.i = i >= 2 ? 0 : 1;
 			c.max.i = 1000;
 			c.step.i = 1;
-			c.value = string(values[i]);
+			c.value = stringizer() + values[i];
 		}
 	}
 

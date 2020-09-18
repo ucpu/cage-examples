@@ -1,6 +1,7 @@
 #include "game.h"
 
 #include <cage-core/geometry.h>
+#include <cage-core/string.h>
 #include <cage-engine/shadowmapHelpers.h>
 
 namespace

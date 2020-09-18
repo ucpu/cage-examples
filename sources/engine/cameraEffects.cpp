@@ -3,6 +3,7 @@
 #include <cage-core/assetManager.h>
 #include <cage-core/hashString.h>
 #include <cage-core/macros.h>
+#include <cage-core/string.h>
 
 #include <cage-engine/window.h>
 #include <cage-engine/gui.h>
@@ -215,7 +216,7 @@ Entity *genInput(Entity *table, sint32 &childIndex, uint32 nameBase, const strin
 		in.min.f = rangeMin;
 		in.max.f = rangeMax;
 		in.step.f = step;
-		in.value = string(current.value);
+		in.value = stringizer() + current.value;
 		return e;
 	}
 }
@@ -272,7 +273,7 @@ void initializeGui()
 			in.min.i = 1;
 			in.max.i = 128;
 			in.step.i = 1;
-			in.value = string(CameraEffects().ssao.samplesCount);
+			in.value = stringizer() + CameraEffects().ssao.samplesCount;
 		}
 		{
 			Entity *e = genInput(table, childIndex, 1, "Blur Passes:", 0, 0, 0, 0);
@@ -281,7 +282,7 @@ void initializeGui()
 			in.min.i = 0;
 			in.max.i = 10;
 			in.step.i = 1;
-			in.value = string(CameraEffects().ssao.blurPasses);
+			in.value = stringizer() + CameraEffects().ssao.blurPasses;
 		}
 	}
 
@@ -348,7 +349,7 @@ void initializeGui()
 			in.min.i = 1;
 			in.max.i = 10;
 			in.step.i = 1;
-			in.value = string(CameraEffects().bloom.blurPasses);
+			in.value = stringizer() + CameraEffects().bloom.blurPasses;
 		}
 	}
 

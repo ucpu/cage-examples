@@ -197,7 +197,7 @@ public:
 					p.parent = e->name();
 					p.order = i;
 					CAGE_COMPONENT_GUI(Text, text, ee);
-					text.value = string(i);
+					text.value = stringizer() + i;
 				}
 			}
 			{ // slider

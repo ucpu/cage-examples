@@ -4,6 +4,7 @@
 #include <cage-core/hashString.h>
 #include <cage-core/color.h>
 #include <cage-core/macros.h>
+#include <cage-core/string.h>
 
 #include <cage-engine/window.h>
 #include <cage-engine/gui.h>
