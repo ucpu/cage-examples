@@ -70,7 +70,7 @@ void sceneReload()
 			ts.position = vec3::parse(posLine);
 			string rotLine;
 			f->readLine(rotLine);
-			ts.orientation = quat(rads(), rads(rotLine.toFloat()), rads());
+			ts.orientation = quat(rads(), rads(toFloat(rotLine)), rads());
 		}
 		CAGE_LOG(SeverityEnum::Info, "scenes", stringizer() + "scene contains " + (engineEntities()->group()->count()) + " entities");
 	}

@@ -213,9 +213,9 @@ bool guiUpdate()
 	{ // update boxes count
 		Entity *e = cage::engineGui()->entities()->get(1);
 		CAGE_COMPONENT_GUI(Input, c, e);
-		if (c.valid && c.value.toUint32() != boxesCount)
+		if (c.valid && toUint32(c.value) != boxesCount)
 		{
-			boxesCount = c.value.toUint32();
+			boxesCount = toUint32(c.value);
 			regenerate = true;
 		}
 	}

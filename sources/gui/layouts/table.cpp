@@ -59,7 +59,7 @@ public:
 		{
 			CAGE_COMPONENT_GUI(Input, b, ents->get(name));
 			if (b.valid)
-				s.sections = b.value.toUint32();
+				s.sections = toUint32(b.value);
 		} break;
 		}
 	}

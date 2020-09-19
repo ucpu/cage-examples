@@ -155,8 +155,8 @@ namespace
 		CAGE_COMPONENT_GUI(Input, t, control);
 		if (t.valid)
 		{
-			CAGE_ASSERT(t.value.isDigitsOnly() && !t.value.empty());
-			value = t.value.toUint32() * 1000;
+			CAGE_ASSERT(isDigitsOnly(t.value) && !t.value.empty());
+			value = toUint32(t.value) * 1000;
 		}
 	}
 }
@@ -168,8 +168,8 @@ bool guiUpdate()
 		CAGE_COMPONENT_GUI(Input, t, control);
 		if (t.valid)
 		{
-			CAGE_ASSERT(t.value.isDigitsOnly() && !t.value.empty());
-			controlThread().updatePeriod(t.value.toUint32() * 1000);
+			CAGE_ASSERT(isDigitsOnly(t.value) && !t.value.empty());
+			controlThread().updatePeriod(toUint32(t.value) * 1000);
 		}
 	}
 	{
@@ -177,8 +177,8 @@ bool guiUpdate()
 		CAGE_COMPONENT_GUI(Input, t, control);
 		if (t.valid)
 		{
-			CAGE_ASSERT(t.value.isDigitsOnly() && !t.value.empty());
-			soundThread().updatePeriod(t.value.toUint32() * 1000);
+			CAGE_ASSERT(isDigitsOnly(t.value) && !t.value.empty());
+			soundThread().updatePeriod(toUint32(t.value) * 1000);
 		}
 	}
 	setIntValue(2, updateDelay);

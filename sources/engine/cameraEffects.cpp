@@ -49,37 +49,37 @@ bool update()
 			Entity *e = ents->get(2);
 			CAGE_COMPONENT_GUI(Input, in, e);
 			if (in.valid)
-				cam.ssao.worldRadius = in.value.toFloat();
+				cam.ssao.worldRadius = toFloat(in.value);
 		}
 		{ // strength
 			Entity *e = ents->get(4);
 			CAGE_COMPONENT_GUI(Input, in, e);
 			if (in.valid)
-				cam.ssao.strength = in.value.toFloat();
+				cam.ssao.strength = toFloat(in.value);
 		}
 		{ // bias
 			Entity *e = ents->get(5);
 			CAGE_COMPONENT_GUI(Input, in, e);
 			if (in.valid)
-				cam.ssao.bias = in.value.toFloat();
+				cam.ssao.bias = toFloat(in.value);
 		}
 		{ // power
 			Entity *e = ents->get(6);
 			CAGE_COMPONENT_GUI(Input, in, e);
 			if (in.valid)
-				cam.ssao.power = in.value.toFloat();
+				cam.ssao.power = toFloat(in.value);
 		}
 		{ // samples count
 			Entity *e = ents->get(7);
 			CAGE_COMPONENT_GUI(Input, in, e);
 			if (in.valid)
-				cam.ssao.samplesCount = in.value.toUint32();
+				cam.ssao.samplesCount = toUint32(in.value);
 		}
 		{ // blur passes
 			Entity *e = ents->get(8);
 			CAGE_COMPONENT_GUI(Input, in, e);
 			if (in.valid)
-				cam.ssao.blurPasses = in.value.toUint32();
+				cam.ssao.blurPasses = toUint32(in.value);
 		}
 	}
 
@@ -101,13 +101,13 @@ bool update()
 			Entity *e = ents->get(22);
 			CAGE_COMPONENT_GUI(Input, in, e);
 			if (in.valid)
-				cam.bloom.threshold = in.value.toFloat();
+				cam.bloom.threshold = toFloat(in.value);
 		}
 		{ // blur passes
 			Entity *e = ents->get(24);
 			CAGE_COMPONENT_GUI(Input, in, e);
 			if (in.valid)
-				cam.bloom.blurPasses = in.value.toUint32();
+				cam.bloom.blurPasses = toUint32(in.value);
 		}
 	}
 
@@ -129,43 +129,43 @@ bool update()
 			Entity *e = ents->get(42);
 			CAGE_COMPONENT_GUI(Input, in, e);
 			if (in.valid)
-				cam.tonemap.shoulderStrength = in.value.toFloat();
+				cam.tonemap.shoulderStrength = toFloat(in.value);
 		}
 		{ // linearStrength
 			Entity *e = ents->get(43);
 			CAGE_COMPONENT_GUI(Input, in, e);
 			if (in.valid)
-				cam.tonemap.linearStrength = in.value.toFloat();
+				cam.tonemap.linearStrength = toFloat(in.value);
 		}
 		{ // linearAngle
 			Entity *e = ents->get(44);
 			CAGE_COMPONENT_GUI(Input, in, e);
 			if (in.valid)
-				cam.tonemap.linearAngle = in.value.toFloat();
+				cam.tonemap.linearAngle = toFloat(in.value);
 		}
 		{ // toeStrength
 			Entity *e = ents->get(45);
 			CAGE_COMPONENT_GUI(Input, in, e);
 			if (in.valid)
-				cam.tonemap.toeStrength = in.value.toFloat();
+				cam.tonemap.toeStrength = toFloat(in.value);
 		}
 		{ // toeNumerator
 			Entity *e = ents->get(46);
 			CAGE_COMPONENT_GUI(Input, in, e);
 			if (in.valid)
-				cam.tonemap.toeNumerator = in.value.toFloat();
+				cam.tonemap.toeNumerator = toFloat(in.value);
 		}
 		{ // toeDenominator
 			Entity *e = ents->get(47);
 			CAGE_COMPONENT_GUI(Input, in, e);
 			if (in.valid)
-				cam.tonemap.toeDenominator = in.value.toFloat();
+				cam.tonemap.toeDenominator = toFloat(in.value);
 		}
 		{ // white
 			Entity *e = ents->get(48);
 			CAGE_COMPONENT_GUI(Input, in, e);
 			if (in.valid)
-				cam.tonemap.white = in.value.toFloat();
+				cam.tonemap.white = toFloat(in.value);
 		}
 	}
 
@@ -179,7 +179,7 @@ bool update()
 			Entity *e = ents->get(52);
 			CAGE_COMPONENT_GUI(Input, in, e);
 			if (in.valid)
-				cam.gamma = in.value.toFloat();
+				cam.gamma = toFloat(in.value);
 		}
 	}
 

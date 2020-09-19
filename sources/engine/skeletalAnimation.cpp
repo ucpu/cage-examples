@@ -81,7 +81,7 @@ int main(int argc, char *args[])
 				s.name = HashString(animation);
 				CAGE_COMPONENT_ENGINE(Transform, t, e);
 				t.position = vec3(i * 3 - 6.f, 0, 3);
-				label(string(animation).remove(0, 35), t.position + vec3(0, 2, 0));
+				label(remove(string(animation), 0, 35), t.position + vec3(0, 2, 0));
 				i++;
 			}
 			{ // no animation
@@ -131,7 +131,7 @@ int main(int argc, char *args[])
 				s.name = HashString(animation);
 				CAGE_COMPONENT_ENGINE(Transform, t, e);
 				t.position = vec3(i * 3 - 6.f, 0, 0);
-				label(string(animation).remove(0, 41), t.position + vec3(0, 3.3, 0));
+				label(remove(string(animation), 0, 41), t.position + vec3(0, 3.3, 0));
 				i++;
 			}
 			{ // no animation set
@@ -176,7 +176,7 @@ int main(int argc, char *args[])
 				s.name = HashString(animation);
 				CAGE_COMPONENT_ENGINE(Transform, t, e);
 				t.position = vec3(i * 3 - 6.f, 0, -3);
-				label(string(animation).remove(0, 33), t.position + vec3(0, 2, 0));
+				label(remove(string(animation), 0, 33), t.position + vec3(0, 2, 0));
 				i++;
 			}
 			{ // no animation
@@ -212,7 +212,7 @@ int main(int argc, char *args[])
 				CAGE_COMPONENT_ENGINE(Transform, t, e);
 				t.position = vec3(i * 3 + 1.5f, 1, 0);
 				t.scale = 0.6;
-				label(string(object).remove(0, 28), t.position + vec3(0, 1, 0));
+				label(remove(string(object), 0, 28), t.position + vec3(0, 1, 0));
 				i++;
 			}
 		}
