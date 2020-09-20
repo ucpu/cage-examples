@@ -14,13 +14,13 @@ void testScreen(const string &screenId, const ivec2 &resolution, uint32 frequenc
 {
 	CAGE_LOG(SeverityEnum::Info, "test", stringizer() + "testing monitor: '" + screenId + "', resolution: " + resolution[0] + " * " + resolution[1] + ", frequency: " + frequency);
 	{
-		vec3 color = randomChance3();
+		vec3 color = randomChance3() * 0.5 + 0.5;
 		Holder<Window> w = newWindow();
 		w->setFullscreen(resolution, frequency, screenId);
 		w->title("cage test monitors");
 		w->processEvents();
 		detail::initializeOpengl();
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < 100; i++)
 		{
 			glViewport(0, 0, resolution[0], resolution[1]);
 			glClearColor(color[0].value, color[1].value, color[2].value, 0);
