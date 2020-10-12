@@ -106,7 +106,7 @@ int main(int argc, char *args[])
 			c.far = 100;
 			c.cameraOrder = 3;
 			c.sceneMask = 1;
-			c.effects = CameraEffectsFlags::CombinedPass;
+			c.effects = CameraEffectsFlags::Default;
 			CAGE_COMPONENT_ENGINE(Render, r, e);
 			r.object = HashString("cage-tests/room/eye.obj");
 			r.sceneMask = 2;

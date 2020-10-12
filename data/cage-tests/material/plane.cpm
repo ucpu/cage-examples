@@ -1,6 +1,6 @@
 
-[base]
-mask = 1
+[mult]
+mask = 0
 
 [textures]
 special = special.png

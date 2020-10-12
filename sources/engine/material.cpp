@@ -60,7 +60,7 @@ int main(int argc, char *args[])
 			Entity *e = ents->create(1);
 			CAGE_COMPONENT_ENGINE(Render, r, e);
 			r.object = HashString("cage-tests/material/plane.obj");
-			r.color = vec3(0.5);
+			r.color = vec3(255, 226, 155) / 255;
 			CAGE_COMPONENT_ENGINE(Transform, t, e);
 			t.scale = 5;
 		}
@@ -80,7 +80,7 @@ int main(int argc, char *args[])
 			c.ambientIntensity = 0.01;
 			c.near = 0.1;
 			c.far = 100;
-			c.effects = CameraEffectsFlags::CombinedPass;
+			c.effects = CameraEffectsFlags::Default;
 			CAGE_COMPONENT_ENGINE(Transform, t, e);
 			t.position = vec3(0, 3, 10);
 			t.orientation = quat(degs(-10), degs(), degs());

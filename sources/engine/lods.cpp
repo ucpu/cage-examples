@@ -46,8 +46,7 @@ int main(int argc, char *args[])
 #undef GCHL_GENERATE
 
 		// window
-		engineWindow()->setWindowed();
-		engineWindow()->windowedSize(ivec2(800, 600));
+		engineWindow()->setMaximized();
 		engineWindow()->title("levels of details");
 
 		// entities

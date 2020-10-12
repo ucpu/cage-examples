@@ -216,7 +216,7 @@ int main(int argc, char *args[])
 			CAGE_COMPONENT_ENGINE(Camera, c, e);
 			c.near = 0.1;
 			c.far = 1000;
-			c.effects = CameraEffectsFlags::CombinedPass;
+			c.effects = CameraEffectsFlags::Default;
 		}
 
 		Holder<FpsCamera> fpsCamera = newFpsCamera(ents->get(10));

@@ -37,7 +37,7 @@ void controlInit()
 		c.ambientIntensity = 0.5;
 		c.ambientDirectionalColor = vec3(1);
 		c.ambientDirectionalIntensity = 0.5;
-		c.effects = CameraEffectsFlags::CombinedPass;
+		c.effects = CameraEffectsFlags::Default;
 	}
 	{ // box 1
 		Entity *e = ents->create(2);

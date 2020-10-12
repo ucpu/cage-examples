@@ -9,9 +9,8 @@ emission = 1
 albedo = Plane.png
 
 [flags]
-opacityTexture
 twoSided
-translucency
+translucent
 noDepthWrite
 noVelocityWrite
 noLighting

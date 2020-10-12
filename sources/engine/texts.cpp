@@ -121,7 +121,7 @@ int main(int argc, char *args[])
 			c.ambientIntensity = 0.02;
 			c.near = 0.1;
 			c.far = 100;
-			c.effects = CameraEffectsFlags::CombinedPass;
+			c.effects = CameraEffectsFlags::Default;
 		}
 		{ // text hello
 			Entity *e = ents->create(11);

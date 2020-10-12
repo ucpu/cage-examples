@@ -80,7 +80,7 @@ void initCommon()
 		CAGE_COMPONENT_ENGINE(Camera, c, e);
 		c.near = 0.1;
 		c.far = 1000;
-		c.effects = CameraEffectsFlags::CombinedPass;
+		c.effects = CameraEffectsFlags::Default;
 		c.sceneMask = 1 + 2 + 4;
 		c.viewportOrigin = vec2(0, 0);
 		c.viewportSize = vec2(0.5);
@@ -128,7 +128,7 @@ void initSceneCrytek()
 		CAGE_COMPONENT_ENGINE(Camera, c, e);
 		c.near = 0.1;
 		c.far = 1000;
-		c.effects = CameraEffectsFlags::CombinedPass;
+		c.effects = CameraEffectsFlags::Default;
 		c.sceneMask = 1;
 		c.viewportOrigin = vec2(0.5, 0);
 		c.viewportSize = vec2(0.5);
@@ -170,7 +170,7 @@ void initSceneDragon()
 		CAGE_COMPONENT_ENGINE(Camera, c, e);
 		c.near = 0.1;
 		c.far = 1000;
-		c.effects = CameraEffectsFlags::CombinedPass;
+		c.effects = CameraEffectsFlags::Default;
 		c.sceneMask = 2;
 		c.viewportOrigin = vec2(0, 0.5);
 		c.viewportSize = vec2(0.5);
@@ -212,7 +212,7 @@ void initSceneRungholt()
 		CAGE_COMPONENT_ENGINE(Camera, c, e);
 		c.near = 0.1;
 		c.far = 1000;
-		c.effects = CameraEffectsFlags::CombinedPass;
+		c.effects = CameraEffectsFlags::Default;
 		c.sceneMask = 4;
 		c.viewportOrigin = vec2(0.5, 0.5);
 		c.viewportSize = vec2(0.5);

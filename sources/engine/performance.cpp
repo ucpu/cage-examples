@@ -70,7 +70,7 @@ bool update()
 			c.ambientIntensity = 0.1;
 			c.ambientDirectionalColor = vec3(1);
 			c.ambientDirectionalIntensity = 0.2;
-			c.effects = CameraEffectsFlags::CombinedPass;
+			c.effects = CameraEffectsFlags::Default;
 			cameraCtrl->setEntity(e);
 		}
 

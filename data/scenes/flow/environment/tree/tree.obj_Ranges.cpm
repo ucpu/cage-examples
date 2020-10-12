@@ -6,6 +6,4 @@ albedo = leaves.png
 
 [flags]
 twoSided
-transparency
-opacityTexture
 

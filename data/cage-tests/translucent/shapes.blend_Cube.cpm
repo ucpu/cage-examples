@@ -3,11 +3,13 @@
 
 [base]
 emission = 0.5
-opacity = 0.1
 albedo = 0.53, 0.09, 0.8
 
+[mult]
+opacity = 0.1
+
 [flags]
-translucency
+translucent
 noDepthWrite
 noVelocityWrite
 noLighting

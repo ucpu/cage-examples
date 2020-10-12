@@ -247,7 +247,7 @@ int main(int argc, char *args[])
 			c.ambientDirectionalIntensity = 0.2;
 			c.near = 0.1;
 			c.far = 100;
-			c.effects = CameraEffectsFlags::CombinedPass;
+			c.effects = CameraEffectsFlags::Default;
 		}
 
 		Holder<FpsCamera> cameraCtrl = newFpsCamera(ents->get(102));

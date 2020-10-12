@@ -92,7 +92,7 @@ void sceneReload()
 		c.near = 0.1;
 		c.far = 200;
 		c.clear = CameraClearFlags::None;
-		c.effects = CameraEffectsFlags::CombinedPass;
+		c.effects = CameraEffectsFlags::Default;
 		cameraCtrl->setEntity(cam);
 	}
 

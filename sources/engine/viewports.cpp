@@ -123,7 +123,7 @@ void regenerate()
 		case 2: // rotating
 			break;
 		}
-		c.effects = CameraEffectsFlags::CombinedPass;
+		c.effects = CameraEffectsFlags::Default;
 	}
 
 	letter('C', vec3(-3, 0, +0) * 10);

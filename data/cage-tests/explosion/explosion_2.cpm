@@ -10,7 +10,6 @@ noLighting
 noShadowCast
 noDepthWrite
 noVelocityWrite
-translucency
-opacityTexture
+translucent
 
 
