@@ -61,7 +61,7 @@ void sceneReload()
 			rs.object = HashString(name.c_str());
 			if (!rs.object)
 			{
-				CAGE_LOG(SeverityEnum::Note, "exception", stringizer() + "object: '" + name + "'");
+				CAGE_LOG_THROW(stringizer() + "object: '" + name + "'");
 				CAGE_THROW_ERROR(Exception, "object has invalid hash");
 			}
 			CAGE_COMPONENT_ENGINE(Transform, ts, e);
