@@ -12,15 +12,15 @@ void testDevice(const string &deviceId, uint32 sampleRate)
 	Holder<SoundContext> sndContext = newSoundContext(SoundContextCreateConfig(), "testAudio:Context");
 	CAGE_LOG(SeverityEnum::Info, "speaker", stringizer() + "backend: '" + sndContext->getBackendName() + "'");
 
-	Holder<MixingBus> sndBus = newMixingBus(sndContext.get());
-	Holder<SoundSource> sndSource = newSoundSource(sndContext.get());
-	sndSource->addOutput(sndBus.get());
+	Holder<MixingBus> sndBus = newMixingBus();
+	Holder<SoundSource> sndSource = newSoundSource();
+	sndSource->addOutput(+sndBus);
 	sndSource->setDataTone();
 	SpeakerCreateConfig cnf;
 	cnf.deviceId = deviceId;
 	cnf.sampleRate = sampleRate;
-	Holder<Speaker> sndSpeaker = newSpeakerOutput(sndContext.get(), cnf, "testAudio:Speaker");
-	sndSpeaker->setInput(sndBus.get());
+	Holder<Speaker> sndSpeaker = newSpeakerOutput(+sndContext, cnf, "testAudio:Speaker");
+	sndSpeaker->setInput(+sndBus);
 
 	CAGE_LOG(SeverityEnum::Info, "speaker", stringizer() + "stream name: '" + sndSpeaker->getStreamName() + "'");
 	CAGE_LOG(SeverityEnum::Info, "speaker", stringizer() + "device id: '" + sndSpeaker->getDeviceId() + "'");

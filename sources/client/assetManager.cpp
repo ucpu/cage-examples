@@ -84,7 +84,7 @@ int main(int argc, char *args[])
 		assets->defineScheme<Texture>(AssetSchemeIndexTexture, genAssetSchemeTexture(1));
 		assets->defineScheme<Mesh>(AssetSchemeIndexMesh, genAssetSchemeMesh(1));
 		assets->defineScheme<Font>(AssetSchemeIndexFont, genAssetSchemeFont(1));
-		assets->defineScheme<SoundSource>(AssetSchemeIndexSoundSource, genAssetSchemeSoundSource(2, sound.get()));
+		assets->defineScheme<SoundSource>(AssetSchemeIndexSoundSource, genAssetSchemeSoundSource(2));
 
 		// threads
 		Holder<Thread> thrGl = newThread(Delegate<void()>().bind<&glThread>(), "opengl");

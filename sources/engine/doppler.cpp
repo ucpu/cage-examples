@@ -64,8 +64,8 @@ void controlInit()
 
 bool soundInit()
 {
-	toneBus = newMixingBus(engineSound());
-	toneSource = newSoundSource(engineSound());
+	toneBus = newMixingBus();
+	toneSource = newSoundSource();
 	toneSource->setDataTone();
 	toneSource->addOutput(toneBus.get());
 	return false;

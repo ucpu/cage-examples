@@ -50,7 +50,7 @@ int main(int argc, char *args[])
 		assets->defineScheme<Texture>(AssetSchemeIndexTexture, genAssetSchemeTexture(0));
 		assets->defineScheme<Mesh>(AssetSchemeIndexMesh, genAssetSchemeMesh(0));
 		assets->defineScheme<Font>(AssetSchemeIndexFont, genAssetSchemeFont(0));
-		assets->defineScheme<SoundSource>(AssetSchemeIndexSoundSource, genAssetSchemeSoundSource(0, sl.get()));
+		assets->defineScheme<SoundSource>(AssetSchemeIndexSoundSource, genAssetSchemeSoundSource(0));
 
 		// load assets
 		assets->add(assetsName);
@@ -76,10 +76,10 @@ int main(int argc, char *args[])
 			shader->bind();
 
 			// initialize sounds
-			Holder<Speaker> speaker = newSpeakerOutput(sl.get(), SpeakerCreateConfig(), "cage");
-			Holder<MixingBus> bus = newMixingBus(sl.get());
-			speaker->setInput(bus.get());
-			source->addOutput(bus.get());
+			Holder<Speaker> speaker = newSpeakerOutput(+sl, SpeakerCreateConfig(), "cage");
+			Holder<MixingBus> bus = newMixingBus();
+			speaker->setInput(+bus);
+			source->addOutput(+bus);
 
 			// show the window
 			ivec2 res(600, 600);
