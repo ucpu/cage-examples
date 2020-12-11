@@ -25,7 +25,6 @@ void controlInit()
 	{ // camera
 		Entity *e = ents->create(1);
 		CAGE_COMPONENT_ENGINE(Transform, t, e);
-		(void)t;
 		CAGE_COMPONENT_ENGINE(Camera, c, e);
 		c.ambientColor = vec3(1);
 		c.ambientIntensity = 0.5;
@@ -48,7 +47,7 @@ void controlInit()
 		l.attenuation = vec3(0, 0.01, 0.0);
 	}
 
-	static const vec3 boxPositions[] = { vec3(-1, -1, 0), vec3(1, -1, 0), vec3(-1, 1, 0), vec3(1, 1, 0) };
+	constexpr const vec3 boxPositions[] = { vec3(-1, -1, 0), vec3(1, -1, 0), vec3(-1, 1, 0), vec3(1, 1, 0) };
 	for (uint32 i = 0; i < sizeof(boxPositions) / sizeof(boxPositions[0]); i++)
 	{ // box
 		Entity *e = ents->create(10 + i);

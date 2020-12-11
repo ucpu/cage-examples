@@ -25,7 +25,7 @@ public:
 		window->setWindowed();
 		window->windowedSize(ivec2(400, 300));
 		{
-			ScopeLock<Mutex> l(openglInitMut);
+			ScopeLock l(openglInitMut);
 			detail::initializeOpengl();
 		}
 		window->title(stringizer() + "window " + index);
