@@ -9,6 +9,7 @@ using namespace cage;
 
 void testDevice(const string &deviceId, uint32 sampleRate)
 {
+	CAGE_LOG(SeverityEnum::Info, "listing", "-----------------");
 	Holder<SoundContext> sndContext = newSoundContext(SoundContextCreateConfig(), "testAudio:Context");
 	CAGE_LOG(SeverityEnum::Info, "speaker", stringizer() + "backend: '" + sndContext->getBackendName() + "'");
 
