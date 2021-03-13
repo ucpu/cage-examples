@@ -45,7 +45,7 @@ void box(const vec3 &pos, const quat &rot)
 	CAGE_COMPONENT_ENGINE(Render, r, e);
 	t.position = pos;
 	t.orientation = rot;
-	r.object = HashString("cage/mesh/fake.obj");
+	r.object = HashString("cage/model/fake.obj");
 	r.sceneMask = 0b111 & ~(holes ? (1 << randomRange(0, 3)) : 0);
 }
 

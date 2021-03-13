@@ -4,7 +4,7 @@ scheme = pack
 medium.pack
 
 []
-scheme = mesh
+scheme = model
 medium.obj
 
 []

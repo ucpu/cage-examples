@@ -4,7 +4,7 @@ scheme = pack
 heavyArmor.pack
 
 []
-scheme = mesh
+scheme = model
 heavyArmor.obj
 
 []

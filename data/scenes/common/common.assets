@@ -4,7 +4,7 @@ scheme = pack
 common.pack
 
 []
-scheme = mesh
+scheme = model
 scale = 2
 tangents = true
 ground.obj
@@ -21,7 +21,7 @@ normalStrength = 0.3
 ground.jpg;n
 
 []
-scheme = mesh
+scheme = model
 skybox.obj
 
 []
@@ -32,6 +32,6 @@ animationDuration = 10000000
 skyboxes/$.png
 
 []
-scheme = mesh
+scheme = model
 scale = 0.05
 lightbulb.obj

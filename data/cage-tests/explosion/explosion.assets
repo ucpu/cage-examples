@@ -5,7 +5,7 @@ explosion.pack
 
 
 []
-scheme = mesh
+scheme = model
 uvs = false
 floor.obj
 
@@ -15,42 +15,42 @@ floor.obj;collider
 
 
 []
-scheme = mesh
+scheme = model
 normals = false
 tangents = false
 material = explosion_1.cpm
 sprite.obj;explosion_1
 
 []
-scheme = mesh
+scheme = model
 normals = false
 tangents = false
 material = explosion_2.cpm
 sprite.obj;explosion_2
 
 []
-scheme = mesh
+scheme = model
 normals = false
 tangents = false
 material = explosion_3.cpm
 sprite.obj;explosion_3
 
 []
-scheme = mesh
+scheme = model
 normals = false
 tangents = false
 material = smoke_1.cpm
 sprite.obj;smoke_1
 
 []
-scheme = mesh
+scheme = model
 normals = false
 tangents = false
 material = smoke_2.cpm
 sprite.obj;smoke_2
 
 []
-scheme = mesh
+scheme = model
 normals = false
 tangents = false
 material = spark_1.cpm

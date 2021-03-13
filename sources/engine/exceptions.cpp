@@ -151,7 +151,7 @@ int main(int argc, char *args[])
 				Entity *e = engineEntities()->create(2);
 				CAGE_COMPONENT_ENGINE(Transform, t, e);
 				CAGE_COMPONENT_ENGINE(Render, r, e);
-				r.object = HashString("cage/mesh/fake.obj");
+				r.object = HashString("cage/model/fake.obj");
 			}
 
 			Holder<EngineProfiling> profiling = newEngineProfiling();

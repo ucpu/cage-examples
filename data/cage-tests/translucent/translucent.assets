@@ -4,7 +4,7 @@ scheme = pack
 translucent.pack
 
 []
-scheme = mesh
+scheme = model
 uvs = false
 tangents = false
 axes = +x+z-y
@@ -13,13 +13,13 @@ shapes.blend?Knot
 shapes.blend?Bulb
 
 []
-scheme = mesh
+scheme = model
 axes = +x+z-y
 scale = 2.5
 shapes.blend?Plane
 
 []
-scheme = mesh
+scheme = model
 uvs = false
 tangents = false
 axes = +x+z-y
@@ -28,7 +28,7 @@ shapes.blend?Sphere
 shapes.blend?Cube
 
 []
-scheme = mesh
+scheme = model
 uvs = false
 tangents = false
 axes = +x+z-y

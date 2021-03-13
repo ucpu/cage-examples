@@ -4,18 +4,18 @@ scheme = pack
 bottle.pack
 
 []
-scheme = mesh
+scheme = model
 tangents = true
 bottle.obj
 
 []
-scheme = mesh
+scheme = model
 uvs = false
 scale = 0.3
 other.obj?arrow
 
 []
-scheme = mesh
+scheme = model
 uvs = false
 scale = 5
 other.obj?plane

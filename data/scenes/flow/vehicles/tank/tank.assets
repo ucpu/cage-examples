@@ -4,7 +4,7 @@ scheme = pack
 tank.pack
 
 []
-scheme = mesh
+scheme = model
 tank.obj
 
 []

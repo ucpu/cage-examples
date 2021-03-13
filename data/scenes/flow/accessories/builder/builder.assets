@@ -4,7 +4,7 @@ scheme = pack
 builder.pack
 
 []
-scheme = mesh
+scheme = model
 builder.obj
 
 []

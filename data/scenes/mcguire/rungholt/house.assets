@@ -23,7 +23,7 @@ scheme = texture
 house-Alpha.png
 
 []
-scheme = mesh
+scheme = model
 scale = 0.5
 house.obj?Stone
 house.obj?Grass

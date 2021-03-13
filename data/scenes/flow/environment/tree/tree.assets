@@ -4,7 +4,7 @@ scheme = pack
 tree.pack
 
 []
-scheme = mesh
+scheme = model
 tree.obj?Bark
 tree.obj?Ranges
 

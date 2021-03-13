@@ -159,7 +159,7 @@ int main(int argc, const char *args[])
 		fa->writeLine(stringizer() + "scheme = pack");
 		fa->writeLine(stringizer() + "material.pack");
 		fa->writeLine(stringizer() + "[]");
-		fa->writeLine(stringizer() + "scheme = mesh");
+		fa->writeLine(stringizer() + "scheme = model");
 		fa->writeLine(stringizer() + "uvs = false");
 	}
 	Holder<File> fp = newFile(pathJoin(basePath, "material.pack"), FileMode(false, true));

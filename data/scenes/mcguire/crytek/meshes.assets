@@ -1,6 +1,6 @@
 
 []
-scheme = mesh
+scheme = model
 bakeModel = true
 instancesLimit = 1
 tangents = true
@@ -19,7 +19,7 @@ sponza.obj?23
 sponza.obj?24
 
 []
-scheme = mesh
+scheme = model
 bakeModel = true
 instancesLimit = 1
 scale = 0.01

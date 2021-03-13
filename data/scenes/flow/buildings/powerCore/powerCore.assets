@@ -4,7 +4,7 @@ scheme = pack
 powerCore.pack
 
 []
-scheme = mesh
+scheme = model
 powerCore.obj?stand
 powerCore.obj?sphere
 

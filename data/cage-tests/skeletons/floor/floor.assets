@@ -1,5 +1,5 @@
 []
-scheme = mesh
+scheme = model
 uvs = false
 floor.obj
 

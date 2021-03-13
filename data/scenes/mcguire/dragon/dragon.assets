@@ -8,7 +8,7 @@ scheme = object
 dragon.object
 
 []
-scheme = mesh
+scheme = model
 scale = 50
 uvs = false
 passInvalidNormals = true

@@ -1,23 +1,23 @@
 
 []
-scheme = mesh
+scheme = model
 scale = 0.1
 camera.obj?camera
 camera.obj?camera_stand
 camera.obj?lens
 
 []
-scheme = mesh
+scheme = model
 scale = 0.2
 eye.obj
 
 []
-scheme = mesh
+scheme = model
 tangents = true
 room.obj?door_front_Door
 
 []
-scheme = mesh
+scheme = model
 room.obj?9
 room.obj?49
 room.obj?13

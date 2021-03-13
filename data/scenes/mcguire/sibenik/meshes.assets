@@ -1,6 +1,6 @@
 
 []
-scheme = mesh
+scheme = model
 bakeModel = true
 tangents = true
 sibenik.obj?0
@@ -9,7 +9,7 @@ sibenik.obj?2
 sibenik.obj?7
 
 []
-scheme = mesh
+scheme = model
 bakeModel = true
 sibenik.obj?3
 sibenik.obj?4

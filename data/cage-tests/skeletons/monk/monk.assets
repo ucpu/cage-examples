@@ -11,7 +11,7 @@ monk.x?TortureFire
 monk.x?Walk
 
 []
-scheme = mesh
+scheme = model
 bones = true
 axes = +x-z+y
 monk.x?Monk_MonkBody

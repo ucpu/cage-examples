@@ -8,6 +8,6 @@ scheme = texture
 special.png
 
 []
-scheme = mesh
+scheme = model
 material = plane.cpm
 plane.obj

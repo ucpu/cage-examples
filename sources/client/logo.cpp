@@ -48,7 +48,7 @@ int main(int argc, char *args[])
 		assets->defineScheme<AssetPack>(AssetSchemeIndexPack, genAssetSchemePack());
 		assets->defineScheme<ShaderProgram>(AssetSchemeIndexShaderProgram, genAssetSchemeShaderProgram(0));
 		assets->defineScheme<Texture>(AssetSchemeIndexTexture, genAssetSchemeTexture(0));
-		assets->defineScheme<Mesh>(AssetSchemeIndexMesh, genAssetSchemeMesh(0));
+		assets->defineScheme<Model>(AssetSchemeIndexModel, genAssetSchemeModel(0));
 		assets->defineScheme<Font>(AssetSchemeIndexFont, genAssetSchemeFont(0));
 		assets->defineScheme<SoundSource>(AssetSchemeIndexSoundSource, genAssetSchemeSoundSource(0));
 
@@ -64,13 +64,13 @@ int main(int argc, char *args[])
 
 		{
 			// fetch assets
-			Holder<Mesh> mesh = assets->get<AssetSchemeIndexMesh, Mesh>(HashString("cage/mesh/square.obj"));
+			Holder<Model> model = assets->get<AssetSchemeIndexModel, Model>(HashString("cage/model/square.obj"));
 			Holder<Texture> texture = assets->get<AssetSchemeIndexTexture, Texture>(HashString("cage-tests/logo/logo.png"));
 			Holder<ShaderProgram> shader = assets->get<AssetSchemeIndexShaderProgram, ShaderProgram>(HashString("cage/shader/engine/blit.glsl"));
 			Holder<SoundSource> source = assets->get<AssetSchemeIndexSoundSource, SoundSource>(HashString("cage-tests/logo/logo.ogg"));
 
 			// initialize graphics
-			mesh->bind();
+			model->bind();
 			glActiveTexture(GL_TEXTURE0 + CAGE_SHADER_TEXTURE_COLOR);
 			texture->bind();
 			shader->bind();
@@ -91,7 +91,7 @@ int main(int argc, char *args[])
 			{
 				res = window->resolution();
 				glViewport(0, 0, res[0], res[1]);
-				mesh->dispatch();
+				model->dispatch();
 				speaker->update(getApplicationTime());
 				threadSleep(10000);
 				window->swapBuffers();

@@ -4,7 +4,7 @@ scheme = pack
 lods.pack
 
 []
-scheme = mesh
+scheme = model
 scale = 5
 uvs = false
 tangents = false

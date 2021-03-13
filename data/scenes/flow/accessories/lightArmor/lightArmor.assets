@@ -4,7 +4,7 @@ scheme = pack
 lightArmor.pack
 
 []
-scheme = mesh
+scheme = model
 lightArmor.obj
 
 []

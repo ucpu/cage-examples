@@ -25,13 +25,13 @@ constexpr const uint32 names[] = {
 	HashString("cage/texture/texture.pack"),
 	HashString("cage/sound/sound.pack"),
 	HashString("cage/shader/shader.pack"),
-	HashString("cage/mesh/mesh.pack"),
+	HashString("cage/model/model.pack"),
 	HashString("cage/font/font.pack"),
 	HashString("cage/cage.pack"),
 	HashString("cage/texture/texture.pack"),
 	HashString("cage/sound/sound.pack"),
 	HashString("cage/shader/shader.pack"),
-	HashString("cage/mesh/mesh.pack"),
+	HashString("cage/model/model.pack"),
 	HashString("cage/font/font.pack"),
 };
 constexpr uint32 count = sizeof(names) / sizeof(names[0]);
@@ -82,7 +82,7 @@ int main(int argc, char *args[])
 		assets->defineScheme<AssetPack>(AssetSchemeIndexPack, genAssetSchemePack());
 		assets->defineScheme<ShaderProgram>(AssetSchemeIndexShaderProgram, genAssetSchemeShaderProgram(1));
 		assets->defineScheme<Texture>(AssetSchemeIndexTexture, genAssetSchemeTexture(1));
-		assets->defineScheme<Mesh>(AssetSchemeIndexMesh, genAssetSchemeMesh(1));
+		assets->defineScheme<Model>(AssetSchemeIndexModel, genAssetSchemeModel(1));
 		assets->defineScheme<Font>(AssetSchemeIndexFont, genAssetSchemeFont(1));
 		assets->defineScheme<SoundSource>(AssetSchemeIndexSoundSource, genAssetSchemeSoundSource(2));
 

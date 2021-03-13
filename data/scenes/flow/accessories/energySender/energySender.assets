@@ -4,7 +4,7 @@ scheme = pack
 energySender.pack
 
 []
-scheme = mesh
+scheme = model
 energySender.obj
 
 []

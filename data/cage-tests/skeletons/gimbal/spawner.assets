@@ -1,13 +1,13 @@
 
 []
-scheme = mesh
+scheme = model
 uvs = false
 bones = true
 material = spawner.cpm
 spawner.x
 
 []
-scheme = mesh
+scheme = model
 uvs = false
 tangents = false
 bones = true

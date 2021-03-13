@@ -4,7 +4,7 @@ scheme = pack
 battery.pack
 
 []
-scheme = mesh
+scheme = model
 battery.obj
 
 []

@@ -2,7 +2,7 @@
 scheme = pack
 material.pack
 []
-scheme = mesh
+scheme = model
 uvs = false
 material.obj?mat_0_0
 material.obj?mat_0_1

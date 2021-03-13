@@ -4,7 +4,7 @@ scheme = pack
 bike.pack
 
 []
-scheme = mesh
+scheme = model
 bike.obj
 
 []

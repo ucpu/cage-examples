@@ -104,7 +104,7 @@ bool update()
 				t.scale = 0.15 * 0.49;
 				t.position = vec3((x - side * 0.5) * 0.15, 0, (y - side * 0.5) * 0.15);
 				CAGE_COMPONENT_ENGINE(Render, r, e);
-				r.object = HashString("cage/mesh/fake.obj");
+				r.object = HashString("cage/model/fake.obj");
 			}
 		}
 	}
