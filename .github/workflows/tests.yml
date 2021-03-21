@@ -3,15 +3,22 @@ on: [push, pull_request]
 
 jobs:
   Windows:
+    name: windows-${{ matrix.os-version }}-${{ matrix.build-config }}-${{ matrix.build-arch }}
     runs-on: windows-${{ matrix.os-version }}
     strategy:
       fail-fast: false
       matrix:
-        os-version: [latest]
+        os-version: [2019]
         build-config: [debug, release]
         build-arch: [Win32, x64]
 
     steps:
+    - name: Versions
+      shell: bash
+      run: |
+        cmake --version
+        git --version
+
     - uses: actions/checkout@v1
 
     - name: Checkout submodules
@@ -19,7 +26,7 @@ jobs:
       run: |
         export MSYS=winsymlinks:nativestrict
         git config --global core.symlinks true
-        git submodule update --init --recursive
+        git submodule update --init --recursive #--depth 1
 
     - name: Configure
       shell: bash
@@ -49,14 +56,14 @@ jobs:
         build-config: [debug, release]
         compiler:
         - {
-            cc: gcc-7,
-            cxx: g++-7,
-            install: gcc-7 g++-7
-          }
-        - {
             cc: gcc-9,
             cxx: g++-9,
             install: gcc-9 g++-9
+          }
+        - {
+            cc: gcc-10,
+            cxx: g++-10,
+            install: gcc-10 g++-10
           }
         - {
             cc: clang,
@@ -81,7 +88,7 @@ jobs:
 
     - name: Checkout submodules
       run: |
-        git submodule update --init --recursive
+        git submodule update --init --recursive --depth 1
 
     - name: Configure
       run: |
