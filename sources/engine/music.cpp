@@ -36,7 +36,7 @@ void init()
 		c.near = 0.1;
 		c.far = 500;
 		CAGE_COMPONENT_ENGINE(Listener, l, e);
-		l.attenuation = vec3(0, 0.03, 0.001);
+		l.rolloffFactor = 0.05;
 	}
 
 	{ // sun
@@ -62,7 +62,7 @@ void init()
 	for (auto it : enumerate(names))
 	{ // sound source
 		{
-			Entity *e = ents->create(numeric_cast<uint32>(it.cnt) + 100);
+			Entity *e = ents->create(numeric_cast<uint32>(it.index) + 100);
 			CAGE_COMPONENT_ENGINE(Transform, t, e);
 			t.scale = 2;
 			CAGE_COMPONENT_ENGINE(Sound, s, e);
@@ -74,7 +74,7 @@ void init()
 			l.intensity = 2;
 		}
 		{
-			Entity *e = ents->create(numeric_cast<uint32>(it.cnt) + 200);
+			Entity *e = ents->create(numeric_cast<uint32>(it.index) + 200);
 			CAGE_COMPONENT_ENGINE(Transform, t, e);
 			t.scale = 0.5;
 			CAGE_COMPONENT_ENGINE(Text, l, e);
@@ -122,12 +122,12 @@ void update()
 	for (auto it : enumerate(positions))
 	{
 		{
-			Entity *e = ents->get(numeric_cast<uint32>(it.cnt) + 100);
+			Entity *e = ents->get(numeric_cast<uint32>(it.index) + 100);
 			CAGE_COMPONENT_ENGINE(Transform, t, e);
 			t.position = *it;
 		}
 		{
-			Entity *e = ents->get(numeric_cast<uint32>(it.cnt) + 200);
+			Entity *e = ents->get(numeric_cast<uint32>(it.index) + 200);
 			CAGE_COMPONENT_ENGINE(Transform, t, e);
 			t.position = *it + vec3(0, 0.25, 0);
 			if (distance(cameraPos, t.position) > 0.1)

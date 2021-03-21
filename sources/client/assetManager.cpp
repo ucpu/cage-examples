@@ -16,7 +16,6 @@ using namespace cage;
 
 std::atomic<bool> destroying;
 Holder<Window> window;
-Holder<SoundContext> sound;
 Holder<AssetManager> assets;
 
 // asset names
@@ -74,7 +73,6 @@ int main(int argc, char *args[])
 		// contexts
 		window = newWindow();
 		window->makeNotCurrent();
-		sound = newSoundContext(SoundContextCreateConfig(), "cage");
 
 		// asset schemes
 		AssetManagerCreateConfig cfg;
@@ -84,7 +82,7 @@ int main(int argc, char *args[])
 		assets->defineScheme<Texture>(AssetSchemeIndexTexture, genAssetSchemeTexture(1));
 		assets->defineScheme<Model>(AssetSchemeIndexModel, genAssetSchemeModel(1));
 		assets->defineScheme<Font>(AssetSchemeIndexFont, genAssetSchemeFont(1));
-		assets->defineScheme<SoundSource>(AssetSchemeIndexSoundSource, genAssetSchemeSoundSource(2));
+		assets->defineScheme<Sound>(AssetSchemeIndexSound, genAssetSchemeSound(2));
 
 		// threads
 		Holder<Thread> thrGl = newThread(Delegate<void()>().bind<&glThread>(), "opengl");
@@ -130,7 +128,6 @@ int main(int argc, char *args[])
 		destroying = true;
 		thrGl->wait();
 		thrSl->wait();
-		sound.clear();
 		window.clear();
 
 		CAGE_LOG(SeverityEnum::Info, "test", "done");

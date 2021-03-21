@@ -8,6 +8,8 @@
 #include <cage-engine/window.h>
 #include <cage-engine/graphics.h>
 #include <cage-engine/sound.h>
+#include <cage-engine/speaker.h>
+#include <cage-engine/voices.h>
 #include <cage-engine/opengl.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/shaderConventions.h>
@@ -40,9 +42,6 @@ int main(int argc, char *args[])
 		window->title("cage test logo");
 		detail::initializeOpengl();
 
-		// sound
-		Holder<SoundContext> sl = newSoundContext(SoundContextCreateConfig(), "cage");
-
 		// assets
 		Holder<AssetManager> assets = newAssetManager(AssetManagerCreateConfig());
 		assets->defineScheme<AssetPack>(AssetSchemeIndexPack, genAssetSchemePack());
@@ -50,7 +49,7 @@ int main(int argc, char *args[])
 		assets->defineScheme<Texture>(AssetSchemeIndexTexture, genAssetSchemeTexture(0));
 		assets->defineScheme<Model>(AssetSchemeIndexModel, genAssetSchemeModel(0));
 		assets->defineScheme<Font>(AssetSchemeIndexFont, genAssetSchemeFont(0));
-		assets->defineScheme<SoundSource>(AssetSchemeIndexSoundSource, genAssetSchemeSoundSource(0));
+		assets->defineScheme<Sound>(AssetSchemeIndexSound, genAssetSchemeSound(0));
 
 		// load assets
 		assets->add(assetsName);
@@ -67,7 +66,7 @@ int main(int argc, char *args[])
 			Holder<Model> model = assets->get<AssetSchemeIndexModel, Model>(HashString("cage/model/square.obj"));
 			Holder<Texture> texture = assets->get<AssetSchemeIndexTexture, Texture>(HashString("cage-tests/logo/logo.png"));
 			Holder<ShaderProgram> shader = assets->get<AssetSchemeIndexShaderProgram, ShaderProgram>(HashString("cage/shader/engine/blit.glsl"));
-			Holder<SoundSource> source = assets->get<AssetSchemeIndexSoundSource, SoundSource>(HashString("cage-tests/logo/logo.ogg"));
+			Holder<Sound> sound = assets->get<AssetSchemeIndexSound, Sound>(HashString("cage-tests/logo/logo.ogg"));
 
 			// initialize graphics
 			model->bind();
@@ -76,10 +75,11 @@ int main(int argc, char *args[])
 			shader->bind();
 
 			// initialize sounds
-			Holder<Speaker> speaker = newSpeakerOutput(+sl, SpeakerCreateConfig(), "cage");
-			Holder<MixingBus> bus = newMixingBus();
-			speaker->setInput(+bus);
-			source->addOutput(+bus);
+			Holder<VoicesMixer> mixer = newVoicesMixer({});
+			Holder<Speaker> speaker = newSpeaker({}, Delegate<void(const SoundCallbackData &)>().bind<VoicesMixer, &VoicesMixer::process>(+mixer));
+			Holder<Voice> voice = mixer->newVoice();
+			voice->sound = sound.share();
+			speaker->start();
 
 			// show the window
 			ivec2 res(600, 600);
@@ -92,7 +92,7 @@ int main(int argc, char *args[])
 				res = window->resolution();
 				glViewport(0, 0, res[0], res[1]);
 				model->dispatch();
-				speaker->update(getApplicationTime());
+				speaker->process(getApplicationTime());
 				threadSleep(10000);
 				window->swapBuffers();
 				window->processEvents();
