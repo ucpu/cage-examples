@@ -13,6 +13,7 @@
 #include <cage-engine/engineProfiling.h>
 #include <cage-engine/fpsCamera.h>
 #include <cage-engine/highPerformanceGpuHint.h>
+#include <cage-engine/sound.h>
 
 #include <vector>
 
@@ -20,7 +21,8 @@ using namespace cage;
 constexpr uint32 assetsName = HashString("cage-tests/screamers/screamers.pack");
 constexpr const uint32 assetsMusic[] = { HashString("cage-tests/music/PurplePlanet/BigDayOut.mp3"), HashString("cage-tests/music/PurplePlanet/Civilisation.mp3"), HashString("cage-tests/music/PurplePlanet/FunkCity.mp3"), HashString("cage-tests/music/PurplePlanet/IntoBattle.mp3"), HashString("cage-tests/music/PurplePlanet/RetroGamer.mp3"), HashString("cage-tests/music/PurplePlanet/TrueFaith.mp3") };
 constexpr const uint32 assetsScreams[] = { HashString("cage-tests/screamers/screams/1.mp3"), HashString("cage-tests/screamers/screams/2.wav"), HashString("cage-tests/screamers/screams/3.ogg"), HashString("cage-tests/screamers/screams/4.wav") };
-constexpr const uint32 assetsExplosions[] = { HashString("cage-tests/explosion/sprite.obj;explosion_1"), HashString("cage-tests/explosion/sprite.obj;explosion_2"), HashString("cage-tests/explosion/sprite.obj;explosion_3") };
+constexpr const uint32 assetsExplosionsSounds[] = { HashString("cage-tests/screamers/explosion/1.flac"), HashString("cage-tests/screamers/explosion/2.wav"), HashString("cage-tests/screamers/explosion/3.wav") };
+constexpr const uint32 assetsExplosionsSprites[] = { HashString("cage-tests/explosion/sprite.obj;explosion_1"), HashString("cage-tests/explosion/sprite.obj;explosion_2"), HashString("cage-tests/explosion/sprite.obj;explosion_3") };
 constexpr const uint32 assetsSmokes[] = { HashString("cage-tests/explosion/sprite.obj;smoke_1"), HashString("cage-tests/explosion/sprite.obj;smoke_2") };
 constexpr const uint32 assetsSparks[] = { HashString("cage-tests/explosion/sprite.obj;spark_1") };
 const vec3 cameraCenter = vec3(0, 2, 0);
@@ -88,10 +90,10 @@ Entity *makeSmoke(const vec3 &position, real scale)
 void makeExplosion(const vec3 &position)
 {
 	{
-		uint32 explosions = randomRange(3u, 5u);
+		const uint32 explosions = randomRange(3u, 5u);
 		for (uint32 i = 0; i < explosions; i++)
 		{
-			Entity *e = makeParticle(position + randomDirection3() * randomChance(), randomRange(0.5, 1.0), arrayPick(assetsExplosions), randomRange(30u, 60u));
+			Entity *e = makeParticle(position + randomDirection3() * randomChance(), randomRange(0.5, 1.0), arrayPick(assetsExplosionsSprites), randomRange(30u, 60u));
 			ParticleComponent &p = e->value<ParticleComponent>(ParticleComponent::component);
 			p.smoking = 0.1;
 			p.dimming = 0.1;
@@ -104,7 +106,7 @@ void makeExplosion(const vec3 &position)
 		}
 	}
 	{
-		uint32 sparks = randomRange(3u, 7u);
+		const uint32 sparks = randomRange(3u, 7u);
 		for (uint32 i = 0; i < sparks; i++)
 		{
 			Entity *e = makeParticle(position + randomDirection3() * randomChance() * 0.5, randomRange(0.1, 0.3), arrayPick(assetsSparks), 40);
@@ -121,6 +123,18 @@ void makeExplosion(const vec3 &position)
 			l.intensity = 5;
 			l.attenuation = vec3(0, 1, 0);
 		}
+	}
+	{
+		Entity *e = engineEntities()->createAnonymous();
+		CAGE_COMPONENT_ENGINE(Transform, tr, e);
+		tr.position = position;
+		tr.orientation = randomDirectionQuat();
+		CAGE_COMPONENT_ENGINE(Sound, snd, e);
+		snd.name = arrayPick(assetsExplosionsSounds);
+		snd.startTime = engineControlTime();
+		TtlComponent &ttlc = e->value<TtlComponent>(TtlComponent::component);
+		Holder<Sound> s = engineAssets()->get<AssetSchemeIndexSound, Sound>(snd.name);
+		ttlc.ttl = numeric_cast<uint32>(s ? s->duration() * 20 / 1000000 + 10 : 5 * 20);
 	}
 }
 
@@ -321,7 +335,7 @@ int main(int argc, char *args[])
 			c.ambientDirectionalColor = vec3(1);
 			c.ambientDirectionalIntensity = 0.2;
 			CAGE_COMPONENT_ENGINE(Listener, l, e);
-			l.rolloffFactor = 0.06;
+			l.rolloffFactor = 0.1;
 		}
 		{ // skybox
 			Entity *e = ents->create(2);

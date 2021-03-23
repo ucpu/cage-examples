@@ -35,3 +35,19 @@ screams/1.mp3
 screams/2.wav
 screams/3.ogg
 screams/4.wav
+
+[]
+scheme = sound
+loopBefore = false
+loopAfter = false
+stream = false
+explosion/1.flac
+explosion/3.wav
+
+[]
+scheme = sound
+loopBefore = false
+loopAfter = false
+stream = false
+gain = 5
+explosion/2.wav
