@@ -1,0 +1,12 @@
+
+[base]
+emission = 1
+
+[textures]
+albedo = /scenes/common/skyboxes/1.png
+
+[flags]
+noDepthTest
+noDepthWrite
+noLighting
+noShadowCast

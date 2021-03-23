@@ -1,6 +1,6 @@
 
 [base]
-emission = 1
+emission = 2
 
 [textures]
 albedo = spark/1/$$.png

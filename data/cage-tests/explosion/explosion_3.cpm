@@ -1,6 +1,6 @@
 
 [base]
-emission = 1
+emission = 3
 
 [textures]
 albedo = explosion/3/$$.png

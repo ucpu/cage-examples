@@ -1,0 +1,37 @@
+
+[]
+scheme = pack
+screamers.pack
+
+[]
+scheme = model
+uvs = false
+tangents = false
+axes = +x+z-y
+suzanne.blend
+
+[]
+scheme = collider
+axes = +x+z-y
+scale = 0.9
+suzanne.blend;collider
+
+[]
+scheme = texture
+srgb = true
+/scenes/common/skyboxes/1.png
+
+[]
+scheme = model
+material = skybox.cpm
+skybox.obj
+
+[]
+scheme = sound
+loopBefore = true
+loopAfter = true
+stream = false
+screams/1.mp3
+screams/2.wav
+screams/3.ogg
+screams/4.wav
