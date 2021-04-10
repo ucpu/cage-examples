@@ -92,7 +92,7 @@ int main(int argc, char *args[])
 				res = window->resolution();
 				glViewport(0, 0, res[0], res[1]);
 				model->dispatch();
-				speaker->process(getApplicationTime());
+				speaker->process(applicationTime());
 				threadSleep(10000);
 				window->swapBuffers();
 				window->processEvents();

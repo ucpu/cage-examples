@@ -98,8 +98,8 @@ int main(int argc, char *args[])
 		// loop
 		for (uint32 step = 0; step < 30; step++)
 		{
-			uint64 stepEnd = getApplicationTime() + 1000 * 1000;
-			while (getApplicationTime() < stepEnd)
+			uint64 stepEnd = applicationTime() + 1000 * 1000;
+			while (applicationTime() < stepEnd)
 			{
 				if (randomChance() < 0.7)
 				{

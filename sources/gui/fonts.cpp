@@ -28,7 +28,7 @@ public:
 	{
 		EntityManager *ents = engineGui()->entities();
 		static real offset = randomChance() * 1000;
-		real t = getApplicationTime() / 2e7f + offset;
+		real t = applicationTime() / 2e7f + offset;
 		for (uint32 i = 0; i < fontsCount; i++)
 		{
 			Entity * e = ents->get(100 + i);

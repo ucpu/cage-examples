@@ -181,7 +181,7 @@ bool update()
 #if 0
 	{ // automatic reloading -> used for engine testing
 		static uint64 last = 0;
-		uint64 now = getApplicationTime();
+		uint64 now = applicationTime();
 		if (now > last + (sin(rads(now) * 2e-7) * 2.5 + 3) * 1000000)
 		{
 			sceneIndexCurrent++;

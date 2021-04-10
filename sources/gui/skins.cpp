@@ -17,7 +17,7 @@ public:
 		}
 
 		static real offset = randomChance() * 1000;
-		real t = getApplicationTime() / 5e6f + offset;
+		real t = applicationTime() / 5e6f + offset;
 
 		vec4 a4;
 		for (uint32 i = 0; i < 4; i++)
