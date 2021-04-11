@@ -3,6 +3,7 @@
 #include <cage-core/geometry.h>
 #include <cage-core/assetManager.h>
 #include <cage-core/hashString.h>
+#include <cage-core/camera.h>
 
 #include <cage-engine/window.h>
 #include <cage-engine/engine.h>
@@ -12,17 +13,54 @@
 
 using namespace cage;
 
+bool autoCubes = true;
+
 void windowClose()
 {
 	engineStop();
 }
 
+Frustum cameraFrustum()
+{
+	Entity *camE = engineEntities()->get(1);
+	CAGE_COMPONENT_ENGINE(Transform, camT, camE);
+	CAGE_COMPONENT_ENGINE(Camera, camC, camE);
+	const ivec2 resolution = engineWindow()->resolution();
+	const Frustum frustum = Frustum(camT, perspectiveProjection(camC.camera.perspectiveFov, real(resolution[0]) / resolution[1], camC.near, camC.far));
+	return frustum;
+}
+
+void keyPress(uint32 a, uint32 b, ModifiersFlags m)
+{
+	EntityManager *ents = engineEntities();
+
+	if (a == 32)
+	{
+		autoCubes = false;
+
+		const Frustum frustum = cameraFrustum();
+
+		// cubes
+		for (uint32 i = 0; i < 10000; i++)
+		{
+			Entity *e = ents->get(100 + i);
+			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			const Aabb box = Aabb(vec3(-0.5 + t.position), vec3(0.5 + t.position));
+			t.scale = intersects(box, frustum) ? 0.5 : 0.1;
+		}
+	}
+}
+
 void update()
 {
+	if (!autoCubes)
+		return;
+
 	EntityManager *ents = engineEntities();
 
 	const real t = engineControlTime() / double(1000000);
 	const Cone shape = Cone(vec3(20 * sin(degs(30 * t)), 1, 0), vec3(0, 0, 1) * quat(degs(), degs(5 * t), degs()), 40, degs(20));
+	//const auto shape = cameraFrustum();
 
 	// cubes
 	for (uint32 i = 0; i < 10000; i++)
@@ -80,6 +118,10 @@ int main(int argc, char *args[])
 		windowCloseListener.attach(engineWindow()->events.windowClose);
 		windowCloseListener.bind<&windowClose>();
 
+		EventListener<void(uint32, uint32, ModifiersFlags)> keyPressListener;
+		keyPressListener.attach(engineWindow()->events.keyPress);
+		keyPressListener.bind<&keyPress>();
+
 		EventListener<void()> updateListener;
 		updateListener.attach(controlThread().update);
 		updateListener.bind<&update>();
@@ -92,7 +134,6 @@ int main(int argc, char *args[])
 
 		Holder<FpsCamera> fpsCamera = newFpsCamera(engineEntities()->get(1));
 		fpsCamera->mouseButton = MouseButtonsFlags::Left;
-		fpsCamera->movementSpeed = 0.3;
 		Holder<EngineProfiling> engineProfiling = newEngineProfiling();
 
 		engineStart();
