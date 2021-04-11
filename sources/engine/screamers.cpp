@@ -1,6 +1,5 @@
 #include <cage-core/logger.h>
 #include <cage-core/entities.h>
-#include <cage-core/config.h>
 #include <cage-core/assetManager.h>
 #include <cage-core/hashString.h>
 #include <cage-core/geometry.h>
@@ -189,7 +188,7 @@ void spawnScreamer()
 	scr.velocity = randomDirection3();
 }
 
-line getCursorRay()
+Line getCursorRay()
 {
 	const ivec2 cursor = engineWindow()->mousePosition();
 	const ivec2 res = engineWindow()->resolution();
@@ -205,7 +204,7 @@ line getCursorRay()
 	const vec4 pf = inv * vec4(px, py, 1, 1);
 	const vec3 near = vec3(pn) / pn[3];
 	const vec3 far = vec3(pf) / pf[3];
-	const line ray = makeRay(near, far);
+	const Line ray = makeRay(near, far);
 	return ray;
 }
 
@@ -226,7 +225,7 @@ void updateScreamers()
 	if (ScreamerComponent::component->group()->count() < screamersCapacity && randomChance() / screamersCapacity < 0.01)
 		spawnScreamer();
 
-	const line cursorRay = getCursorRay();
+	const Line cursorRay = getCursorRay();
 
 	std::vector<vec3> newSmokes, newExplosions;
 	for (Entity *e : ScreamerComponent::component->group()->entities())

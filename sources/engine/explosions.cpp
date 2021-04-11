@@ -138,8 +138,8 @@ void mousePress(MouseButtonsFlags buttons, ModifiersFlags, const ivec2 &iPoint)
 		vec4 pf = inv * vec4(px, py, 1, 1);
 		vec3 near = vec3(pn) / pn[3];
 		vec3 far = vec3(pf) / pf[3];
-		line ray = makeRay(near, far);
-		plane floor = plane(vec3(), vec3(0, 1, 0));
+		Line ray = makeRay(near, far);
+		Plane floor = Plane(vec3(), vec3(0, 1, 0));
 		position = intersection(ray, floor);
 		if (!position.valid())
 			return; // click outside floor
