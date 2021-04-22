@@ -31,6 +31,7 @@ scheme = sound
 loopBefore = true
 loopAfter = true
 stream = false
+mono = true
 screams/1.mp3
 screams/2.wav
 screams/3.ogg
@@ -41,6 +42,7 @@ scheme = sound
 loopBefore = false
 loopAfter = false
 stream = false
+mono = true
 explosion/1.flac
 explosion/3.wav
 
@@ -50,4 +52,5 @@ loopBefore = false
 loopAfter = false
 stream = false
 gain = 5
+mono = true
 explosion/2.wav
