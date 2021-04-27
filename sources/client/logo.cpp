@@ -44,12 +44,12 @@ int main(int argc, char *args[])
 
 		// assets
 		Holder<AssetManager> assets = newAssetManager(AssetManagerCreateConfig());
-		assets->defineScheme<AssetPack>(AssetSchemeIndexPack, genAssetSchemePack());
-		assets->defineScheme<ShaderProgram>(AssetSchemeIndexShaderProgram, genAssetSchemeShaderProgram(0));
-		assets->defineScheme<Texture>(AssetSchemeIndexTexture, genAssetSchemeTexture(0));
-		assets->defineScheme<Model>(AssetSchemeIndexModel, genAssetSchemeModel(0));
-		assets->defineScheme<Font>(AssetSchemeIndexFont, genAssetSchemeFont(0));
-		assets->defineScheme<Sound>(AssetSchemeIndexSound, genAssetSchemeSound(0));
+		assets->defineScheme<AssetSchemeIndexPack, AssetPack>(genAssetSchemePack());
+		assets->defineScheme<AssetSchemeIndexShaderProgram, ShaderProgram>(genAssetSchemeShaderProgram(0));
+		assets->defineScheme<AssetSchemeIndexTexture, Texture>(genAssetSchemeTexture(0));
+		assets->defineScheme<AssetSchemeIndexModel, Model>(genAssetSchemeModel(0));
+		assets->defineScheme<AssetSchemeIndexFont, Font>(genAssetSchemeFont(0));
+		assets->defineScheme<AssetSchemeIndexSound, Sound>(genAssetSchemeSound(0));
 
 		// load assets
 		assets->add(assetsName);

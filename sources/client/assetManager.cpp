@@ -77,12 +77,12 @@ int main(int argc, char *args[])
 		// asset schemes
 		AssetManagerCreateConfig cfg;
 		assets = newAssetManager(cfg);
-		assets->defineScheme<AssetPack>(AssetSchemeIndexPack, genAssetSchemePack());
-		assets->defineScheme<ShaderProgram>(AssetSchemeIndexShaderProgram, genAssetSchemeShaderProgram(1));
-		assets->defineScheme<Texture>(AssetSchemeIndexTexture, genAssetSchemeTexture(1));
-		assets->defineScheme<Model>(AssetSchemeIndexModel, genAssetSchemeModel(1));
-		assets->defineScheme<Font>(AssetSchemeIndexFont, genAssetSchemeFont(1));
-		assets->defineScheme<Sound>(AssetSchemeIndexSound, genAssetSchemeSound(2));
+		assets->defineScheme<AssetSchemeIndexPack, AssetPack>(genAssetSchemePack());
+		assets->defineScheme<AssetSchemeIndexShaderProgram, ShaderProgram>(genAssetSchemeShaderProgram(1));
+		assets->defineScheme<AssetSchemeIndexTexture, Texture>(genAssetSchemeTexture(1));
+		assets->defineScheme<AssetSchemeIndexModel, Model>(genAssetSchemeModel(1));
+		assets->defineScheme<AssetSchemeIndexFont, Font>(genAssetSchemeFont(1));
+		assets->defineScheme<AssetSchemeIndexSound, Sound>(genAssetSchemeSound(2));
 
 		// threads
 		Holder<Thread> thrGl = newThread(Delegate<void()>().bind<&glThread>(), "opengl");
