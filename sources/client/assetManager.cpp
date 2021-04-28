@@ -6,7 +6,10 @@
 #include <cage-core/hashString.h>
 
 #include <cage-engine/window.h>
-#include <cage-engine/graphics.h>
+#include <cage-engine/font.h>
+#include <cage-engine/shaderProgram.h>
+#include <cage-engine/texture.h>
+#include <cage-engine/model.h>
 #include <cage-engine/sound.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 

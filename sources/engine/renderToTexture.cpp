@@ -6,7 +6,7 @@
 #include <cage-core/macros.h>
 
 #include <cage-engine/window.h>
-#include <cage-engine/graphics.h>
+#include <cage-engine/texture.h>
 #include <cage-engine/gui.h>
 #include <cage-engine/engine.h>
 #include <cage-engine/opengl.h>
