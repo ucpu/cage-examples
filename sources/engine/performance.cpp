@@ -36,9 +36,9 @@ bool guiUpdate();
 
 void updateBoxes(uint32 thrIndex, uint32 thrCount)
 {
-	uint64 time = engineControlTime();
-	uint32 boxesCount = RenderComponent::component->group()->count();
-	Entity *const *boxesEntities = RenderComponent::component->group()->array();
+	const uint64 time = engineControlTime();
+	const uint32 boxesCount = RenderComponent::component->count();
+	auto boxesEntities = RenderComponent::component->entities();
 
 	const uint32 myCount = boxesCount / thrCount;
 	const uint32 start = thrIndex * myCount;

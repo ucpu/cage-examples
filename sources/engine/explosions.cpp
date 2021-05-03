@@ -236,7 +236,7 @@ int main(int argc, char *args[])
 		// entities
 		EntityManager *ents = engineEntities();
 		entitiesToDestroy = ents->defineGroup();
-		Particle::component = ents->defineComponent<Particle>(Particle(), EntityComponentCreateConfig(true));
+		Particle::component = ents->defineComponent<Particle>(Particle());
 		{ // camera
 			Entity *e = ents->create(1);
 			CAGE_COMPONENT_ENGINE(Transform, t, e);

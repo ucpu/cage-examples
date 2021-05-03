@@ -317,9 +317,9 @@ int main(int argc, char *args[])
 
 		// entities
 		EntityManager *ents = engineEntities();
-		ScreamerComponent::component = ents->defineComponent(ScreamerComponent(), true);
-		TtlComponent::component = ents->defineComponent(TtlComponent(), true);
-		ParticleComponent::component = ents->defineComponent(ParticleComponent(), true);
+		ScreamerComponent::component = ents->defineComponent(ScreamerComponent());
+		TtlComponent::component = ents->defineComponent(TtlComponent());
+		ParticleComponent::component = ents->defineComponent(ParticleComponent());
 		entsToDestroy = ents->defineGroup();
 		{ // camera
 			Entity *e = ents->create(1);

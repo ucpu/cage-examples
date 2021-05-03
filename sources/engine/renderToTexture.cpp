@@ -38,7 +38,7 @@ bool graphicsInitialize()
 		CAGE_COMPONENT_ENGINE(Camera, c, e);
 		c.target = fabScreenTex.get();
 	}
-	engineAssets()->fabricate<AssetSchemeIndexTexture, Texture>(screenName, templates::move(fabScreenTex), "fabricated tv screen");
+	engineAssets()->fabricate<AssetSchemeIndexTexture, Texture>(screenName, std::move(fabScreenTex), "fabricated tv screen");
 	return false;
 }
 
