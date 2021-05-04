@@ -35,11 +35,9 @@ jobs:
         cmake --build . -- -j3
         echo "$PWD" >> $GITHUB_PATH
 
-    - uses: actions/checkout@v1
-
-    - name: Checkout submodules
-      run: |
-        git submodule update --init --recursive
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
 
     - name: Configure
       run: |
