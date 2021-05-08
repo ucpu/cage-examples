@@ -75,42 +75,42 @@ public:
 
 		Entity *e = engineGui()->entities()->get(name);
 
-		if (e->has(engineGui()->components().Button))
+		if (e->has<GuiButtonComponent>())
 		{
 			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "button press");
 		}
 
-		if (e->has(engineGui()->components().CheckBox))
+		if (e->has<GuiCheckBoxComponent>())
 		{
 			CAGE_COMPONENT_GUI(CheckBox, c, e);
 			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "check box state: " + (uint32)c.state);
 		}
 
-		if (e->has(engineGui()->components().RadioBox))
+		if (e->has<GuiRadioBoxComponent>())
 		{
 			CAGE_COMPONENT_GUI(RadioBox, c, e);
 			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "radio box state: " + (uint32)c.state);
 		}
 
-		if (e->has(engineGui()->components().ColorPicker))
+		if (e->has<GuiColorPickerComponent>())
 		{
 			CAGE_COMPONENT_GUI(ColorPicker, c, e);
 			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "color picker: " + c.color);
 		}
 
-		if (e->has(engineGui()->components().ComboBox))
+		if (e->has<GuiComboBoxComponent>())
 		{
 			CAGE_COMPONENT_GUI(ComboBox, c, e);
 			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "combo box selected: " + c.selected);
 		}
 
-		if (e->has(engineGui()->components().Input))
+		if (e->has<GuiInputComponent>())
 		{
 			CAGE_COMPONENT_GUI(Input, c, e);
 			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "input box valid: " + c.valid + ", value: " + c.value);
 		}
 
-		if (e->has(engineGui()->components().SliderBar))
+		if (e->has<GuiSliderBarComponent>())
 		{
 			CAGE_COMPONENT_GUI(SliderBar, c, e);
 			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "slider bar value: " + c.value);

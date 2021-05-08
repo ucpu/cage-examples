@@ -8,7 +8,6 @@
 #include <cage-engine/window.h>
 #include <cage-engine/gui.h>
 #include <cage-engine/engine.h>
-#include <cage-engine/engineProfiling.h>
 #include <cage-engine/fpsCamera.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 
@@ -89,7 +88,6 @@ int main(int argc, char *args[])
 		Holder<FpsCamera> fpsCamera = newFpsCamera(ents->get(3));
 		fpsCamera->mouseButton = MouseButtonsFlags::Left;
 		fpsCamera->movementSpeed = 0.3;
-		Holder<EngineProfiling> engineProfiling = newEngineProfiling();
 
 		engineAssets()->add(assetsName);
 		engineStart();

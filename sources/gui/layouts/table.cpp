@@ -24,7 +24,7 @@ public:
 				CAGE_COMPONENT_GUI(Scrollbars, sc, ents->get(42));
 			}
 			else
-				ents->get(42)->remove(engineGui()->components().Scrollbars);
+				ents->get(42)->remove<GuiScrollbarsComponent>();
 		} break;
 		case 3:
 		{
@@ -51,7 +51,7 @@ public:
 			{ // remove scrollbars
 				for (auto e : items)
 				{
-					e->remove(engineGui()->components().Scrollbars);
+					e->remove<GuiScrollbarsComponent>();
 				}
 			}
 		} break;
