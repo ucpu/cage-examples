@@ -3,7 +3,6 @@
 #include <cage-core/timer.h>
 
 #include <cage-engine/window.h>
-#include <cage-engine/graphics.h>
 #include <cage-engine/screenList.h>
 #include <cage-engine/opengl.h>
 #include <cage-engine/highPerformanceGpuHint.h>
