@@ -110,7 +110,7 @@ int main(int argc, char *args[])
 		log1->output.bind<logOutputStdOut>();
 
 		// override breakpoints
-		detail::setGlobalBreakpointOverride(false);
+		detail::globalBreakpointOverride(false);
 
 		// run
 		while (!fullStop)
