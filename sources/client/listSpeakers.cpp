@@ -42,7 +42,7 @@ void testDevice(const string &deviceId, uint32 sampleRate)
 	Holder<Timer> tmr = newTimer();
 	while (true)
 	{
-		uint64 t = tmr->microsSinceStart();
+		uint64 t = tmr->duration();
 		if (t > 3 * 1000 * 1000)
 			break;
 		speaker->process(t);

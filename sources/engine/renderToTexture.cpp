@@ -36,7 +36,7 @@ bool graphicsInitialize()
 	{
 		Entity *e = engineEntities()->get(4);
 		CAGE_COMPONENT_ENGINE(Camera, c, e);
-		c.target = fabScreenTex.get();
+		c.target = +fabScreenTex;
 	}
 	engineAssets()->fabricate<AssetSchemeIndexTexture, Texture>(screenName, std::move(fabScreenTex), "fabricated tv screen");
 	return false;
