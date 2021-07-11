@@ -37,7 +37,7 @@ int main(int argc, const char *args[])
 
 	updateInitialize();
 	{
-		Holder<FullscreenSwitcher> fullscreen = newFullscreenSwitcher(false);
+		Holder<FullscreenSwitcher> fullscreen = newFullscreenSwitcher({});
 		engineStart();
 	}
 	updateFinalize();
