@@ -22,9 +22,9 @@ bool windowClose()
 	return false;
 }
 
-bool keyPress(uint32, uint32 b, ModifiersFlags modifiers)
+bool keyPress(uint32 key, ModifiersFlags)
 {
-	switch (b)
+	switch (key)
 	{
 	case 65:
 		camsLayout = camsLayout == 2 ? 0 : camsLayout + 1;
@@ -210,7 +210,7 @@ int main(int argc, char *args[])
 		// events
 		EventListener<bool()> applicationQuitListener;
 		EventListener<bool()> windowCloseListener;
-		EventListener<bool(uint32 key, uint32, ModifiersFlags modifiers)> keyPressListener;
+		EventListener<bool(uint32 key, ModifiersFlags modifiers)> keyPressListener;
 		EventListener<bool()> updateListener;
 		windowCloseListener.bind<&windowClose>();
 		keyPressListener.bind<&keyPress>();

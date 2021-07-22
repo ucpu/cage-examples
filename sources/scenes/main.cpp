@@ -5,7 +5,7 @@
 #include <cage-core/config.h>
 
 bool closeButton();
-bool keyPress(uint32 a, uint32 b, ModifiersFlags m);
+bool keyPress(uint32 a, ModifiersFlags m);
 bool guiFunction(uint32 en);
 bool update();
 

@@ -127,21 +127,21 @@ public:
 		return true;
 	}
 
-	bool keyPress(uint32 a, uint32 b, ModifiersFlags m)
+	bool keyPress(uint32 key, ModifiersFlags m)
 	{
-		CAGE_LOG(SeverityEnum::Info, "event", stringizer() + "key " + a + ", scancode " + b + ", mods " + (uint32)m + ", pressed in window " + index);
+		CAGE_LOG(SeverityEnum::Info, "event", stringizer() + "key " + key + ", mods " + (uint32)m + ", pressed in window " + index);
 		return true;
 	}
 
-	bool keyRepeat(uint32 a, uint32 b, ModifiersFlags m)
+	bool keyRepeat(uint32 key, ModifiersFlags m)
 	{
-		CAGE_LOG(SeverityEnum::Info, "event", stringizer() + "key " + a + ", scancode " + b + ", mods " + (uint32)m + ", repeated in window " + index);
+		CAGE_LOG(SeverityEnum::Info, "event", stringizer() + "key " + key + ", mods " + (uint32)m + ", repeated in window " + index);
 		return true;
 	}
 
-	bool keyRelease(uint32 a, uint32 b, ModifiersFlags m)
+	bool keyRelease(uint32 key, ModifiersFlags m)
 	{
-		CAGE_LOG(SeverityEnum::Info, "event", stringizer() + "key " + a + ", scancode " + b + ", mods " + (uint32)m + ", released in window " + index);
+		CAGE_LOG(SeverityEnum::Info, "event", stringizer() + "key " + key + ", mods " + (uint32)m + ", released in window " + index);
 		return true;
 	}
 

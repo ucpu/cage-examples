@@ -154,7 +154,7 @@ void updateParticles()
 			CAGE_COMPONENT_ENGINE(Light, l, e);
 			l.intensity *= 1 - p.dimming;
 			if (l.intensity < 0.05)
-				e->remove(LightComponent::component);
+				e->remove<LightComponent>();
 		}
 		if (randomChance() < p.smoking)
 			newSmokes.emplace_back(vec4(t.position + randomDirection3() * (randomChance() * t.scale * 0.5), (randomChance() + 0.5) * t.scale));

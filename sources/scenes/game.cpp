@@ -153,9 +153,9 @@ bool closeButton()
 	return false;
 }
 
-bool keyPress(uint32 a, uint32 b, ModifiersFlags m)
+bool keyPress(uint32 key, ModifiersFlags)
 {
-	switch (a)
+	switch (key)
 	{
 	case 256: // esc
 		engineStop();
