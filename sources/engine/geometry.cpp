@@ -30,11 +30,11 @@ Frustum cameraFrustum()
 	return frustum;
 }
 
-void keyPress(uint32 a, uint32 b, ModifiersFlags m)
+void keyPress(uint32 key, ModifiersFlags)
 {
 	EntityManager *ents = engineEntities();
 
-	if (a == 32)
+	if (key == 32)
 	{
 		autoCubes = false;
 
@@ -118,7 +118,7 @@ int main(int argc, char *args[])
 		windowCloseListener.attach(engineWindow()->events.windowClose);
 		windowCloseListener.bind<&windowClose>();
 
-		EventListener<void(uint32, uint32, ModifiersFlags)> keyPressListener;
+		EventListener<void(uint32, ModifiersFlags)> keyPressListener;
 		keyPressListener.attach(engineWindow()->events.keyPress);
 		keyPressListener.bind<&keyPress>();
 

@@ -24,7 +24,7 @@ bool windowClose()
 	return false;
 }
 
-bool keyPress(uint32, uint32, ModifiersFlags modifiers)
+bool keyPress(uint32, ModifiersFlags)
 {
 	return false;
 }
@@ -59,7 +59,7 @@ int main(int argc, char *args[])
 		// events
 #define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
 		GCHL_GENERATE((), windowClose, engineWindow()->events.windowClose);
-		GCHL_GENERATE((uint32, uint32, ModifiersFlags), keyPress, engineWindow()->events.keyPress);
+		GCHL_GENERATE((uint32, ModifiersFlags), keyPress, engineWindow()->events.keyPress);
 		GCHL_GENERATE((), update, controlThread().update);
 #undef GCHL_GENERATE
 
