@@ -17,7 +17,7 @@
 using namespace cage;
 constexpr uint32 assetsName = HashString("cage-tests/translucent/translucent.pack");
 constexpr uint32 knotsCount = 40;
-constexpr uint32 bulbsCount = 5;
+constexpr uint32 bulbsCount = 50;
 
 Holder<NoiseFunction> bulbsNoise[3];
 vec3 bulbsVelocities[bulbsCount];
@@ -233,6 +233,7 @@ int main(int argc, char *args[])
 			CAGE_COMPONENT_ENGINE(Light, l, e);
 			l.lightType = LightTypeEnum::Point;
 			r.color = l.color = colorHsvToRgb(randomChance3() * vec3(1, .5, .5) + vec3(0, .5, .5));
+			l.intensity = 3;
 			l.attenuation = vec3(0.5, 0, 0.07);
 		}
 		for (uint32 j = 0; j < 3; j++)

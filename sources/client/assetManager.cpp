@@ -56,12 +56,10 @@ void slThread()
 {
 	while (!destroying)
 	{
-		while (assets->processCustomThread(2));
 		threadSleep(1000);
 		for (uint32 i = 0; i < 50; i++)
 			assets->get<AssetSchemeIndexPack, AssetPack>(names[randomRange(0u, count)]);
 	}
-	assets->unloadCustomThread(2);
 }
 
 int main(int argc, char *args[])
@@ -85,7 +83,7 @@ int main(int argc, char *args[])
 		assets->defineScheme<AssetSchemeIndexTexture, Texture>(genAssetSchemeTexture(1));
 		assets->defineScheme<AssetSchemeIndexModel, Model>(genAssetSchemeModel(1));
 		assets->defineScheme<AssetSchemeIndexFont, Font>(genAssetSchemeFont(1));
-		assets->defineScheme<AssetSchemeIndexSound, Sound>(genAssetSchemeSound(2));
+		assets->defineScheme<AssetSchemeIndexSound, Sound>(genAssetSchemeSound());
 
 		// threads
 		Holder<Thread> thrGl = newThread(Delegate<void()>().bind<&glThread>(), "opengl");

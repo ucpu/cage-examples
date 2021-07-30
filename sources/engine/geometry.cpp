@@ -60,6 +60,7 @@ void update()
 
 	const real t = engineControlTime() / double(1000000);
 	const Cone shape = Cone(vec3(20 * sin(degs(30 * t)), 1, 0), vec3(0, 0, 1) * quat(degs(), degs(5 * t), degs()), 40, degs(20));
+	//const Frustum shape = Frustum(transform(vec3(20 * sin(degs(30 * t)), 1, 0), quat(degs(180), degs(5 * t), degs())), perspectiveProjection(degs(60), 1, 10, 40));
 	//const auto shape = cameraFrustum();
 
 	// cubes

@@ -105,7 +105,7 @@ int main(int argc, char *args[])
 				label("scaled", t.position + vec3(0, 3, 0));
 				i++;
 			}
-#if 0
+#if 1
 			// performance
 			for (sint32 i = 0; i < 32 * 32; i++)
 			{
@@ -114,6 +114,7 @@ int main(int argc, char *args[])
 				r.object = HashString("cage-tests/skeletons/lemur/lemur.x");
 				CAGE_COMPONENT_ENGINE(SkeletalAnimation, s, e);
 				s.name = HashString(animations[1]);
+				s.speed = randomRange(0.1, 10.0);
 				CAGE_COMPONENT_ENGINE(Transform, t, e);
 				t.position = vec3((i % 32) * 2 - 32, 0, (i / 32) * 2 - 70);
 			}
