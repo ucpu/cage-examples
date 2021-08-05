@@ -8,7 +8,7 @@
 #include <cage-engine/window.h>
 #include <cage-engine/engine.h>
 #include <cage-engine/highPerformanceGpuHint.h>
-#include <cage-engine/engineProfiling.h>
+#include <cage-engine/engineStatistics.h>
 #include <cage-engine/fpsCamera.h>
 
 using namespace cage;
@@ -161,7 +161,7 @@ int main(int argc, char *args[])
 
 		engineAssets()->add(assetsName);
 		{
-			Holder<EngineProfiling> profiling = newEngineProfiling();
+			Holder<EngineStatistics> statistics = newEngineStatistics();
 			Holder<FpsCamera> fps = newFpsCamera(engineEntities()->get(1));
 			fps->mouseButton = MouseButtonsFlags::Left;
 			engineStart();

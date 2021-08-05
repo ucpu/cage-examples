@@ -11,7 +11,7 @@
 #include <cage-engine/gui.h>
 #include <cage-engine/engine.h>
 #include <cage-engine/fpsCamera.h>
-#include <cage-engine/engineProfiling.h>
+#include <cage-engine/engineStatistics.h>
 
 #include <cstdio>
 #include <set>

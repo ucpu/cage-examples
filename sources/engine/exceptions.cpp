@@ -6,7 +6,7 @@
 
 #include <cage-engine/window.h>
 #include <cage-engine/engine.h>
-#include <cage-engine/engineProfiling.h>
+#include <cage-engine/engineStatistics.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 
 using namespace cage;
@@ -154,7 +154,7 @@ int main(int argc, char *args[])
 				r.object = HashString("cage/model/fake.obj");
 			}
 
-			Holder<EngineProfiling> profiling = newEngineProfiling();
+			Holder<EngineStatistics> statistics = newEngineStatistics();
 
 			engineStart();
 			engineFinalize();

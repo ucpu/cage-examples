@@ -9,7 +9,7 @@
 #include <cage-engine/window.h>
 #include <cage-engine/gui.h>
 #include <cage-engine/engine.h>
-#include <cage-engine/engineProfiling.h>
+#include <cage-engine/engineStatistics.h>
 #include <cage-engine/fpsCamera.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/sound.h>
@@ -367,7 +367,7 @@ int main(int argc, char *args[])
 		cameraCtrl->mouseButton = MouseButtonsFlags::Left;
 		cameraCtrl->movementSpeed = 0;
 		cameraCtrl->turningSpeed *= 0.5;
-		Holder<EngineProfiling> engineProfiling = newEngineProfiling();
+		Holder<EngineStatistics> statistics = newEngineStatistics();
 
 		engineAssets()->add(assetsName);
 		engineStart();

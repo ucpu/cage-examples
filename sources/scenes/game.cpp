@@ -7,7 +7,7 @@
 namespace
 {
 	Holder<FpsCamera> cameraCtrl;
-	Holder<EngineProfiling> engineProfilingInstance;
+	Holder<EngineStatistics> statistics;
 
 	uint32 sceneIndexCurrent;
 	uint32 sceneIndexLoaded;
@@ -242,7 +242,7 @@ void cameraInitialize()
 	cameraCtrl = newFpsCamera();
 	cameraCtrl->movementSpeed = 0.5;
 	cameraCtrl->mouseButton = MouseButtonsFlags::Left;
-	engineProfilingInstance = newEngineProfiling();
+	statistics = newEngineStatistics();
 }
 
 void updateInitialize()
@@ -281,7 +281,7 @@ void updateInitialize()
 
 void updateFinalize()
 {
-	engineProfilingInstance.clear();
+	statistics.clear();
 	cameraCtrl.clear();
 	engineAssets()->remove(HashString("scenes/common/common.pack"));
 	if (sceneHashCurrent)

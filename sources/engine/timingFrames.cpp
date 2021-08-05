@@ -8,10 +8,8 @@
 #include <cage-engine/window.h>
 #include <cage-engine/gui.h>
 #include <cage-engine/engine.h>
-#include <cage-engine/engineProfiling.h>
+#include <cage-engine/engineStatistics.h>
 #include <cage-engine/highPerformanceGpuHint.h>
-
-#include <optick.h>
 
 using namespace cage;
 
@@ -60,8 +58,6 @@ bool update()
 	}
 	if (updateDelay)
 	{
-		OPTICK_EVENT("updateDelay");
-		OPTICK_TAG("updateDelay", updateDelay);
 		threadSleep(updateDelay);
 	}
 	guiUpdate();
@@ -72,8 +68,6 @@ bool prepare()
 {
 	if (!prepareDelay)
 		return false;
-	OPTICK_EVENT("prepareDelay");
-	OPTICK_TAG("prepareDelay", prepareDelay);
 	threadSleep(prepareDelay);
 	return false;
 }
@@ -82,8 +76,6 @@ bool render()
 {
 	if (!renderDelay)
 		return false;
-	OPTICK_EVENT("renderDelay");
-	OPTICK_TAG("renderDelay", renderDelay);
 	threadSleep(renderDelay);
 	return false;
 }
@@ -92,8 +84,6 @@ bool soundUpdate()
 {
 	if (!soundDelay)
 		return false;
-	OPTICK_EVENT("soundDelay");
-	OPTICK_TAG("soundDelay", soundDelay);
 	threadSleep(soundDelay);
 	return false;
 }
@@ -215,7 +205,7 @@ int main(int argc, char *args[])
 		engineWindow()->windowedSize(ivec2(800, 600));
 		engineWindow()->title("timing frames");
 		controlInit();
-		Holder<EngineProfiling> engineProfiling = newEngineProfiling();
+		Holder<EngineStatistics> statistics = newEngineStatistics();
 
 		engineStart();
 		engineFinalize();

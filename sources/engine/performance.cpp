@@ -11,7 +11,7 @@
 #include <cage-engine/gui.h>
 #include <cage-engine/engine.h>
 #include <cage-engine/fpsCamera.h>
-#include <cage-engine/engineProfiling.h>
+#include <cage-engine/engineStatistics.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 
 #include <atomic>
@@ -268,7 +268,7 @@ int main(int argc, char *args[])
 		cameraCtrl->movementSpeed = 0.1;
 		cameraCtrl->mouseButton = MouseButtonsFlags::Left;
 
-		Holder<EngineProfiling> engineProfiling = newEngineProfiling();
+		Holder<EngineStatistics> statistics = newEngineStatistics();
 
 		updateThreads = newThreadPool();
 		updateThreads->function.bind<&updateBoxes>();
