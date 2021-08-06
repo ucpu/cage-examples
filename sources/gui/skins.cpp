@@ -12,7 +12,7 @@ public:
 
 		uint32 animateOption = -1;
 		{
-			CAGE_COMPONENT_GUI(ComboBox, combo, ents->get(100));
+			GuiComboBoxComponent &combo = ents->get(100)->value<GuiComboBoxComponent>();
 			animateOption = combo.selected;
 		}
 
@@ -71,10 +71,10 @@ public:
 
 		{ // animate option
 			Entity *e = ents->create(100);
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 2;
-			CAGE_COMPONENT_GUI(ComboBox, input, e);
-			CAGE_COMPONENT_GUI(Text, text, e);
+			GuiComboBoxComponent &input = e->value<GuiComboBoxComponent>();
+			GuiTextComponent &text = e->value<GuiTextComponent>();
 			text.value = "animation";
 			static const char *options[] = {
 				"margins",
@@ -85,38 +85,38 @@ public:
 			for (uint32 i = 0; i < sizeof(options)/sizeof(options[0]); i++)
 			{
 				Entity *ee = ents->createUnique();
-				CAGE_COMPONENT_GUI(Parent, p, ee);
+				GuiParentComponent &p = ee->value<GuiParentComponent>();
 				p.parent = 100;
 				p.order = i;
-				CAGE_COMPONENT_GUI(Text, text, ee);
+				GuiTextComponent &text = ee->value<GuiTextComponent>();
 				text.value = options[i];
 			}
 		}
 		{ // main
 			Entity *panel = ents->get(3);
 			//panel->remove(gui()->components().LayoutTable);
-			CAGE_COMPONENT_GUI(LayoutLine, ll, panel);
-			CAGE_COMPONENT_GUI(Scrollbars, sc, panel);
+			GuiLayoutLineComponent &ll = panel->value<GuiLayoutLineComponent>();
+			GuiScrollbarsComponent &sc = panel->value<GuiScrollbarsComponent>();
 			sc.alignment = vec2(0.5, 0);
 		}
 		{ // left panel
 			Entity *panel = ents->create(4);
-			CAGE_COMPONENT_GUI(Parent, p, panel);
+			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = 1;
-			CAGE_COMPONENT_GUI(Panel, gp, panel);
-			CAGE_COMPONENT_GUI(LayoutLine, ll, panel);
+			GuiPanelComponent &gp = panel->value<GuiPanelComponent>();
+			GuiLayoutLineComponent &ll = panel->value<GuiLayoutLineComponent>();
 			ll.vertical = true;
 		}
 		{ // right panel
 			Entity *panel = ents->create(5);
-			CAGE_COMPONENT_GUI(Parent, p, panel);
+			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = 2;
-			CAGE_COMPONENT_GUI(Panel, gp, panel);
-			CAGE_COMPONENT_GUI(LayoutLine, ll, panel);
+			GuiPanelComponent &gp = panel->value<GuiPanelComponent>();
+			GuiLayoutLineComponent &ll = panel->value<GuiLayoutLineComponent>();
 			ll.vertical = true;
-			CAGE_COMPONENT_GUI(WidgetState, ws, panel);
+			GuiWidgetStateComponent &ws = panel->value<GuiWidgetStateComponent>();
 			ws.skinIndex = 1;
 		}
 		for (uint32 side = 4; side < 6; side++)
@@ -124,95 +124,95 @@ public:
 			uint32 index = 0;
 			{ // label
 				Entity *e = ents->createUnique();
-				CAGE_COMPONENT_GUI(Parent, p, e);
+				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = side;
 				p.order = index++;
-				CAGE_COMPONENT_GUI(Label, label, e);
-				CAGE_COMPONENT_GUI(Text, text, e);
+				GuiLabelComponent &label = e->value<GuiLabelComponent>();
+				GuiTextComponent &text = e->value<GuiTextComponent>();
 				text.value = "People shouldn't be afraid of their government.\nGovernments should be afraid of their people.";
-				CAGE_COMPONENT_GUI(TextFormat, format, e);
+				GuiTextFormatComponent &format = e->value<GuiTextFormatComponent>();
 				format.align = TextAlignEnum::Left;
 			}
 			{ // button
 				Entity *e = ents->createUnique();
-				CAGE_COMPONENT_GUI(Parent, p, e);
+				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = side;
 				p.order = index++;
-				CAGE_COMPONENT_GUI(Button, button, e);
-				CAGE_COMPONENT_GUI(Text, text, e);
+				GuiButtonComponent &button = e->value<GuiButtonComponent>();
+				GuiTextComponent &text = e->value<GuiTextComponent>();
 				text.value = "button";
 			}
 			{ // text input box
 				Entity *e = ents->createUnique();
-				CAGE_COMPONENT_GUI(Parent, p, e);
+				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = side;
 				p.order = index++;
-				CAGE_COMPONENT_GUI(Input, input, e);
-				CAGE_COMPONENT_GUI(Text, text, e);
+				GuiInputComponent &input = e->value<GuiInputComponent>();
+				GuiTextComponent &text = e->value<GuiTextComponent>();
 				text.value = "text input box";
 			}
 			{ // real input box
 				Entity *e = ents->createUnique();
-				CAGE_COMPONENT_GUI(Parent, p, e);
+				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = side;
 				p.order = index++;
-				CAGE_COMPONENT_GUI(Input, input, e);
+				GuiInputComponent &input = e->value<GuiInputComponent>();
 				input.type = InputTypeEnum::Real;
 				input.min.f = -5;
 				input.max.f = 5;
 				input.step.f = 0.1;
-				CAGE_COMPONENT_GUI(Text, text, e);
+				GuiTextComponent &text = e->value<GuiTextComponent>();
 				text.value = "real input box";
 			}
 			{ // checkbox
 				Entity *e = ents->createUnique();
-				CAGE_COMPONENT_GUI(Parent, p, e);
+				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = side;
 				p.order = index++;
-				CAGE_COMPONENT_GUI(CheckBox, box, e);
-				CAGE_COMPONENT_GUI(Text, text, e);
+				GuiCheckBoxComponent &box = e->value<GuiCheckBoxComponent>();
+				GuiTextComponent &text = e->value<GuiTextComponent>();
 				text.value = "checkbox";
 			}
 			{ // radiobox
 				Entity *e = ents->createUnique();
-				CAGE_COMPONENT_GUI(Parent, p, e);
+				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = side;
 				p.order = index++;
-				CAGE_COMPONENT_GUI(RadioBox, box, e);
-				CAGE_COMPONENT_GUI(Text, text, e);
+				GuiRadioBoxComponent &box = e->value<GuiRadioBoxComponent>();
+				GuiTextComponent &text = e->value<GuiTextComponent>();
 				text.value = "radiobox";
 			}
 			{ // combo box
 				Entity *e = ents->createUnique();
-				CAGE_COMPONENT_GUI(Parent, p, e);
+				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = side;
 				p.order = index++;
-				CAGE_COMPONENT_GUI(ComboBox, input, e);
-				CAGE_COMPONENT_GUI(Text, text, e);
+				GuiComboBoxComponent &input = e->value<GuiComboBoxComponent>();
+				GuiTextComponent &text = e->value<GuiTextComponent>();
 				text.value = "combo box";
 				for (uint32 i = 0; i < 5; i++)
 				{
 					Entity *ee = ents->createUnique();
-					CAGE_COMPONENT_GUI(Parent, p, ee);
+					GuiParentComponent &p = ee->value<GuiParentComponent>();
 					p.parent = e->name();
 					p.order = i;
-					CAGE_COMPONENT_GUI(Text, text, ee);
+					GuiTextComponent &text = ee->value<GuiTextComponent>();
 					text.value = stringizer() + i;
 				}
 			}
 			{ // slider
 				Entity *e = ents->createUnique();
-				CAGE_COMPONENT_GUI(Parent, p, e);
+				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = side;
 				p.order = index++;
-				CAGE_COMPONENT_GUI(SliderBar, slider, e);
+				GuiSliderBarComponent &slider = e->value<GuiSliderBarComponent>();
 			}
 			{ // color picker
 				Entity *e = ents->createUnique();
-				CAGE_COMPONENT_GUI(Parent, p, e);
+				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = side;
 				p.order = index++;
-				CAGE_COMPONENT_GUI(ColorPicker, picker, e);
+				GuiColorPickerComponent &picker = e->value<GuiColorPickerComponent>();
 			}
 		}
 	}

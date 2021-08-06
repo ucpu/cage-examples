@@ -10,35 +10,35 @@ public:
 
 		Entity *cell = ents->createUnique();
 		{
-			CAGE_COMPONENT_GUI(Panel, b, cell);
+			GuiPanelComponent &b = cell->value<GuiPanelComponent>();
 		}
 
 		if (depth == 15)
 		{
 			Entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = cell->name();
-			CAGE_COMPONENT_GUI(Label, l, e);
-			CAGE_COMPONENT_GUI(Text, t, e);
+			GuiLabelComponent &l = e->value<GuiLabelComponent>();
+			GuiTextComponent &t = e->value<GuiTextComponent>();
 			t.value = "Hi";
 		}
 		else
 		{
-			CAGE_COMPONENT_GUI(LayoutSplitter, s, cell);
+			GuiLayoutSplitterComponent &s = cell->value<GuiLayoutSplitterComponent>();
 			s.vertical = (depth % 2) == 1;
 			s.inverse = ((depth / 2) % 2) == 1;
 			{ // first
 				Entity *e = ents->createUnique();
-				CAGE_COMPONENT_GUI(Parent, p, e);
+				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = cell->name();
 				p.order = s.inverse;
-				CAGE_COMPONENT_GUI(Button, l, e);
-				CAGE_COMPONENT_GUI(Text, t, e);
+				GuiButtonComponent &l = e->value<GuiButtonComponent>();
+				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = stringizer() + "Item: " + (depth + 1);
 			}
 			{ // second
 				Entity *e = makeSplitterRec(depth + 1);
-				CAGE_COMPONENT_GUI(Parent, p, e);
+				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = cell->name();
 				p.order = !s.inverse;
 			}

@@ -53,41 +53,41 @@ int main(int argc, char *args[])
 		EntityManager *ents = engineEntities();
 		{ // cube
 			Entity *e = ents->create(1);
-			CAGE_COMPONENT_ENGINE(Render, r, e);
+			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/lods/cube.object");
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position = vec3(-8, 0, 0);
 		}
 		{ // sphere
 			Entity *e = ents->create(2);
-			CAGE_COMPONENT_ENGINE(Render, r, e);
+			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/lods/sphere.object");
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position = vec3(8, 0, 0);
 		}
 		{ // floor
 			Entity *e = ents->create(3);
-			CAGE_COMPONENT_ENGINE(Render, r, e);
+			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/lods/floor.object");
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position = vec3(0, -5, 0);
 		}
 		{ // sun
 			Entity *e = ents->create(9);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.orientation = quat(degs(-60), degs(20), degs());
-			CAGE_COMPONENT_ENGINE(Light, l, e);
+			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Directional;
-			CAGE_COMPONENT_ENGINE(Shadowmap, s, e);
+			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 1024;
 			s.worldSize = vec3(20, 20, 20);
 		}
 		{ // camera
 			Entity *e = ents->create(10);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position = vec3(0, 3, 30);
 			t.orientation = quat(degs(-10), degs(), degs());
-			CAGE_COMPONENT_ENGINE(Camera, c, e);
+			CameraComponent &c = e->value<CameraComponent>();
 			c.ambientColor = vec3(1);
 			c.ambientIntensity = 0.5;
 			c.near = 0.1;

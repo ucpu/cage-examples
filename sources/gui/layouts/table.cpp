@@ -13,37 +13,37 @@ public:
 	{
 		guiTestClass::guiEvent(name);
 		EntityManager *ents = engineGui()->entities();
-		CAGE_COMPONENT_GUI(LayoutTable, s, ents->get(42));
+		GuiLayoutTableComponent &s = ents->get(42)->value<GuiLayoutTableComponent>();
 		switch (name)
 		{
 		case 2:
 		{
-			CAGE_COMPONENT_GUI(CheckBox, b, ents->get(name));
+			GuiCheckBoxComponent &b = ents->get(name)->value<GuiCheckBoxComponent>();
 			if (b.state == CheckBoxStateEnum::Checked)
 			{
-				CAGE_COMPONENT_GUI(Scrollbars, sc, ents->get(42));
+				GuiScrollbarsComponent &sc = ents->get(42)->value<GuiScrollbarsComponent>();
 			}
 			else
 				ents->get(42)->remove<GuiScrollbarsComponent>();
 		} break;
 		case 3:
 		{
-			CAGE_COMPONENT_GUI(CheckBox, b, ents->get(name));
+			GuiCheckBoxComponent &b = ents->get(name)->value<GuiCheckBoxComponent>();
 			s.vertical = b.state == CheckBoxStateEnum::Checked;
 		} break;
 		case 4:
 		{
-			CAGE_COMPONENT_GUI(CheckBox, b, ents->get(name));
+			GuiCheckBoxComponent &b = ents->get(name)->value<GuiCheckBoxComponent>();
 			s.grid = b.state == CheckBoxStateEnum::Checked;
 		} break;
 		case 5:
 		{
-			CAGE_COMPONENT_GUI(CheckBox, b, ents->get(name));
+			GuiCheckBoxComponent &b = ents->get(name)->value<GuiCheckBoxComponent>();
 			if (b.state == CheckBoxStateEnum::Checked)
 			{ // add scrollbars
 				for (auto e : items)
 				{
-					CAGE_COMPONENT_GUI(Scrollbars, sc, e);
+					GuiScrollbarsComponent &sc = e->value<GuiScrollbarsComponent>();
 					sc.alignment = randomChance2();
 				}
 			}
@@ -57,7 +57,7 @@ public:
 		} break;
 		case 6:
 		{
-			CAGE_COMPONENT_GUI(Input, b, ents->get(name));
+			GuiInputComponent &b = ents->get(name)->value<GuiInputComponent>();
 			if (b.valid)
 				s.sections = toUint32(b.value);
 		} break;
@@ -70,74 +70,74 @@ public:
 
 		Entity *mainSplitter = ents->createUnique();
 		{
-			CAGE_COMPONENT_GUI(LayoutSplitter, l, mainSplitter);
+			GuiLayoutSplitterComponent &l = mainSplitter->value<GuiLayoutSplitterComponent>();
 			l.vertical = true;
 		}
 
 		{
 			Entity *menu = ents->createUnique();
 			{
-				CAGE_COMPONENT_GUI(Parent, p, menu);
+				GuiParentComponent &p = menu->value<GuiParentComponent>();
 				p.parent = mainSplitter->name();
 				p.order = 1;
-				CAGE_COMPONENT_GUI(Panel, b, menu);
-				CAGE_COMPONENT_GUI(LayoutLine, l, menu);
-				CAGE_COMPONENT_GUI(Scrollbars, sc, menu);
+				GuiPanelComponent &b = menu->value<GuiPanelComponent>();
+				GuiLayoutLineComponent &l = menu->value<GuiLayoutLineComponent>();
+				GuiScrollbarsComponent &sc = menu->value<GuiScrollbarsComponent>();
 			}
 
 			{ // scrollbar
 				Entity *e = ents->create(2);
-				CAGE_COMPONENT_GUI(Parent, p, e);
+				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = menu->name();
 				p.order = 2;
-				CAGE_COMPONENT_GUI(CheckBox, b, e);
-				CAGE_COMPONENT_GUI(Text, t, e);
+				GuiCheckBoxComponent &b = e->value<GuiCheckBoxComponent>();
+				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = "scrollbar";
 			}
 
 			{ // vertical
 				Entity *e = ents->create(3);
-				CAGE_COMPONENT_GUI(Parent, p, e);
+				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = menu->name();
 				p.order = 3;
-				CAGE_COMPONENT_GUI(CheckBox, b, e);
+				GuiCheckBoxComponent &b = e->value<GuiCheckBoxComponent>();
 				b.state = CheckBoxStateEnum::Checked;
-				CAGE_COMPONENT_GUI(Text, t, e);
+				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = "vertical";
 			}
 
 			{ // grid
 				Entity *e = ents->create(4);
-				CAGE_COMPONENT_GUI(Parent, p, e);
+				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = menu->name();
 				p.order = 4;
-				CAGE_COMPONENT_GUI(CheckBox, b, e);
-				CAGE_COMPONENT_GUI(Text, t, e);
+				GuiCheckBoxComponent &b = e->value<GuiCheckBoxComponent>();
+				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = "grid";
 			}
 
 			{ // scrollbars
 				Entity *e = ents->create(5);
-				CAGE_COMPONENT_GUI(Parent, p, e);
+				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = menu->name();
 				p.order = 5;
-				CAGE_COMPONENT_GUI(CheckBox, b, e);
-				CAGE_COMPONENT_GUI(Text, t, e);
+				GuiCheckBoxComponent &b = e->value<GuiCheckBoxComponent>();
+				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = "scrollbars";
 			}
 
 			{ // sections
 				Entity *e = ents->create(6);
-				CAGE_COMPONENT_GUI(Parent, p, e);
+				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = menu->name();
 				p.order = 6;
-				CAGE_COMPONENT_GUI(Input, b, e);
+				GuiInputComponent &b = e->value<GuiInputComponent>();
 				b.min.i = 0;
 				b.max.i = 10;
 				b.step.i = 1;
 				b.type = InputTypeEnum::Integer;
 				b.value = "0";
-				CAGE_COMPONENT_GUI(Text, t, e);
+				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = "sections";
 			}
 		}
@@ -145,11 +145,11 @@ public:
 		// the test table
 		Entity *presentation = ents->create(42);
 		{
-			CAGE_COMPONENT_GUI(Parent, p, presentation);
+			GuiParentComponent &p = presentation->value<GuiParentComponent>();
 			p.parent = mainSplitter->name();
 			p.order = 2;
-			CAGE_COMPONENT_GUI(Panel, b, presentation);
-			CAGE_COMPONENT_GUI(LayoutTable, t, presentation);
+			GuiPanelComponent &b = presentation->value<GuiPanelComponent>();
+			GuiLayoutTableComponent &t = presentation->value<GuiLayoutTableComponent>();
 			t.sections = 0;
 		}
 
@@ -159,21 +159,21 @@ public:
 			// scrollbars
 			Entity *o = ents->createUnique();
 			{
-				CAGE_COMPONENT_GUI(Parent, p, o);
+				GuiParentComponent &p = o->value<GuiParentComponent>();
 				p.parent = 42;
 				p.order = i;
-				CAGE_COMPONENT_GUI(Panel, panel, o);
+				GuiPanelComponent &panel = o->value<GuiPanelComponent>();
 			}
 			items.push_back(o);
 			// button
 			Entity *b = ents->createUnique();
 			{
-				CAGE_COMPONENT_GUI(Parent, p, b);
+				GuiParentComponent &p = b->value<GuiParentComponent>();
 				p.parent = o->name();
-				CAGE_COMPONENT_GUI(Button, but, b);
-				CAGE_COMPONENT_GUI(Text, t, b);
+				GuiButtonComponent &but = b->value<GuiButtonComponent>();
+				GuiTextComponent &t = b->value<GuiTextComponent>();
 				t.value = stringizer() + "item " + i;
-				CAGE_COMPONENT_GUI(ExplicitSize, size, b);
+				GuiExplicitSizeComponent &size = b->value<GuiExplicitSizeComponent>();
 				size.size = randomRange2(50, 250);
 			}
 		}

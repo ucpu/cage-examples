@@ -17,10 +17,10 @@ public:
 		{
 			Entity *e = ents->createUnique();
 			widgets.push_back(e->name());
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = parent;
 			p.order = i;
-			CAGE_COMPONENT_GUI(Text, t, e);
+			GuiTextComponent &t = e->value<GuiTextComponent>();
 			t.value = stringizer() + e->name();
 		}
 	}
@@ -31,7 +31,7 @@ public:
 		widgets.erase(std::remove_if(widgets.begin(), widgets.end(), [&](uint32 n)
 		{
 			Entity *e = ents->get(n);
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			bool ret = !ents->has(p.parent);
 			if (ret)
 				e->destroy();
@@ -58,7 +58,7 @@ public:
 			Entity *e = ents->createUnique();
 			widgets.push_back(e->name());
 			{
-				CAGE_COMPONENT_GUI(Parent, p, e);
+				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = 10;
 				p.order = e->name();
 			}
@@ -66,71 +66,71 @@ public:
 			{
 			case 0:
 			{
-				CAGE_COMPONENT_GUI(Button, b, e);
-				CAGE_COMPONENT_GUI(Text, t, e);
+				GuiButtonComponent &b = e->value<GuiButtonComponent>();
+				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = stringizer() + e->name();
 			} break;
 			case 1:
 			{
-				CAGE_COMPONENT_GUI(CheckBox, cb, e);
+				GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
 				cb.state = CheckBoxStateEnum::Indeterminate;
 			} break;
 			case 2:
 			{
-				CAGE_COMPONENT_GUI(ColorPicker, cp, e);
+				GuiColorPickerComponent &cp = e->value<GuiColorPickerComponent>();
 				cp.color = vec3(randomRange3(0, 1));
 			} break;
 			case 3:
 			{
-				CAGE_COMPONENT_GUI(ComboBox, cb, e);
+				GuiComboBoxComponent &cb = e->value<GuiComboBoxComponent>();
 				generateList(e->name());
 			} break;
 			case 4:
 			{
-				CAGE_COMPONENT_GUI(Input, i, e);
+				GuiInputComponent &i = e->value<GuiInputComponent>();
 				i.value = stringizer() + e->name();
 			} break;
 			case 5:
 			{
-				CAGE_COMPONENT_GUI(Label, l, e);
-				CAGE_COMPONENT_GUI(Text, t, e);
+				GuiLabelComponent &l = e->value<GuiLabelComponent>();
+				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = stringizer() + e->name();
 			} break;
 			case 6:
 			{
-				CAGE_COMPONENT_GUI(ListBox, lb, e);
+				GuiListBoxComponent &lb = e->value<GuiListBoxComponent>();
 				generateList(e->name());
 			} break;
 			case 7:
 			{
-				CAGE_COMPONENT_GUI(Panel, p, e);
-				CAGE_COMPONENT_GUI(Text, t, e);
+				GuiPanelComponent &p = e->value<GuiPanelComponent>();
+				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = stringizer() + e->name();
 			} break;
 			case 8:
 			{
-				CAGE_COMPONENT_GUI(ProgressBar, pb, e);
+				GuiProgressBarComponent &pb = e->value<GuiProgressBarComponent>();
 				pb.progress = randomChance();
 				pb.showValue = !!(e->name() % 2);
 			} break;
 			case 9:
 			{
-				CAGE_COMPONENT_GUI(RadioBox, rb, e);
+				GuiRadioBoxComponent &rb = e->value<GuiRadioBoxComponent>();
 			} break;
 			case 10:
 			{
-				CAGE_COMPONENT_GUI(SliderBar, sb, e);
+				GuiSliderBarComponent &sb = e->value<GuiSliderBarComponent>();
 				sb.value = randomChance();
 			} break;
 			case 11:
 			{
-				CAGE_COMPONENT_GUI(Spoiler, s, e);
-				CAGE_COMPONENT_GUI(Text, t, e);
+				GuiSpoilerComponent &s = e->value<GuiSpoilerComponent>();
+				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = stringizer() + e->name();
 			} break;
 			case 12:
 			{
-				CAGE_COMPONENT_GUI(TextArea, ta, e);
+				GuiTextAreaComponent &ta = e->value<GuiTextAreaComponent>();
 			} break;
 			}
 		}
@@ -144,9 +144,9 @@ public:
 
 		{
 			Entity *e = ents->create(10);
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
-			CAGE_COMPONENT_GUI(LayoutLine, ll, e);
+			GuiLayoutLineComponent &ll = e->value<GuiLayoutLineComponent>();
 			ll.vertical = true;
 		}
 	}

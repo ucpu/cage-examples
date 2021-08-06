@@ -23,8 +23,8 @@ void windowClose()
 Frustum cameraFrustum()
 {
 	Entity *camE = engineEntities()->get(1);
-	CAGE_COMPONENT_ENGINE(Transform, camT, camE);
-	CAGE_COMPONENT_ENGINE(Camera, camC, camE);
+	TransformComponent &camT = camE->value<TransformComponent>();
+	CameraComponent &camC = camE->value<CameraComponent>();
 	const ivec2 resolution = engineWindow()->resolution();
 	const Frustum frustum = Frustum(camT, perspectiveProjection(camC.camera.perspectiveFov, real(resolution[0]) / resolution[1], camC.near, camC.far));
 	return frustum;
@@ -44,7 +44,7 @@ void keyPress(uint32 key, ModifiersFlags)
 		for (uint32 i = 0; i < 10000; i++)
 		{
 			Entity *e = ents->get(100 + i);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			const Aabb box = Aabb(vec3(-0.5 + t.position), vec3(0.5 + t.position));
 			t.scale = intersects(box, frustum) ? 0.5 : 0.1;
 		}
@@ -67,7 +67,7 @@ void update()
 	for (uint32 i = 0; i < 10000; i++)
 	{
 		Entity *e = ents->get(100 + i);
-		CAGE_COMPONENT_ENGINE(Transform, t, e);
+		TransformComponent &t = e->value<TransformComponent>();
 		const Aabb box = Aabb(vec3(-0.5 + t.position), vec3(0.5 + t.position));
 		t.scale = intersects(Sphere(box), shape) ? 0.5 : 0.1;
 	}
@@ -79,10 +79,10 @@ void init()
 
 	{ // camera
 		Entity *e = ents->create(1);
-		CAGE_COMPONENT_ENGINE(Transform, t, e);
+		TransformComponent &t = e->value<TransformComponent>();
 		t.position = vec3(0, 50, 70);
 		t.orientation = quat(degs(-40), degs(), degs());
-		CAGE_COMPONENT_ENGINE(Camera, c, e);
+		CameraComponent &c = e->value<CameraComponent>();
 		c.near = 0.1;
 		c.far = 1000;
 		c.effects = CameraEffectsFlags::Default;
@@ -96,10 +96,10 @@ void init()
 	for (uint32 i = 0; i < 10000; i++)
 	{
 		Entity *e = ents->create(100 + i);
-		CAGE_COMPONENT_ENGINE(Transform, t, e);
+		TransformComponent &t = e->value<TransformComponent>();
 		t.position = vec3(i / 100, 0, i % 100) + vec3(-50, 1, -50);
 		t.scale = 0;
-		CAGE_COMPONENT_ENGINE(Render, r, e);
+		RenderComponent &r = e->value<RenderComponent>();
 		r.object = HashString("cage/model/fake.obj");
 	}
 }

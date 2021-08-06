@@ -16,24 +16,24 @@ public:
 
 		Entity *panel = ents->create(2);
 		{
-			CAGE_COMPONENT_GUI(Panel, gp, panel);
-			CAGE_COMPONENT_GUI(LayoutLine, ll, panel);
+			GuiPanelComponent &gp = panel->value<GuiPanelComponent>();
+			GuiLayoutLineComponent &ll = panel->value<GuiLayoutLineComponent>();
 			ll.vertical = true;
-			CAGE_COMPONENT_GUI(Scrollbars, sc, panel);
+			GuiScrollbarsComponent &sc = panel->value<GuiScrollbarsComponent>();
 			sc.alignment = vec2(0.5, 0);
 		}
 
 		for (uint32 i = 0; i < 300; i++)
 		{
 			Entity * e = ents->create(100 + i);
-			CAGE_COMPONENT_GUI(Parent, parent, e);
+			GuiParentComponent &parent = e->value<GuiParentComponent>();
 			parent.parent = panel->name();
 			parent.order = i;
-			CAGE_COMPONENT_GUI(Label, label, e);
-			CAGE_COMPONENT_GUI(Text, text, e);
+			GuiLabelComponent &label = e->value<GuiLabelComponent>();
+			GuiTextComponent &text = e->value<GuiTextComponent>();
 			text.assetName = HashString("cage-tests/gui/utf8test.textpack");
 			text.textName = HashString(string(stringizer() + "utf8test/" + i));
-			CAGE_COMPONENT_GUI(TextFormat, format, e);
+			GuiTextFormatComponent &format = e->value<GuiTextFormatComponent>();
 			format.font = HashString("cage-tests/gui/DroidSansMono.ttf");
 		}
 	}

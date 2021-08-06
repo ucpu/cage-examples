@@ -25,7 +25,7 @@ bool windowClose()
 void enableEffect(CameraEffectsFlags effect, bool enable)
 {
 	Entity *camera = engineEntities()->get(1);
-	CAGE_COMPONENT_ENGINE(Camera, cam, camera);
+	CameraComponent &cam = camera->value<CameraComponent>();
 	if (enable)
 		cam.effects = cam.effects | effect;
 	else
@@ -49,48 +49,48 @@ bool update()
 	EntityManager *ents = engineGui()->entities();
 
 	Entity *camera = engineEntities()->get(1);
-	CAGE_COMPONENT_ENGINE(Camera, cam, camera);
+	CameraComponent &cam = camera->value<CameraComponent>();
 
 	{ // ambient occlusion
 		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::AmbientOcclusion);
 		{ // enable
 			Entity *e = ents->get(baseName);
-			CAGE_COMPONENT_GUI(CheckBox, cb, e);
+			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
 			enableEffect(CameraEffectsFlags::AmbientOcclusion, cb.state == CheckBoxStateEnum::Checked);
 		}
 		{ // world radius
 			Entity *e = ents->get(baseName + 1);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.ssao.worldRadius = toFloat(in.value);
 		}
 		{ // strength
 			Entity *e = ents->get(baseName + 2);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.ssao.strength = toFloat(in.value);
 		}
 		{ // bias
 			Entity *e = ents->get(baseName + 3);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.ssao.bias = toFloat(in.value);
 		}
 		{ // power
 			Entity *e = ents->get(baseName + 4);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.ssao.power = toFloat(in.value);
 		}
 		{ // samples count
 			Entity *e = ents->get(baseName + 5);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.ssao.samplesCount = toUint32(in.value);
 		}
 		{ // blur passes
 			Entity *e = ents->get(baseName + 6);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.ssao.blurPasses = toUint32(in.value);
 		}
@@ -100,30 +100,30 @@ bool update()
 		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::DepthOfField);
 		{ // enable
 			Entity *e = ents->get(baseName);
-			CAGE_COMPONENT_GUI(CheckBox, cb, e);
+			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
 			enableEffect(CameraEffectsFlags::DepthOfField, cb.state == CheckBoxStateEnum::Checked);
 		}
 		{ // focus distance
 			Entity *e = ents->get(baseName + 1);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.depthOfField.focusDistance = toFloat(in.value);
 		}
 		{ // focus radius
 			Entity *e = ents->get(baseName + 2);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.depthOfField.focusRadius = toFloat(in.value);
 		}
 		{ // blend radius
 			Entity *e = ents->get(baseName + 3);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.depthOfField.blendRadius = toFloat(in.value);
 		}
 		{ // blur passes
 			Entity *e = ents->get(baseName + 4);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.depthOfField.blurPasses = toUint32(in.value);
 		}
@@ -133,7 +133,7 @@ bool update()
 		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::MotionBlur);
 		{ // enable
 			Entity *e = ents->get(baseName);
-			CAGE_COMPONENT_GUI(CheckBox, cb, e);
+			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
 			enableEffect(CameraEffectsFlags::MotionBlur, cb.state == CheckBoxStateEnum::Checked);
 		}
 	}
@@ -142,18 +142,18 @@ bool update()
 		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::Bloom);
 		{ // enable
 			Entity *e = ents->get(baseName);
-			CAGE_COMPONENT_GUI(CheckBox, cb, e);
+			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
 			enableEffect(CameraEffectsFlags::Bloom, cb.state == CheckBoxStateEnum::Checked);
 		}
 		{ // threshold
 			Entity *e = ents->get(baseName + 1);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.bloom.threshold = toFloat(in.value);
 		}
 		{ // blur passes
 			Entity *e = ents->get(baseName + 2);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.bloom.blurPasses = toUint32(in.value);
 		}
@@ -163,30 +163,30 @@ bool update()
 		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::EyeAdaptation);
 		{ // enable
 			Entity *e = ents->get(baseName);
-			CAGE_COMPONENT_GUI(CheckBox, cb, e);
+			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
 			enableEffect(CameraEffectsFlags::EyeAdaptation, cb.state == CheckBoxStateEnum::Checked);
 		}
 		{ // key
 			Entity *e = ents->get(baseName + 1);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.eyeAdaptation.key = toFloat(in.value);
 		}
 		{ // strength
 			Entity *e = ents->get(baseName + 2);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.eyeAdaptation.strength = toFloat(in.value);
 		}
 		{ // darkerSpeed
 			Entity *e = ents->get(baseName + 3);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.eyeAdaptation.darkerSpeed = toFloat(in.value);
 		}
 		{ // lighterSpeed
 			Entity *e = ents->get(baseName + 4);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.eyeAdaptation.lighterSpeed = toFloat(in.value);
 		}
@@ -196,48 +196,48 @@ bool update()
 		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::ToneMapping);
 		{ // enable
 			Entity *e = ents->get(baseName);
-			CAGE_COMPONENT_GUI(CheckBox, cb, e);
+			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
 			enableEffect(CameraEffectsFlags::ToneMapping, cb.state == CheckBoxStateEnum::Checked);
 		}
 		{ // shoulderStrength
 			Entity *e = ents->get(baseName + 1);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.tonemap.shoulderStrength = toFloat(in.value);
 		}
 		{ // linearStrength
 			Entity *e = ents->get(baseName + 2);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.tonemap.linearStrength = toFloat(in.value);
 		}
 		{ // linearAngle
 			Entity *e = ents->get(baseName + 3);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.tonemap.linearAngle = toFloat(in.value);
 		}
 		{ // toeStrength
 			Entity *e = ents->get(baseName + 4);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.tonemap.toeStrength = toFloat(in.value);
 		}
 		{ // toeNumerator
 			Entity *e = ents->get(baseName + 5);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.tonemap.toeNumerator = toFloat(in.value);
 		}
 		{ // toeDenominator
 			Entity *e = ents->get(baseName + 6);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.tonemap.toeDenominator = toFloat(in.value);
 		}
 		{ // white
 			Entity *e = ents->get(baseName + 7);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.tonemap.white = toFloat(in.value);
 		}
@@ -247,12 +247,12 @@ bool update()
 		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::GammaCorrection);
 		{ // enable
 			Entity *e = ents->get(baseName);
-			CAGE_COMPONENT_GUI(CheckBox, cb, e);
+			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
 			enableEffect(CameraEffectsFlags::GammaCorrection, cb.state == CheckBoxStateEnum::Checked);
 		}
 		{ // gamma
 			Entity *e = ents->get(baseName + 1);
-			CAGE_COMPONENT_GUI(Input, in, e);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.gamma = toFloat(in.value);
 		}
@@ -262,7 +262,7 @@ bool update()
 		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::AntiAliasing);
 		{ // enable
 			Entity *e = ents->get(baseName);
-			CAGE_COMPONENT_GUI(CheckBox, cb, e);
+			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
 			enableEffect(CameraEffectsFlags::AntiAliasing, cb.state == CheckBoxStateEnum::Checked);
 		}
 	}
@@ -275,19 +275,19 @@ Entity *genInputFloat(Entity *table, sint32 &childIndex, uint32 nameBase, const 
 	EntityManager *ents = engineGui()->entities();
 	{
 		Entity *e = ents->createUnique();
-		CAGE_COMPONENT_GUI(Parent, p, e);
+		GuiParentComponent &p = e->value<GuiParentComponent>();
 		p.parent = table->name();
 		p.order = childIndex++;
-		CAGE_COMPONENT_GUI(Label, label, e);
-		CAGE_COMPONENT_GUI(Text, t, e);
+		GuiLabelComponent &label = e->value<GuiLabelComponent>();
+		GuiTextComponent &t = e->value<GuiTextComponent>();
 		t.value = labelText;
 	}
 	{
 		Entity *e = ents->create(nameBase + childIndex / 2);
-		CAGE_COMPONENT_GUI(Parent, p, e);
+		GuiParentComponent &p = e->value<GuiParentComponent>();
 		p.parent = table->name();
 		p.order = childIndex++;
-		CAGE_COMPONENT_GUI(Input, in, e);
+		GuiInputComponent &in = e->value<GuiInputComponent>();
 		in.type = InputTypeEnum::Real;
 		in.min.f = rangeMin;
 		in.max.f = rangeMax;
@@ -300,7 +300,7 @@ Entity *genInputFloat(Entity *table, sint32 &childIndex, uint32 nameBase, const 
 Entity *genInputInt(Entity *table, sint32 &childIndex, uint32 nameBase, const string &labelText, sint32 rangeMin, sint32 rangeMax, sint32 step, sint32 current)
 {
 	Entity *e = genInputFloat(table, childIndex, nameBase, labelText, 0, 0, 0, 0);
-	CAGE_COMPONENT_GUI(Input, in, e);
+	GuiInputComponent &in = e->value<GuiInputComponent>();
 	in.type = InputTypeEnum::Integer;
 	in.min.i = rangeMin;
 	in.max.i = rangeMax;
@@ -319,8 +319,8 @@ void initializeGui()
 	EntityManager *ents = engineGui()->entities();
 	Entity *layout = ents->createUnique();
 	{ // layout
-		CAGE_COMPONENT_GUI(Scrollbars, sc, layout);
-		CAGE_COMPONENT_GUI(LayoutLine, l, layout);
+		GuiScrollbarsComponent &sc = layout->value<GuiScrollbarsComponent>();
+		GuiLayoutLineComponent &l = layout->value<GuiLayoutLineComponent>();
 		l.vertical = true;
 	}
 
@@ -328,31 +328,31 @@ void initializeGui()
 		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::AmbientOcclusion);
 		Entity *panel = ents->createUnique();
 		{
-			CAGE_COMPONENT_GUI(Parent, p, panel);
+			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = layout->name();
 			p.order = baseName;
-			CAGE_COMPONENT_GUI(Spoiler, c, panel);
-			CAGE_COMPONENT_GUI(Text, t, panel);
+			GuiSpoilerComponent &c = panel->value<GuiSpoilerComponent>();
+			GuiTextComponent &t = panel->value<GuiTextComponent>();
 			t.value = "Ambient Occlusion";
-			CAGE_COMPONENT_GUI(LayoutLine, l, panel);
+			GuiLayoutLineComponent &l = panel->value<GuiLayoutLineComponent>();
 			l.vertical = true;
 		}
 		{ // enabled
 			Entity *e = ents->create(baseName);
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 1;
-			CAGE_COMPONENT_GUI(Text, t, e);
+			GuiTextComponent &t = e->value<GuiTextComponent>();
 			t.value = "Enabled";
-			CAGE_COMPONENT_GUI(CheckBox, cb, e);
+			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
 			cb.state = genEnabled(CameraEffectsFlags::AmbientOcclusion);
 		}
 		Entity *table = ents->createUnique();
 		{
-			CAGE_COMPONENT_GUI(Parent, p, table);
+			GuiParentComponent &p = table->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 2;
-			CAGE_COMPONENT_GUI(LayoutTable, t, table);
+			GuiLayoutTableComponent &t = table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
 		genInputFloat(table, childIndex, baseName, "World Radius:", 0.1, 3, 0.05, CameraEffects().ssao.worldRadius);
@@ -367,31 +367,31 @@ void initializeGui()
 		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::DepthOfField);
 		Entity *panel = ents->createUnique();
 		{
-			CAGE_COMPONENT_GUI(Parent, p, panel);
+			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = layout->name();
 			p.order = baseName;
-			CAGE_COMPONENT_GUI(Spoiler, c, panel);
-			CAGE_COMPONENT_GUI(Text, t, panel);
+			GuiSpoilerComponent &c = panel->value<GuiSpoilerComponent>();
+			GuiTextComponent &t = panel->value<GuiTextComponent>();
 			t.value = "Depth of field";
-			CAGE_COMPONENT_GUI(LayoutLine, l, panel);
+			GuiLayoutLineComponent &l = panel->value<GuiLayoutLineComponent>();
 			l.vertical = true;
 		}
 		{ // enabled
 			Entity *e = ents->create(baseName);
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 1;
-			CAGE_COMPONENT_GUI(Text, t, e);
+			GuiTextComponent &t = e->value<GuiTextComponent>();
 			t.value = "Enabled";
-			CAGE_COMPONENT_GUI(CheckBox, cb, e);
+			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
 			cb.state = genEnabled(CameraEffectsFlags::DepthOfField);
 		}
 		Entity *table = ents->createUnique();
 		{
-			CAGE_COMPONENT_GUI(Parent, p, table);
+			GuiParentComponent &p = table->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 2;
-			CAGE_COMPONENT_GUI(LayoutTable, t, table);
+			GuiLayoutTableComponent &t = table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
 		genInputFloat(table, childIndex, baseName, "Focus distance:", 0, 20, 0.5, CameraEffects().depthOfField.focusDistance);
@@ -404,23 +404,23 @@ void initializeGui()
 		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::MotionBlur);
 		Entity *panel = ents->createUnique();
 		{
-			CAGE_COMPONENT_GUI(Parent, p, panel);
+			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = layout->name();
 			p.order = baseName;
-			CAGE_COMPONENT_GUI(Spoiler, c, panel);
-			CAGE_COMPONENT_GUI(Text, t, panel);
+			GuiSpoilerComponent &c = panel->value<GuiSpoilerComponent>();
+			GuiTextComponent &t = panel->value<GuiTextComponent>();
 			t.value = "Motion Blur";
-			CAGE_COMPONENT_GUI(LayoutLine, l, panel);
+			GuiLayoutLineComponent &l = panel->value<GuiLayoutLineComponent>();
 			l.vertical = true;
 		}
 		{ // enabled
 			Entity *e = ents->create(baseName);
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 1;
-			CAGE_COMPONENT_GUI(Text, t, e);
+			GuiTextComponent &t = e->value<GuiTextComponent>();
 			t.value = "Enabled";
-			CAGE_COMPONENT_GUI(CheckBox, cb, e);
+			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
 			cb.state = genEnabled(CameraEffectsFlags::MotionBlur);
 		}
 	}
@@ -429,31 +429,31 @@ void initializeGui()
 		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::Bloom);
 		Entity *panel = ents->createUnique();
 		{
-			CAGE_COMPONENT_GUI(Parent, p, panel);
+			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = layout->name();
 			p.order = baseName;
-			CAGE_COMPONENT_GUI(Spoiler, c, panel);
-			CAGE_COMPONENT_GUI(Text, t, panel);
+			GuiSpoilerComponent &c = panel->value<GuiSpoilerComponent>();
+			GuiTextComponent &t = panel->value<GuiTextComponent>();
 			t.value = "Bloom";
-			CAGE_COMPONENT_GUI(LayoutLine, l, panel);
+			GuiLayoutLineComponent &l = panel->value<GuiLayoutLineComponent>();
 			l.vertical = true;
 		}
 		{ // enabled
 			Entity *e = ents->create(baseName);
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 1;
-			CAGE_COMPONENT_GUI(Text, t, e);
+			GuiTextComponent &t = e->value<GuiTextComponent>();
 			t.value = "Enabled";
-			CAGE_COMPONENT_GUI(CheckBox, cb, e);
+			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
 			cb.state = genEnabled(CameraEffectsFlags::Bloom);
 		}
 		Entity *table = ents->createUnique();
 		{
-			CAGE_COMPONENT_GUI(Parent, p, table);
+			GuiParentComponent &p = table->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 2;
-			CAGE_COMPONENT_GUI(LayoutTable, t, table);
+			GuiLayoutTableComponent &t = table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
 		genInputFloat(table, childIndex, baseName, "Threshold:", 0, 5, 0.01, CameraEffects().bloom.threshold);
@@ -464,31 +464,31 @@ void initializeGui()
 		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::EyeAdaptation);
 		Entity *panel = ents->createUnique();
 		{
-			CAGE_COMPONENT_GUI(Parent, p, panel);
+			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = layout->name();
 			p.order = baseName;
-			CAGE_COMPONENT_GUI(Spoiler, c, panel);
-			CAGE_COMPONENT_GUI(Text, t, panel);
+			GuiSpoilerComponent &c = panel->value<GuiSpoilerComponent>();
+			GuiTextComponent &t = panel->value<GuiTextComponent>();
 			t.value = "Eye Adaptation";
-			CAGE_COMPONENT_GUI(LayoutLine, l, panel);
+			GuiLayoutLineComponent &l = panel->value<GuiLayoutLineComponent>();
 			l.vertical = true;
 		}
 		{ // enabled
 			Entity *e = ents->create(baseName);
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 1;
-			CAGE_COMPONENT_GUI(Text, t, e);
+			GuiTextComponent &t = e->value<GuiTextComponent>();
 			t.value = "Enabled";
-			CAGE_COMPONENT_GUI(CheckBox, cb, e);
+			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
 			cb.state = genEnabled(CameraEffectsFlags::EyeAdaptation);
 		}
 		Entity *table = ents->createUnique();
 		{
-			CAGE_COMPONENT_GUI(Parent, p, table);
+			GuiParentComponent &p = table->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 2;
-			CAGE_COMPONENT_GUI(LayoutTable, t, table);
+			GuiLayoutTableComponent &t = table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
 		genInputFloat(table, childIndex, baseName, "Key:", 0, 1, 0.02, CameraEffects().eyeAdaptation.key);
@@ -501,31 +501,31 @@ void initializeGui()
 		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::ToneMapping);
 		Entity *panel = ents->createUnique();
 		{
-			CAGE_COMPONENT_GUI(Parent, p, panel);
+			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = layout->name();
 			p.order = baseName;
-			CAGE_COMPONENT_GUI(Spoiler, c, panel);
-			CAGE_COMPONENT_GUI(Text, t, panel);
+			GuiSpoilerComponent &c = panel->value<GuiSpoilerComponent>();
+			GuiTextComponent &t = panel->value<GuiTextComponent>();
 			t.value = "Tone Mapping";
-			CAGE_COMPONENT_GUI(LayoutLine, l, panel);
+			GuiLayoutLineComponent &l = panel->value<GuiLayoutLineComponent>();
 			l.vertical = true;
 		}
 		{ // enabled
 			Entity *e = ents->create(baseName);
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 1;
-			CAGE_COMPONENT_GUI(Text, t, e);
+			GuiTextComponent &t = e->value<GuiTextComponent>();
 			t.value = "Enabled";
-			CAGE_COMPONENT_GUI(CheckBox, cb, e);
+			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
 			cb.state = genEnabled(CameraEffectsFlags::ToneMapping);
 		}
 		Entity *table = ents->createUnique();
 		{
-			CAGE_COMPONENT_GUI(Parent, p, table);
+			GuiParentComponent &p = table->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 2;
-			CAGE_COMPONENT_GUI(LayoutTable, t, table);
+			GuiLayoutTableComponent &t = table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
 		genInputFloat(table, childIndex, baseName, "Shoulder Strength:", 0, 1, 0.02, CameraEffects().tonemap.shoulderStrength);
@@ -541,31 +541,31 @@ void initializeGui()
 		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::GammaCorrection);
 		Entity *panel = ents->createUnique();
 		{
-			CAGE_COMPONENT_GUI(Parent, p, panel);
+			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = layout->name();
 			p.order = baseName;
-			CAGE_COMPONENT_GUI(Spoiler, c, panel);
-			CAGE_COMPONENT_GUI(Text, t, panel);
+			GuiSpoilerComponent &c = panel->value<GuiSpoilerComponent>();
+			GuiTextComponent &t = panel->value<GuiTextComponent>();
 			t.value = "Gamma";
-			CAGE_COMPONENT_GUI(LayoutLine, l, panel);
+			GuiLayoutLineComponent &l = panel->value<GuiLayoutLineComponent>();
 			l.vertical = true;
 		}
 		{ // enabled
 			Entity *e = ents->create(baseName);
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 1;
-			CAGE_COMPONENT_GUI(Text, t, e);
+			GuiTextComponent &t = e->value<GuiTextComponent>();
 			t.value = "Enabled";
-			CAGE_COMPONENT_GUI(CheckBox, cb, e);
+			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
 			cb.state = genEnabled(CameraEffectsFlags::GammaCorrection);
 		}
 		Entity *table = ents->createUnique();
 		{
-			CAGE_COMPONENT_GUI(Parent, p, table);
+			GuiParentComponent &p = table->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 2;
-			CAGE_COMPONENT_GUI(LayoutTable, t, table);
+			GuiLayoutTableComponent &t = table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
 		genInputFloat(table, childIndex, baseName, "Gamma:", 1, 5, 0.1, CameraEffects().gamma);
@@ -575,23 +575,23 @@ void initializeGui()
 		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::AntiAliasing);
 		Entity *panel = ents->createUnique();
 		{
-			CAGE_COMPONENT_GUI(Parent, p, panel);
+			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = layout->name();
 			p.order = baseName;
-			CAGE_COMPONENT_GUI(Spoiler, c, panel);
-			CAGE_COMPONENT_GUI(Text, t, panel);
+			GuiSpoilerComponent &c = panel->value<GuiSpoilerComponent>();
+			GuiTextComponent &t = panel->value<GuiTextComponent>();
 			t.value = "Antialiasing";
-			CAGE_COMPONENT_GUI(LayoutLine, l, panel);
+			GuiLayoutLineComponent &l = panel->value<GuiLayoutLineComponent>();
 			l.vertical = true;
 		}
 		{ // enabled
 			Entity *e = ents->create(baseName);
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 1;
-			CAGE_COMPONENT_GUI(Text, t, e);
+			GuiTextComponent &t = e->value<GuiTextComponent>();
 			t.value = "Enabled";
-			CAGE_COMPONENT_GUI(CheckBox, cb, e);
+			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
 			cb.state = genEnabled(CameraEffectsFlags::AntiAliasing);
 		}
 	}
@@ -623,10 +623,10 @@ int main(int argc, char *args[])
 		EntityManager *ents = engineEntities();
 		{ // camera
 			Entity *e = ents->create(1);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position = vec3(11.5, 1, -1);
 			t.orientation = quat(degs(10), degs(110), degs());
-			CAGE_COMPONENT_ENGINE(Camera, c, e);
+			CameraComponent &c = e->value<CameraComponent>();
 			c.ambientColor = vec3(1);
 			c.ambientIntensity = 0.01;
 			c.ambientDirectionalColor = vec3(1);
@@ -637,29 +637,29 @@ int main(int argc, char *args[])
 		}
 		{ // sun
 			Entity *e = ents->create(2);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position = vec3(0, 5, 0);
 			t.orientation = quat(degs(-75), degs(-120), degs());
-			CAGE_COMPONENT_ENGINE(Light, l, e);
+			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Directional;
 			l.color = vec3(1);
 			l.intensity = 3;
-			CAGE_COMPONENT_ENGINE(Shadowmap, s, e);
+			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 2048;
 			s.worldSize = vec3(30);
 		}
 		{ // floor
 			Entity *e = ents->create(10);
-			CAGE_COMPONENT_ENGINE(Render, r, e);
+			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("scenes/common/ground.obj");
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position = vec3(0, -1.264425, 0);
 		}
 		{ // sponza
 			Entity *e = ents->create(11);
-			CAGE_COMPONENT_ENGINE(Render, r, e);
+			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("scenes/mcguire/crytek/sponza.object");
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 		}
 
 		Holder<FpsCamera> fpsCamera = newFpsCamera(ents->get(1));

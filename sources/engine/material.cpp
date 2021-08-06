@@ -25,7 +25,7 @@ void update()
 
 	{ // rotate the material plane
 		Entity *e = ents->get(1);
-		CAGE_COMPONENT_ENGINE(Transform, t, e);
+		TransformComponent &t = e->value<TransformComponent>();
 		t.orientation = quat(degs(), degs(1), degs()) * t.orientation;
 	}
 }
@@ -57,30 +57,30 @@ int main(int argc, char *args[])
 		EntityManager *ents = engineEntities();
 		{ // material
 			Entity *e = ents->create(1);
-			CAGE_COMPONENT_ENGINE(Render, r, e);
+			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/material/plane.obj");
 			r.color = vec3(255, 226, 155) / 255;
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.scale = 5;
 		}
 		{ // sun
 			Entity *e = ents->create(2);
-			CAGE_COMPONENT_ENGINE(Light, l, e);
+			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Directional;
 			l.color = vec3(1);
 			l.intensity = 3;
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.orientation = quat(degs(-30), degs(180), degs());
 		}
 		{ // camera
 			Entity *e = ents->create(3);
-			CAGE_COMPONENT_ENGINE(Camera, c, e);
+			CameraComponent &c = e->value<CameraComponent>();
 			c.ambientColor = vec3(1);
 			c.ambientIntensity = 0.01;
 			c.near = 0.1;
 			c.far = 100;
 			c.effects = CameraEffectsFlags::Default;
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position = vec3(0, 3, 10);
 			t.orientation = quat(degs(-10), degs(), degs());
 		}

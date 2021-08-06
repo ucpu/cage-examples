@@ -10,7 +10,7 @@ class guiTestImpl : public guiTestClass
 		guiBasicLayout();
 		{
 			Entity *e = ents->get(3);
-			CAGE_COMPONENT_GUI(LayoutTable, layout, e);
+			GuiLayoutTableComponent &layout = e->value<GuiLayoutTableComponent>();
 		}
 
 		uint32 index = 1;
@@ -18,60 +18,60 @@ class guiTestImpl : public guiTestClass
 		{ // with text
 			guiLabel(3, index, "with text");
 			Entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(Button, b, e);
-			CAGE_COMPONENT_GUI(Text, t, e);
+			GuiButtonComponent &b = e->value<GuiButtonComponent>();
+			GuiTextComponent &t = e->value<GuiTextComponent>();
 			t.value = "text";
 		}
 		{ // horizontal
 			guiLabel(3, index, "horizontal");
 			Entity *layout = ents->createUnique();
-			CAGE_COMPONENT_GUI(Parent, p, layout);
+			GuiParentComponent &p = layout->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(LayoutLine, l, layout);
+			GuiLayoutLineComponent &l = layout->value<GuiLayoutLineComponent>();
 			for (uint32 i = 0; i < 4; i++)
 			{
 				Entity *e = ents->createUnique();
-				CAGE_COMPONENT_GUI(Parent, p, e);
+				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = layout->name();
 				p.order = index++;
-				CAGE_COMPONENT_GUI(Button, b, e);
+				GuiButtonComponent &b = e->value<GuiButtonComponent>();
 				//b.allowMerging = true;
-				CAGE_COMPONENT_GUI(Text, t, e);
+				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = stringizer() + i;
 			}
 		}
 		{ // vertical
 			guiLabel(3, index, "vertical");
 			Entity *layout = ents->createUnique();
-			CAGE_COMPONENT_GUI(Parent, p, layout);
+			GuiParentComponent &p = layout->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(LayoutLine, l, layout);
+			GuiLayoutLineComponent &l = layout->value<GuiLayoutLineComponent>();
 			l.vertical = true;
 			for (uint32 i = 0; i < 4; i++)
 			{
 				Entity *e = ents->createUnique();
-				CAGE_COMPONENT_GUI(Parent, p, e);
+				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = layout->name();
 				p.order = index++;
-				CAGE_COMPONENT_GUI(Button, b, e);
+				GuiButtonComponent &b = e->value<GuiButtonComponent>();
 				//b.allowMerging = true;
-				CAGE_COMPONENT_GUI(Text, t, e);
+				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = stringizer() + i;
 			}
 		}
 		{ // with image
 			guiLabel(3, index, "with image");
 			Entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(Button, b, e);
-			CAGE_COMPONENT_GUI(Image, m, e);
+			GuiButtonComponent &b = e->value<GuiButtonComponent>();
+			GuiImageComponent &m = e->value<GuiImageComponent>();
 			m.textureName = HashString("cage/texture/helper.jpg");
 			m.textureUvOffset = vec2(5 / 8.f, 2 / 8.f);
 			m.textureUvSize = vec2(1 / 8.f, 1 / 8.f);
@@ -79,13 +79,13 @@ class guiTestImpl : public guiTestClass
 		{ // with custom event
 			guiLabel(3, index, "with custom event");
 			Entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(Button, b, e);
-			CAGE_COMPONENT_GUI(Text, t, e);
+			GuiButtonComponent &b = e->value<GuiButtonComponent>();
+			GuiTextComponent &t = e->value<GuiTextComponent>();
 			t.value = "custom event";
-			CAGE_COMPONENT_GUI(Event, ev, e);
+			GuiEventComponent &ev = e->value<GuiEventComponent>();
 			ev.event.bind<guiTestImpl, &guiTestImpl::onButtonPressed>(this);
 		}
 	}

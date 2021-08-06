@@ -63,12 +63,12 @@ uint32 arrayPick(PointerRange<const uint32> arr)
 Entity *makeParticle(const vec3 &position, real scale, uint32 object, uint32 ttl)
 {
 	Entity *e = engineEntities()->createAnonymous();
-	CAGE_COMPONENT_ENGINE(Transform, t, e);
+	TransformComponent &t = e->value<TransformComponent>();
 	t.position = position;
 	t.scale = scale;
-	CAGE_COMPONENT_ENGINE(Render, r, e);
+	RenderComponent &r = e->value<RenderComponent>();
 	r.object = object;
-	CAGE_COMPONENT_ENGINE(TextureAnimation, ta, e);
+	TextureAnimationComponent &ta = e->value<TextureAnimationComponent>();
 	ta.startTime = engineControlTime();
 	ta.speed = 18.0 / ttl;
 	ParticleComponent &p = e->value<ParticleComponent>(ParticleComponent::component);
@@ -96,7 +96,7 @@ void makeExplosion(const vec3 &position)
 			ParticleComponent &p = e->value<ParticleComponent>(ParticleComponent::component);
 			p.smoking = 0.1;
 			p.dimming = 0.1;
-			CAGE_COMPONENT_ENGINE(Light, l, e);
+			LightComponent &l = e->value<LightComponent>();
 			l.color = vec3(247, 221, 59) / 255;
 			l.color += randomRange3(-0.05, 0.05);
 			l.color = saturate(l.color);
@@ -115,7 +115,7 @@ void makeExplosion(const vec3 &position)
 			p.drag = 0.05;
 			p.velocity = vec3(randomRange(-10.0, 10.0), randomRange(5.0, 10.0), randomRange(-10.0, 10.0)) / 20;
 			p.dimming = 0.1;
-			CAGE_COMPONENT_ENGINE(Light, l, e);
+			LightComponent &l = e->value<LightComponent>();
 			l.color = vec3(247, 221, 59) / 255;
 			l.color += randomRange3(-0.05, 0.05);
 			l.color = saturate(l.color);
@@ -125,10 +125,10 @@ void makeExplosion(const vec3 &position)
 	}
 	{
 		Entity *e = engineEntities()->createAnonymous();
-		CAGE_COMPONENT_ENGINE(Transform, tr, e);
+		TransformComponent &tr = e->value<TransformComponent>();
 		tr.position = position;
 		tr.orientation = randomDirectionQuat();
-		CAGE_COMPONENT_ENGINE(Sound, snd, e);
+		SoundComponent &snd = e->value<SoundComponent>();
 		snd.name = arrayPick(assetsExplosionsSounds);
 		snd.startTime = engineControlTime();
 		TtlComponent &ttlc = e->value<TtlComponent>(TtlComponent::component);
@@ -144,14 +144,14 @@ void updateParticles()
 	for (Entity *e : ParticleComponent::component->entities())
 	{
 		ParticleComponent &p = e->value<ParticleComponent>(ParticleComponent::component);
-		CAGE_COMPONENT_ENGINE(Transform, t, e);
+		TransformComponent &t = e->value<TransformComponent>();
 		p.velocity *= 1 - p.drag;
 		p.velocity += vec3(0, -p.gravity, 0);
 		t.position += p.velocity;
 		t.orientation = quat(t.position - cameraCenter, vec3(0, 1, 0));
 		if (p.dimming.valid())
 		{
-			CAGE_COMPONENT_ENGINE(Light, l, e);
+			LightComponent &l = e->value<LightComponent>();
 			l.intensity *= 1 - p.dimming;
 			if (l.intensity < 0.05)
 				e->remove<LightComponent>();
@@ -167,19 +167,19 @@ void spawnScreamer()
 {
 	Entity *e = engineEntities()->createUnique();
 
-	CAGE_COMPONENT_ENGINE(Render, render, e);
+	RenderComponent &render = e->value<RenderComponent>();
 	render.object = HashString("cage-tests/screamers/suzanne.blend");
 
-	CAGE_COMPONENT_ENGINE(Transform, tr, e);
+	TransformComponent &tr = e->value<TransformComponent>();
 	tr.position = randomDirection3() * vec3(1, 0, 1) * randomRange(500, 700) + vec3(0, 10, 0);
 	tr.orientation = randomDirectionQuat();
 	tr.scale = randomRange(0.4, 0.6);
 
-	CAGE_COMPONENT_ENGINE(Sound, snd, e);
+	SoundComponent &snd = e->value<SoundComponent>();
 	snd.name = arrayPick(assetsScreams);
 	snd.startTime = engineControlTime();
 
-	CAGE_COMPONENT_ENGINE(Light, lig, e);
+	LightComponent &lig = e->value<LightComponent>();
 	lig.attenuation = vec3(0, 1, 0);
 	render.color = lig.color = randomDirection3() * 0.5 + 0.5;
 	lig.intensity = 5;
@@ -195,8 +195,8 @@ Line getCursorRay()
 	const vec2 p = vec2(cursor) / vec2(res) * 2 - 1;
 	const real px = p[0], py = -p[1];
 	Entity *camera = engineEntities()->get(1);
-	CAGE_COMPONENT_ENGINE(Transform, ts, camera);
-	CAGE_COMPONENT_ENGINE(Camera, cs, camera);
+	TransformComponent &ts = camera->value<TransformComponent>();
+	CameraComponent &cs = camera->value<CameraComponent>();
 	const mat4 view = inverse(mat4(ts.position, ts.orientation, vec3(ts.scale, ts.scale, ts.scale)));
 	const mat4 proj = perspectiveProjection(cs.camera.perspectiveFov, real(res[0]) / real(res[1]), cs.near, cs.far);
 	const mat4 inv = inverse(proj * view);
@@ -230,7 +230,7 @@ void updateScreamers()
 	std::vector<vec3> newSmokes, newExplosions;
 	for (Entity *e : ScreamerComponent::component->group()->entities())
 	{
-		CAGE_COMPONENT_ENGINE(Transform, tr, e);
+		TransformComponent &tr = e->value<TransformComponent>();
 
 		if (intersects(cursorRay, +collider, tr))
 		{ // hit the screamer
@@ -323,9 +323,9 @@ int main(int argc, char *args[])
 		entsToDestroy = ents->defineGroup();
 		{ // camera
 			Entity *e = ents->create(1);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position = cameraCenter;
-			CAGE_COMPONENT_ENGINE(Camera, c, e);
+			CameraComponent &c = e->value<CameraComponent>();
 			c.near = 0.03;
 			c.far = 500;
 			c.effects = CameraEffectsFlags::Default;
@@ -333,34 +333,34 @@ int main(int argc, char *args[])
 			c.ambientIntensity = 0.1;
 			c.ambientDirectionalColor = vec3(1);
 			c.ambientDirectionalIntensity = 0.2;
-			CAGE_COMPONENT_ENGINE(Listener, l, e);
+			ListenerComponent &l = e->value<ListenerComponent>();
 			l.rolloffFactor = 0.1;
 		}
 		{ // skybox
 			Entity *e = ents->create(2);
-			CAGE_COMPONENT_ENGINE(Render, r, e);
+			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/screamers/skybox.obj");
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position = vec3(0, 2, 0);
 			t.scale = 200;
 		}
 		{ // sun
 			Entity *e = ents->create(3);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.orientation = quat(degs(-50), degs(-42 + 180), degs());
-			CAGE_COMPONENT_ENGINE(Light, l, e);
+			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Directional;
 			l.color = vec3(1);
 			l.intensity = 0.5;
-			CAGE_COMPONENT_ENGINE(Shadowmap, s, e);
+			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 4096;
 			s.worldSize = vec3(50);
 		}
 		{ // floor
 			Entity *e = ents->create(4);
-			CAGE_COMPONENT_ENGINE(Render, r, e);
+			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("scenes/common/ground.obj");
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 		}
 
 		Holder<FpsCamera> cameraCtrl = newFpsCamera(ents->get(1));

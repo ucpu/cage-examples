@@ -47,7 +47,7 @@ void updateBoxes(uint32 thrIndex, uint32 thrCount)
 	for (uint32 i = start; i != end; i++)
 	{
 		Entity *e = boxesEntities[i];
-		CAGE_COMPONENT_ENGINE(Transform, t, e);
+		TransformComponent &t = e->value<TransformComponent>();
 		t.position[1] = noise->evaluate(vec3(vec2(t.position[0], t.position[2]) * 0.15, time * 5e-8)) - 2;
 	}
 }
@@ -63,9 +63,9 @@ bool update()
 
 		{ // camera
 			Entity *e = ents->create(1);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.orientation = quat(degs(-30), degs(), degs());
-			CAGE_COMPONENT_ENGINE(Camera, c, e);
+			CameraComponent &c = e->value<CameraComponent>();
 			c.ambientColor = vec3(1);
 			c.ambientIntensity = 0.1;
 			c.ambientDirectionalColor = vec3(1);
@@ -76,14 +76,14 @@ bool update()
 
 		{ // light
 			Entity *e = ents->create(2);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.orientation = quat(degs(-20), degs(-110), degs());
-			CAGE_COMPONENT_ENGINE(Light, l, e);
+			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Directional;
 			l.color = vec3(0.9);
 			if (shadowEnabled)
 			{
-				CAGE_COMPONENT_ENGINE(Shadowmap, s, e);
+				ShadowmapComponent &s = e->value<ShadowmapComponent>();
 				s.worldSize = vec3(20);
 				s.resolution = 4096;
 			}
@@ -100,10 +100,10 @@ bool update()
 			for (uint32 x = 0; x < side; x++)
 			{
 				Entity *e = ents->createAnonymous();
-				CAGE_COMPONENT_ENGINE(Transform, t, e);
+				TransformComponent &t = e->value<TransformComponent>();
 				t.scale = 0.15 * 0.49;
 				t.position = vec3((x - side * 0.5) * 0.15, 0, (y - side * 0.5) * 0.15);
-				CAGE_COMPONENT_ENGINE(Render, r, e);
+				RenderComponent &r = e->value<RenderComponent>();
 				r.object = HashString("cage/model/fake.obj");
 			}
 		}
@@ -111,7 +111,7 @@ bool update()
 
 	{ // camera
 		Entity *e = ents->get(1);
-		CAGE_COMPONENT_ENGINE(Camera, c, e);
+		CameraComponent &c = e->value<CameraComponent>();
 		c.far = c.near + cameraRange * 50 + 1;
 	}
 
@@ -130,33 +130,33 @@ bool guiInit()
 
 	Entity *root = g->entities()->createUnique();
 	{
-		CAGE_COMPONENT_GUI(Scrollbars, sc, root);
+		GuiScrollbarsComponent &sc = root->value<GuiScrollbarsComponent>();
 	}
 
 	Entity *panel = g->entities()->createUnique();
 	{
-		CAGE_COMPONENT_GUI(Parent, child, panel);
+		GuiParentComponent &child = panel->value<GuiParentComponent>();
 		child.parent = root->name();
-		CAGE_COMPONENT_GUI(Panel, c, panel);
-		CAGE_COMPONENT_GUI(LayoutTable, l, panel);
+		GuiPanelComponent &c = panel->value<GuiPanelComponent>();
+		GuiLayoutTableComponent &l = panel->value<GuiLayoutTableComponent>();
 	}
 
 	{ // boxes count
 		Entity *lab = g->entities()->createUnique();
 		{
-			CAGE_COMPONENT_GUI(Parent, child, lab);
+			GuiParentComponent &child = lab->value<GuiParentComponent>();
 			child.parent = panel->name();
 			child.order = 1;
-			CAGE_COMPONENT_GUI(Label, c, lab);
-			CAGE_COMPONENT_GUI(Text, t, lab);
+			GuiLabelComponent &c = lab->value<GuiLabelComponent>();
+			GuiTextComponent &t = lab->value<GuiTextComponent>();
 			t.value = "boxes: ";
 		}
 		Entity *con = g->entities()->create(1);
 		{
-			CAGE_COMPONENT_GUI(Parent, child, con);
+			GuiParentComponent &child = con->value<GuiParentComponent>();
 			child.parent = panel->name();
 			child.order = 2;
-			CAGE_COMPONENT_GUI(Input, c, con);
+			GuiInputComponent &c = con->value<GuiInputComponent>();
 			c.type = InputTypeEnum::Integer;
 			c.min.i = 100;
 			c.max.i = 100000;
@@ -168,19 +168,19 @@ bool guiInit()
 	{ // camera range
 		Entity *lab = g->entities()->createUnique();
 		{
-			CAGE_COMPONENT_GUI(Parent, child, lab);
+			GuiParentComponent &child = lab->value<GuiParentComponent>();
 			child.parent = panel->name();
 			child.order = 3;
-			CAGE_COMPONENT_GUI(Label, c, lab);
-			CAGE_COMPONENT_GUI(Text, t, lab);
+			GuiLabelComponent &c = lab->value<GuiLabelComponent>();
+			GuiTextComponent &t = lab->value<GuiTextComponent>();
 			t.value = "camera range: ";
 		}
 		Entity *con = g->entities()->create(2);
 		{
-			CAGE_COMPONENT_GUI(Parent, child, con);
+			GuiParentComponent &child = con->value<GuiParentComponent>();
 			child.parent = panel->name();
 			child.order = 4;
-			CAGE_COMPONENT_GUI(SliderBar, c, con);
+			GuiSliderBarComponent &c = con->value<GuiSliderBarComponent>();
 			c.value = 0.5;
 		}
 	}
@@ -188,19 +188,19 @@ bool guiInit()
 	{ // shadow
 		Entity *lab = g->entities()->createUnique();
 		{
-			CAGE_COMPONENT_GUI(Parent, child, lab);
+			GuiParentComponent &child = lab->value<GuiParentComponent>();
 			child.parent = panel->name();
 			child.order = 5;
-			CAGE_COMPONENT_GUI(Label, c, lab);
-			CAGE_COMPONENT_GUI(Text, t, lab);
+			GuiLabelComponent &c = lab->value<GuiLabelComponent>();
+			GuiTextComponent &t = lab->value<GuiTextComponent>();
 			t.value = "enable shadow: ";
 		}
 		Entity *con = g->entities()->create(4);
 		{
-			CAGE_COMPONENT_GUI(Parent, child, con);
+			GuiParentComponent &child = con->value<GuiParentComponent>();
 			child.parent = panel->name();
 			child.order = 6;
-			CAGE_COMPONENT_GUI(CheckBox, c, con);
+			GuiCheckBoxComponent &c = con->value<GuiCheckBoxComponent>();
 			c.state = CheckBoxStateEnum::Checked;
 		}
 	}
@@ -212,7 +212,7 @@ bool guiUpdate()
 {
 	{ // update boxes count
 		Entity *e = cage::engineGui()->entities()->get(1);
-		CAGE_COMPONENT_GUI(Input, c, e);
+		GuiInputComponent &c = e->value<GuiInputComponent>();
 		if (c.valid && toUint32(c.value) != boxesCount)
 		{
 			boxesCount = toUint32(c.value);
@@ -222,13 +222,13 @@ bool guiUpdate()
 
 	{ // update camera range
 		Entity *e = cage::engineGui()->entities()->get(2);
-		CAGE_COMPONENT_GUI(SliderBar, c, e);
+		GuiSliderBarComponent &c = e->value<GuiSliderBarComponent>();
 		cameraRange = c.value;
 	}
 
 	{ // update enable shadow
 		Entity *e = cage::engineGui()->entities()->get(4);
-		CAGE_COMPONENT_GUI(CheckBox, c, e);
+		GuiCheckBoxComponent &c = e->value<GuiCheckBoxComponent>();
 		bool checked = c.state == CheckBoxStateEnum::Checked;
 		if (checked != shadowEnabled)
 		{

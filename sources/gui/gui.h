@@ -23,11 +23,11 @@ public:
 	{
 		EntityManager *ents = engineGui()->entities();
 		Entity *e = ents->createUnique();
-		CAGE_COMPONENT_GUI(Parent, p, e);
+		GuiParentComponent &p = e->value<GuiParentComponent>();
 		p.parent = parentName;
 		p.order = index++;
-		CAGE_COMPONENT_GUI(Label, l, e);
-		CAGE_COMPONENT_GUI(Text, t, e);
+		GuiLabelComponent &l = e->value<GuiLabelComponent>();
+		GuiTextComponent &t = e->value<GuiTextComponent>();
 		t.value = name;
 	}
 
@@ -37,26 +37,26 @@ public:
 
 		{ // splitter
 			Entity *split = ents->create(1);
-			CAGE_COMPONENT_GUI(LayoutSplitter, ls, split);
+			GuiLayoutSplitterComponent &ls = split->value<GuiLayoutSplitterComponent>();
 			ls.vertical = true;
 		}
 		{ // top panel
 			Entity *panel = ents->create(2);
-			CAGE_COMPONENT_GUI(Parent, p, panel);
+			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = 1;
 			p.order = 1;
-			CAGE_COMPONENT_GUI(Panel, gp, panel);
-			CAGE_COMPONENT_GUI(Scrollbars, sc, panel);
+			GuiPanelComponent &gp = panel->value<GuiPanelComponent>();
+			GuiScrollbarsComponent &sc = panel->value<GuiScrollbarsComponent>();
 		}
 		{ // bottom panel
 			Entity *panel = ents->create(3);
-			CAGE_COMPONENT_GUI(Parent, p, panel);
+			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = 1;
 			p.order = 2;
-			CAGE_COMPONENT_GUI(Panel, pan, panel);
-			//CAGE_COMPONENT_GUI(LayoutTable, lt, panel);
+			GuiPanelComponent &pan = panel->value<GuiPanelComponent>();
+			
 			//lt.vertical = true;
-			CAGE_COMPONENT_GUI(Scrollbars, sc, panel);
+			GuiScrollbarsComponent &sc = panel->value<GuiScrollbarsComponent>();
 			sc.alignment = vec2(0.5, 0);
 		}
 	}
@@ -82,37 +82,37 @@ public:
 
 		if (e->has<GuiCheckBoxComponent>())
 		{
-			CAGE_COMPONENT_GUI(CheckBox, c, e);
+			GuiCheckBoxComponent &c = e->value<GuiCheckBoxComponent>();
 			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "check box state: " + (uint32)c.state);
 		}
 
 		if (e->has<GuiRadioBoxComponent>())
 		{
-			CAGE_COMPONENT_GUI(RadioBox, c, e);
+			GuiRadioBoxComponent &c = e->value<GuiRadioBoxComponent>();
 			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "radio box state: " + (uint32)c.state);
 		}
 
 		if (e->has<GuiColorPickerComponent>())
 		{
-			CAGE_COMPONENT_GUI(ColorPicker, c, e);
+			GuiColorPickerComponent &c = e->value<GuiColorPickerComponent>();
 			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "color picker: " + c.color);
 		}
 
 		if (e->has<GuiComboBoxComponent>())
 		{
-			CAGE_COMPONENT_GUI(ComboBox, c, e);
+			GuiComboBoxComponent &c = e->value<GuiComboBoxComponent>();
 			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "combo box selected: " + c.selected);
 		}
 
 		if (e->has<GuiInputComponent>())
 		{
-			CAGE_COMPONENT_GUI(Input, c, e);
+			GuiInputComponent &c = e->value<GuiInputComponent>();
 			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "input box valid: " + c.valid + ", value: " + c.value);
 		}
 
 		if (e->has<GuiSliderBarComponent>())
 		{
-			CAGE_COMPONENT_GUI(SliderBar, c, e);
+			GuiSliderBarComponent &c = e->value<GuiSliderBarComponent>();
 			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "slider bar value: " + c.value);
 		}
 	}

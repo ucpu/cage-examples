@@ -29,8 +29,8 @@ void controlInit()
 	EntityManager *ents = engineEntities();
 	{ // camera
 		Entity *e = ents->create(1);
-		CAGE_COMPONENT_ENGINE(Transform, t, e);
-		CAGE_COMPONENT_ENGINE(Camera, c, e);
+		TransformComponent &t = e->value<TransformComponent>();
+		CameraComponent &c = e->value<CameraComponent>();
 		c.ambientColor = vec3(1);
 		c.ambientIntensity = 0.5;
 		c.ambientDirectionalColor = vec3(1);
@@ -39,8 +39,8 @@ void controlInit()
 	}
 	{ // box 1
 		Entity *e = ents->create(2);
-		CAGE_COMPONENT_ENGINE(Transform, t, e);
-		CAGE_COMPONENT_ENGINE(Render, r, e);
+		TransformComponent &t = e->value<TransformComponent>();
+		RenderComponent &r = e->value<RenderComponent>();
 		r.object = HashString("cage/model/fake.obj");
 	}
 }
@@ -53,7 +53,7 @@ bool update()
 	EntityManager *ents = engineEntities();
 	{ // box 1
 		Entity *e = ents->get(2);
-		CAGE_COMPONENT_ENGINE(Transform, t, e);
+		TransformComponent &t = e->value<TransformComponent>();
 		t.position = vec3(sin(rads(time * 1e-6)) * 10, cos(rads(time * 1e-6)) * 10, -20);
 	}
 	if (updateDelay)
@@ -94,14 +94,14 @@ bool guiInit()
 
 	Entity *panel = g->entities()->createUnique();
 	{
-		CAGE_COMPONENT_GUI(Scrollbars, sc, panel);
+		GuiScrollbarsComponent &sc = panel->value<GuiScrollbarsComponent>();
 	}
 
 	Entity *layout = g->entities()->createUnique();
 	{
-		CAGE_COMPONENT_GUI(Panel, c, layout);
-		CAGE_COMPONENT_GUI(LayoutTable, l, layout);
-		CAGE_COMPONENT_GUI(Parent, child, layout);
+		GuiPanelComponent &c = layout->value<GuiPanelComponent>();
+		GuiLayoutTableComponent &l = layout->value<GuiLayoutTableComponent>();
+		GuiParentComponent &child = layout->value<GuiParentComponent>();
 		child.parent = panel->name();
 	}
 
@@ -113,19 +113,19 @@ bool guiInit()
 	{
 		Entity *lab = g->entities()->createUnique();
 		{
-			CAGE_COMPONENT_GUI(Parent, child, lab);
+			GuiParentComponent &child = lab->value<GuiParentComponent>();
 			child.parent = layout->name();
 			child.order = i * 2 + 0;
-			CAGE_COMPONENT_GUI(Label, c, lab);
-			CAGE_COMPONENT_GUI(Text, t, lab);
+			GuiLabelComponent &c = lab->value<GuiLabelComponent>();
+			GuiTextComponent &t = lab->value<GuiTextComponent>();
 			t.value = names[i];
 		}
 		Entity *con = g->entities()->create(20 + i);
 		{
-			CAGE_COMPONENT_GUI(Parent, child, con);
+			GuiParentComponent &child = con->value<GuiParentComponent>();
 			child.parent = layout->name();
 			child.order = i * 2 + 1;
-			CAGE_COMPONENT_GUI(Input, c, con);
+			GuiInputComponent &c = con->value<GuiInputComponent>();
 			c.type = InputTypeEnum::Integer;
 			c.min.i = i >= 2 ? 0 : 1;
 			c.max.i = 1000;
@@ -142,7 +142,7 @@ namespace
 	void setIntValue(uint32 index, uint64 &value)
 	{
 		Entity *control = cage::engineGui()->entities()->get(20 + index);
-		CAGE_COMPONENT_GUI(Input, t, control);
+		GuiInputComponent &t = control->value<GuiInputComponent>();
 		if (t.valid)
 		{
 			CAGE_ASSERT(isDigitsOnly(t.value) && !t.value.empty());
@@ -155,7 +155,7 @@ bool guiUpdate()
 {
 	{
 		Entity *control = cage::engineGui()->entities()->get(20 + 0);
-		CAGE_COMPONENT_GUI(Input, t, control);
+		GuiInputComponent &t = control->value<GuiInputComponent>();
 		if (t.valid)
 		{
 			CAGE_ASSERT(isDigitsOnly(t.value) && !t.value.empty());
@@ -164,7 +164,7 @@ bool guiUpdate()
 	}
 	{
 		Entity *control = cage::engineGui()->entities()->get(20 + 1);
-		CAGE_COMPONENT_GUI(Input, t, control);
+		GuiInputComponent &t = control->value<GuiInputComponent>();
 		if (t.valid)
 		{
 			CAGE_ASSERT(isDigitsOnly(t.value) && !t.value.empty());

@@ -35,7 +35,7 @@ bool graphicsInitialize()
 	fabScreenTex->setDebugName("fabScreenTex");
 	{
 		Entity *e = engineEntities()->get(4);
-		CAGE_COMPONENT_ENGINE(Camera, c, e);
+		CameraComponent &c = e->value<CameraComponent>();
 		c.target = +fabScreenTex;
 	}
 	engineAssets()->fabricate<AssetSchemeIndexTexture, Texture>(screenName, std::move(fabScreenTex), "fabricated tv screen");
@@ -52,8 +52,8 @@ bool update()
 {
 	uint64 time = engineControlTime();
 
-	CAGE_COMPONENT_ENGINE(Transform, t1, engineEntities()->get(3));
-	CAGE_COMPONENT_ENGINE(Transform, t2, engineEntities()->get(4));
+	TransformComponent &t1 = engineEntities()->get(3)->value<TransformComponent>();
+	TransformComponent &t2 = engineEntities()->get(4)->value<TransformComponent>();
 	t1.orientation = t2.orientation = quat(degs(-25), degs(sin(degs(time * 3e-5)) * 20 + 125), degs());
 
 	return false;
@@ -86,18 +86,18 @@ int main(int argc, char *args[])
 		EntityManager *ents = engineEntities();
 		{ // room
 			Entity *e = ents->create(10);
-			CAGE_COMPONENT_ENGINE(Render, r, e);
+			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/room/room.object");
 			r.sceneMask = 3;
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			(void)t;
 		}
 		Entity *eye = nullptr;
 		{ // eye
 			Entity *e = eye = ents->create(1);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position = vec3(0, 1.7, 0);
-			CAGE_COMPONENT_ENGINE(Camera, c, e);
+			CameraComponent &c = e->value<CameraComponent>();
 			c.ambientColor = vec3(1);
 			c.ambientIntensity = 0.3;
 			c.ambientDirectionalColor = vec3(1);
@@ -107,35 +107,35 @@ int main(int argc, char *args[])
 			c.cameraOrder = 3;
 			c.sceneMask = 1;
 			c.effects = CameraEffectsFlags::Default;
-			CAGE_COMPONENT_ENGINE(Render, r, e);
+			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/room/eye.obj");
 			r.sceneMask = 2;
 		}
 		{ // camera stand
 			Entity *e = ents->create(2);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position = vec3(2.5, 2.5, -1.3);
 			t.orientation = quat(degs(), degs(125), degs());
-			CAGE_COMPONENT_ENGINE(Render, r, e);
+			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/room/camera.obj?camera_stand");
 			r.sceneMask = 1;
 		}
 		{ // camera lens
 			Entity *e = ents->create(3);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position = vec3(2.5, 2.5, -1.3);
-			CAGE_COMPONENT_ENGINE(Render, r, e);
+			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/room/camera.obj?lens");
 			r.sceneMask = 1;
 		}
 		{ // camera body
 			Entity *e = ents->create(4);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position = vec3(2.5, 2.5, -1.3);
-			CAGE_COMPONENT_ENGINE(Render, r, e);
+			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/room/camera.obj?camera");
 			r.sceneMask = 1;
-			CAGE_COMPONENT_ENGINE(Camera, c, e);
+			CameraComponent &c = e->value<CameraComponent>();
 			c.ambientColor = vec3(1);
 			c.ambientIntensity = 0.3;
 			c.ambientDirectionalColor = vec3(1);

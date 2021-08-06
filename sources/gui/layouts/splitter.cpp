@@ -8,17 +8,17 @@ public:
 	{
 		guiTestClass::guiEvent(name);
 		EntityManager *ents = engineGui()->entities();
-		CAGE_COMPONENT_GUI(LayoutSplitter, s, ents->get(42));
+		GuiLayoutSplitterComponent &s = ents->get(42)->value<GuiLayoutSplitterComponent>();
 		switch (name)
 		{
 		case 3:
 		{
-			CAGE_COMPONENT_GUI(CheckBox, b, ents->get(name));
+			GuiCheckBoxComponent &b = ents->get(name)->value<GuiCheckBoxComponent>();
 			s.vertical = b.state == CheckBoxStateEnum::Checked;
 		} break;
 		case 4:
 		{
-			CAGE_COMPONENT_GUI(CheckBox, b, ents->get(name));
+			GuiCheckBoxComponent &b = ents->get(name)->value<GuiCheckBoxComponent>();
 			s.inverse = b.state == CheckBoxStateEnum::Checked;
 		} break;
 		}
@@ -29,28 +29,28 @@ public:
 		EntityManager *ents = engineGui()->entities();
 		Entity *e = ents->createUnique();
 		{
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 42;
 			p.order = order;
-			CAGE_COMPONENT_GUI(Text, t, e);
+			GuiTextComponent &t = e->value<GuiTextComponent>();
 			if (order == 1)
 			{
-				CAGE_COMPONENT_GUI(Panel, panel, e);
+				GuiPanelComponent &panel = e->value<GuiPanelComponent>();
 				t.value = "Panel";
 			}
 			else
 			{
-				CAGE_COMPONENT_GUI(Spoiler, spoiler, e);
+				GuiSpoilerComponent &spoiler = e->value<GuiSpoilerComponent>();
 				t.value = "Spoiler";
 			}
-			CAGE_COMPONENT_GUI(LayoutLine, l, e);
+			GuiLayoutLineComponent &l = e->value<GuiLayoutLineComponent>();
 		}
 		Entity *b = ents->create(100 + order);
 		{
-			CAGE_COMPONENT_GUI(Parent, p, b);
+			GuiParentComponent &p = b->value<GuiParentComponent>();
 			p.parent = e->name();
-			CAGE_COMPONENT_GUI(Button, but, b);
-			CAGE_COMPONENT_GUI(Text, t, b);
+			GuiButtonComponent &but = b->value<GuiButtonComponent>();
+			GuiTextComponent &t = b->value<GuiTextComponent>();
 			t.value = "Button";
 		}
 	}
@@ -61,37 +61,37 @@ public:
 
 		Entity *mainSplitter = ents->createUnique();
 		{
-			CAGE_COMPONENT_GUI(LayoutSplitter, l, mainSplitter);
+			GuiLayoutSplitterComponent &l = mainSplitter->value<GuiLayoutSplitterComponent>();
 			l.vertical = true;
 		}
 
 		{
 			Entity *menu = ents->createUnique();
 			{
-				CAGE_COMPONENT_GUI(Parent, p, menu);
+				GuiParentComponent &p = menu->value<GuiParentComponent>();
 				p.parent = mainSplitter->name();
 				p.order = 1;
-				CAGE_COMPONENT_GUI(Panel, b, menu);
-				CAGE_COMPONENT_GUI(LayoutLine, l, menu);
+				GuiPanelComponent &b = menu->value<GuiPanelComponent>();
+				GuiLayoutLineComponent &l = menu->value<GuiLayoutLineComponent>();
 			}
 
 			{ // vertical
 				Entity *e = ents->create(3);
-				CAGE_COMPONENT_GUI(Parent, p, e);
+				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = menu->name();
 				p.order = 3;
-				CAGE_COMPONENT_GUI(CheckBox, b, e);
-				CAGE_COMPONENT_GUI(Text, t, e);
+				GuiCheckBoxComponent &b = e->value<GuiCheckBoxComponent>();
+				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = "vertical";
 			}
 
 			{ // inverse
 				Entity *e = ents->create(4);
-				CAGE_COMPONENT_GUI(Parent, p, e);
+				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = menu->name();
 				p.order = 4;
-				CAGE_COMPONENT_GUI(CheckBox, b, e);
-				CAGE_COMPONENT_GUI(Text, t, e);
+				GuiCheckBoxComponent &b = e->value<GuiCheckBoxComponent>();
+				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = "inverse";
 			}
 		}
@@ -99,11 +99,11 @@ public:
 		// the test splitter
 		Entity *presentation = ents->create(42);
 		{
-			CAGE_COMPONENT_GUI(Parent, p, presentation);
+			GuiParentComponent &p = presentation->value<GuiParentComponent>();
 			p.parent = mainSplitter->name();
 			p.order = 2;
-			//CAGE_COMPONENT_GUI(Panel, b, presentation);
-			CAGE_COMPONENT_GUI(LayoutSplitter, l, presentation);
+			
+			GuiLayoutSplitterComponent &l = presentation->value<GuiLayoutSplitterComponent>();
 		}
 
 		genContent(1);

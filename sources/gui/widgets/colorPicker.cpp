@@ -12,7 +12,7 @@ class guiTestImpl : public guiTestClass
 		guiBasicLayout();
 		{
 			Entity *e = ents->get(3);
-			CAGE_COMPONENT_GUI(LayoutTable, layout, e);
+			GuiLayoutTableComponent &layout = e->value<GuiLayoutTableComponent>();
 		}
 
 		uint32 index = 1;
@@ -20,10 +20,10 @@ class guiTestImpl : public guiTestClass
 		{ // small
 			guiLabel(3, index, "small");
 			Entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(ColorPicker, cp, e);
+			GuiColorPickerComponent &cp = e->value<GuiColorPickerComponent>();
 			cp.collapsible = true;
 			cp.color = colorValueToHeatmapRgb(randomChance());
 		}
@@ -31,10 +31,10 @@ class guiTestImpl : public guiTestClass
 		{ // large
 			guiLabel(3, index, "large");
 			Entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(ColorPicker, cp, e);
+			GuiColorPickerComponent &cp = e->value<GuiColorPickerComponent>();
 			cp.collapsible = false;
 			cp.color = colorValueToHeatmapRgb(randomChance());
 		}

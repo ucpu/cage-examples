@@ -57,12 +57,12 @@ EntityComponent *Particle::component;
 Entity *makeParticle(const vec3 &position, real scale, uint32 object, uint32 ttl)
 {
 	Entity *e = engineEntities()->createAnonymous();
-	CAGE_COMPONENT_ENGINE(Transform, t, e);
+	TransformComponent &t = e->value<TransformComponent>();
 	t.position = position;
 	t.scale = scale;
-	CAGE_COMPONENT_ENGINE(Render, r, e);
+	RenderComponent &r = e->value<RenderComponent>();
 	r.object = object;
-	CAGE_COMPONENT_ENGINE(TextureAnimation, ta, e);
+	TextureAnimationComponent &ta = e->value<TextureAnimationComponent>();
 	ta.startTime = engineControlTime();
 	ta.speed = 18.0 / ttl;
 	Particle &p = e->value<Particle>(Particle::component);
@@ -89,7 +89,7 @@ void makeExplosion(const vec3 &position)
 			Particle &p = e->value<Particle>(Particle::component);
 			p.smoking = 0.1;
 			p.dimming = 0.2;
-			CAGE_COMPONENT_ENGINE(Light, l, e);
+			LightComponent &l = e->value<LightComponent>();
 			l.color = vec3(247, 221, 59) / 255;
 			l.color += randomRange3(-0.05, 0.05);
 			l.color = clamp(l.color, 0, 1);
@@ -129,8 +129,8 @@ void mousePress(MouseButtonsFlags buttons, ModifiersFlags, const ivec2 &iPoint)
 		p = p * 2 - 1;
 		real px = p[0], py = -p[1];
 		Entity *camera = engineEntities()->get(1);
-		CAGE_COMPONENT_ENGINE(Transform, ts, camera);
-		CAGE_COMPONENT_ENGINE(Camera, cs, camera);
+		TransformComponent &ts = camera->value<TransformComponent>();
+		CameraComponent &cs = camera->value<CameraComponent>();
 		mat4 view = inverse(mat4(ts.position, ts.orientation, vec3(ts.scale, ts.scale, ts.scale)));
 		mat4 proj = perspectiveProjection(cs.camera.perspectiveFov, real(res[0]) / real(res[1]), cs.near, cs.far);
 		mat4 inv = inverse(proj * view);
@@ -173,7 +173,7 @@ void update()
 	vec3 cameraCenter;
 	{
 		Entity *camera = engineEntities()->get(1);
-		CAGE_COMPONENT_ENGINE(Transform, ts, camera);
+		TransformComponent &ts = camera->value<TransformComponent>();
 		cameraCenter = ts.position;
 	}
 
@@ -187,7 +187,7 @@ void update()
 			entitiesToDestroy->add(e);
 			continue;
 		}
-		CAGE_COMPONENT_ENGINE(Transform, t, e);
+		TransformComponent &t = e->value<TransformComponent>();
 		p.velocity *= 1 - p.drag;
 		p.velocity += vec3(0, -p.gravity, 0);
 		reflectParticleVelocity(p, t, collider.get());
@@ -195,7 +195,7 @@ void update()
 		t.orientation = quat(t.position - cameraCenter, vec3(0, 1, 0));
 		if (p.dimming.valid())
 		{
-			CAGE_COMPONENT_ENGINE(Light, l, e);
+			LightComponent &l = e->value<LightComponent>();
 			l.intensity *= 1 - p.dimming;
 		}
 		if (randomChance() < p.smoking)
@@ -239,10 +239,10 @@ int main(int argc, char *args[])
 		Particle::component = ents->defineComponent<Particle>(Particle());
 		{ // camera
 			Entity *e = ents->create(1);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position = vec3(0, 3, 10);
 			t.orientation = quat(degs(-20), degs(), degs());
-			CAGE_COMPONENT_ENGINE(Camera, c, e);
+			CameraComponent &c = e->value<CameraComponent>();
 			c.near = 0.1;
 			c.far = 1000;
 			c.effects = CameraEffectsFlags::Default;
@@ -253,21 +253,21 @@ int main(int argc, char *args[])
 		}
 		{ // sun
 			Entity *e = ents->create(2);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.orientation = quat(degs(-50), degs(-42 + 180), degs());
 			t.position = vec3(0, 5, 0);
-			CAGE_COMPONENT_ENGINE(Light, l, e);
+			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Directional;
 			l.intensity = 2;
-			CAGE_COMPONENT_ENGINE(Shadowmap, s, e);
+			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 2048;
 			s.worldSize = vec3(15);
 		}
 		{ // floor
 			Entity *e = ents->create(3);
-			CAGE_COMPONENT_ENGINE(Render, r, e);
+			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/explosion/floor.obj");
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position[1] = -0.5;
 		}
 		// explosions

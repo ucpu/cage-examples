@@ -44,7 +44,7 @@ void controlUpdate()
 	EntityManager *ents = engineEntities();
 	{
 		Entity *e = ents->get(2);
-		CAGE_COMPONENT_ENGINE(Transform, t, e);
+		TransformComponent &t = e->value<TransformComponent>();
 		t.position = vec3(sin(rads(time * 1e-6)) * 10, cos(rads(time * 1e-6)) * 10, -20);
 	}
 	maybeThrow(probLoop, 3);
@@ -143,14 +143,14 @@ int main(int argc, char *args[])
 
 			{ // camera
 				Entity *e = engineEntities()->create(1);
-				CAGE_COMPONENT_ENGINE(Transform, t, e);
-				CAGE_COMPONENT_ENGINE(Camera, c, e);
+				TransformComponent &t = e->value<TransformComponent>();
+				CameraComponent &c = e->value<CameraComponent>();
 				c.ambientColor = vec3(1);
 			}
 			{ // box 1
 				Entity *e = engineEntities()->create(2);
-				CAGE_COMPONENT_ENGINE(Transform, t, e);
-				CAGE_COMPONENT_ENGINE(Render, r, e);
+				TransformComponent &t = e->value<TransformComponent>();
+				RenderComponent &r = e->value<RenderComponent>();
 				r.object = HashString("cage/model/fake.obj");
 			}
 

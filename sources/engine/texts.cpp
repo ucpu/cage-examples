@@ -55,15 +55,15 @@ bool update()
 		static Holder<NoiseFunction> noise1 = newNoiseFunction(noiseInit(42));
 		static Holder<NoiseFunction> noise2 = newNoiseFunction(noiseInit(13));
 		Entity *e = ents->get(10);
-		CAGE_COMPONENT_ENGINE(Transform, t, e);
+		TransformComponent &t = e->value<TransformComponent>();
 		t.position = vec3(noise1->evaluate(engineControlTime()) * 2, noise2->evaluate(engineControlTime()) * 2, 10);
-		CAGE_COMPONENT_ENGINE(Text, r, e);
+		TextComponent &r = e->value<TextComponent>();
 		r.value = stringizer() + t.position[0] + "|" + t.position[1] + "|" + t.position[2];
 	}
 
 	{
 		Entity *e = ents->get(11);
-		CAGE_COMPONENT_ENGINE(Transform, t, e);
+		TransformComponent &t = e->value<TransformComponent>();
 		t.orientation = quat(degs(), degs(engineControlTime() * 1e-5), degs());
 	}
 
@@ -95,28 +95,28 @@ int main(int argc, char *args[])
 		EntityManager *ents = engineEntities();
 		{ // floor
 			Entity *e = ents->create(1);
-			CAGE_COMPONENT_ENGINE(Render, r, e);
+			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/skeletons/floor/floor.obj");
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position = vec3(0, -5, 0);
 		}
 		{ // sun
 			Entity *e = ents->create(2);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.orientation = quat(degs(-50), degs(-42 + 180), degs());
-			CAGE_COMPONENT_ENGINE(Light, l, e);
+			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Directional;
 			l.color = vec3(1);
 			l.intensity = 3;
-			//CAGE_COMPONENT_ENGINE(Shadowmap, s, e);
+			
 			//s.resolution = 2048;
 			//s.worldSize = vec3(12, 12, 10);
 		}
 		{ // camera
 			Entity *e = ents->create(3);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.orientation = quat(degs(-10), degs(), degs());
-			CAGE_COMPONENT_ENGINE(Camera, c, e);
+			CameraComponent &c = e->value<CameraComponent>();
 			c.ambientColor = vec3(1);
 			c.ambientIntensity = 0.02;
 			c.near = 0.1;
@@ -125,39 +125,39 @@ int main(int argc, char *args[])
 		}
 		{ // text hello
 			Entity *e = ents->create(11);
-			CAGE_COMPONENT_ENGINE(Text, r, e);
+			TextComponent &r = e->value<TextComponent>();
 			r.assetName = HashString("cage-tests/texts/texts.textpack");
 			r.textName = HashString("short/hello");
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position = vec3(0, 0, -10);
 			t.scale = 3;
 		}
 		{ // text long a
 			Entity *e = ents->createAnonymous();
-			CAGE_COMPONENT_ENGINE(Text, r, e);
+			TextComponent &r = e->value<TextComponent>();
 			r.assetName = HashString("cage-tests/texts/texts.textpack");
 			r.textName = HashString("long/a");
 			r.color = vec3(1, 0, 0);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position = vec3(-10, 0, 0);
 			t.orientation = quat(degs(), degs(90), degs());
 		}
 		{ // text long b
 			Entity *e = ents->createAnonymous();
-			CAGE_COMPONENT_ENGINE(Text, r, e);
+			TextComponent &r = e->value<TextComponent>();
 			r.assetName = HashString("cage-tests/texts/texts.textpack");
 			r.textName = HashString("long/b");
 			r.color = vec3(0, 0, 1);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position = vec3(10, 0, 0);
 			t.orientation = quat(degs(), degs(-90), degs());
 		}
 		{ // text params
 			Entity *e = ents->create(10);
-			CAGE_COMPONENT_ENGINE(Text, r, e);
+			TextComponent &r = e->value<TextComponent>();
 			r.assetName = HashString("cage-tests/texts/texts.textpack");
 			r.textName = HashString("params/a");
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position = vec3(0, 0, 10);
 			t.orientation = quat(degs(), degs(180), degs());
 		}
@@ -165,10 +165,10 @@ int main(int argc, char *args[])
 			for (uint32 i = 0; i < fontsCount; i++)
 			{
 				Entity *e = ents->createAnonymous();
-				CAGE_COMPONENT_ENGINE(Text, r, e);
+				TextComponent &r = e->value<TextComponent>();
 				r.value = labelTexts[i];
 				r.font = HashString(fontNames[i]);
-				CAGE_COMPONENT_ENGINE(Transform, t, e);
+				TransformComponent &t = e->value<TransformComponent>();
 				t.position = vec3(0, -3, 2.0 * i - fontsCount);
 				t.orientation = quat(degs(-90), degs(), degs());
 			}

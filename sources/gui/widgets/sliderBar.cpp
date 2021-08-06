@@ -6,12 +6,12 @@ class guiTestImpl : public guiTestClass
 	Entity *envelopeInScrollbars(Entity *e)
 	{
 		Entity *r = engineGui()->entities()->createUnique();
-		CAGE_COMPONENT_GUI(Parent, pr, r);
-		CAGE_COMPONENT_GUI(Parent, pe, e);
+		GuiParentComponent &pr = r->value<GuiParentComponent>();
+		GuiParentComponent &pe = e->value<GuiParentComponent>();
 		pr = pe;
 		pe.parent = r->name();
 		pe.order = 0;
-		CAGE_COMPONENT_GUI(Scrollbars, sc, r);
+		GuiScrollbarsComponent &sc = r->value<GuiScrollbarsComponent>();
 		return r;
 	}
 
@@ -22,7 +22,7 @@ class guiTestImpl : public guiTestClass
 		guiBasicLayout();
 		{
 			Entity *e = ents->get(3);
-			CAGE_COMPONENT_GUI(LayoutTable, layout, e);
+			GuiLayoutTableComponent &layout = e->value<GuiLayoutTableComponent>();
 		}
 
 		uint32 index = 1;
@@ -30,20 +30,20 @@ class guiTestImpl : public guiTestClass
 		{ // default
 			guiLabel(3, index, "default");
 			Entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(SliderBar, s, e);
+			GuiSliderBarComponent &s = e->value<GuiSliderBarComponent>();
 			envelopeInScrollbars(e);
 		}
 
 		{ // vertical
 			guiLabel(3, index, "vertical");
 			Entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(SliderBar, s, e);
+			GuiSliderBarComponent &s = e->value<GuiSliderBarComponent>();
 			s.vertical = true;
 			envelopeInScrollbars(e);
 		}
@@ -51,10 +51,10 @@ class guiTestImpl : public guiTestClass
 		{ // range
 			guiLabel(3, index, "range");
 			Entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(SliderBar, s, e);
+			GuiSliderBarComponent &s = e->value<GuiSliderBarComponent>();
 			s.min = 13;
 			s.max = 42;
 			s.value = 21;

@@ -26,35 +26,35 @@ void init()
 
 	{ // camera
 		Entity *e = ents->create(1);
-		CAGE_COMPONENT_ENGINE(Transform, t, e);
+		TransformComponent &t = e->value<TransformComponent>();
 		t.position = vec3(0, 1.7, 0);
-		CAGE_COMPONENT_ENGINE(Camera, c, e);
+		CameraComponent &c = e->value<CameraComponent>();
 		c.ambientColor = vec3(1);
 		c.ambientIntensity = 0.2;
 		c.ambientDirectionalColor = vec3(1);
 		c.ambientDirectionalIntensity = 0.2;
 		c.near = 0.1;
 		c.far = 500;
-		CAGE_COMPONENT_ENGINE(Listener, l, e);
+		ListenerComponent &l = e->value<ListenerComponent>();
 		l.rolloffFactor = 0.05;
 	}
 
 	{ // sun
 		Entity *e = ents->createAnonymous();
-		CAGE_COMPONENT_ENGINE(Transform, t, e);
+		TransformComponent &t = e->value<TransformComponent>();
 		t.orientation = quat(degs(-90), {}, {});
-		CAGE_COMPONENT_ENGINE(Light, l, e);
+		LightComponent &l = e->value<LightComponent>();
 		l.lightType = LightTypeEnum::Directional;
-		CAGE_COMPONENT_ENGINE(Shadowmap, s, e);
+		ShadowmapComponent &s = e->value<ShadowmapComponent>();
 		s.resolution = 4096;
 		s.worldSize = vec3(200);
 	}
 
 	{ // floor
 		Entity *e = ents->createAnonymous();
-		CAGE_COMPONENT_ENGINE(Transform, t, e);
+		TransformComponent &t = e->value<TransformComponent>();
 		t.scale = 200 / 8;
-		CAGE_COMPONENT_ENGINE(Render, r, e);
+		RenderComponent &r = e->value<RenderComponent>();
 		r.object = HashString("cage-tests/lods/floor.object");
 	}
 
@@ -63,21 +63,21 @@ void init()
 	{ // sound source
 		{
 			Entity *e = ents->create(numeric_cast<uint32>(it.index) + 100);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.scale = 2;
-			CAGE_COMPONENT_ENGINE(Sound, s, e);
+			SoundComponent &s = e->value<SoundComponent>();
 			s.name = HashString(string(stringizer() + "cage-tests/music/PurplePlanet/" + *it));
-			CAGE_COMPONENT_ENGINE(Render, r, e);
+			RenderComponent &r = e->value<RenderComponent>();
 			r.color = vec3(1);
 			r.object = HashString("scenes/common/lightbulb.obj");
-			CAGE_COMPONENT_ENGINE(Light, l, e);
+			LightComponent &l = e->value<LightComponent>();
 			l.intensity = 2;
 		}
 		{
 			Entity *e = ents->create(numeric_cast<uint32>(it.index) + 200);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.scale = 0.5;
-			CAGE_COMPONENT_ENGINE(Text, l, e);
+			TextComponent &l = e->value<TextComponent>();
 			string n = *it;
 			l.value = split(n, ".");
 		}
@@ -90,7 +90,7 @@ void update()
 
 	const vec3 cameraPos = [&]() {
 		Entity *e = ents->get(1);
-		CAGE_COMPONENT_ENGINE(Transform, t, e);
+		TransformComponent &t = e->value<TransformComponent>();
 		return t.position;
 	}();
 
@@ -123,12 +123,12 @@ void update()
 	{
 		{
 			Entity *e = ents->get(numeric_cast<uint32>(it.index) + 100);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position = *it;
 		}
 		{
 			Entity *e = ents->get(numeric_cast<uint32>(it.index) + 200);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position = *it + vec3(0, 0.25, 0);
 			if (distance(cameraPos, t.position) > 0.1)
 				t.orientation = quat(t.position - cameraPos, vec3(0, 1, 0));

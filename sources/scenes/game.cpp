@@ -57,14 +57,14 @@ void sceneReload()
 			if (name.empty())
 				continue;
 			Entity *e = engineEntities()->createAnonymous();
-			CAGE_COMPONENT_ENGINE(Render, rs, e);
+			RenderComponent &rs = e->value<RenderComponent>();
 			rs.object = HashString(name.c_str());
 			if (!rs.object)
 			{
 				CAGE_LOG_THROW(stringizer() + "object: '" + name + "'");
 				CAGE_THROW_ERROR(Exception, "object has invalid hash");
 			}
-			CAGE_COMPONENT_ENGINE(Transform, ts, e);
+			TransformComponent &ts = e->value<TransformComponent>();
 			string posLine;
 			f->readLine(posLine);
 			ts.position = vec3::parse(posLine);
@@ -81,9 +81,9 @@ void sceneReload()
 
 	{ // camera
 		Entity *cam = engineEntities()->create(1);
-		CAGE_COMPONENT_ENGINE(Transform, t, cam);
+		TransformComponent &t = cam->value<TransformComponent>();
 		t.position = vec3(0, 10, 30);
-		CAGE_COMPONENT_ENGINE(Camera, c, cam);
+		CameraComponent &c = cam->value<CameraComponent>();
 		c.ambientColor = vec3(1);
 		c.ambientIntensity = 0.03;
 		c.ambientDirectionalColor = vec3(1);
@@ -98,19 +98,19 @@ void sceneReload()
 
 	{ // skybox
 		Entity *cam = engineEntities()->create(2);
-		CAGE_COMPONENT_ENGINE(Transform, tc, cam);
+		TransformComponent &tc = cam->value<TransformComponent>();
 		(void)tc;
-		CAGE_COMPONENT_ENGINE(Camera, c, cam);
+		CameraComponent &c = cam->value<CameraComponent>();
 		c.sceneMask = 2;
 		c.cameraOrder = 1;
 		c.near = 0.1;
 		c.far = 50;
 		c.effects = CameraEffectsFlags::MotionBlur; // need to enable motion blur to make sure that velocity buffer is cleared
 		Entity *sky = engineEntities()->create(3);
-		CAGE_COMPONENT_ENGINE(Transform, ts, sky);
+		TransformComponent &ts = sky->value<TransformComponent>();
 		(void)ts;
-		CAGE_COMPONENT_ENGINE(Render, r, sky);
-		CAGE_COMPONENT_ENGINE(TextureAnimation, a, sky);
+		RenderComponent &r = sky->value<RenderComponent>();
+		TextureAnimationComponent &a = sky->value<TextureAnimationComponent>();
 		(void)a;
 		r.object = HashString("scenes/common/skybox.obj");
 		r.sceneMask = 2;
@@ -120,13 +120,13 @@ void sceneReload()
 	for (int i = 0; i < directionalLightsCount; i++)
 	{
 		directionalLights[i] = engineEntities()->createAnonymous();
-		CAGE_COMPONENT_ENGINE(Transform, ts, directionalLights[i]);
+		TransformComponent &ts = directionalLights[i]->value<TransformComponent>();
 		ts.orientation = quat(degs(randomChance() * -20 - 30), degs(i * 360.0f / (float)directionalLightsCount + randomChance() * 180 / (float)directionalLightsCount), degs());
-		CAGE_COMPONENT_ENGINE(Light, ls, directionalLights[i]);
+		LightComponent &ls = directionalLights[i]->value<LightComponent>();
 		ls.color = vec3(1);
 		ls.intensity = 2.5;
 		ls.lightType = LightTypeEnum::Directional;
-		CAGE_COMPONENT_ENGINE(Shadowmap, ss, directionalLights[i]);
+		ShadowmapComponent &ss = directionalLights[i]->value<ShadowmapComponent>();
 		ss.resolution = 2048;
 	}
 	
@@ -134,15 +134,15 @@ void sceneReload()
 	for (int i = 0; i < pointLightsCount; i++)
 	{
 		pointLights[i] = engineEntities()->createAnonymous();
-		CAGE_COMPONENT_ENGINE(Transform, ts, pointLights[i]);
+		TransformComponent &ts = pointLights[i]->value<TransformComponent>();
 		ts.position = (vec3(randomChance(), randomChance(), randomChance()) * 2 - 1) * 15;
-		CAGE_COMPONENT_ENGINE(Light, ls, pointLights[i]);
+		LightComponent &ls = pointLights[i]->value<LightComponent>();
 		ls.color = colorHsvToRgb(vec3(randomChance(), 1, 1));
 		ls.lightType = LightTypeEnum::Point;
-		//CAGE_COMPONENT_ENGINE(Shadowmap, ss, pointLights[i]);
+		
 		//ss.worldSize = vec3(60);
 		//ss.resolution = 1024;
-		CAGE_COMPONENT_ENGINE(Render, r, pointLights[i]);
+		RenderComponent &r = pointLights[i]->value<RenderComponent>();
 		r.color = ls.color;
 		r.object = HashString("scenes/common/lightbulb.obj");
 	}
@@ -200,8 +200,8 @@ bool update()
 	}
 
 	{ // update camera for skybox
-		CAGE_COMPONENT_ENGINE(Transform, t1, engineEntities()->get(1));
-		CAGE_COMPONENT_ENGINE(Transform, t2, engineEntities()->get(2));
+		TransformComponent &t1 = engineEntities()->get(1)->value<TransformComponent>();
+		TransformComponent &t2 = engineEntities()->get(2)->value<TransformComponent>();
 		t2.orientation = t1.orientation;
 	}
 
@@ -254,27 +254,27 @@ void updateInitialize()
 	{ // prev
 		Entity *a = cage::engineGui()->entities()->createUnique();
 		{ // a
-			CAGE_COMPONENT_GUI(Scrollbars, sc, a);
+			GuiScrollbarsComponent &sc = a->value<GuiScrollbarsComponent>();
 			sc.alignment = vec2(0, 1);
 		}
 		Entity *e = cage::engineGui()->entities()->create(1);
-		CAGE_COMPONENT_GUI(Parent, parent, e);
+		GuiParentComponent &parent = e->value<GuiParentComponent>();
 		parent.parent = a->name();
-		CAGE_COMPONENT_GUI(Button, c, e);
-		CAGE_COMPONENT_GUI(Text, t, e);
+		GuiButtonComponent &c = e->value<GuiButtonComponent>();
+		GuiTextComponent &t = e->value<GuiTextComponent>();
 		t.value = "< prev";
 	}
 	{ // next
 		Entity *a = cage::engineGui()->entities()->createUnique();
 		{ // a
-			CAGE_COMPONENT_GUI(Scrollbars, sc, a);
+			GuiScrollbarsComponent &sc = a->value<GuiScrollbarsComponent>();
 			sc.alignment = vec2(1, 1);
 		}
 		Entity *e = cage::engineGui()->entities()->create(2);
-		CAGE_COMPONENT_GUI(Parent, parent, e);
+		GuiParentComponent &parent = e->value<GuiParentComponent>();
 		parent.parent = a->name();
-		CAGE_COMPONENT_GUI(Button, c, e);
-		CAGE_COMPONENT_GUI(Text, t, e);
+		GuiButtonComponent &c = e->value<GuiButtonComponent>();
+		GuiTextComponent &t = e->value<GuiTextComponent>();
 		t.value = "next >";
 	}
 }

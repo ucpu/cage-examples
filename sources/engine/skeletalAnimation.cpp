@@ -37,9 +37,9 @@ bool update()
 void label(const string &name, const vec3 &position)
 {
 	Entity *e = engineEntities()->createAnonymous();
-	CAGE_COMPONENT_ENGINE(Text, txt, e);
+	TextComponent &txt = e->value<TextComponent>();
 	txt.value = name;
-	CAGE_COMPONENT_ENGINE(Transform, t, e);
+	TransformComponent &t = e->value<TransformComponent>();
 	t.position = position;
 	t.scale = 0.2;
 	t.orientation = quat(degs(), degs(180), degs());
@@ -75,31 +75,31 @@ int main(int argc, char *args[])
 			for (const char *animation : animations)
 			{
 				Entity *e = ents->create(1 + i);
-				CAGE_COMPONENT_ENGINE(Render, r, e);
+				RenderComponent &r = e->value<RenderComponent>();
 				r.object = HashString("cage-tests/skeletons/lemur/lemur.x");
-				CAGE_COMPONENT_ENGINE(SkeletalAnimation, s, e);
+				SkeletalAnimationComponent &s = e->value<SkeletalAnimationComponent>();
 				s.name = HashString(animation);
-				CAGE_COMPONENT_ENGINE(Transform, t, e);
+				TransformComponent &t = e->value<TransformComponent>();
 				t.position = vec3(i * 3 - 6.f, 0, 3);
 				label(remove(string(animation), 0, 35), t.position + vec3(0, 2, 0));
 				i++;
 			}
 			{ // no animation
 				Entity *e = ents->create(1 + i);
-				CAGE_COMPONENT_ENGINE(Render, r, e);
+				RenderComponent &r = e->value<RenderComponent>();
 				r.object = HashString("cage-tests/skeletons/lemur/lemur.x");
-				CAGE_COMPONENT_ENGINE(Transform, t, e);
+				TransformComponent &t = e->value<TransformComponent>();
 				t.position = vec3(i * 3 - 6.f, 0, 3);
 				label("no animation", t.position + vec3(0, 2, 0));
 				i++;
 			}
 			{ // scaled
 				Entity *e = ents->create(1 + i);
-				CAGE_COMPONENT_ENGINE(Render, r, e);
+				RenderComponent &r = e->value<RenderComponent>();
 				r.object = HashString("cage-tests/skeletons/lemur/lemur.x");
-				CAGE_COMPONENT_ENGINE(SkeletalAnimation, s, e);
+				SkeletalAnimationComponent &s = e->value<SkeletalAnimationComponent>();
 				s.name = HashString("cage-tests/skeletons/lemur/lemur.x?idle");
-				CAGE_COMPONENT_ENGINE(Transform, t, e);
+				TransformComponent &t = e->value<TransformComponent>();
 				t.position = vec3(i * 3 - 6.f, 0, 3);
 				t.scale = 1.5;
 				label("scaled", t.position + vec3(0, 3, 0));
@@ -110,12 +110,12 @@ int main(int argc, char *args[])
 			for (sint32 i = 0; i < 32 * 32; i++)
 			{
 				Entity *e = ents->createAnonymous();
-				CAGE_COMPONENT_ENGINE(Render, r, e);
+				RenderComponent &r = e->value<RenderComponent>();
 				r.object = HashString("cage-tests/skeletons/lemur/lemur.x");
-				CAGE_COMPONENT_ENGINE(SkeletalAnimation, s, e);
+				SkeletalAnimationComponent &s = e->value<SkeletalAnimationComponent>();
 				s.name = HashString(animations[1]);
 				s.speed = randomRange(0.1, 10.0);
-				CAGE_COMPONENT_ENGINE(Transform, t, e);
+				TransformComponent &t = e->value<TransformComponent>();
 				t.position = vec3((i % 32) * 2 - 32, 0, (i / 32) * 2 - 70);
 			}
 #endif
@@ -126,40 +126,40 @@ int main(int argc, char *args[])
 			for (const char *animation : animations)
 			{
 				Entity *e = ents->create(10 + i);
-				CAGE_COMPONENT_ENGINE(Render, r, e);
+				RenderComponent &r = e->value<RenderComponent>();
 				r.object = HashString("cage-tests/skeletons/cylinder/cylinder.x");
-				CAGE_COMPONENT_ENGINE(SkeletalAnimation, s, e);
+				SkeletalAnimationComponent &s = e->value<SkeletalAnimationComponent>();
 				s.name = HashString(animation);
-				CAGE_COMPONENT_ENGINE(Transform, t, e);
+				TransformComponent &t = e->value<TransformComponent>();
 				t.position = vec3(i * 3 - 6.f, 0, 0);
 				label(remove(string(animation), 0, 41), t.position + vec3(0, 3.3, 0));
 				i++;
 			}
 			{ // no animation set
 				Entity *e = ents->create(10 + i);
-				CAGE_COMPONENT_ENGINE(Render, r, e);
+				RenderComponent &r = e->value<RenderComponent>();
 				r.object = HashString("cage-tests/skeletons/cylinder/cylinder.x");
-				CAGE_COMPONENT_ENGINE(Transform, t, e);
+				TransformComponent &t = e->value<TransformComponent>();
 				t.position = vec3(i * 3 - 6.f, 0, 0);
 				label("no anim set", t.position + vec3(0, 3.3, 0));
 				i++;
 			}
 			{ // non-existent animation
 				Entity *e = ents->create(10 + i);
-				CAGE_COMPONENT_ENGINE(Render, r, e);
+				RenderComponent &r = e->value<RenderComponent>();
 				r.object = HashString("cage-tests/skeletons/cylinder/cylinder.x");
-				CAGE_COMPONENT_ENGINE(SkeletalAnimation, s, e);
+				SkeletalAnimationComponent &s = e->value<SkeletalAnimationComponent>();
 				s.name = HashString("cage-tests/skeletons/cylinder/cylinder.x?non-existent");
-				CAGE_COMPONENT_ENGINE(Transform, t, e);
+				TransformComponent &t = e->value<TransformComponent>();
 				t.position = vec3(i * 3 - 6.f, 0, 0);
 				label("invalid anim", t.position + vec3(0, 3.3, 0));
 				i++;
 			}
 			{ // non-existent object
 				Entity *e = ents->create(10 + i);
-				CAGE_COMPONENT_ENGINE(Render, r, e);
+				RenderComponent &r = e->value<RenderComponent>();
 				r.object = HashString("cage-tests/skeletons/cylinder/non-existent.x");
-				CAGE_COMPONENT_ENGINE(Transform, t, e);
+				TransformComponent &t = e->value<TransformComponent>();
 				t.position = vec3(i * 3 - 6.f, 0, 0);
 				label("invalid object", t.position + vec3(0, 3.3, 0));
 				i++;
@@ -171,31 +171,31 @@ int main(int argc, char *args[])
 			for (const char *animation : animations)
 			{
 				Entity *e = ents->create(20 + i);
-				CAGE_COMPONENT_ENGINE(Render, r, e);
+				RenderComponent &r = e->value<RenderComponent>();
 				r.object = HashString("cage-tests/skeletons/monk/monk.object");
-				CAGE_COMPONENT_ENGINE(SkeletalAnimation, s, e);
+				SkeletalAnimationComponent &s = e->value<SkeletalAnimationComponent>();
 				s.name = HashString(animation);
-				CAGE_COMPONENT_ENGINE(Transform, t, e);
+				TransformComponent &t = e->value<TransformComponent>();
 				t.position = vec3(i * 3 - 6.f, 0, -3);
 				label(remove(string(animation), 0, 33), t.position + vec3(0, 2, 0));
 				i++;
 			}
 			{ // no animation
 				Entity *e = ents->create(20 + i);
-				CAGE_COMPONENT_ENGINE(Render, r, e);
+				RenderComponent &r = e->value<RenderComponent>();
 				r.object = HashString("cage-tests/skeletons/monk/monk.object");
-				CAGE_COMPONENT_ENGINE(Transform, t, e);
+				TransformComponent &t = e->value<TransformComponent>();
 				t.position = vec3(i * 3 - 6.f, 0, -3);
 				label("no anim", t.position + vec3(0, 2, 0));
 				i++;
 			}
 			{ // rotated
 				Entity *e = ents->create(20 + i);
-				CAGE_COMPONENT_ENGINE(Render, r, e);
+				RenderComponent &r = e->value<RenderComponent>();
 				r.object = HashString("cage-tests/skeletons/monk/monk.object");
-				CAGE_COMPONENT_ENGINE(SkeletalAnimation, s, e);
+				SkeletalAnimationComponent &s = e->value<SkeletalAnimationComponent>();
 				s.name = HashString("cage-tests/skeletons/monk/monk.x?Dance");
-				CAGE_COMPONENT_ENGINE(Transform, t, e);
+				TransformComponent &t = e->value<TransformComponent>();
 				t.position = vec3(i * 3 - 6.f, 0, -3);
 				t.orientation = quat(degs(), degs(randomRange(45, 270)), degs());
 				label("rotated", t.position + vec3(0, 2, 0));
@@ -208,9 +208,9 @@ int main(int argc, char *args[])
 			for (const char *object : objects)
 			{
 				Entity *e = ents->create(30 + i);
-				CAGE_COMPONENT_ENGINE(Render, r, e);
+				RenderComponent &r = e->value<RenderComponent>();
 				r.object = HashString(object);
-				CAGE_COMPONENT_ENGINE(Transform, t, e);
+				TransformComponent &t = e->value<TransformComponent>();
 				t.position = vec3(i * 3 + 1.5f, 1, 0);
 				t.scale = 0.6;
 				label(remove(string(object), 0, 28), t.position + vec3(0, 1, 0));
@@ -219,29 +219,29 @@ int main(int argc, char *args[])
 		}
 		{ // floor
 			Entity *e = ents->create(100);
-			CAGE_COMPONENT_ENGINE(Render, r, e);
+			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/skeletons/floor/floor.obj");
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			(void)t;
 		}
 		{ // sun
 			Entity *e = ents->create(101);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.orientation = quat(degs(-50), degs(-42 + 180), degs());
-			CAGE_COMPONENT_ENGINE(Light, l, e);
+			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Directional;
 			l.color = vec3(1);
 			l.intensity = 2;
-			CAGE_COMPONENT_ENGINE(Shadowmap, s, e);
+			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 2048;
 			s.worldSize = vec3(12, 12, 10);
 		}
 		{ // camera
 			Entity *e = ents->create(102);
-			CAGE_COMPONENT_ENGINE(Transform, t, e);
+			TransformComponent &t = e->value<TransformComponent>();
 			t.position = vec3(0, 5, -10);
 			t.orientation = quat(degs(-15), degs(180), degs());
-			CAGE_COMPONENT_ENGINE(Camera, c, e);
+			CameraComponent &c = e->value<CameraComponent>();
 			c.ambientColor = vec3(1);
 			c.ambientIntensity = 0.1;
 			c.ambientDirectionalColor = vec3(1);

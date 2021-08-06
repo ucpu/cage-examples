@@ -10,7 +10,7 @@ class guiTestImpl : public guiTestClass
 		guiBasicLayout();
 		{
 			Entity *e = ents->get(3);
-			CAGE_COMPONENT_GUI(LayoutTable, layout, e);
+			GuiLayoutTableComponent &layout = e->value<GuiLayoutTableComponent>();
 		}
 
 		uint32 index = 1;
@@ -18,49 +18,49 @@ class guiTestImpl : public guiTestClass
 		{ // empty
 			guiLabel(3, index, "empty");
 			Entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(ComboBox, cb, e);
-			CAGE_COMPONENT_GUI(Text, t, e);
+			GuiComboBoxComponent &cb = e->value<GuiComboBoxComponent>();
+			GuiTextComponent &t = e->value<GuiTextComponent>();
 			t.value = "placeholder";
 		}
 		{ // items
 			guiLabel(3, index, "items");
 			Entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(ComboBox, cb, e);
-			CAGE_COMPONENT_GUI(Text, t, e);
+			GuiComboBoxComponent &cb = e->value<GuiComboBoxComponent>();
+			GuiTextComponent &t = e->value<GuiTextComponent>();
 			t.value = "select one:";
 			for (uint32 i = 0; i < 4; i++)
 			{
 				Entity *o = ents->createUnique();
-				CAGE_COMPONENT_GUI(Parent, p, o);
+				GuiParentComponent &p = o->value<GuiParentComponent>();
 				p.parent = e->name();
 				p.order = index++;
-				CAGE_COMPONENT_GUI(Text, t, o);
+				GuiTextComponent &t = o->value<GuiTextComponent>();
 				t.value = stringizer() + "option " + i;
 			}
 		}
 		{ // preselected
 			guiLabel(3, index, "preselected");
 			Entity *e = ents->createUnique();
-			CAGE_COMPONENT_GUI(Parent, p, e);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			CAGE_COMPONENT_GUI(ComboBox, cb, e);
+			GuiComboBoxComponent &cb = e->value<GuiComboBoxComponent>();
 			cb.selected = 2;
-			CAGE_COMPONENT_GUI(Text, t, e);
+			GuiTextComponent &t = e->value<GuiTextComponent>();
 			t.value = "select one:";
 			for (uint32 i = 0; i < 4; i++)
 			{
 				Entity *o = ents->createUnique();
-				CAGE_COMPONENT_GUI(Parent, p, o);
+				GuiParentComponent &p = o->value<GuiParentComponent>();
 				p.parent = e->name();
 				p.order = index++;
-				CAGE_COMPONENT_GUI(Text, t, o);
+				GuiTextComponent &t = o->value<GuiTextComponent>();
 				t.value = stringizer() + "option " + i;
 			}
 		}
