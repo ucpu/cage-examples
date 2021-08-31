@@ -24,12 +24,12 @@ constexpr const uint32 assetsExplosionsSounds[] = { HashString("cage-tests/screa
 constexpr const uint32 assetsExplosionsSprites[] = { HashString("cage-tests/explosion/sprite.obj;explosion_1"), HashString("cage-tests/explosion/sprite.obj;explosion_2"), HashString("cage-tests/explosion/sprite.obj;explosion_3") };
 constexpr const uint32 assetsSmokes[] = { HashString("cage-tests/explosion/sprite.obj;smoke_1"), HashString("cage-tests/explosion/sprite.obj;smoke_2") };
 constexpr const uint32 assetsSparks[] = { HashString("cage-tests/explosion/sprite.obj;spark_1") };
-const vec3 cameraCenter = vec3(0, 2, 0);
+const Vec3 cameraCenter = Vec3(0, 2, 0);
 
 struct ScreamerComponent
 {
 	static EntityComponent *component;
-	vec3 velocity;
+	Vec3 velocity;
 	uint32 steaming = 0;
 };
 
@@ -42,11 +42,11 @@ struct TtlComponent
 struct ParticleComponent
 {
 	static EntityComponent *component;
-	vec3 velocity;
-	real gravity;
-	real drag;
-	real smoking; // a chance to create a smoke particle
-	real dimming = real::Nan();
+	Vec3 velocity;
+	Real gravity;
+	Real drag;
+	Real smoking; // a chance to create a smoke particle
+	Real dimming = Real::Nan();
 };
 
 EntityComponent *ScreamerComponent::component;
@@ -60,7 +60,7 @@ uint32 arrayPick(PointerRange<const uint32> arr)
 	return arr[randomRange(uintPtr(0), arr.size())];
 }
 
-Entity *makeParticle(const vec3 &position, real scale, uint32 object, uint32 ttl)
+Entity *makeParticle(const Vec3 &position, Real scale, uint32 object, uint32 ttl)
 {
 	Entity *e = engineEntities()->createAnonymous();
 	TransformComponent &t = e->value<TransformComponent>();
@@ -77,16 +77,16 @@ Entity *makeParticle(const vec3 &position, real scale, uint32 object, uint32 ttl
 	return e;
 }
 
-Entity *makeSmoke(const vec3 &position, real scale)
+Entity *makeSmoke(const Vec3 &position, Real scale)
 {
 	Entity *e = makeParticle(position, scale, arrayPick(assetsSmokes), randomRange(20u, 30u));
 	ParticleComponent &p = e->value<ParticleComponent>(ParticleComponent::component);
 	p.drag = 0.03;
-	p.velocity = vec3(randomRange(-0.2, 0.2), randomRange(0.5, 1.0), randomRange(-0.2, 0.2)) / 20 * scale;
+	p.velocity = Vec3(randomRange(-0.2, 0.2), randomRange(0.5, 1.0), randomRange(-0.2, 0.2)) / 20 * scale;
 	return e;
 }
 
-void makeExplosion(const vec3 &position)
+void makeExplosion(const Vec3 &position)
 {
 	{
 		const uint32 explosions = randomRange(3u, 5u);
@@ -97,11 +97,11 @@ void makeExplosion(const vec3 &position)
 			p.smoking = 0.1;
 			p.dimming = 0.1;
 			LightComponent &l = e->value<LightComponent>();
-			l.color = vec3(247, 221, 59) / 255;
+			l.color = Vec3(247, 221, 59) / 255;
 			l.color += randomRange3(-0.05, 0.05);
 			l.color = saturate(l.color);
 			l.intensity = 8;
-			l.attenuation = vec3(0, 1, 0);
+			l.attenuation = Vec3(0, 1, 0);
 		}
 	}
 	{
@@ -113,14 +113,14 @@ void makeExplosion(const vec3 &position)
 			p.smoking = 0.4;
 			p.gravity = 0.5 / 20;
 			p.drag = 0.05;
-			p.velocity = vec3(randomRange(-10.0, 10.0), randomRange(5.0, 10.0), randomRange(-10.0, 10.0)) / 20;
+			p.velocity = Vec3(randomRange(-10.0, 10.0), randomRange(5.0, 10.0), randomRange(-10.0, 10.0)) / 20;
 			p.dimming = 0.1;
 			LightComponent &l = e->value<LightComponent>();
-			l.color = vec3(247, 221, 59) / 255;
+			l.color = Vec3(247, 221, 59) / 255;
 			l.color += randomRange3(-0.05, 0.05);
 			l.color = saturate(l.color);
 			l.intensity = 5;
-			l.attenuation = vec3(0, 1, 0);
+			l.attenuation = Vec3(0, 1, 0);
 		}
 	}
 	{
@@ -139,16 +139,16 @@ void makeExplosion(const vec3 &position)
 
 void updateParticles()
 {
-	std::vector<vec4> newSmokes;
+	std::vector<Vec4> newSmokes;
 	newSmokes.reserve(ParticleComponent::component->entities().size() / 10);
 	for (Entity *e : ParticleComponent::component->entities())
 	{
 		ParticleComponent &p = e->value<ParticleComponent>(ParticleComponent::component);
 		TransformComponent &t = e->value<TransformComponent>();
 		p.velocity *= 1 - p.drag;
-		p.velocity += vec3(0, -p.gravity, 0);
+		p.velocity += Vec3(0, -p.gravity, 0);
 		t.position += p.velocity;
-		t.orientation = quat(t.position - cameraCenter, vec3(0, 1, 0));
+		t.orientation = Quat(t.position - cameraCenter, Vec3(0, 1, 0));
 		if (p.dimming.valid())
 		{
 			LightComponent &l = e->value<LightComponent>();
@@ -157,10 +157,10 @@ void updateParticles()
 				e->remove<LightComponent>();
 		}
 		if (randomChance() < p.smoking)
-			newSmokes.emplace_back(vec4(t.position + randomDirection3() * (randomChance() * t.scale * 0.5), (randomChance() + 0.5) * t.scale));
+			newSmokes.emplace_back(Vec4(t.position + randomDirection3() * (randomChance() * t.scale * 0.5), (randomChance() + 0.5) * t.scale));
 	}
-	for (const vec4 &s : newSmokes)
-		makeSmoke(vec3(s), s[3]);
+	for (const Vec4 &s : newSmokes)
+		makeSmoke(Vec3(s), s[3]);
 }
 
 void spawnScreamer()
@@ -171,7 +171,7 @@ void spawnScreamer()
 	render.object = HashString("cage-tests/screamers/suzanne.blend");
 
 	TransformComponent &tr = e->value<TransformComponent>();
-	tr.position = randomDirection3() * vec3(1, 0, 1) * randomRange(500, 700) + vec3(0, 10, 0);
+	tr.position = randomDirection3() * Vec3(1, 0, 1) * randomRange(500, 700) + Vec3(0, 10, 0);
 	tr.orientation = randomDirectionQuat();
 	tr.scale = randomRange(0.4, 0.6);
 
@@ -180,7 +180,7 @@ void spawnScreamer()
 	snd.startTime = engineControlTime();
 
 	LightComponent &lig = e->value<LightComponent>();
-	lig.attenuation = vec3(0, 1, 0);
+	lig.attenuation = Vec3(0, 1, 0);
 	render.color = lig.color = randomDirection3() * 0.5 + 0.5;
 	lig.intensity = 5;
 
@@ -190,20 +190,20 @@ void spawnScreamer()
 
 Line getCursorRay()
 {
-	const ivec2 cursor = engineWindow()->mousePosition();
-	const ivec2 res = engineWindow()->resolution();
-	const vec2 p = vec2(cursor) / vec2(res) * 2 - 1;
-	const real px = p[0], py = -p[1];
+	const Vec2i cursor = engineWindow()->mousePosition();
+	const Vec2i res = engineWindow()->resolution();
+	const Vec2 p = Vec2(cursor) / Vec2(res) * 2 - 1;
+	const Real px = p[0], py = -p[1];
 	Entity *camera = engineEntities()->get(1);
 	TransformComponent &ts = camera->value<TransformComponent>();
 	CameraComponent &cs = camera->value<CameraComponent>();
-	const mat4 view = inverse(mat4(ts.position, ts.orientation, vec3(ts.scale, ts.scale, ts.scale)));
-	const mat4 proj = perspectiveProjection(cs.camera.perspectiveFov, real(res[0]) / real(res[1]), cs.near, cs.far);
-	const mat4 inv = inverse(proj * view);
-	const vec4 pn = inv * vec4(px, py, -1, 1);
-	const vec4 pf = inv * vec4(px, py, 1, 1);
-	const vec3 near = vec3(pn) / pn[3];
-	const vec3 far = vec3(pf) / pf[3];
+	const Mat4 view = inverse(Mat4(ts.position, ts.orientation, Vec3(ts.scale, ts.scale, ts.scale)));
+	const Mat4 proj = perspectiveProjection(cs.camera.perspectiveFov, Real(res[0]) / Real(res[1]), cs.near, cs.far);
+	const Mat4 inv = inverse(proj * view);
+	const Vec4 pn = inv * Vec4(px, py, -1, 1);
+	const Vec4 pf = inv * Vec4(px, py, 1, 1);
+	const Vec3 near = Vec3(pn) / pn[3];
+	const Vec3 far = Vec3(pf) / pf[3];
 	const Line ray = makeRay(near, far);
 	return ray;
 }
@@ -227,7 +227,7 @@ void updateScreamers()
 
 	const Line cursorRay = getCursorRay();
 
-	std::vector<vec3> newSmokes, newExplosions;
+	std::vector<Vec3> newSmokes, newExplosions;
 	for (Entity *e : ScreamerComponent::component->group()->entities())
 	{
 		TransformComponent &tr = e->value<TransformComponent>();
@@ -240,7 +240,7 @@ void updateScreamers()
 			continue;
 		}
 
-		const real dist = distance(cameraCenter, tr.position);
+		const Real dist = distance(cameraCenter, tr.position);
 		if (dist < 2)
 		{ // hit the player
 			CAGE_LOG(SeverityEnum::Info, "screamers", "hit");
@@ -249,23 +249,23 @@ void updateScreamers()
 		}
 
 		ScreamerComponent &scr = e->value<ScreamerComponent>(ScreamerComponent::component);
-		const vec3 dir = normalize(cameraCenter - tr.position);
+		const Vec3 dir = normalize(cameraCenter - tr.position);
 		scr.velocity += dir * 0.1;
-		scr.velocity += tr.orientation * vec3(0.2, 1, 0) * clamp(dist * 0.01, 0, 1) * 0.3;
-		scr.velocity += vec3(0, 1, 0) * sqr(max(2 - tr.position[1], 0));
+		scr.velocity += tr.orientation * Vec3(0.2, 1, 0) * clamp(dist * 0.01, 0, 1) * 0.3;
+		scr.velocity += Vec3(0, 1, 0) * sqr(max(2 - tr.position[1], 0));
 		tr.position += scr.velocity;
-		tr.orientation = quat(scr.velocity, tr.orientation * vec3(0, 1, 0)) * quat(degs(), degs(), degs(20));
+		tr.orientation = Quat(scr.velocity, tr.orientation * Vec3(0, 1, 0)) * Quat(Degs(), Degs(), Degs(20));
 		scr.velocity *= 0.93;
 
 		if (scr.steaming++ > 2)
 		{
-			newSmokes.push_back(tr.position + tr.orientation * vec3(randomRange2(-0.5, 0.5), 1.5));
+			newSmokes.push_back(tr.position + tr.orientation * Vec3(randomRange2(-0.5, 0.5), 1.5));
 			scr.steaming = randomRange(0, 3);
 		}
 	}
-	for (const vec3 &p : newSmokes)
+	for (const Vec3 &p : newSmokes)
 		makeSmoke(p, randomRange(0.3, 0.7));
-	for (const vec3 &p : newExplosions)
+	for (const Vec3 &p : newExplosions)
 		makeExplosion(p);
 }
 
@@ -329,9 +329,9 @@ int main(int argc, char *args[])
 			c.near = 0.03;
 			c.far = 500;
 			c.effects = CameraEffectsFlags::Default;
-			c.ambientColor = vec3(1);
+			c.ambientColor = Vec3(1);
 			c.ambientIntensity = 0.1;
-			c.ambientDirectionalColor = vec3(1);
+			c.ambientDirectionalColor = Vec3(1);
 			c.ambientDirectionalIntensity = 0.2;
 			ListenerComponent &l = e->value<ListenerComponent>();
 			l.rolloffFactor = 0.1;
@@ -341,20 +341,20 @@ int main(int argc, char *args[])
 			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/screamers/skybox.obj");
 			TransformComponent &t = e->value<TransformComponent>();
-			t.position = vec3(0, 2, 0);
+			t.position = Vec3(0, 2, 0);
 			t.scale = 200;
 		}
 		{ // sun
 			Entity *e = ents->create(3);
 			TransformComponent &t = e->value<TransformComponent>();
-			t.orientation = quat(degs(-50), degs(-42 + 180), degs());
+			t.orientation = Quat(Degs(-50), Degs(-42 + 180), Degs());
 			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Directional;
-			l.color = vec3(1);
+			l.color = Vec3(1);
 			l.intensity = 0.5;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 4096;
-			s.worldSize = vec3(50);
+			s.worldSize = Vec3(50);
 		}
 		{ // floor
 			Entity *e = ents->create(4);

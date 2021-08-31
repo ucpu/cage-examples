@@ -24,16 +24,16 @@ bool windowClose()
 	return false;
 }
 
-vec3 getGuiColor(uint32 id)
+Vec3 getGuiColor(uint32 id)
 {
 	Entity *e = engineGui()->entities()->get(id);
 	GuiColorPickerComponent &c = e->value<GuiColorPickerComponent>();
 	return c.color;
 }
 
-vec3 getGuiOrientation(uint32 id)
+Vec3 getGuiOrientation(uint32 id)
 {
-	vec3 result;
+	Vec3 result;
 	EntityManager *ents = engineGui()->entities();
 	for (uint32 i = 0; i < 2; i++)
 	{
@@ -62,20 +62,20 @@ bool update()
 		LightComponent &l = e->value<LightComponent>();
 		r.color = l.color = getGuiColor(37 + i * 10);
 		TransformComponent &t = e->value<TransformComponent>();
-		vec3 o = getGuiOrientation(33 + i * 10);
-		t.orientation = quat(degs(o[0] - 90), degs(o[1]), degs());
-		t.position = vec3(0, 3, 0) + t.orientation * vec3(0, 0, 10);
+		Vec3 o = getGuiOrientation(33 + i * 10);
+		t.orientation = Quat(Degs(o[0] - 90), Degs(o[1]), Degs());
+		t.position = Vec3(0, 3, 0) + t.orientation * Vec3(0, 0, 10);
 	}
 
 	{ // rotate the bottle
 		Entity *e = ents->get(2);
 		TransformComponent &t = e->value<TransformComponent>();
-		t.orientation = quat(degs(), degs(1), degs()) * t.orientation;
+		t.orientation = Quat(Degs(), Degs(1), Degs()) * t.orientation;
 	}
 	return false;
 }
 
-void initializeGuiColors(uint32 parentId, uint32 id, const vec3 &hsv)
+void initializeGuiColors(uint32 parentId, uint32 id, const Vec3 &hsv)
 {
 	Entity *e = engineGui()->entities()->create(id);
 	GuiParentComponent &p = e->value<GuiParentComponent>();
@@ -108,17 +108,17 @@ void initializeGui()
 			GuiLayoutLineComponent &l = panel->value<GuiLayoutLineComponent>();
 			l.vertical = true;
 		}
-		initializeGuiColors(panel->name(), 27, vec3(0, 0, 0.02));
-		initializeGuiColors(panel->name(), 28, vec3(0, 0, 0.02));
+		initializeGuiColors(panel->name(), 27, Vec3(0, 0, 0.02));
+		initializeGuiColors(panel->name(), 28, Vec3(0, 0, 0.02));
 	}
 
-	vec3 colors[3] = {
-		vec3(0.11, 0.95, 0.8),
-		vec3(0.44, 0.95, 0.8),
-		vec3(0.77, 0.95, 0.8)
+	Vec3 colors[3] = {
+		Vec3(0.11, 0.95, 0.8),
+		Vec3(0.44, 0.95, 0.8),
+		Vec3(0.77, 0.95, 0.8)
 	};
-	real pitches[3] = { 0.25 * 90, 0.3 * 90, 0.55 * 90 };
-	real yaws[3] = { 0.1 * 360, 0.2 * 360, 0.6 * 360 };
+	Real pitches[3] = { 0.25 * 90, 0.3 * 90, 0.55 * 90 };
+	Real yaws[3] = { 0.1 * 360, 0.2 * 360, 0.6 * 360 };
 	for (uint32 i = 0; i < 3; i++)
 	{ // spot lights
 		Entity *panel = ents->create(30 + i * 10);
@@ -128,7 +128,7 @@ void initializeGui()
 			p.order = 5 + i;
 			GuiSpoilerComponent &c = panel->value<GuiSpoilerComponent>();
 			GuiTextComponent &t = panel->value<GuiTextComponent>();
-			t.value = stringizer() + "Spot light [" + i + "]:";
+			t.value = Stringizer() + "Spot light [" + i + "]:";
 			GuiLayoutLineComponent &l = panel->value<GuiLayoutLineComponent>();
 			l.vertical = true;
 		}
@@ -192,7 +192,7 @@ int main(int argc, char *args[])
 			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/bottle/bottle.obj");
 			TransformComponent &t = e->value<TransformComponent>();
-			t.position += vec3(1, 0, 0);
+			t.position += Vec3(1, 0, 0);
 		}
 		for (uint32 i = 0; i < 3; i++)
 		{ // spot lights
@@ -201,18 +201,18 @@ int main(int argc, char *args[])
 			r.object = HashString("cage-tests/bottle/other.obj?arrow");
 			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Spot;
-			l.spotAngle = degs(40);
+			l.spotAngle = Degs(40);
 			l.spotExponent = 40;
-			l.attenuation = vec3(1, 0, 0.005);
+			l.attenuation = Vec3(1, 0, 0.005);
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 512;
-			s.worldSize = vec3(3, 50, 0);
+			s.worldSize = Vec3(3, 50, 0);
 		}
 		{ // camera
 			Entity *e = ents->create(10);
 			TransformComponent &t = e->value<TransformComponent>();
-			t.position = vec3(0, 5, 7);
-			t.orientation = quat(degs(-10), degs(), degs());
+			t.position = Vec3(0, 5, 7);
+			t.orientation = Quat(Degs(-10), Degs(), Degs());
 			CameraComponent &c = e->value<CameraComponent>();
 			c.near = 0.1;
 			c.far = 1000;

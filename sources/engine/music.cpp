@@ -27,11 +27,11 @@ void init()
 	{ // camera
 		Entity *e = ents->create(1);
 		TransformComponent &t = e->value<TransformComponent>();
-		t.position = vec3(0, 1.7, 0);
+		t.position = Vec3(0, 1.7, 0);
 		CameraComponent &c = e->value<CameraComponent>();
-		c.ambientColor = vec3(1);
+		c.ambientColor = Vec3(1);
 		c.ambientIntensity = 0.2;
-		c.ambientDirectionalColor = vec3(1);
+		c.ambientDirectionalColor = Vec3(1);
 		c.ambientDirectionalIntensity = 0.2;
 		c.near = 0.1;
 		c.far = 500;
@@ -42,12 +42,12 @@ void init()
 	{ // sun
 		Entity *e = ents->createAnonymous();
 		TransformComponent &t = e->value<TransformComponent>();
-		t.orientation = quat(degs(-90), {}, {});
+		t.orientation = Quat(Degs(-90), {}, {});
 		LightComponent &l = e->value<LightComponent>();
 		l.lightType = LightTypeEnum::Directional;
 		ShadowmapComponent &s = e->value<ShadowmapComponent>();
 		s.resolution = 4096;
-		s.worldSize = vec3(200);
+		s.worldSize = Vec3(200);
 	}
 
 	{ // floor
@@ -66,9 +66,9 @@ void init()
 			TransformComponent &t = e->value<TransformComponent>();
 			t.scale = 2;
 			SoundComponent &s = e->value<SoundComponent>();
-			s.name = HashString(string(stringizer() + "cage-tests/music/PurplePlanet/" + *it));
+			s.name = HashString(String(Stringizer() + "cage-tests/music/PurplePlanet/" + *it));
 			RenderComponent &r = e->value<RenderComponent>();
-			r.color = vec3(1);
+			r.color = Vec3(1);
 			r.object = HashString("scenes/common/lightbulb.obj");
 			LightComponent &l = e->value<LightComponent>();
 			l.intensity = 2;
@@ -78,7 +78,7 @@ void init()
 			TransformComponent &t = e->value<TransformComponent>();
 			t.scale = 0.5;
 			TextComponent &l = e->value<TextComponent>();
-			string n = *it;
+			String n = *it;
 			l.value = split(n, ".");
 		}
 	}
@@ -88,35 +88,35 @@ void update()
 {
 	EntityManager *ents = engineEntities();
 
-	const vec3 cameraPos = [&]() {
+	const Vec3 cameraPos = [&]() {
 		Entity *e = ents->get(1);
 		TransformComponent &t = e->value<TransformComponent>();
 		return t.position;
 	}();
 
-	vec3 positions[] = {
-		vec3(-100, 1, -100),
-		vec3(0, 1, -100),
-		vec3(100, 1, -100),
-		vec3(-100, 1, 0),
-		vec3(100, 2, 0),
-		vec3(0, 1, 100),
+	Vec3 positions[] = {
+		Vec3(-100, 1, -100),
+		Vec3(0, 1, -100),
+		Vec3(100, 1, -100),
+		Vec3(-100, 1, 0),
+		Vec3(100, 2, 0),
+		Vec3(0, 1, 100),
 	};
 
 	{
 		const uint64 t = engineControlTime();
 
-		rads a = rads(t * 3e-7);
-		real r = 10;
-		positions[3] = vec3(positions[3][0] + sin(a) * r, positions[3][1], positions[3][2] + cos(a) * r);
+		Rads a = Rads(t * 3e-7);
+		Real r = 10;
+		positions[3] = Vec3(positions[3][0] + sin(a) * r, positions[3][1], positions[3][2] + cos(a) * r);
 
-		a = rads(t * 5e-7);
+		a = Rads(t * 5e-7);
 		r = 2;
-		positions[4] = vec3(positions[4][0], positions[4][1] + sin(a) * r, positions[4][2] + cos(a) * r);
+		positions[4] = Vec3(positions[4][0], positions[4][1] + sin(a) * r, positions[4][2] + cos(a) * r);
 
-		a = rads(t * 2e-7);
+		a = Rads(t * 2e-7);
 		r = 20;
-		positions[5] = vec3(positions[5][0] + cos(a) * r, positions[5][1], positions[5][2]);
+		positions[5] = Vec3(positions[5][0] + cos(a) * r, positions[5][1], positions[5][2]);
 	}
 
 	for (auto it : enumerate(positions))
@@ -129,9 +129,9 @@ void update()
 		{
 			Entity *e = ents->get(numeric_cast<uint32>(it.index) + 200);
 			TransformComponent &t = e->value<TransformComponent>();
-			t.position = *it + vec3(0, 0.25, 0);
+			t.position = *it + Vec3(0, 0.25, 0);
 			if (distance(cameraPos, t.position) > 0.1)
-				t.orientation = quat(t.position - cameraPos, vec3(0, 1, 0));
+				t.orientation = Quat(t.position - cameraPos, Vec3(0, 1, 0));
 		}
 	}
 }

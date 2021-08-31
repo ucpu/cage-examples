@@ -26,7 +26,7 @@ void update()
 	{ // rotate the material plane
 		Entity *e = ents->get(1);
 		TransformComponent &t = e->value<TransformComponent>();
-		t.orientation = quat(degs(), degs(1), degs()) * t.orientation;
+		t.orientation = Quat(Degs(), Degs(1), Degs()) * t.orientation;
 	}
 }
 
@@ -59,7 +59,7 @@ int main(int argc, char *args[])
 			Entity *e = ents->create(1);
 			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/material/plane.obj");
-			r.color = vec3(255, 226, 155) / 255;
+			r.color = Vec3(255, 226, 155) / 255;
 			TransformComponent &t = e->value<TransformComponent>();
 			t.scale = 5;
 		}
@@ -67,22 +67,22 @@ int main(int argc, char *args[])
 			Entity *e = ents->create(2);
 			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Directional;
-			l.color = vec3(1);
+			l.color = Vec3(1);
 			l.intensity = 3;
 			TransformComponent &t = e->value<TransformComponent>();
-			t.orientation = quat(degs(-30), degs(180), degs());
+			t.orientation = Quat(Degs(-30), Degs(180), Degs());
 		}
 		{ // camera
 			Entity *e = ents->create(3);
 			CameraComponent &c = e->value<CameraComponent>();
-			c.ambientColor = vec3(1);
+			c.ambientColor = Vec3(1);
 			c.ambientIntensity = 0.01;
 			c.near = 0.1;
 			c.far = 100;
 			c.effects = CameraEffectsFlags::Default;
 			TransformComponent &t = e->value<TransformComponent>();
-			t.position = vec3(0, 3, 10);
-			t.orientation = quat(degs(-10), degs(), degs());
+			t.position = Vec3(0, 3, 10);
+			t.orientation = Quat(Degs(-10), Degs(), Degs());
 		}
 
 		Holder<FpsCamera> fpsCamera = newFpsCamera(ents->get(3));

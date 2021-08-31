@@ -20,7 +20,7 @@ public:
 			GuiLayoutLineComponent &ll = panel->value<GuiLayoutLineComponent>();
 			ll.vertical = true;
 			GuiScrollbarsComponent &sc = panel->value<GuiScrollbarsComponent>();
-			sc.alignment = vec2(0.5, 0);
+			sc.alignment = Vec2(0.5, 0);
 		}
 
 		for (uint32 i = 0; i < 300; i++)
@@ -32,7 +32,7 @@ public:
 			GuiLabelComponent &label = e->value<GuiLabelComponent>();
 			GuiTextComponent &text = e->value<GuiTextComponent>();
 			text.assetName = HashString("cage-tests/gui/utf8test.textpack");
-			text.textName = HashString(string(stringizer() + "utf8test/" + i));
+			text.textName = HashString(String(Stringizer() + "utf8test/" + i));
 			GuiTextFormatComponent &format = e->value<GuiTextFormatComponent>();
 			format.font = HashString("cage-tests/gui/DroidSansMono.ttf");
 		}

@@ -270,7 +270,7 @@ bool update()
 	return false;
 }
 
-Entity *genInputFloat(Entity *table, sint32 &childIndex, uint32 nameBase, const string &labelText, real rangeMin, real rangeMax, real step, real current)
+Entity *genInputFloat(Entity *table, sint32 &childIndex, uint32 nameBase, const String &labelText, Real rangeMin, Real rangeMax, Real step, Real current)
 {
 	EntityManager *ents = engineGui()->entities();
 	{
@@ -292,12 +292,12 @@ Entity *genInputFloat(Entity *table, sint32 &childIndex, uint32 nameBase, const 
 		in.min.f = rangeMin;
 		in.max.f = rangeMax;
 		in.step.f = step;
-		in.value = stringizer() + current;
+		in.value = Stringizer() + current;
 		return e;
 	}
 }
 
-Entity *genInputInt(Entity *table, sint32 &childIndex, uint32 nameBase, const string &labelText, sint32 rangeMin, sint32 rangeMax, sint32 step, sint32 current)
+Entity *genInputInt(Entity *table, sint32 &childIndex, uint32 nameBase, const String &labelText, sint32 rangeMin, sint32 rangeMax, sint32 step, sint32 current)
 {
 	Entity *e = genInputFloat(table, childIndex, nameBase, labelText, 0, 0, 0, 0);
 	GuiInputComponent &in = e->value<GuiInputComponent>();
@@ -305,7 +305,7 @@ Entity *genInputInt(Entity *table, sint32 &childIndex, uint32 nameBase, const st
 	in.min.i = rangeMin;
 	in.max.i = rangeMax;
 	in.step.i = step;
-	in.value = stringizer() + current;
+	in.value = Stringizer() + current;
 	return e;
 }
 
@@ -624,12 +624,12 @@ int main(int argc, char *args[])
 		{ // camera
 			Entity *e = ents->create(1);
 			TransformComponent &t = e->value<TransformComponent>();
-			t.position = vec3(11.5, 1, -1);
-			t.orientation = quat(degs(10), degs(110), degs());
+			t.position = Vec3(11.5, 1, -1);
+			t.orientation = Quat(Degs(10), Degs(110), Degs());
 			CameraComponent &c = e->value<CameraComponent>();
-			c.ambientColor = vec3(1);
+			c.ambientColor = Vec3(1);
 			c.ambientIntensity = 0.01;
-			c.ambientDirectionalColor = vec3(1);
+			c.ambientDirectionalColor = Vec3(1);
 			c.ambientDirectionalIntensity = 0.03;
 			c.near = 0.1;
 			c.far = 100;
@@ -638,22 +638,22 @@ int main(int argc, char *args[])
 		{ // sun
 			Entity *e = ents->create(2);
 			TransformComponent &t = e->value<TransformComponent>();
-			t.position = vec3(0, 5, 0);
-			t.orientation = quat(degs(-75), degs(-120), degs());
+			t.position = Vec3(0, 5, 0);
+			t.orientation = Quat(Degs(-75), Degs(-120), Degs());
 			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Directional;
-			l.color = vec3(1);
+			l.color = Vec3(1);
 			l.intensity = 3;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 2048;
-			s.worldSize = vec3(30);
+			s.worldSize = Vec3(30);
 		}
 		{ // floor
 			Entity *e = ents->create(10);
 			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("scenes/common/ground.obj");
 			TransformComponent &t = e->value<TransformComponent>();
-			t.position = vec3(0, -1.264425, 0);
+			t.position = Vec3(0, -1.264425, 0);
 		}
 		{ // sponza
 			Entity *e = ents->create(11);

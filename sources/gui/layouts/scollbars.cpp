@@ -13,7 +13,7 @@ public:
 			Entity *e = ents->createUnique();
 			an = e->name();
 			GuiScrollbarsComponent &sc = e->value<GuiScrollbarsComponent>();
-			sc.alignment = vec2(0.5, 0.5);
+			sc.alignment = Vec2(0.5, 0.5);
 		}
 
 		uint32 bn = 0;
@@ -26,9 +26,9 @@ public:
 			GuiTextComponent &text = e->value<GuiTextComponent>();
 			text.value = "Outer";
 			GuiExplicitSizeComponent &size = e->value<GuiExplicitSizeComponent>();
-			size.size = vec2(400, 400);
+			size.size = Vec2(400, 400);
 			GuiScrollbarsComponent &sc = e->value<GuiScrollbarsComponent>();
-			sc.alignment = vec2(0.5, 0.5);
+			sc.alignment = Vec2(0.5, 0.5);
 		}
 
 		uint32 cn = 0;
@@ -50,7 +50,7 @@ public:
 			GuiImageComponent &img = e->value<GuiImageComponent>();
 			img.textureName = HashString("cage/texture/helper.jpg");
 			GuiExplicitSizeComponent &size = e->value<GuiExplicitSizeComponent>();
-			size.size = vec2(500, 500);
+			size.size = Vec2(500, 500);
 		}
 	}
 

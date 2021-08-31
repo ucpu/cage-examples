@@ -8,20 +8,20 @@ constexpr uint32 MetallicSteps = 12;
 
 int main(int argc, const char *args[])
 {
-	const string basePath = pathJoin(pathSearchTowardsRoot("data", PathTypeFlags::Directory), "data/scenes/material");
-	const string scenesPath = pathJoin(pathSearchTowardsRoot("scenes-maps", PathTypeFlags::Directory), "material.txt");
+	const String basePath = pathJoin(pathSearchTowardsRoot("data", PathTypeFlags::Directory), "data/scenes/material");
+	const String scenesPath = pathJoin(pathSearchTowardsRoot("scenes-maps", PathTypeFlags::Directory), "material.txt");
 
 	Holder<File> fa = writeFile(pathJoin(basePath, "material.assets"));
-	fa->writeLine(stringizer() + "[]");
-	fa->writeLine(stringizer() + "scheme = pack");
-	fa->writeLine(stringizer() + "material.pack");
+	fa->writeLine(Stringizer() + "[]");
+	fa->writeLine(Stringizer() + "scheme = pack");
+	fa->writeLine(Stringizer() + "material.pack");
 	fa->writeLine("");
-	fa->writeLine(stringizer() + "[]");
-	fa->writeLine(stringizer() + "scheme = model");
-	fa->writeLine(stringizer() + "uvs = false");
+	fa->writeLine(Stringizer() + "[]");
+	fa->writeLine(Stringizer() + "scheme = model");
+	fa->writeLine(Stringizer() + "uvs = false");
 
 	Holder<File> fp = writeFile(pathJoin(basePath, "material.pack"));
-	fp->writeLine(stringizer() + "[]");
+	fp->writeLine(Stringizer() + "[]");
 
 	Holder<File> fs = writeFile(scenesPath);
 	fs->writeLine("scenes/material/material.pack");
@@ -35,7 +35,7 @@ int main(int argc, const char *args[])
 	{
 		for (uint32 m = 0; m < MetallicSteps; m++)
 		{
-			const string mat = stringizer() + "mat_" + r + "_" + m;
+			const String mat = Stringizer() + "mat_" + r + "_" + m;
 
 			{
 				Holder<Mesh> msh = newMeshSphereRegular(1, 0.2);
@@ -46,18 +46,18 @@ int main(int argc, const char *args[])
 
 			{
 				Holder<File> fc = writeFile(pathJoin(basePath, mat + ".obj_DefaultMaterial.cpm"));
-				fc->writeLine(stringizer() + "[base]");
-				fc->writeLine(stringizer() + "albedo = 0.95, 0.7, 0.2");
-				fc->writeLine(stringizer() + "roughness = " + ((r + 0.5) / RoughnessSteps));
-				fc->writeLine(stringizer() + "metallic = " + ((m + 0.5) / MetallicSteps));
+				fc->writeLine(Stringizer() + "[base]");
+				fc->writeLine(Stringizer() + "albedo = 0.95, 0.7, 0.2");
+				fc->writeLine(Stringizer() + "roughness = " + ((r + 0.5) / RoughnessSteps));
+				fc->writeLine(Stringizer() + "metallic = " + ((m + 0.5) / MetallicSteps));
 			}
 
-			fa->writeLine(stringizer() + mat + ".obj");
-			fp->writeLine(stringizer() + mat + ".obj");
+			fa->writeLine(Stringizer() + mat + ".obj");
+			fp->writeLine(Stringizer() + mat + ".obj");
 
-			fs->writeLine(stringizer() + "scenes/material/" + mat + ".obj");
-			fs->writeLine(stringizer() + (sint32)(r * 3 - RoughnessSteps * 3 / 2) + " 0 " + (sint32)(m * 3 - MetallicSteps * 3 / 2));
-			fs->writeLine(stringizer() + "0");
+			fs->writeLine(Stringizer() + "scenes/material/" + mat + ".obj");
+			fs->writeLine(Stringizer() + (sint32)(r * 3 - RoughnessSteps * 3 / 2) + " 0 " + (sint32)(m * 3 - MetallicSteps * 3 / 2));
+			fs->writeLine(Stringizer() + "0");
 			fs->writeLine("");
 		}
 	}

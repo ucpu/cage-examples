@@ -85,7 +85,7 @@ int main(int argc, char *args[])
 			speaker->start();
 
 			// show the window
-			ivec2 res(600, 600);
+			Vec2i res(600, 600);
 			window->windowedSize(res);
 			window->setWindowed();
 

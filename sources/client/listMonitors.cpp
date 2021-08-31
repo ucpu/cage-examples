@@ -9,11 +9,11 @@
 
 using namespace cage;
 
-void testScreen(const string &screenId, const ivec2 &resolution, uint32 frequency)
+void testScreen(const String &screenId, const Vec2i &resolution, uint32 frequency)
 {
-	CAGE_LOG(SeverityEnum::Info, "test", stringizer() + "testing monitor: '" + screenId + "', resolution: " + resolution[0] + " * " + resolution[1] + ", frequency: " + frequency);
+	CAGE_LOG(SeverityEnum::Info, "test", Stringizer() + "testing monitor: '" + screenId + "', resolution: " + resolution[0] + " * " + resolution[1] + ", frequency: " + frequency);
 	{
-		vec3 color = randomChance3() * 0.5 + 0.5;
+		Vec3 color = randomChance3() * 0.5 + 0.5;
 		Holder<Window> w = newWindow();
 		w->setFullscreen(resolution, frequency, screenId);
 		w->title("cage test monitors");
@@ -45,9 +45,9 @@ int main(int argc, char *args[])
 		uint32 defaultIndex = list->defaultDevice();
 		for (const ScreenDevice *d : list->devices())
 		{
-			CAGE_LOG(SeverityEnum::Info, "listing", stringizer() + "monitor" + (defaultIndex-- == 0 ? ", primary" : "") + ":");
-			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "monitor id: '" + d->id() + "'");
-			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "monitor name: '" + d->name() + "'");
+			CAGE_LOG(SeverityEnum::Info, "listing", Stringizer() + "monitor" + (defaultIndex-- == 0 ? ", primary" : "") + ":");
+			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", Stringizer() + "monitor id: '" + d->id() + "'");
+			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", Stringizer() + "monitor name: '" + d->name() + "'");
 
 			ScreenMode testmode;
 
@@ -56,10 +56,10 @@ int main(int argc, char *args[])
 			{
 				if (currentIndex == 0)
 					testmode = m;
-				CAGE_LOG(SeverityEnum::Info, "listing", stringizer() + "video mode " + (currentIndex-- == 0 ? ", current" : "") + ":");
-				ivec2 r = m.resolution;
-				CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "resolution: " + r[0] + "*" + r[1]);
-				CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "frequency: " + m.frequency);
+				CAGE_LOG(SeverityEnum::Info, "listing", Stringizer() + "video mode " + (currentIndex-- == 0 ? ", current" : "") + ":");
+				Vec2i r = m.resolution;
+				CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", Stringizer() + "resolution: " + r[0] + "*" + r[1]);
+				CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", Stringizer() + "frequency: " + m.frequency);
 			}
 
 			testScreen(d->id(), testmode.resolution, testmode.frequency);

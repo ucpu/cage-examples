@@ -56,15 +56,15 @@ bool update()
 		static Holder<NoiseFunction> noise2 = newNoiseFunction(noiseInit(13));
 		Entity *e = ents->get(10);
 		TransformComponent &t = e->value<TransformComponent>();
-		t.position = vec3(noise1->evaluate(engineControlTime()) * 2, noise2->evaluate(engineControlTime()) * 2, 10);
+		t.position = Vec3(noise1->evaluate(engineControlTime()) * 2, noise2->evaluate(engineControlTime()) * 2, 10);
 		TextComponent &r = e->value<TextComponent>();
-		r.value = stringizer() + t.position[0] + "|" + t.position[1] + "|" + t.position[2];
+		r.value = Stringizer() + t.position[0] + "|" + t.position[1] + "|" + t.position[2];
 	}
 
 	{
 		Entity *e = ents->get(11);
 		TransformComponent &t = e->value<TransformComponent>();
-		t.orientation = quat(degs(), degs(engineControlTime() * 1e-5), degs());
+		t.orientation = Quat(Degs(), Degs(engineControlTime() * 1e-5), Degs());
 	}
 
 	return false;
@@ -98,15 +98,15 @@ int main(int argc, char *args[])
 			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/skeletons/floor/floor.obj");
 			TransformComponent &t = e->value<TransformComponent>();
-			t.position = vec3(0, -5, 0);
+			t.position = Vec3(0, -5, 0);
 		}
 		{ // sun
 			Entity *e = ents->create(2);
 			TransformComponent &t = e->value<TransformComponent>();
-			t.orientation = quat(degs(-50), degs(-42 + 180), degs());
+			t.orientation = Quat(Degs(-50), Degs(-42 + 180), Degs());
 			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Directional;
-			l.color = vec3(1);
+			l.color = Vec3(1);
 			l.intensity = 3;
 			
 			//s.resolution = 2048;
@@ -115,9 +115,9 @@ int main(int argc, char *args[])
 		{ // camera
 			Entity *e = ents->create(3);
 			TransformComponent &t = e->value<TransformComponent>();
-			t.orientation = quat(degs(-10), degs(), degs());
+			t.orientation = Quat(Degs(-10), Degs(), Degs());
 			CameraComponent &c = e->value<CameraComponent>();
-			c.ambientColor = vec3(1);
+			c.ambientColor = Vec3(1);
 			c.ambientIntensity = 0.02;
 			c.near = 0.1;
 			c.far = 100;
@@ -129,7 +129,7 @@ int main(int argc, char *args[])
 			r.assetName = HashString("cage-tests/texts/texts.textpack");
 			r.textName = HashString("short/hello");
 			TransformComponent &t = e->value<TransformComponent>();
-			t.position = vec3(0, 0, -10);
+			t.position = Vec3(0, 0, -10);
 			t.scale = 3;
 		}
 		{ // text long a
@@ -137,20 +137,20 @@ int main(int argc, char *args[])
 			TextComponent &r = e->value<TextComponent>();
 			r.assetName = HashString("cage-tests/texts/texts.textpack");
 			r.textName = HashString("long/a");
-			r.color = vec3(1, 0, 0);
+			r.color = Vec3(1, 0, 0);
 			TransformComponent &t = e->value<TransformComponent>();
-			t.position = vec3(-10, 0, 0);
-			t.orientation = quat(degs(), degs(90), degs());
+			t.position = Vec3(-10, 0, 0);
+			t.orientation = Quat(Degs(), Degs(90), Degs());
 		}
 		{ // text long b
 			Entity *e = ents->createAnonymous();
 			TextComponent &r = e->value<TextComponent>();
 			r.assetName = HashString("cage-tests/texts/texts.textpack");
 			r.textName = HashString("long/b");
-			r.color = vec3(0, 0, 1);
+			r.color = Vec3(0, 0, 1);
 			TransformComponent &t = e->value<TransformComponent>();
-			t.position = vec3(10, 0, 0);
-			t.orientation = quat(degs(), degs(-90), degs());
+			t.position = Vec3(10, 0, 0);
+			t.orientation = Quat(Degs(), Degs(-90), Degs());
 		}
 		{ // text params
 			Entity *e = ents->create(10);
@@ -158,8 +158,8 @@ int main(int argc, char *args[])
 			r.assetName = HashString("cage-tests/texts/texts.textpack");
 			r.textName = HashString("params/a");
 			TransformComponent &t = e->value<TransformComponent>();
-			t.position = vec3(0, 0, 10);
-			t.orientation = quat(degs(), degs(180), degs());
+			t.position = Vec3(0, 0, 10);
+			t.orientation = Quat(Degs(), Degs(180), Degs());
 		}
 		{ // fonts
 			for (uint32 i = 0; i < fontsCount; i++)
@@ -169,8 +169,8 @@ int main(int argc, char *args[])
 				r.value = labelTexts[i];
 				r.font = HashString(fontNames[i]);
 				TransformComponent &t = e->value<TransformComponent>();
-				t.position = vec3(0, -3, 2.0 * i - fontsCount);
-				t.orientation = quat(degs(-90), degs(), degs());
+				t.position = Vec3(0, -3, 2.0 * i - fontsCount);
+				t.orientation = Quat(Degs(-90), Degs(), Degs());
 			}
 		}
 

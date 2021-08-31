@@ -19,13 +19,13 @@ void synthesizeTone(const SoundCallbackData &data)
 	for (uint32 sampleIndex = 0; sampleIndex < data.frames; sampleIndex++)
 	{
 		double angle = sampleIndex * step + offset;
-		real sample = std::sin(angle);
+		Real sample = std::sin(angle);
 		for (uint32 ch = 0; ch < data.channels; ch++)
 			data.buffer[sampleIndex * data.channels + ch] = sample.value;
 	}
 }
 
-void testDevice(const string &deviceId, uint32 sampleRate)
+void testDevice(const String &deviceId, uint32 sampleRate)
 {
 	CAGE_LOG(SeverityEnum::Info, "listing", "-----------------");
 
@@ -33,9 +33,9 @@ void testDevice(const string &deviceId, uint32 sampleRate)
 	cnf.deviceId = deviceId;
 	cnf.sampleRate = sampleRate;
 	Holder<Speaker> speaker = newSpeaker(cnf, Delegate<void(const SoundCallbackData &)>().bind<&synthesizeTone>());
-	CAGE_LOG(SeverityEnum::Info, "speaker", stringizer() + "channels: " + speaker->channels());
-	CAGE_LOG(SeverityEnum::Info, "speaker", stringizer() + "sample rate: " + speaker->sampleRate());
-	CAGE_LOG(SeverityEnum::Info, "speaker", stringizer() + "latency: " + speaker->latency());
+	CAGE_LOG(SeverityEnum::Info, "speaker", Stringizer() + "channels: " + speaker->channels());
+	CAGE_LOG(SeverityEnum::Info, "speaker", Stringizer() + "sample rate: " + speaker->sampleRate());
+	CAGE_LOG(SeverityEnum::Info, "speaker", Stringizer() + "latency: " + speaker->latency());
 	speaker->start();
 
 	CAGE_LOG(SeverityEnum::Info, "speaker", "play start");
@@ -64,12 +64,12 @@ int main(int argc, char *args[])
 		for (const SpeakerDevice &d : list->devices())
 		{
 			CAGE_LOG(SeverityEnum::Info, "listing", "-------------------------------------");
-			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "id: '" + d.id + "'");
-			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "name: '" + d.name + "'");
-			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "group: '" + d.group + "'");
-			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "vendor: '" + d.vendor + "'");
-			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "channels: " + d.channels);
-			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", stringizer() + "sample rate min: " + d.minSamplerate + ", max: " + d.maxSamplerate + ", default: " + d.defaultSamplerate);
+			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", Stringizer() + "id: '" + d.id + "'");
+			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", Stringizer() + "name: '" + d.name + "'");
+			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", Stringizer() + "group: '" + d.group + "'");
+			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", Stringizer() + "vendor: '" + d.vendor + "'");
+			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", Stringizer() + "channels: " + d.channels);
+			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", Stringizer() + "sample rate min: " + d.minSamplerate + ", max: " + d.maxSamplerate + ", default: " + d.defaultSamplerate);
 			if (d.available)
 			{
 				testDevice(d.id, 44100);

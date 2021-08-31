@@ -29,7 +29,7 @@ bool windowClose()
 bool graphicsInitialize()
 {
 	Holder<Texture> fabScreenTex = newTexture();
-	fabScreenTex->image2d(ivec2(800, 500), GL_RGB16F);
+	fabScreenTex->image2d(Vec2i(800, 500), GL_RGB16F);
 	fabScreenTex->filters(GL_LINEAR, GL_LINEAR, 16);
 	fabScreenTex->wraps(GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);
 	fabScreenTex->setDebugName("fabScreenTex");
@@ -54,7 +54,7 @@ bool update()
 
 	TransformComponent &t1 = engineEntities()->get(3)->value<TransformComponent>();
 	TransformComponent &t2 = engineEntities()->get(4)->value<TransformComponent>();
-	t1.orientation = t2.orientation = quat(degs(-25), degs(sin(degs(time * 3e-5)) * 20 + 125), degs());
+	t1.orientation = t2.orientation = Quat(Degs(-25), Degs(sin(Degs(time * 3e-5)) * 20 + 125), Degs());
 
 	return false;
 }
@@ -96,11 +96,11 @@ int main(int argc, char *args[])
 		{ // eye
 			Entity *e = eye = ents->create(1);
 			TransformComponent &t = e->value<TransformComponent>();
-			t.position = vec3(0, 1.7, 0);
+			t.position = Vec3(0, 1.7, 0);
 			CameraComponent &c = e->value<CameraComponent>();
-			c.ambientColor = vec3(1);
+			c.ambientColor = Vec3(1);
 			c.ambientIntensity = 0.3;
-			c.ambientDirectionalColor = vec3(1);
+			c.ambientDirectionalColor = Vec3(1);
 			c.ambientDirectionalIntensity = 0.5;
 			c.near = 0.2;
 			c.far = 100;
@@ -114,8 +114,8 @@ int main(int argc, char *args[])
 		{ // camera stand
 			Entity *e = ents->create(2);
 			TransformComponent &t = e->value<TransformComponent>();
-			t.position = vec3(2.5, 2.5, -1.3);
-			t.orientation = quat(degs(), degs(125), degs());
+			t.position = Vec3(2.5, 2.5, -1.3);
+			t.orientation = Quat(Degs(), Degs(125), Degs());
 			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/room/camera.obj?camera_stand");
 			r.sceneMask = 1;
@@ -123,7 +123,7 @@ int main(int argc, char *args[])
 		{ // camera lens
 			Entity *e = ents->create(3);
 			TransformComponent &t = e->value<TransformComponent>();
-			t.position = vec3(2.5, 2.5, -1.3);
+			t.position = Vec3(2.5, 2.5, -1.3);
 			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/room/camera.obj?lens");
 			r.sceneMask = 1;
@@ -131,14 +131,14 @@ int main(int argc, char *args[])
 		{ // camera body
 			Entity *e = ents->create(4);
 			TransformComponent &t = e->value<TransformComponent>();
-			t.position = vec3(2.5, 2.5, -1.3);
+			t.position = Vec3(2.5, 2.5, -1.3);
 			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/room/camera.obj?camera");
 			r.sceneMask = 1;
 			CameraComponent &c = e->value<CameraComponent>();
-			c.ambientColor = vec3(1);
+			c.ambientColor = Vec3(1);
 			c.ambientIntensity = 0.3;
-			c.ambientDirectionalColor = vec3(1);
+			c.ambientDirectionalColor = Vec3(1);
 			c.ambientDirectionalIntensity = 0.5;
 			c.near = 0.2;
 			c.far = 100;

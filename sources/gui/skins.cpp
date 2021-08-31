@@ -16,12 +16,12 @@ public:
 			animateOption = combo.selected;
 		}
 
-		static real offset = randomChance() * 1000;
-		real t = applicationTime() / 5e6f + offset;
+		static Real offset = randomChance() * 1000;
+		Real t = applicationTime() / 5e6f + offset;
 
-		vec4 a4;
+		Vec4 a4;
 		for (uint32 i = 0; i < 4; i++)
-			a4[i] = (steeper(rads(t) + rads::Full() * real(i) / 4) * 0.5 + 0.5) * 20;
+			a4[i] = (steeper(Rads(t) + Rads::Full() * Real(i) / 4) * 0.5 + 0.5) * 20;
 
 		GuiSkinConfig skin;
 		switch (animateOption)
@@ -97,7 +97,7 @@ public:
 			//panel->remove(gui()->components().LayoutTable);
 			GuiLayoutLineComponent &ll = panel->value<GuiLayoutLineComponent>();
 			GuiScrollbarsComponent &sc = panel->value<GuiScrollbarsComponent>();
-			sc.alignment = vec2(0.5, 0);
+			sc.alignment = Vec2(0.5, 0);
 		}
 		{ // left panel
 			Entity *panel = ents->create(4);
@@ -197,7 +197,7 @@ public:
 					p.parent = e->name();
 					p.order = i;
 					GuiTextComponent &text = ee->value<GuiTextComponent>();
-					text.value = stringizer() + i;
+					text.value = Stringizer() + i;
 				}
 			}
 			{ // slider

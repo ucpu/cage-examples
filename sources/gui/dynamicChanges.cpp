@@ -21,7 +21,7 @@ public:
 			p.parent = parent;
 			p.order = i;
 			GuiTextComponent &t = e->value<GuiTextComponent>();
-			t.value = stringizer() + e->name();
+			t.value = Stringizer() + e->name();
 		}
 	}
 
@@ -68,7 +68,7 @@ public:
 			{
 				GuiButtonComponent &b = e->value<GuiButtonComponent>();
 				GuiTextComponent &t = e->value<GuiTextComponent>();
-				t.value = stringizer() + e->name();
+				t.value = Stringizer() + e->name();
 			} break;
 			case 1:
 			{
@@ -78,7 +78,7 @@ public:
 			case 2:
 			{
 				GuiColorPickerComponent &cp = e->value<GuiColorPickerComponent>();
-				cp.color = vec3(randomRange3(0, 1));
+				cp.color = Vec3(randomRange3(0, 1));
 			} break;
 			case 3:
 			{
@@ -88,13 +88,13 @@ public:
 			case 4:
 			{
 				GuiInputComponent &i = e->value<GuiInputComponent>();
-				i.value = stringizer() + e->name();
+				i.value = Stringizer() + e->name();
 			} break;
 			case 5:
 			{
 				GuiLabelComponent &l = e->value<GuiLabelComponent>();
 				GuiTextComponent &t = e->value<GuiTextComponent>();
-				t.value = stringizer() + e->name();
+				t.value = Stringizer() + e->name();
 			} break;
 			case 6:
 			{
@@ -105,7 +105,7 @@ public:
 			{
 				GuiPanelComponent &p = e->value<GuiPanelComponent>();
 				GuiTextComponent &t = e->value<GuiTextComponent>();
-				t.value = stringizer() + e->name();
+				t.value = Stringizer() + e->name();
 			} break;
 			case 8:
 			{
@@ -126,7 +126,7 @@ public:
 			{
 				GuiSpoilerComponent &s = e->value<GuiSpoilerComponent>();
 				GuiTextComponent &t = e->value<GuiTextComponent>();
-				t.value = stringizer() + e->name();
+				t.value = Stringizer() + e->name();
 			} break;
 			case 12:
 			{

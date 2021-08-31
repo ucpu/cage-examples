@@ -34,7 +34,7 @@ public:
 				p.order = s.inverse;
 				GuiButtonComponent &l = e->value<GuiButtonComponent>();
 				GuiTextComponent &t = e->value<GuiTextComponent>();
-				t.value = stringizer() + "Item: " + (depth + 1);
+				t.value = Stringizer() + "Item: " + (depth + 1);
 			}
 			{ // second
 				Entity *e = makeSplitterRec(depth + 1);

@@ -18,34 +18,34 @@ namespace
 	static const uint32 pointLightsCount = 50;
 	Entity *pointLights[pointLightsCount];
 
-	std::vector<string> maps;
+	std::vector<String> maps;
 }
 
 void loadMapsList()
 {
-	string root = pathSearchTowardsRoot("scenes-maps", PathTypeFlags::Directory | PathTypeFlags::Archive);
+	String root = pathSearchTowardsRoot("scenes-maps", PathTypeFlags::Directory | PathTypeFlags::Archive);
 	Holder<DirectoryList> list = newDirectoryList(root);
 	while (list->valid())
 	{
 		maps.push_back(pathJoin(root, list->name()));
 		list->next();
 	}
-	CAGE_LOG(SeverityEnum::Info, "scenes", stringizer() + "found " + maps.size() + " maps");
+	CAGE_LOG(SeverityEnum::Info, "scenes", Stringizer() + "found " + maps.size() + " maps");
 }
 
 void sceneReload()
 {
-	CAGE_LOG(SeverityEnum::Info, "scenes", stringizer() + "loading scene index: " + sceneIndexCurrent);
-	string scenePath = maps[sceneIndexCurrent];
-	CAGE_LOG(SeverityEnum::Info, "scenes", stringizer() + "loading scene description from file: '" + scenePath + "'");
-	engineWindow()->title(string() + "scene: " + pathExtractFilename(scenePath));
+	CAGE_LOG(SeverityEnum::Info, "scenes", Stringizer() + "loading scene index: " + sceneIndexCurrent);
+	String scenePath = maps[sceneIndexCurrent];
+	CAGE_LOG(SeverityEnum::Info, "scenes", Stringizer() + "loading scene description from file: '" + scenePath + "'");
+	engineWindow()->title(String() + "scene: " + pathExtractFilename(scenePath));
 	engineEntities()->destroy();
 
 	// load new entities
 	try
 	{
 		Holder<File> f = newFile(scenePath, FileMode(true, false));
-		string name;
+		String name;
 		f->readLine(name);
 		if (sceneHashCurrent)
 			engineAssets()->remove(sceneHashCurrent);
@@ -61,18 +61,18 @@ void sceneReload()
 			rs.object = HashString(name.c_str());
 			if (!rs.object)
 			{
-				CAGE_LOG_THROW(stringizer() + "object: '" + name + "'");
+				CAGE_LOG_THROW(Stringizer() + "object: '" + name + "'");
 				CAGE_THROW_ERROR(Exception, "object has invalid hash");
 			}
 			TransformComponent &ts = e->value<TransformComponent>();
-			string posLine;
+			String posLine;
 			f->readLine(posLine);
-			ts.position = vec3::parse(posLine);
-			string rotLine;
+			ts.position = Vec3::parse(posLine);
+			String rotLine;
 			f->readLine(rotLine);
-			ts.orientation = quat(rads(), rads(toFloat(rotLine)), rads());
+			ts.orientation = Quat(Rads(), Rads(toFloat(rotLine)), Rads());
 		}
-		CAGE_LOG(SeverityEnum::Info, "scenes", stringizer() + "scene contains " + (engineEntities()->group()->count()) + " entities");
+		CAGE_LOG(SeverityEnum::Info, "scenes", Stringizer() + "scene contains " + (engineEntities()->group()->count()) + " entities");
 	}
 	catch (...)
 	{
@@ -82,11 +82,11 @@ void sceneReload()
 	{ // camera
 		Entity *cam = engineEntities()->create(1);
 		TransformComponent &t = cam->value<TransformComponent>();
-		t.position = vec3(0, 10, 30);
+		t.position = Vec3(0, 10, 30);
 		CameraComponent &c = cam->value<CameraComponent>();
-		c.ambientColor = vec3(1);
+		c.ambientColor = Vec3(1);
 		c.ambientIntensity = 0.03;
-		c.ambientDirectionalColor = vec3(1);
+		c.ambientDirectionalColor = Vec3(1);
 		c.ambientDirectionalIntensity = 0.07;
 		c.cameraOrder = 2;
 		c.near = 0.1;
@@ -121,9 +121,9 @@ void sceneReload()
 	{
 		directionalLights[i] = engineEntities()->createAnonymous();
 		TransformComponent &ts = directionalLights[i]->value<TransformComponent>();
-		ts.orientation = quat(degs(randomChance() * -20 - 30), degs(i * 360.0f / (float)directionalLightsCount + randomChance() * 180 / (float)directionalLightsCount), degs());
+		ts.orientation = Quat(Degs(randomChance() * -20 - 30), Degs(i * 360.0f / (float)directionalLightsCount + randomChance() * 180 / (float)directionalLightsCount), Degs());
 		LightComponent &ls = directionalLights[i]->value<LightComponent>();
-		ls.color = vec3(1);
+		ls.color = Vec3(1);
 		ls.intensity = 2.5;
 		ls.lightType = LightTypeEnum::Directional;
 		ShadowmapComponent &ss = directionalLights[i]->value<ShadowmapComponent>();
@@ -135,9 +135,9 @@ void sceneReload()
 	{
 		pointLights[i] = engineEntities()->createAnonymous();
 		TransformComponent &ts = pointLights[i]->value<TransformComponent>();
-		ts.position = (vec3(randomChance(), randomChance(), randomChance()) * 2 - 1) * 15;
+		ts.position = (Vec3(randomChance(), randomChance(), randomChance()) * 2 - 1) * 15;
 		LightComponent &ls = pointLights[i]->value<LightComponent>();
-		ls.color = colorHsvToRgb(vec3(randomChance(), 1, 1));
+		ls.color = colorHsvToRgb(Vec3(randomChance(), 1, 1));
 		ls.lightType = LightTypeEnum::Point;
 		
 		//ss.worldSize = vec3(60);
@@ -183,7 +183,7 @@ bool update()
 	{ // automatic reloading -> used for engine testing
 		static uint64 last = 0;
 		uint64 now = applicationTime();
-		if (now > last + (sin(rads(now) * 2e-7) * 2.5 + 3) * 1000000)
+		if (now > last + (sin(Rads(now) * 2e-7) * 2.5 + 3) * 1000000)
 		{
 			sceneIndexCurrent++;
 			if (sceneIndexCurrent == maps.size())
@@ -255,7 +255,7 @@ void updateInitialize()
 		Entity *a = cage::engineGui()->entities()->createUnique();
 		{ // a
 			GuiScrollbarsComponent &sc = a->value<GuiScrollbarsComponent>();
-			sc.alignment = vec2(0, 1);
+			sc.alignment = Vec2(0, 1);
 		}
 		Entity *e = cage::engineGui()->entities()->create(1);
 		GuiParentComponent &parent = e->value<GuiParentComponent>();
@@ -268,7 +268,7 @@ void updateInitialize()
 		Entity *a = cage::engineGui()->entities()->createUnique();
 		{ // a
 			GuiScrollbarsComponent &sc = a->value<GuiScrollbarsComponent>();
-			sc.alignment = vec2(1, 1);
+			sc.alignment = Vec2(1, 1);
 		}
 		Entity *e = cage::engineGui()->entities()->create(2);
 		GuiParentComponent &parent = e->value<GuiParentComponent>();

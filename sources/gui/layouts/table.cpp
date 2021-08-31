@@ -172,7 +172,7 @@ public:
 				p.parent = o->name();
 				GuiButtonComponent &but = b->value<GuiButtonComponent>();
 				GuiTextComponent &t = b->value<GuiTextComponent>();
-				t.value = stringizer() + "item " + i;
+				t.value = Stringizer() + "item " + i;
 				GuiExplicitSizeComponent &size = b->value<GuiExplicitSizeComponent>();
 				size.size = randomRange2(50, 250);
 			}

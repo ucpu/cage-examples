@@ -117,7 +117,7 @@ int main(int argc, char *args[])
 				for (uint32 i = 0; i < 50; i++)
 					assets->get<AssetSchemeIndexPack, AssetPack>(names[randomRange(0u, count)]);
 			}
-			CAGE_LOG(SeverityEnum::Info, "test", stringizer() + "step " + (step + 1) + "/30 finished");
+			CAGE_LOG(SeverityEnum::Info, "test", Stringizer() + "step " + (step + 1) + "/30 finished");
 		}
 
 		// clean up

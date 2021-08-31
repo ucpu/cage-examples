@@ -9,7 +9,7 @@ const char *fontNames[] = {
 	"cage-tests/gui/asimov.otf",
 	"cage/font/ubuntu/Ubuntu-R.ttf",
 };
-const string labelTexts[] = {
+const String labelTexts[] = {
 	"Droid Sans Mono",
 	"Immortal",
 	"Roboto",
@@ -27,13 +27,13 @@ public:
 	void update() override
 	{
 		EntityManager *ents = engineGui()->entities();
-		static real offset = randomChance() * 1000;
-		real t = applicationTime() / 2e7f + offset;
+		static Real offset = randomChance() * 1000;
+		Real t = applicationTime() / 2e7f + offset;
 		for (uint32 i = 0; i < fontsCount; i++)
 		{
 			Entity * e = ents->get(100 + i);
 			GuiTextFormatComponent &format = e->value<GuiTextFormatComponent>();
-			format.size = (steeper(rads(t) + rads::Full() * real(i) / fontsCount) * 0.5 + 0.5) * 80 + 10;
+			format.size = (steeper(Rads(t) + Rads::Full() * Real(i) / fontsCount) * 0.5 + 0.5) * 80 + 10;
 		}
 	}
 
@@ -45,7 +45,7 @@ public:
 		{
 			GuiPanelComponent &gp = panel->value<GuiPanelComponent>();
 			GuiScrollbarsComponent &sc = panel->value<GuiScrollbarsComponent>();
-			sc.alignment = vec2(0.5, 0.5);
+			sc.alignment = Vec2(0.5, 0.5);
 			GuiLayoutLineComponent &ll = panel->value<GuiLayoutLineComponent>();
 			ll.vertical = true;
 		}
@@ -63,7 +63,7 @@ public:
 			format.font = HashString(fontNames[i]);
 			format.align = TextAlignEnum::Center;
 			format.lineSpacing = 1;
-			format.color = colorHsvToRgb(vec3(randomChance(), 1, 1));
+			format.color = colorHsvToRgb(Vec3(randomChance(), 1, 1));
 		}
 	}
 

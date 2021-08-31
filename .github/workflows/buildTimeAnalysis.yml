@@ -15,6 +15,7 @@ jobs:
     steps:
     - name: Install packages
       run: |
+        sudo apt-get update
         sudo apt-get install -y xorg-dev nasm clang-9
 
     - name: Versions

@@ -41,7 +41,7 @@ class guiTestImpl : public guiTestClass
 				p.parent = e->name();
 				p.order = index++;
 				GuiTextComponent &t = o->value<GuiTextComponent>();
-				t.value = stringizer() + "option " + i;
+				t.value = Stringizer() + "option " + i;
 			}
 		}
 		{ // preselected
@@ -61,7 +61,7 @@ class guiTestImpl : public guiTestClass
 				p.parent = e->name();
 				p.order = index++;
 				GuiTextComponent &t = o->value<GuiTextComponent>();
-				t.value = stringizer() + "option " + i;
+				t.value = Stringizer() + "option " + i;
 			}
 		}
 	}

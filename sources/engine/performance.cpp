@@ -22,7 +22,7 @@ Holder<FpsCamera> cameraCtrl;
 Holder<ThreadPool> updateThreads;
 Holder<NoiseFunction> noise;
 uint32 boxesCount;
-real cameraRange;
+Real cameraRange;
 bool shadowEnabled;
 std::atomic<bool> regenerate;
 
@@ -48,7 +48,7 @@ void updateBoxes(uint32 thrIndex, uint32 thrCount)
 	{
 		Entity *e = boxesEntities[i];
 		TransformComponent &t = e->value<TransformComponent>();
-		t.position[1] = noise->evaluate(vec3(vec2(t.position[0], t.position[2]) * 0.15, time * 5e-8)) - 2;
+		t.position[1] = noise->evaluate(Vec3(Vec2(t.position[0], t.position[2]) * 0.15, time * 5e-8)) - 2;
 	}
 }
 
@@ -64,11 +64,11 @@ bool update()
 		{ // camera
 			Entity *e = ents->create(1);
 			TransformComponent &t = e->value<TransformComponent>();
-			t.orientation = quat(degs(-30), degs(), degs());
+			t.orientation = Quat(Degs(-30), Degs(), Degs());
 			CameraComponent &c = e->value<CameraComponent>();
-			c.ambientColor = vec3(1);
+			c.ambientColor = Vec3(1);
 			c.ambientIntensity = 0.1;
-			c.ambientDirectionalColor = vec3(1);
+			c.ambientDirectionalColor = Vec3(1);
 			c.ambientDirectionalIntensity = 0.2;
 			c.effects = CameraEffectsFlags::Default;
 			cameraCtrl->setEntity(e);
@@ -77,14 +77,14 @@ bool update()
 		{ // light
 			Entity *e = ents->create(2);
 			TransformComponent &t = e->value<TransformComponent>();
-			t.orientation = quat(degs(-20), degs(-110), degs());
+			t.orientation = Quat(Degs(-20), Degs(-110), Degs());
 			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Directional;
-			l.color = vec3(0.9);
+			l.color = Vec3(0.9);
 			if (shadowEnabled)
 			{
 				ShadowmapComponent &s = e->value<ShadowmapComponent>();
-				s.worldSize = vec3(20);
+				s.worldSize = Vec3(20);
 				s.resolution = 4096;
 			}
 		}
@@ -102,7 +102,7 @@ bool update()
 				Entity *e = ents->createAnonymous();
 				TransformComponent &t = e->value<TransformComponent>();
 				t.scale = 0.15 * 0.49;
-				t.position = vec3((x - side * 0.5) * 0.15, 0, (y - side * 0.5) * 0.15);
+				t.position = Vec3((x - side * 0.5) * 0.15, 0, (y - side * 0.5) * 0.15);
 				RenderComponent &r = e->value<RenderComponent>();
 				r.object = HashString("cage/model/fake.obj");
 			}

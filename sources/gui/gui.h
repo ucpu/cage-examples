@@ -14,12 +14,12 @@ class guiTestClass
 {
 public:
 
-	static real steeper(rads x)
+	static Real steeper(Rads x)
 	{
 		return (9 * sin(x) + sin(x * 3)) / 8;
 	}
 
-	static void guiLabel(uint32 parentName, uint32 &index, const string &name)
+	static void guiLabel(uint32 parentName, uint32 &index, const String &name)
 	{
 		EntityManager *ents = engineGui()->entities();
 		Entity *e = ents->createUnique();
@@ -57,7 +57,7 @@ public:
 			
 			//lt.vertical = true;
 			GuiScrollbarsComponent &sc = panel->value<GuiScrollbarsComponent>();
-			sc.alignment = vec2(0.5, 0);
+			sc.alignment = Vec2(0.5, 0);
 		}
 	}
 
@@ -71,49 +71,49 @@ public:
 
 	virtual void guiEvent(uint32 name)
 	{
-		CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "gui event on entity: " + name);
+		CAGE_LOG(SeverityEnum::Info, "gui event", Stringizer() + "gui event on entity: " + name);
 
 		Entity *e = engineGui()->entities()->get(name);
 
 		if (e->has<GuiButtonComponent>())
 		{
-			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "button press");
+			CAGE_LOG(SeverityEnum::Info, "gui event", Stringizer() + "button press");
 		}
 
 		if (e->has<GuiCheckBoxComponent>())
 		{
 			GuiCheckBoxComponent &c = e->value<GuiCheckBoxComponent>();
-			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "check box state: " + (uint32)c.state);
+			CAGE_LOG(SeverityEnum::Info, "gui event", Stringizer() + "check box state: " + (uint32)c.state);
 		}
 
 		if (e->has<GuiRadioBoxComponent>())
 		{
 			GuiRadioBoxComponent &c = e->value<GuiRadioBoxComponent>();
-			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "radio box state: " + (uint32)c.state);
+			CAGE_LOG(SeverityEnum::Info, "gui event", Stringizer() + "radio box state: " + (uint32)c.state);
 		}
 
 		if (e->has<GuiColorPickerComponent>())
 		{
 			GuiColorPickerComponent &c = e->value<GuiColorPickerComponent>();
-			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "color picker: " + c.color);
+			CAGE_LOG(SeverityEnum::Info, "gui event", Stringizer() + "color picker: " + c.color);
 		}
 
 		if (e->has<GuiComboBoxComponent>())
 		{
 			GuiComboBoxComponent &c = e->value<GuiComboBoxComponent>();
-			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "combo box selected: " + c.selected);
+			CAGE_LOG(SeverityEnum::Info, "gui event", Stringizer() + "combo box selected: " + c.selected);
 		}
 
 		if (e->has<GuiInputComponent>())
 		{
 			GuiInputComponent &c = e->value<GuiInputComponent>();
-			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "input box valid: " + c.valid + ", value: " + c.value);
+			CAGE_LOG(SeverityEnum::Info, "gui event", Stringizer() + "input box valid: " + c.valid + ", value: " + c.value);
 		}
 
 		if (e->has<GuiSliderBarComponent>())
 		{
 			GuiSliderBarComponent &c = e->value<GuiSliderBarComponent>();
-			CAGE_LOG(SeverityEnum::Info, "gui event", stringizer() + "slider bar value: " + c.value);
+			CAGE_LOG(SeverityEnum::Info, "gui event", Stringizer() + "slider bar value: " + c.value);
 		}
 	}
 
@@ -124,7 +124,7 @@ public:
 
 	virtual void initialize() = 0;
 
-	int run(const string &title)
+	int run(const String &title)
 	{
 		try
 		{
@@ -144,7 +144,7 @@ public:
 			guiListener.bind<guiTestClass, &guiTestClass::guiEvent>(this);
 
 			// window
-			engineWindow()->windowedSize(ivec2(800, 600));
+			engineWindow()->windowedSize(Vec2i(800, 600));
 			engineWindow()->setMaximized();
 			engineWindow()->title(title);
 

@@ -41,7 +41,7 @@ class guiTestImpl : public guiTestClass
 				GuiButtonComponent &b = e->value<GuiButtonComponent>();
 				//b.allowMerging = true;
 				GuiTextComponent &t = e->value<GuiTextComponent>();
-				t.value = stringizer() + i;
+				t.value = Stringizer() + i;
 			}
 		}
 		{ // vertical
@@ -61,7 +61,7 @@ class guiTestImpl : public guiTestClass
 				GuiButtonComponent &b = e->value<GuiButtonComponent>();
 				//b.allowMerging = true;
 				GuiTextComponent &t = e->value<GuiTextComponent>();
-				t.value = stringizer() + i;
+				t.value = Stringizer() + i;
 			}
 		}
 		{ // with image
@@ -73,8 +73,8 @@ class guiTestImpl : public guiTestClass
 			GuiButtonComponent &b = e->value<GuiButtonComponent>();
 			GuiImageComponent &m = e->value<GuiImageComponent>();
 			m.textureName = HashString("cage/texture/helper.jpg");
-			m.textureUvOffset = vec2(5 / 8.f, 2 / 8.f);
-			m.textureUvSize = vec2(1 / 8.f, 1 / 8.f);
+			m.textureUvOffset = Vec2(5 / 8.f, 2 / 8.f);
+			m.textureUvSize = Vec2(1 / 8.f, 1 / 8.f);
 		}
 		{ // with custom event
 			guiLabel(3, index, "with custom event");

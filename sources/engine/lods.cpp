@@ -56,39 +56,39 @@ int main(int argc, char *args[])
 			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/lods/cube.object");
 			TransformComponent &t = e->value<TransformComponent>();
-			t.position = vec3(-8, 0, 0);
+			t.position = Vec3(-8, 0, 0);
 		}
 		{ // sphere
 			Entity *e = ents->create(2);
 			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/lods/sphere.object");
 			TransformComponent &t = e->value<TransformComponent>();
-			t.position = vec3(8, 0, 0);
+			t.position = Vec3(8, 0, 0);
 		}
 		{ // floor
 			Entity *e = ents->create(3);
 			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/lods/floor.object");
 			TransformComponent &t = e->value<TransformComponent>();
-			t.position = vec3(0, -5, 0);
+			t.position = Vec3(0, -5, 0);
 		}
 		{ // sun
 			Entity *e = ents->create(9);
 			TransformComponent &t = e->value<TransformComponent>();
-			t.orientation = quat(degs(-60), degs(20), degs());
+			t.orientation = Quat(Degs(-60), Degs(20), Degs());
 			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Directional;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 1024;
-			s.worldSize = vec3(20, 20, 20);
+			s.worldSize = Vec3(20, 20, 20);
 		}
 		{ // camera
 			Entity *e = ents->create(10);
 			TransformComponent &t = e->value<TransformComponent>();
-			t.position = vec3(0, 3, 30);
-			t.orientation = quat(degs(-10), degs(), degs());
+			t.position = Vec3(0, 3, 30);
+			t.orientation = Quat(Degs(-10), Degs(), Degs());
 			CameraComponent &c = e->value<CameraComponent>();
-			c.ambientColor = vec3(1);
+			c.ambientColor = Vec3(1);
 			c.ambientIntensity = 0.5;
 			c.near = 0.1;
 			c.far = 200;

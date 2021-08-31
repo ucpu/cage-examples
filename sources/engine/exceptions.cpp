@@ -45,7 +45,7 @@ void controlUpdate()
 	{
 		Entity *e = ents->get(2);
 		TransformComponent &t = e->value<TransformComponent>();
-		t.position = vec3(sin(rads(time * 1e-6)) * 10, cos(rads(time * 1e-6)) * 10, -20);
+		t.position = Vec3(sin(Rads(time * 1e-6)) * 10, cos(Rads(time * 1e-6)) * 10, -20);
 	}
 	maybeThrow(probLoop, 3);
 }
@@ -138,14 +138,14 @@ int main(int argc, char *args[])
 			windowCloseListener.attach(engineWindow()->events.windowClose);
 
 			engineWindow()->setWindowed();
-			engineWindow()->windowedSize(ivec2(800, 600));
+			engineWindow()->windowedSize(Vec2i(800, 600));
 			engineWindow()->title("exceptions");
 
 			{ // camera
 				Entity *e = engineEntities()->create(1);
 				TransformComponent &t = e->value<TransformComponent>();
 				CameraComponent &c = e->value<CameraComponent>();
-				c.ambientColor = vec3(1);
+				c.ambientColor = Vec3(1);
 			}
 			{ // box 1
 				Entity *e = engineEntities()->create(2);
