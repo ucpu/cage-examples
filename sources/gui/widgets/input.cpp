@@ -5,7 +5,7 @@ class guiTestImpl : public guiTestClass
 
 	void initialize() override
 	{
-		EntityManager *ents = engineGui()->entities();
+		EntityManager *ents = engineGuiEntities();
 
 		guiBasicLayout();
 		{

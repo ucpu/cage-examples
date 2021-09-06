@@ -5,7 +5,7 @@ class guiTestImpl : public guiTestClass
 
 	Entity *envelopeInScrollbars(Entity *e)
 	{
-		Entity *r = engineGui()->entities()->createUnique();
+		Entity *r = engineGuiEntities()->createUnique();
 		GuiParentComponent &pr = r->value<GuiParentComponent>();
 		GuiParentComponent &pe = e->value<GuiParentComponent>();
 		pr = pe;
@@ -17,7 +17,7 @@ class guiTestImpl : public guiTestClass
 
 	void initialize() override
 	{
-		EntityManager *ents = engineGui()->entities();
+		EntityManager *ents = engineGuiEntities();
 
 		guiBasicLayout();
 		{

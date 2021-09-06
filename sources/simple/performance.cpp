@@ -6,13 +6,15 @@
 #include <cage-core/threadPool.h>
 #include <cage-core/macros.h>
 #include <cage-core/string.h>
-
 #include <cage-engine/window.h>
-#include <cage-engine/gui.h>
-#include <cage-engine/engine.h>
-#include <cage-engine/fpsCamera.h>
-#include <cage-engine/engineStatistics.h>
 #include <cage-engine/highPerformanceGpuHint.h>
+#include <cage-engine/guiComponents.h>
+#include <cage-engine/guiManager.h>
+#include <cage-engine/scene.h>
+
+#include <cage-simple/engine.h>
+#include <cage-simple/fpsCamera.h>
+#include <cage-simple/statisticsGui.h>
 
 #include <atomic>
 
@@ -126,7 +128,7 @@ bool update()
 
 bool guiInit()
 {
-	Gui *g = cage::engineGui();
+	GuiManager *g = cage::engineGuiManager();
 
 	Entity *root = g->entities()->createUnique();
 	{
@@ -211,7 +213,7 @@ bool guiInit()
 bool guiUpdate()
 {
 	{ // update boxes count
-		Entity *e = cage::engineGui()->entities()->get(1);
+		Entity *e = cage::engineGuiEntities()->get(1);
 		GuiInputComponent &c = e->value<GuiInputComponent>();
 		if (c.valid && toUint32(c.value) != boxesCount)
 		{
@@ -221,13 +223,13 @@ bool guiUpdate()
 	}
 
 	{ // update camera range
-		Entity *e = cage::engineGui()->entities()->get(2);
+		Entity *e = cage::engineGuiEntities()->get(2);
 		GuiSliderBarComponent &c = e->value<GuiSliderBarComponent>();
 		cameraRange = c.value;
 	}
 
 	{ // update enable shadow
-		Entity *e = cage::engineGui()->entities()->get(4);
+		Entity *e = cage::engineGuiEntities()->get(4);
 		GuiCheckBoxComponent &c = e->value<GuiCheckBoxComponent>();
 		bool checked = c.state == CheckBoxStateEnum::Checked;
 		if (checked != shadowEnabled)
@@ -268,7 +270,7 @@ int main(int argc, char *args[])
 		cameraCtrl->movementSpeed = 0.1;
 		cameraCtrl->mouseButton = MouseButtonsFlags::Left;
 
-		Holder<EngineStatistics> statistics = newEngineStatistics();
+		Holder<StatisticsGui> statistics = newStatisticsGui();
 
 		updateThreads = newThreadPool();
 		updateThreads->function.bind<&updateBoxes>();

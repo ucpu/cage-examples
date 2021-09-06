@@ -5,14 +5,15 @@
 #include <cage-core/geometry.h>
 #include <cage-core/collider.h>
 #include <cage-core/camera.h>
-
 #include <cage-engine/window.h>
-#include <cage-engine/gui.h>
-#include <cage-engine/engine.h>
-#include <cage-engine/engineStatistics.h>
-#include <cage-engine/fpsCamera.h>
 #include <cage-engine/highPerformanceGpuHint.h>
+#include <cage-engine/guiComponents.h>
+#include <cage-engine/scene.h>
 #include <cage-engine/sound.h>
+
+#include <cage-simple/engine.h>
+#include <cage-simple/fpsCamera.h>
+#include <cage-simple/statisticsGui.h>
 
 #include <vector>
 
@@ -367,7 +368,7 @@ int main(int argc, char *args[])
 		cameraCtrl->mouseButton = MouseButtonsFlags::Left;
 		cameraCtrl->movementSpeed = 0;
 		cameraCtrl->turningSpeed *= 0.5;
-		Holder<EngineStatistics> statistics = newEngineStatistics();
+		Holder<StatisticsGui> statistics = newStatisticsGui();
 
 		engineAssets()->add(assetsName);
 		engineStart();

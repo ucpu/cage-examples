@@ -7,7 +7,7 @@ public:
 	void guiEvent(uint32 name) override
 	{
 		guiTestClass::guiEvent(name);
-		EntityManager *ents = engineGui()->entities();
+		EntityManager *ents = engineGuiEntities();
 		GuiLayoutSplitterComponent &s = ents->get(42)->value<GuiLayoutSplitterComponent>();
 		switch (name)
 		{
@@ -26,7 +26,7 @@ public:
 
 	void genContent(sint32 order)
 	{
-		EntityManager *ents = engineGui()->entities();
+		EntityManager *ents = engineGuiEntities();
 		Entity *e = ents->createUnique();
 		{
 			GuiParentComponent &p = e->value<GuiParentComponent>();
@@ -57,7 +57,7 @@ public:
 
 	void initialize() override
 	{
-		EntityManager *ents = engineGui()->entities();
+		EntityManager *ents = engineGuiEntities();
 
 		Entity *mainSplitter = ents->createUnique();
 		{

@@ -4,13 +4,14 @@
 #include <cage-core/hashString.h>
 #include <cage-core/macros.h>
 #include <cage-core/string.h>
-
 #include <cage-engine/window.h>
-#include <cage-engine/gui.h>
-#include <cage-engine/engine.h>
-#include <cage-engine/engineStatistics.h>
-#include <cage-engine/fpsCamera.h>
 #include <cage-engine/highPerformanceGpuHint.h>
+#include <cage-engine/guiComponents.h>
+#include <cage-engine/scene.h>
+
+#include <cage-simple/engine.h>
+#include <cage-simple/statisticsGui.h>
+#include <cage-simple/fpsCamera.h>
 
 using namespace cage;
 
@@ -46,7 +47,7 @@ constexpr sint32 genBaseName(CameraEffectsFlags f_)
 
 bool update()
 {
-	EntityManager *ents = engineGui()->entities();
+	EntityManager *ents = engineGuiEntities();
 
 	Entity *camera = engineEntities()->get(1);
 	CameraComponent &cam = camera->value<CameraComponent>();
@@ -272,7 +273,7 @@ bool update()
 
 Entity *genInputFloat(Entity *table, sint32 &childIndex, uint32 nameBase, const String &labelText, Real rangeMin, Real rangeMax, Real step, Real current)
 {
-	EntityManager *ents = engineGui()->entities();
+	EntityManager *ents = engineGuiEntities();
 	{
 		Entity *e = ents->createUnique();
 		GuiParentComponent &p = e->value<GuiParentComponent>();
@@ -316,7 +317,7 @@ constexpr CheckBoxStateEnum genEnabled(CameraEffectsFlags f)
 
 void initializeGui()
 {
-	EntityManager *ents = engineGui()->entities();
+	EntityManager *ents = engineGuiEntities();
 	Entity *layout = ents->createUnique();
 	{ // layout
 		GuiScrollbarsComponent &sc = layout->value<GuiScrollbarsComponent>();
@@ -665,7 +666,7 @@ int main(int argc, char *args[])
 		Holder<FpsCamera> fpsCamera = newFpsCamera(ents->get(1));
 		fpsCamera->mouseButton = MouseButtonsFlags::Left;
 		fpsCamera->movementSpeed = 0.3;
-		Holder<EngineStatistics> statistics = newEngineStatistics();
+		Holder<StatisticsGui> statistics = newStatisticsGui();
 
 		engineAssets()->add(assetsName);
 		engineStart();

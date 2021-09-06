@@ -4,12 +4,14 @@
 #include <cage-core/assetManager.h>
 #include <cage-core/hashString.h>
 #include <cage-core/camera.h>
-
 #include <cage-engine/window.h>
-#include <cage-engine/engine.h>
-#include <cage-engine/engineStatistics.h>
-#include <cage-engine/fpsCamera.h>
 #include <cage-engine/highPerformanceGpuHint.h>
+#include <cage-engine/guiComponents.h>
+#include <cage-engine/scene.h>
+
+#include <cage-simple/engine.h>
+#include <cage-simple/fpsCamera.h>
+#include <cage-simple/statisticsGui.h>
 
 using namespace cage;
 
@@ -135,7 +137,7 @@ int main(int argc, char *args[])
 
 		Holder<FpsCamera> fpsCamera = newFpsCamera(engineEntities()->get(1));
 		fpsCamera->mouseButton = MouseButtonsFlags::Left;
-		Holder<EngineStatistics> statistics = newEngineStatistics();
+		Holder<StatisticsGui> statistics = newStatisticsGui();
 
 		engineStart();
 		engineFinalize();

@@ -4,12 +4,14 @@
 #include <cage-core/assetManager.h>
 #include <cage-core/hashString.h>
 #include <cage-core/color.h>
-
 #include <cage-engine/window.h>
-#include <cage-engine/gui.h>
-#include <cage-engine/engine.h>
-#include <cage-engine/fpsCamera.h>
 #include <cage-engine/highPerformanceGpuHint.h>
+#include <cage-engine/guiComponents.h>
+#include <cage-engine/scene.h>
+
+#include <cage-simple/engine.h>
+#include <cage-simple/fpsCamera.h>
+#include <cage-simple/statisticsGui.h>
 
 using namespace cage;
 constexpr uint32 assetsName = HashString("cage-tests/material/material.pack");

@@ -1,0 +1,14 @@
+
+message(STATUS "----------------------------------------------------------------")
+message(STATUS "simple")
+message(STATUS "----------------------------------------------------------------")
+
+file(GLOB cage-tests-source-list "*.cpp")
+foreach(test ${cage-tests-source-list})
+	get_filename_component(name ${test} NAME)
+	string(REPLACE ".cpp" "" name ${name})
+	add_executable(${name} ${test})
+	target_link_libraries(${name} cage-simple)
+	cage_ide_category(${name} simple)
+	cage_ide_working_dir_in_place(${name})
+endforeach()

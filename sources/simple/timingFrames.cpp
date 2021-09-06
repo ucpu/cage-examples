@@ -4,12 +4,15 @@
 #include <cage-core/hashString.h>
 #include <cage-core/macros.h>
 #include <cage-core/string.h>
-
 #include <cage-engine/window.h>
-#include <cage-engine/gui.h>
-#include <cage-engine/engine.h>
-#include <cage-engine/engineStatistics.h>
 #include <cage-engine/highPerformanceGpuHint.h>
+#include <cage-engine/guiComponents.h>
+#include <cage-engine/guiManager.h>
+#include <cage-engine/scene.h>
+
+#include <cage-simple/engine.h>
+#include <cage-simple/fpsCamera.h>
+#include <cage-simple/statisticsGui.h>
 
 using namespace cage;
 
@@ -90,7 +93,7 @@ bool soundUpdate()
 
 bool guiInit()
 {
-	Gui *g = cage::engineGui();
+	GuiManager *g = cage::engineGuiManager();
 
 	Entity *panel = g->entities()->createUnique();
 	{
@@ -141,7 +144,7 @@ namespace
 {
 	void setIntValue(uint32 index, uint64 &value)
 	{
-		Entity *control = cage::engineGui()->entities()->get(20 + index);
+		Entity *control = cage::engineGuiEntities()->get(20 + index);
 		GuiInputComponent &t = control->value<GuiInputComponent>();
 		if (t.valid)
 		{
@@ -154,7 +157,7 @@ namespace
 bool guiUpdate()
 {
 	{
-		Entity *control = cage::engineGui()->entities()->get(20 + 0);
+		Entity *control = cage::engineGuiEntities()->get(20 + 0);
 		GuiInputComponent &t = control->value<GuiInputComponent>();
 		if (t.valid)
 		{
@@ -163,7 +166,7 @@ bool guiUpdate()
 		}
 	}
 	{
-		Entity *control = cage::engineGui()->entities()->get(20 + 1);
+		Entity *control = cage::engineGuiEntities()->get(20 + 1);
 		GuiInputComponent &t = control->value<GuiInputComponent>();
 		if (t.valid)
 		{
@@ -205,7 +208,7 @@ int main(int argc, char *args[])
 		engineWindow()->windowedSize(Vec2i(800, 600));
 		engineWindow()->title("timing frames");
 		controlInit();
-		Holder<EngineStatistics> statistics = newEngineStatistics();
+		Holder<StatisticsGui> statistics = newStatisticsGui();
 
 		engineStart();
 		engineFinalize();

@@ -4,15 +4,16 @@
 #include <cage-core/assetManager.h>
 #include <cage-core/hashString.h>
 #include <cage-core/macros.h>
-
 #include <cage-engine/window.h>
-#include <cage-engine/texture.h>
-#include <cage-engine/gui.h>
-#include <cage-engine/engine.h>
-#include <cage-engine/opengl.h>
-#include <cage-engine/engineStatistics.h>
-#include <cage-engine/fpsCamera.h>
 #include <cage-engine/highPerformanceGpuHint.h>
+#include <cage-engine/guiComponents.h>
+#include <cage-engine/scene.h>
+#include <cage-engine/texture.h>
+#include <cage-engine/opengl.h>
+
+#include <cage-simple/engine.h>
+#include <cage-simple/fpsCamera.h>
+#include <cage-simple/statisticsGui.h>
 
 #include <vector>
 
@@ -150,7 +151,7 @@ int main(int argc, char *args[])
 		Holder<FpsCamera> fpsCamera = newFpsCamera(eye);
 		fpsCamera->mouseButton = MouseButtonsFlags::Left;
 		fpsCamera->movementSpeed = 0.1;
-		Holder<EngineStatistics> statistics = newEngineStatistics();
+		Holder<StatisticsGui> statistics = newStatisticsGui();
 
 		engineAssets()->add(assetsName);
 		engineStart();

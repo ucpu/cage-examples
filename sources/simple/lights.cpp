@@ -5,13 +5,14 @@
 #include <cage-core/hashString.h>
 #include <cage-core/color.h>
 #include <cage-core/macros.h>
-
 #include <cage-engine/window.h>
-#include <cage-engine/gui.h>
-#include <cage-engine/engine.h>
-#include <cage-engine/engineStatistics.h>
-#include <cage-engine/fpsCamera.h>
+#include <cage-engine/guiComponents.h>
 #include <cage-engine/highPerformanceGpuHint.h>
+#include <cage-engine/scene.h>
+
+#include <cage-simple/engine.h>
+#include <cage-simple/statisticsGui.h>
+#include <cage-simple/fpsCamera.h>
 
 #include <vector>
 
@@ -26,7 +27,7 @@ bool windowClose()
 
 Vec3 getGuiColor(uint32 id)
 {
-	Entity *e = engineGui()->entities()->get(id);
+	Entity *e = engineGuiEntities()->get(id);
 	GuiColorPickerComponent &c = e->value<GuiColorPickerComponent>();
 	return c.color;
 }
@@ -34,7 +35,7 @@ Vec3 getGuiColor(uint32 id)
 Vec3 getGuiOrientation(uint32 id)
 {
 	Vec3 result;
-	EntityManager *ents = engineGui()->entities();
+	EntityManager *ents = engineGuiEntities();
 	for (uint32 i = 0; i < 2; i++)
 	{
 		Entity *e = ents->get(id + i);
@@ -77,7 +78,7 @@ bool update()
 
 void initializeGuiColors(uint32 parentId, uint32 id, const Vec3 &hsv)
 {
-	Entity *e = engineGui()->entities()->create(id);
+	Entity *e = engineGuiEntities()->create(id);
 	GuiParentComponent &p = e->value<GuiParentComponent>();
 	p.parent = parentId;
 	p.order = id;
@@ -88,7 +89,7 @@ void initializeGuiColors(uint32 parentId, uint32 id, const Vec3 &hsv)
 
 void initializeGui()
 {
-	EntityManager *ents = engineGui()->entities();
+	EntityManager *ents = engineGuiEntities();
 	Entity *layout = ents->create(1);
 	{ // layout
 		GuiScrollbarsComponent &sc = layout->value<GuiScrollbarsComponent>();
@@ -222,7 +223,7 @@ int main(int argc, char *args[])
 		Holder<FpsCamera> fpsCamera = newFpsCamera(ents->get(10));
 		fpsCamera->mouseButton = MouseButtonsFlags::Left;
 		fpsCamera->movementSpeed = 0.3;
-		Holder<EngineStatistics> statistics = newEngineStatistics();
+		Holder<StatisticsGui> statistics = newStatisticsGui();
 
 		engineAssets()->add(assetsName);
 		engineStart();

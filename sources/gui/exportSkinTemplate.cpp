@@ -8,7 +8,7 @@ class guiTestImpl : public guiTestClass
 public:
 	void initialize() override
 	{
-		detail::guiSkinTemplateExport(engineGui()->skin(0), 2048)->exportFile("guiSkinTemplate.png");
+		detail::guiSkinTemplateExport(engineGuiManager()->skin(0), 2048)->exportFile("guiSkinTemplate.png");
 		engineStop();
 	}
 };

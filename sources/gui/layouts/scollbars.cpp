@@ -6,7 +6,7 @@ public:
 
 	void initialize() override
 	{
-		EntityManager *ents = engineGui()->entities();
+		EntityManager *ents = engineGuiEntities();
 
 		uint32 an = 0;
 		{

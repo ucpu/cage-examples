@@ -26,7 +26,7 @@ public:
 
 	void update() override
 	{
-		EntityManager *ents = engineGui()->entities();
+		EntityManager *ents = engineGuiEntities();
 		static Real offset = randomChance() * 1000;
 		Real t = applicationTime() / 2e7f + offset;
 		for (uint32 i = 0; i < fontsCount; i++)
@@ -39,7 +39,7 @@ public:
 
 	void initialize() override
 	{
-		EntityManager *ents = engineGui()->entities();
+		EntityManager *ents = engineGuiEntities();
 
 		Entity *panel = ents->create(2);
 		{

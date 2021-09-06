@@ -2,11 +2,12 @@
 #include <cage-core/entities.h>
 #include <cage-core/hashString.h>
 #include <cage-core/assetManager.h>
-
 #include <cage-engine/window.h>
-#include <cage-engine/gui.h>
-#include <cage-engine/engine.h>
+#include <cage-engine/guiManager.h>
+#include <cage-engine/guiComponents.h>
 #include <cage-engine/highPerformanceGpuHint.h>
+
+#include <cage-simple/engine.h>
 
 using namespace cage;
 
@@ -21,7 +22,7 @@ public:
 
 	static void guiLabel(uint32 parentName, uint32 &index, const String &name)
 	{
-		EntityManager *ents = engineGui()->entities();
+		EntityManager *ents = engineGuiEntities();
 		Entity *e = ents->createUnique();
 		GuiParentComponent &p = e->value<GuiParentComponent>();
 		p.parent = parentName;
@@ -33,7 +34,7 @@ public:
 
 	static void guiBasicLayout()
 	{
-		EntityManager *ents = engineGui()->entities();
+		EntityManager *ents = engineGuiEntities();
 
 		{ // splitter
 			Entity *split = ents->create(1);
@@ -73,7 +74,7 @@ public:
 	{
 		CAGE_LOG(SeverityEnum::Info, "gui event", Stringizer() + "gui event on entity: " + name);
 
-		Entity *e = engineGui()->entities()->get(name);
+		Entity *e = engineGuiEntities()->get(name);
 
 		if (e->has<GuiButtonComponent>())
 		{
@@ -140,7 +141,7 @@ public:
 			windowCloseListener.bind<guiTestClass, &guiTestClass::windowClose>(this);
 			updateListener.attach(controlThread().update);
 			updateListener.bind<guiTestClass, &guiTestClass::update>(this);
-			guiListener.attach(engineGui()->widgetEvent);
+			guiListener.attach(engineGuiManager()->widgetEvent);
 			guiListener.bind<guiTestClass, &guiTestClass::guiEvent>(this);
 
 			// window

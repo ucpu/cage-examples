@@ -12,7 +12,7 @@ public:
 	void guiEvent(uint32 name) override
 	{
 		guiTestClass::guiEvent(name);
-		EntityManager *ents = engineGui()->entities();
+		EntityManager *ents = engineGuiEntities();
 		GuiLayoutTableComponent &s = ents->get(42)->value<GuiLayoutTableComponent>();
 		switch (name)
 		{
@@ -66,7 +66,7 @@ public:
 
 	void initialize() override
 	{
-		EntityManager *ents = engineGui()->entities();
+		EntityManager *ents = engineGuiEntities();
 
 		Entity *mainSplitter = ents->createUnique();
 		{

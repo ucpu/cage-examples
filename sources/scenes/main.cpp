@@ -1,8 +1,12 @@
-#include "game.h"
+#include <cage-core/config.h>
 #include <cage-core/logger.h>
 #include <cage-engine/highPerformanceGpuHint.h>
-#include <cage-engine/fullscreenSwitcher.h>
-#include <cage-core/config.h>
+#include <cage-engine/guiManager.h>
+#include <cage-engine/window.h>
+#include <cage-simple/fullscreenSwitcher.h>
+#include <cage-simple/engine.h>
+
+using namespace cage;
 
 bool closeButton();
 bool keyPress(uint32 a, ModifiersFlags m);
@@ -33,7 +37,7 @@ int main(int argc, const char *args[])
 	listeners.keyPress.bind<&keyPress>();
 	listeners.attachAll(engineWindow());
 	guiListener.bind<&guiFunction>();
-	engineGui()->widgetEvent.attach(guiListener);
+	engineGuiManager()->widgetEvent.attach(guiListener);
 
 	updateInitialize();
 	{

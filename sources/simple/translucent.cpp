@@ -6,13 +6,14 @@
 #include <cage-core/color.h>
 #include <cage-core/noiseFunction.h>
 #include <cage-core/macros.h>
-
 #include <cage-engine/window.h>
-#include <cage-engine/gui.h>
-#include <cage-engine/engine.h>
-#include <cage-engine/engineStatistics.h>
-#include <cage-engine/fpsCamera.h>
 #include <cage-engine/highPerformanceGpuHint.h>
+#include <cage-engine/guiComponents.h>
+#include <cage-engine/scene.h>
+
+#include <cage-simple/engine.h>
+#include <cage-simple/fpsCamera.h>
+#include <cage-simple/statisticsGui.h>
 
 using namespace cage;
 constexpr uint32 assetsName = HashString("cage-tests/translucent/translucent.pack");
@@ -247,7 +248,7 @@ int main(int argc, char *args[])
 		Holder<FpsCamera> cameraCtrl = newFpsCamera(ents->get(1));
 		cameraCtrl->mouseButton = MouseButtonsFlags::Left;
 		cameraCtrl->movementSpeed = 0.3;
-		Holder<EngineStatistics> statistics = newEngineStatistics();
+		Holder<StatisticsGui> statistics = newStatisticsGui();
 
 		engineAssets()->add(assetsName);
 		engineStart();

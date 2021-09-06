@@ -1,13 +1,29 @@
-#include "game.h"
-
+#include <cage-core/assetManager.h>
+#include <cage-core/hashString.h>
+#include <cage-core/entities.h>
 #include <cage-core/geometry.h>
 #include <cage-core/string.h>
-#include <cage-engine/shadowmapHelpers.h>
+#include <cage-core/files.h>
+#include <cage-core/timer.h>
+#include <cage-core/color.h>
+
+#include <cage-engine/guiComponents.h>
+#include <cage-engine/window.h>
+#include <cage-engine/scene.h>
+
+#include <cage-simple/shadowmapHelpers.h>
+#include <cage-simple/statisticsGui.h>
+#include <cage-simple/fpsCamera.h>
+#include <cage-simple/engine.h>
+
+#include <vector>
+
+using namespace cage;
 
 namespace
 {
 	Holder<FpsCamera> cameraCtrl;
-	Holder<EngineStatistics> statistics;
+	Holder<StatisticsGui> statistics;
 
 	uint32 sceneIndexCurrent;
 	uint32 sceneIndexLoaded;
@@ -242,7 +258,7 @@ void cameraInitialize()
 	cameraCtrl = newFpsCamera();
 	cameraCtrl->movementSpeed = 0.5;
 	cameraCtrl->mouseButton = MouseButtonsFlags::Left;
-	statistics = newEngineStatistics();
+	statistics = newStatisticsGui();
 }
 
 void updateInitialize()
@@ -252,12 +268,12 @@ void updateInitialize()
 	engineAssets()->add(HashString("scenes/common/common.pack"));
 
 	{ // prev
-		Entity *a = cage::engineGui()->entities()->createUnique();
+		Entity *a = cage::engineGuiEntities()->createUnique();
 		{ // a
 			GuiScrollbarsComponent &sc = a->value<GuiScrollbarsComponent>();
 			sc.alignment = Vec2(0, 1);
 		}
-		Entity *e = cage::engineGui()->entities()->create(1);
+		Entity *e = cage::engineGuiEntities()->create(1);
 		GuiParentComponent &parent = e->value<GuiParentComponent>();
 		parent.parent = a->name();
 		GuiButtonComponent &c = e->value<GuiButtonComponent>();
@@ -265,12 +281,12 @@ void updateInitialize()
 		t.value = "< prev";
 	}
 	{ // next
-		Entity *a = cage::engineGui()->entities()->createUnique();
+		Entity *a = cage::engineGuiEntities()->createUnique();
 		{ // a
 			GuiScrollbarsComponent &sc = a->value<GuiScrollbarsComponent>();
 			sc.alignment = Vec2(1, 1);
 		}
-		Entity *e = cage::engineGui()->entities()->create(2);
+		Entity *e = cage::engineGuiEntities()->create(2);
 		GuiParentComponent &parent = e->value<GuiParentComponent>();
 		parent.parent = a->name();
 		GuiButtonComponent &c = e->value<GuiButtonComponent>();
