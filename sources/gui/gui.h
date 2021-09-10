@@ -14,7 +14,6 @@ using namespace cage;
 class guiTestClass
 {
 public:
-
 	static Real steeper(Rads x)
 	{
 		return (9 * sin(x) + sin(x * 3)) / 8;
@@ -70,11 +69,11 @@ public:
 	virtual void update()
 	{}
 
-	virtual void guiEvent(uint32 name)
+	virtual void guiEvent(InputGuiWidget in)
 	{
-		CAGE_LOG(SeverityEnum::Info, "gui event", Stringizer() + "gui event on entity: " + name);
+		CAGE_LOG(SeverityEnum::Info, "gui event", Stringizer() + "gui event on entity: " + in.widget);
 
-		Entity *e = engineGuiEntities()->get(name);
+		Entity *e = engineGuiEntities()->get(in.widget);
 
 		if (e->has<GuiButtonComponent>())
 		{
@@ -137,8 +136,8 @@ public:
 			initializeEngine();
 
 			// events
-			windowCloseListener.attach(engineWindow()->events.windowClose);
-			windowCloseListener.bind<guiTestClass, &guiTestClass::windowClose>(this);
+			windowCloseListener.attach(engineWindow()->events, -5156);
+			windowCloseListener.bind<guiTestClass, &guiTestClass::onWindowClose>(this);
 			updateListener.attach(controlThread().update);
 			updateListener.bind<guiTestClass, &guiTestClass::update>(this);
 			guiListener.attach(engineGuiManager()->widgetEvent);
@@ -166,10 +165,20 @@ public:
 		}
 	}
 
-	EventListener<void()> windowCloseListener;
+	EventListener<bool(const GenericInput &)> windowCloseListener;
 	EventListener<void()> updateListener;
-	EventListener<void(uint32)> guiListener;
+	InputListener<InputClassEnum::GuiWidget, InputGuiWidget> guiListener;
 
+protected:
+	bool onWindowClose(const GenericInput &in)
+	{
+		if (in.type == InputClassEnum::WindowClose)
+		{
+			windowClose();
+			return true;
+		}
+		return false;
+	}
 };
 
 #define MAIN(CLASS_NAME, TITLE) int main() { return CLASS_NAME().run(TITLE); }

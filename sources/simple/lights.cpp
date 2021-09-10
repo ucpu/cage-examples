@@ -4,7 +4,6 @@
 #include <cage-core/assetManager.h>
 #include <cage-core/hashString.h>
 #include <cage-core/color.h>
-#include <cage-core/macros.h>
 #include <cage-engine/window.h>
 #include <cage-engine/guiComponents.h>
 #include <cage-engine/highPerformanceGpuHint.h>
@@ -19,10 +18,9 @@
 using namespace cage;
 constexpr uint32 assetsName = HashString("cage-tests/bottle/bottle.pack");
 
-bool windowClose()
+void windowClose(InputWindow)
 {
 	engineStop();
-	return false;
 }
 
 Vec3 getGuiColor(uint32 id)
@@ -45,7 +43,7 @@ Vec3 getGuiOrientation(uint32 id)
 	return result;
 }
 
-bool update()
+void update()
 {
 	EntityManager *ents = engineEntities();
 
@@ -73,7 +71,6 @@ bool update()
 		TransformComponent &t = e->value<TransformComponent>();
 		t.orientation = Quat(Degs(), Degs(1), Degs()) * t.orientation;
 	}
-	return false;
 }
 
 void initializeGuiColors(uint32 parentId, uint32 id, const Vec3 &hsv)
@@ -169,10 +166,12 @@ int main(int argc, char *args[])
 		engineInitialize(EngineCreateConfig());
 
 		// events
-#define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
-		GCHL_GENERATE((), windowClose, engineWindow()->events.windowClose);
-		GCHL_GENERATE((), update, controlThread().update);
-#undef GCHL_GENERATE
+		EventListener<void()> updateListener;
+		updateListener.attach(controlThread().update);
+		updateListener.bind<&update>();
+		InputListener<InputClassEnum::WindowClose, InputWindow> closeListener;
+		closeListener.attach(engineWindow()->events);
+		closeListener.bind<&windowClose>();
 
 		// window
 		engineWindow()->setMaximized();

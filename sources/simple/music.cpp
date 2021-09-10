@@ -17,7 +17,7 @@ using namespace cage;
 
 constexpr uint32 assetsName = HashString("cage-tests/music/music.pack");
 
-void windowClose()
+void windowClose(InputWindow)
 {
 	engineStop();
 }
@@ -151,11 +151,11 @@ int main(int argc, char *args[])
 
 		// events
 		EventListener<void()> updateListener;
-		updateListener.bind<&update>();
 		updateListener.attach(controlThread().update);
-		EventListener<void()> windowCloseListener;
-		windowCloseListener.bind<&windowClose>();
-		windowCloseListener.attach(engineWindow()->events.windowClose);
+		updateListener.bind<&update>();
+		InputListener<InputClassEnum::WindowClose, InputWindow> closeListener;
+		closeListener.attach(engineWindow()->events);
+		closeListener.bind<&windowClose>();
 
 		engineWindow()->setMaximized();
 		engineWindow()->title("music");

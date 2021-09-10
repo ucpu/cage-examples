@@ -164,15 +164,14 @@ void sceneReload()
 	}
 }
 
-bool closeButton()
+void windowClose(InputWindow)
 {
 	engineStop();
-	return false;
 }
 
-bool keyPress(uint32 key, ModifiersFlags)
+void keyPress(InputKey in)
 {
-	switch (key)
+	switch (in.key)
 	{
 	case 256: // esc
 		engineStop();
@@ -189,11 +188,9 @@ bool keyPress(uint32 key, ModifiersFlags)
 			sceneIndexCurrent = 0;
 		break;
 	}
-
-	return false;
 }
 
-bool update()
+void update()
 {
 #if 0
 	{ // automatic reloading -> used for engine testing
@@ -229,13 +226,11 @@ bool update()
 				fitShadowmapForDirectionalLight(e, sceneBox);
 		}
 	}
-
-	return false;
 }
 
-bool guiFunction(uint32 en)
+bool guiFunction(InputGuiWidget in)
 {
-	switch (en)
+	switch (in.widget)
 	{
 	case 1: // prev
 		if (sceneIndexCurrent == 0)

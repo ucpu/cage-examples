@@ -4,21 +4,21 @@ class guiTestImpl : public guiTestClass
 {
 public:
 
-	void guiEvent(uint32 name) override
+	void guiEvent(InputGuiWidget in) override
 	{
-		guiTestClass::guiEvent(name);
+		guiTestClass::guiEvent(in);
 		EntityManager *ents = engineGuiEntities();
 		GuiLayoutSplitterComponent &s = ents->get(42)->value<GuiLayoutSplitterComponent>();
-		switch (name)
+		switch (in.widget)
 		{
 		case 3:
 		{
-			GuiCheckBoxComponent &b = ents->get(name)->value<GuiCheckBoxComponent>();
+			GuiCheckBoxComponent &b = ents->get(in.widget)->value<GuiCheckBoxComponent>();
 			s.vertical = b.state == CheckBoxStateEnum::Checked;
 		} break;
 		case 4:
 		{
-			GuiCheckBoxComponent &b = ents->get(name)->value<GuiCheckBoxComponent>();
+			GuiCheckBoxComponent &b = ents->get(in.widget)->value<GuiCheckBoxComponent>();
 			s.inverse = b.state == CheckBoxStateEnum::Checked;
 		} break;
 		}

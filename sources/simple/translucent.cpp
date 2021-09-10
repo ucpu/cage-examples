@@ -5,7 +5,6 @@
 #include <cage-core/hashString.h>
 #include <cage-core/color.h>
 #include <cage-core/noiseFunction.h>
-#include <cage-core/macros.h>
 #include <cage-engine/window.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/guiComponents.h>
@@ -31,13 +30,12 @@ Vec3 bulbChange(const Vec3 &pos)
 	return r;
 }
 
-bool windowClose()
+void windowClose(InputWindow)
 {
 	engineStop();
-	return false;
 }
 
-bool update()
+void update()
 {
 	EntityManager *ents = engineEntities();
 
@@ -82,8 +80,6 @@ bool update()
 		t.position = Vec3(sin(angle) * 5, 1, cos(angle) * 5);
 #endif
 	}
-
-	return false;
 }
 
 int main(int argc, char *args[])
@@ -98,10 +94,12 @@ int main(int argc, char *args[])
 		engineInitialize(EngineCreateConfig());
 
 		// events
-#define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
-		GCHL_GENERATE((), windowClose, engineWindow()->events.windowClose);
-		GCHL_GENERATE((), update, controlThread().update);
-#undef GCHL_GENERATE
+		EventListener<void()> updateListener;
+		updateListener.attach(controlThread().update);
+		updateListener.bind<&update>();
+		InputListener<InputClassEnum::WindowClose, InputWindow> closeListener;
+		closeListener.attach(engineWindow()->events);
+		closeListener.bind<&windowClose>();
 
 		// window
 		engineWindow()->setMaximized();

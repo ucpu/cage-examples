@@ -3,7 +3,6 @@
 #include <cage-core/assetManager.h>
 #include <cage-core/hashString.h>
 #include <cage-core/color.h>
-#include <cage-core/macros.h>
 #include <cage-core/string.h>
 #include <cage-engine/window.h>
 #include <cage-engine/highPerformanceGpuHint.h>
@@ -19,20 +18,9 @@
 using namespace cage;
 constexpr uint32 assetsName = HashString("cage-tests/skeletons/skeletons.pack");
 
-bool windowClose()
+void windowClose(InputWindow)
 {
 	engineStop();
-	return false;
-}
-
-bool keyPress(uint32, ModifiersFlags)
-{
-	return false;
-}
-
-bool update()
-{
-	return false;
 }
 
 void label(const String &name, const Vec3 &position)
@@ -58,11 +46,9 @@ int main(int argc, char *args[])
 		engineInitialize(EngineCreateConfig());
 
 		// events
-#define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
-		GCHL_GENERATE((), windowClose, engineWindow()->events.windowClose);
-		GCHL_GENERATE((uint32, ModifiersFlags), keyPress, engineWindow()->events.keyPress);
-		GCHL_GENERATE((), update, controlThread().update);
-#undef GCHL_GENERATE
+		InputListener<InputClassEnum::WindowClose, InputWindow> closeListener;
+		closeListener.attach(engineWindow()->events);
+		closeListener.bind<&windowClose>();
 
 		// window
 		engineWindow()->setMaximized();

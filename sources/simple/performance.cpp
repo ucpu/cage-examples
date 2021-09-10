@@ -4,7 +4,6 @@
 #include <cage-core/hashString.h>
 #include <cage-core/noiseFunction.h>
 #include <cage-core/threadPool.h>
-#include <cage-core/macros.h>
 #include <cage-core/string.h>
 #include <cage-engine/window.h>
 #include <cage-engine/highPerformanceGpuHint.h>
@@ -28,13 +27,12 @@ Real cameraRange;
 bool shadowEnabled;
 std::atomic<bool> regenerate;
 
-bool windowClose()
+void windowClose(InputWindow)
 {
 	engineStop();
-	return false;
 }
 
-bool guiUpdate();
+void guiUpdate();
 
 void updateBoxes(uint32 thrIndex, uint32 thrCount)
 {
@@ -54,7 +52,7 @@ void updateBoxes(uint32 thrIndex, uint32 thrCount)
 	}
 }
 
-bool update()
+void update()
 {
 	EntityManager *ents = engineEntities();
 
@@ -122,11 +120,9 @@ bool update()
 	}
 
 	guiUpdate();
-
-	return false;
 }
 
-bool guiInit()
+void guiInit()
 {
 	GuiManager *g = cage::engineGuiManager();
 
@@ -206,11 +202,9 @@ bool guiInit()
 			c.state = CheckBoxStateEnum::Checked;
 		}
 	}
-
-	return false;
 }
 
-bool guiUpdate()
+void guiUpdate()
 {
 	{ // update boxes count
 		Entity *e = cage::engineGuiEntities()->get(1);
@@ -238,8 +232,6 @@ bool guiUpdate()
 			regenerate = true;
 		}
 	}
-
-	return false;
 }
 
 int main(int argc, char *args[])
@@ -254,13 +246,15 @@ int main(int argc, char *args[])
 		engineInitialize(EngineCreateConfig());
 
 		// events
-#define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
-		GCHL_GENERATE((), update, controlThread().update);
-		GCHL_GENERATE((), guiInit, controlThread().initialize);
-#undef GCHL_GENERATE
-		EventListener<bool()> windowCloseListener;
-		windowCloseListener.bind<&windowClose>();
-		windowCloseListener.attach(engineWindow()->events.windowClose);
+		EventListener<void()> updateListener;
+		updateListener.attach(controlThread().update);
+		updateListener.bind<&update>();
+		EventListener<void()> initListener;
+		initListener.attach(controlThread().initialize);
+		initListener.bind<&guiInit>();
+		InputListener<InputClassEnum::WindowClose, InputWindow> closeListener;
+		closeListener.attach(engineWindow()->events);
+		closeListener.bind<&windowClose>();
 
 		engineWindow()->setMaximized();
 		engineWindow()->title("performance");

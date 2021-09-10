@@ -270,7 +270,7 @@ void updateScreamers()
 		makeExplosion(p);
 }
 
-void windowClose()
+void windowClose(InputWindow)
 {
 	engineStop();
 }
@@ -304,13 +304,12 @@ int main(int argc, char *args[])
 
 		engineInitialize(EngineCreateConfig());
 
-		EventListener<void()> windowCloseListener;
-		windowCloseListener.attach(engineWindow()->events.windowClose);
-		windowCloseListener.bind<&windowClose>();
-
 		EventListener<void()> updateListener;
 		updateListener.attach(controlThread().update);
 		updateListener.bind<&update>();
+		InputListener<InputClassEnum::WindowClose, InputWindow> closeListener;
+		closeListener.attach(engineWindow()->events);
+		closeListener.bind<&windowClose>();
 
 		// window
 		engineWindow()->setMaximized();

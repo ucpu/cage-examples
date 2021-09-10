@@ -8,10 +8,10 @@
 
 using namespace cage;
 
-bool closeButton();
-bool keyPress(uint32 a, ModifiersFlags m);
-bool guiFunction(uint32 en);
-bool update();
+void windowClose(InputWindow);
+void keyPress(InputKey in);
+bool guiFunction(InputGuiWidget);
+void update();
 
 void cameraInitialize();
 void updateInitialize();
@@ -28,16 +28,18 @@ int main(int argc, const char *args[])
 	engineInitialize(EngineCreateConfig());
 	cameraInitialize();
 
-	EventListener<bool()> updateListener;
-	WindowEventListeners listeners;
-	EventListener<bool(uint32)> guiListener;
+	EventListener<void()> updateListener;
+	updateListener.attach(controlThread().update);
 	updateListener.bind<&update>();
-	controlThread().update.attach(updateListener);
-	listeners.windowClose.bind<&closeButton>();
-	listeners.keyPress.bind<&keyPress>();
-	listeners.attachAll(engineWindow());
+	InputListener<InputClassEnum::WindowClose, InputWindow> closeListener;
+	closeListener.attach(engineWindow()->events);
+	closeListener.bind<&windowClose>();
+	InputListener<InputClassEnum::KeyPress, InputKey> keyPressListener;
+	keyPressListener.attach(engineWindow()->events);
+	keyPressListener.bind<&keyPress>();
+	InputListener<InputClassEnum::GuiWidget, InputGuiWidget, bool> guiListener;
+	guiListener.attach(engineGuiManager()->widgetEvent);
 	guiListener.bind<&guiFunction>();
-	engineGuiManager()->widgetEvent.attach(guiListener);
 
 	updateInitialize();
 	{

@@ -16,7 +16,7 @@
 using namespace cage;
 constexpr uint32 assetsName = HashString("cage-tests/material/material.pack");
 
-void windowClose()
+void windowClose(InputWindow)
 {
 	engineStop();
 }
@@ -44,12 +44,12 @@ int main(int argc, char *args[])
 		engineInitialize(EngineCreateConfig());
 
 		// events
-		EventListener<void()> closeListener;
-		closeListener.attach(engineWindow()->events.windowClose);
-		closeListener.bind<&windowClose>();
 		EventListener<void()> updateListener;
 		updateListener.attach(controlThread().update);
 		updateListener.bind<&update>();
+		InputListener<InputClassEnum::WindowClose, InputWindow> closeListener;
+		closeListener.attach(engineWindow()->events);
+		closeListener.bind<&windowClose>();
 
 		// window
 		engineWindow()->setMaximized();

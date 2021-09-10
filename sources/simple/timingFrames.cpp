@@ -2,7 +2,6 @@
 #include <cage-core/concurrent.h>
 #include <cage-core/entities.h>
 #include <cage-core/hashString.h>
-#include <cage-core/macros.h>
 #include <cage-core/string.h>
 #include <cage-engine/window.h>
 #include <cage-engine/highPerformanceGpuHint.h>
@@ -21,10 +20,9 @@ uint64 prepareDelay = 0;
 uint64 renderDelay = 0;
 uint64 soundDelay = 0;
 
-bool windowClose()
+void windowClose(InputWindow)
 {
 	engineStop();
-	return false;
 }
 
 void controlInit()
@@ -48,9 +46,9 @@ void controlInit()
 	}
 }
 
-bool guiUpdate();
+void guiUpdate();
 
-bool update()
+void update()
 {
 	uint64 time = engineControlTime();
 	EntityManager *ents = engineEntities();
@@ -64,34 +62,30 @@ bool update()
 		threadSleep(updateDelay);
 	}
 	guiUpdate();
-	return false;
 }
 
-bool prepare()
+void prepare()
 {
 	if (!prepareDelay)
-		return false;
+		return;
 	threadSleep(prepareDelay);
-	return false;
 }
 
-bool render()
+void render()
 {
 	if (!renderDelay)
-		return false;
+		return;
 	threadSleep(renderDelay);
-	return false;
 }
 
-bool soundUpdate()
+void soundUpdate()
 {
 	if (!soundDelay)
-		return false;
+		return;
 	threadSleep(soundDelay);
-	return false;
 }
 
-bool guiInit()
+void guiInit()
 {
 	GuiManager *g = cage::engineGuiManager();
 
@@ -136,8 +130,6 @@ bool guiInit()
 			c.value = Stringizer() + values[i];
 		}
 	}
-
-	return false;
 }
 
 namespace
@@ -154,7 +146,7 @@ namespace
 	}
 }
 
-bool guiUpdate()
+void guiUpdate()
 {
 	{
 		Entity *control = cage::engineGuiEntities()->get(20 + 0);
@@ -178,7 +170,6 @@ bool guiUpdate()
 	setIntValue(3, prepareDelay);
 	setIntValue(4, renderDelay);
 	setIntValue(5, soundDelay);
-	return false;
 }
 
 int main(int argc, char *args[])
@@ -193,19 +184,26 @@ int main(int argc, char *args[])
 		engineInitialize(EngineCreateConfig());
 
 		// events
-#define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
-		GCHL_GENERATE((), update, controlThread().update);
-		GCHL_GENERATE((), prepare, graphicsPrepareThread().prepare);
-		GCHL_GENERATE((), render, graphicsDispatchThread().dispatch);
-		GCHL_GENERATE((), soundUpdate, soundThread().sound);
-		GCHL_GENERATE((), guiInit, controlThread().initialize);
-#undef GCHL_GENERATE
-		EventListener<bool()> windowCloseListener;
-		windowCloseListener.bind<&windowClose>();
-		windowCloseListener.attach(engineWindow()->events.windowClose);
+		EventListener<void()> updateListener;
+		updateListener.attach(controlThread().update);
+		updateListener.bind<&update>();
+		EventListener<void()> prepareListener;
+		prepareListener.attach(graphicsPrepareThread().prepare);
+		prepareListener.bind<&prepare>();
+		EventListener<void()> renderListener;
+		renderListener.attach(graphicsDispatchThread().dispatch);
+		renderListener.bind<&render>();
+		EventListener<void()> soundListener;
+		soundListener.attach(soundThread().sound);
+		soundListener.bind<&soundUpdate>();
+		EventListener<void()> guiInitListener;
+		guiInitListener.attach(controlThread().initialize);
+		guiInitListener.bind<&guiInit>();
+		InputListener<InputClassEnum::WindowClose, InputWindow> closeListener;
+		closeListener.attach(engineWindow()->events);
+		closeListener.bind<&windowClose>();
 
-		engineWindow()->setWindowed();
-		engineWindow()->windowedSize(Vec2i(800, 600));
+		engineWindow()->setMaximized();
 		engineWindow()->title("timing frames");
 		controlInit();
 		Holder<StatisticsGui> statistics = newStatisticsGui();

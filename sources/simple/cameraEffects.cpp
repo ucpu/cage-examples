@@ -2,7 +2,6 @@
 #include <cage-core/entities.h>
 #include <cage-core/assetManager.h>
 #include <cage-core/hashString.h>
-#include <cage-core/macros.h>
 #include <cage-core/string.h>
 #include <cage-engine/window.h>
 #include <cage-engine/highPerformanceGpuHint.h>
@@ -17,10 +16,9 @@ using namespace cage;
 
 constexpr uint32 assetsName = HashString("cage-tests/camera-effects/effects.pack");
 
-bool windowClose()
+void windowClose(InputWindow)
 {
 	engineStop();
-	return false;
 }
 
 void enableEffect(CameraEffectsFlags effect, bool enable)
@@ -45,7 +43,7 @@ constexpr sint32 genBaseName(CameraEffectsFlags f_)
 	return ret * 10;
 }
 
-bool update()
+void update()
 {
 	EntityManager *ents = engineGuiEntities();
 
@@ -267,8 +265,6 @@ bool update()
 			enableEffect(CameraEffectsFlags::AntiAliasing, cb.state == CheckBoxStateEnum::Checked);
 		}
 	}
-
-	return false;
 }
 
 Entity *genInputFloat(Entity *table, sint32 &childIndex, uint32 nameBase, const String &labelText, Real rangeMin, Real rangeMax, Real step, Real current)
@@ -610,10 +606,12 @@ int main(int argc, char *args[])
 		engineInitialize(EngineCreateConfig());
 
 		// events
-#define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
-		GCHL_GENERATE((), windowClose, engineWindow()->events.windowClose);
-		GCHL_GENERATE((), update, controlThread().update);
-#undef GCHL_GENERATE
+		EventListener<void()> updateListener;
+		updateListener.attach(controlThread().update);
+		updateListener.bind<&update>();
+		InputListener<InputClassEnum::WindowClose, InputWindow> closeListener;
+		closeListener.attach(engineWindow()->events);
+		closeListener.bind<&windowClose>();
 
 		// window
 		engineWindow()->title("camera effects");

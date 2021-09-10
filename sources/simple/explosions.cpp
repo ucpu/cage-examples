@@ -4,7 +4,6 @@
 #include <cage-core/assetManager.h>
 #include <cage-core/hashString.h>
 #include <cage-core/color.h>
-#include <cage-core/macros.h>
 #include <cage-core/camera.h>
 #include <cage-core/geometry.h>
 #include <cage-core/collider.h>
@@ -112,20 +111,20 @@ void makeExplosion(const Vec3 &position)
 	}
 }
 
-void windowClose()
+void windowClose(InputWindow)
 {
 	engineStop();
 }
 
-void mousePress(MouseButtonsFlags buttons, ModifiersFlags, const Vec2i &iPoint)
+void mousePress(InputMouse in)
 {
-	if (none(buttons & MouseButtonsFlags::Left))
+	if (none(in.buttons & MouseButtonsFlags::Left))
 		return;
 
 	Vec3 position;
 	{
 		Vec2i res = engineWindow()->resolution();
-		Vec2 p = Vec2(iPoint[0], iPoint[1]);
+		Vec2 p = Vec2(in.position);
 		p /= Vec2(res[0], res[1]);
 		p = p * 2 - 1;
 		Real px = p[0], py = -p[1];
@@ -220,14 +219,14 @@ int main(int argc, char *args[])
 		engineInitialize(EngineCreateConfig());
 
 		// events
-		EventListener<void()> closeListener;
-		closeListener.attach(engineWindow()->events.windowClose);
-		closeListener.bind<&windowClose>();
 		EventListener<void()> updateListener;
 		updateListener.attach(controlThread().update);
 		updateListener.bind<&update>();
-		EventListener<void(MouseButtonsFlags, ModifiersFlags, const Vec2i &)> mouseListener;
-		mouseListener.attach(engineWindow()->events.mousePress);
+		InputListener<InputClassEnum::WindowClose, InputWindow> closeListener;
+		closeListener.attach(engineWindow()->events);
+		closeListener.bind<&windowClose>();
+		InputListener<InputClassEnum::MousePress, InputMouse> mouseListener;
+		mouseListener.attach(engineWindow()->events);
 		mouseListener.bind<&mousePress>();
 
 		// window

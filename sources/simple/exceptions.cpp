@@ -17,7 +17,7 @@ constexpr float probInit = 0.05f;
 constexpr float probLoop = 0.001f;
 constexpr float probFinish = 0.1f;
 
-void windowClose()
+void windowClose(InputWindow)
 {
 	fullStop = true;
 	engineStop();
@@ -134,9 +134,9 @@ int main(int argc, char *args[])
 			GCHL_GENERATE(soundFinish, soundThread().finalize);
 			GCHL_GENERATE(soundSound, soundThread().sound);
 #undef GCHL_GENERATE
-			EventListener<void()> windowCloseListener;
-			windowCloseListener.bind<&windowClose>();
-			windowCloseListener.attach(engineWindow()->events.windowClose);
+			InputListener<InputClassEnum::WindowClose, InputWindow> closeListener;
+			closeListener.attach(engineWindow()->events);
+			closeListener.bind<&windowClose>();
 
 			engineWindow()->setWindowed();
 			engineWindow()->windowedSize(Vec2i(800, 600));

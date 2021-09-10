@@ -17,7 +17,7 @@ using namespace cage;
 
 bool autoCubes = true;
 
-void windowClose()
+void windowClose(InputWindow)
 {
 	engineStop();
 }
@@ -32,11 +32,11 @@ Frustum cameraFrustum()
 	return frustum;
 }
 
-void keyPress(uint32 key, ModifiersFlags)
+void keyPress(InputKey in)
 {
 	EntityManager *ents = engineEntities();
 
-	if (key == 32)
+	if (in.key == 32)
 	{
 		autoCubes = false;
 
@@ -117,17 +117,15 @@ int main(int argc, char *args[])
 
 		engineInitialize(EngineCreateConfig());
 
-		EventListener<void()> windowCloseListener;
-		windowCloseListener.attach(engineWindow()->events.windowClose);
-		windowCloseListener.bind<&windowClose>();
-
-		EventListener<void(uint32, ModifiersFlags)> keyPressListener;
-		keyPressListener.attach(engineWindow()->events.keyPress);
-		keyPressListener.bind<&keyPress>();
-
 		EventListener<void()> updateListener;
 		updateListener.attach(controlThread().update);
 		updateListener.bind<&update>();
+		InputListener<InputClassEnum::WindowClose, InputWindow> closeListener;
+		closeListener.attach(engineWindow()->events);
+		closeListener.bind<&windowClose>();
+		InputListener<InputClassEnum::KeyPress, InputKey> keyPressListener;
+		keyPressListener.attach(engineWindow()->events);
+		keyPressListener.bind<&keyPress>();
 
 		// window
 		engineWindow()->setMaximized();

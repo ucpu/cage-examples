@@ -22,10 +22,9 @@ using namespace cage;
 bool closing = false;
 constexpr uint32 assetsName = HashString("cage-tests/logo/logo.pack");
 
-bool windowClose()
+void windowClose(InputWindow)
 {
 	closing = true;
-	return false;
 }
 
 int main(int argc, char *args[])
@@ -39,9 +38,9 @@ int main(int argc, char *args[])
 
 		// window
 		Holder<Window> window = newWindow();
-		EventListener<bool()> windowCloseListener;
+		InputListener<InputClassEnum::WindowClose, InputWindow> windowCloseListener;
 		windowCloseListener.bind<&windowClose>();
-		window->events.windowClose.attach(windowCloseListener);
+		windowCloseListener.attach(window->events);
 		window->title("cage test logo");
 		detail::initializeOpengl();
 

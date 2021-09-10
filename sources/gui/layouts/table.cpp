@@ -9,16 +9,16 @@ public:
 
 	std::vector<Entity *> items;
 
-	void guiEvent(uint32 name) override
+	void guiEvent(InputGuiWidget in) override
 	{
-		guiTestClass::guiEvent(name);
+		guiTestClass::guiEvent(in);
 		EntityManager *ents = engineGuiEntities();
 		GuiLayoutTableComponent &s = ents->get(42)->value<GuiLayoutTableComponent>();
-		switch (name)
+		switch (in.widget)
 		{
 		case 2:
 		{
-			GuiCheckBoxComponent &b = ents->get(name)->value<GuiCheckBoxComponent>();
+			GuiCheckBoxComponent &b = ents->get(in.widget)->value<GuiCheckBoxComponent>();
 			if (b.state == CheckBoxStateEnum::Checked)
 			{
 				GuiScrollbarsComponent &sc = ents->get(42)->value<GuiScrollbarsComponent>();
@@ -28,17 +28,17 @@ public:
 		} break;
 		case 3:
 		{
-			GuiCheckBoxComponent &b = ents->get(name)->value<GuiCheckBoxComponent>();
+			GuiCheckBoxComponent &b = ents->get(in.widget)->value<GuiCheckBoxComponent>();
 			s.vertical = b.state == CheckBoxStateEnum::Checked;
 		} break;
 		case 4:
 		{
-			GuiCheckBoxComponent &b = ents->get(name)->value<GuiCheckBoxComponent>();
+			GuiCheckBoxComponent &b = ents->get(in.widget)->value<GuiCheckBoxComponent>();
 			s.grid = b.state == CheckBoxStateEnum::Checked;
 		} break;
 		case 5:
 		{
-			GuiCheckBoxComponent &b = ents->get(name)->value<GuiCheckBoxComponent>();
+			GuiCheckBoxComponent &b = ents->get(in.widget)->value<GuiCheckBoxComponent>();
 			if (b.state == CheckBoxStateEnum::Checked)
 			{ // add scrollbars
 				for (auto e : items)
@@ -57,7 +57,7 @@ public:
 		} break;
 		case 6:
 		{
-			GuiInputComponent &b = ents->get(name)->value<GuiInputComponent>();
+			GuiInputComponent &b = ents->get(in.widget)->value<GuiInputComponent>();
 			if (b.valid)
 				s.sections = toUint32(b.value);
 		} break;

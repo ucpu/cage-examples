@@ -3,7 +3,6 @@
 #include <cage-core/config.h>
 #include <cage-core/assetManager.h>
 #include <cage-core/hashString.h>
-#include <cage-core/macros.h>
 #include <cage-engine/window.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/guiComponents.h>
@@ -21,13 +20,12 @@ using namespace cage;
 constexpr uint32 assetsName = HashString("cage-tests/room/room.pack");
 constexpr uint32 screenName = HashString("cage-tests/room/tvscreen.jpg");
 
-bool windowClose()
+void windowClose(InputWindow)
 {
 	engineStop();
-	return false;
 }
 
-bool graphicsInitialize()
+void graphicsInitialize()
 {
 	Holder<Texture> fabScreenTex = newTexture();
 	fabScreenTex->image2d(Vec2i(800, 500), GL_RGB16F);
@@ -40,24 +38,19 @@ bool graphicsInitialize()
 		c.target = +fabScreenTex;
 	}
 	engineAssets()->fabricate<AssetSchemeIndexTexture, Texture>(screenName, std::move(fabScreenTex), "fabricated tv screen");
-	return false;
 }
 
-bool graphicsFinalize()
+void graphicsFinalize()
 {
 	engineAssets()->remove(screenName);
-	return false;
 }
 
-bool update()
+void update()
 {
 	uint64 time = engineControlTime();
-
 	TransformComponent &t1 = engineEntities()->get(3)->value<TransformComponent>();
 	TransformComponent &t2 = engineEntities()->get(4)->value<TransformComponent>();
 	t1.orientation = t2.orientation = Quat(Degs(-25), Degs(sin(Degs(time * 3e-5)) * 20 + 125), Degs());
-
-	return false;
 }
 
 int main(int argc, char *args[])
@@ -72,12 +65,18 @@ int main(int argc, char *args[])
 		engineInitialize(EngineCreateConfig());
 
 		// events
-#define GCHL_GENERATE(TYPE, FUNC, EVENT) EventListener<bool TYPE> CAGE_JOIN(FUNC, Listener); CAGE_JOIN(FUNC, Listener).bind<&FUNC>(); CAGE_JOIN(FUNC, Listener).attach(EVENT);
-		GCHL_GENERATE((), windowClose, engineWindow()->events.windowClose);
-		GCHL_GENERATE((), graphicsInitialize, graphicsDispatchThread().initialize);
-		GCHL_GENERATE((), graphicsFinalize, graphicsDispatchThread().finalize);
-		GCHL_GENERATE((), update, controlThread().update);
-#undef GCHL_GENERATE
+		EventListener<void()> updateListener;
+		updateListener.attach(controlThread().update);
+		updateListener.bind<&update>();
+		InputListener<InputClassEnum::WindowClose, InputWindow> closeListener;
+		closeListener.attach(engineWindow()->events);
+		closeListener.bind<&windowClose>();
+		EventListener<void()> graphicsInitListener;
+		graphicsInitListener.attach(graphicsDispatchThread().initialize);
+		graphicsInitListener.bind<&graphicsInitialize>();
+		EventListener<void()> graphicsFinisListener;
+		graphicsFinisListener.attach(graphicsDispatchThread().finalize);
+		graphicsFinisListener.bind<&graphicsFinalize>();
 
 		// window
 		engineWindow()->setMaximized();
