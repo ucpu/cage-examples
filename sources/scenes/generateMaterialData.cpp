@@ -41,7 +41,7 @@ int main(int argc, const char *args[])
 				Holder<Mesh> msh = newMeshSphereRegular(1, 0.2);
 				MeshExportObjConfig cfg;
 				cfg.objectName = mat;
-				msh->exportObjFile(cfg, pathJoin(basePath, mat + ".obj"));
+				msh->exportObjFile(pathJoin(basePath, mat + ".obj"), cfg);
 			}
 
 			{
