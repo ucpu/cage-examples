@@ -191,7 +191,7 @@ int main(int argc, char *args[])
 		}
 		{ // gimbals/spawners
 			uint32 i = 0;
-			constexpr const char *objects[] = { "cage-tests/skeletons/gimbal/spawner_x.object", "cage-tests/skeletons/gimbal/spawner_fbx.object" };
+			constexpr const char *objects[] = { "cage-tests/skeletons/gimbal/spawner_fbx.object", "cage-tests/skeletons/gimbal/spawner_glb.object", "cage-tests/skeletons/gimbal/spawner_x.object" };
 			for (const char *object : objects)
 			{
 				Entity *e = ents->create(30 + i);

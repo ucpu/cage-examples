@@ -1,0 +1,41 @@
+
+[]
+scheme = model
+formats.obj
+
+[]
+scheme = model
+bones = true
+formats.fbx
+formats.glb
+
+[]
+scheme = skeleton
+formats.fbx;skeleton
+formats.glb;skeleton
+
+[]
+scheme = animation
+formats.fbx?Armature|Idle
+formats.glb?Idle
+formats.fbx?Armature|Ears
+formats.glb?Ears
+formats.fbx?Armature|Chin
+formats.glb?Chin
+
+[]
+scheme = texture
+alias = albedo.png
+formats.glb?albedo
+
+[]
+scheme = object
+formats_fbx_ears.object
+formats_fbx_chin.object
+formats_glb_ears.object
+formats_glb_chin.object
+formats_obj.object
+
+[]
+scheme = pack
+formats.pack
