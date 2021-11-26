@@ -6,27 +6,40 @@ formats.obj
 []
 scheme = model
 bones = true
+scale = 0.01
 formats.fbx
+
+[]
+scheme = model
+bones = true
 formats.glb
 
 []
 scheme = skeleton
+scale = 0.01
 formats.fbx;skeleton
+
+[]
+scheme = skeleton
 formats.glb;skeleton
 
 []
 scheme = animation
 formats.fbx?Armature|Idle
-formats.glb?Idle
 formats.fbx?Armature|Ears
-formats.glb?Ears
 formats.fbx?Armature|Chin
+
+[]
+scheme = animation
+formats.glb?Idle
+formats.glb?Ears
 formats.glb?Chin
 
 []
 scheme = texture
-alias = albedo.png
+srgb = true
 formats.glb?albedo
+albedo.png
 
 []
 scheme = object

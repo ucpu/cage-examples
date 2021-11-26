@@ -1,6 +1,7 @@
 
 [skeletalAnimation]
 name = formats.fbx?Armature|Ears
+speed = 40
 
 []
 formats.fbx

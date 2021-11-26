@@ -1,6 +1,7 @@
 
 [skeletalAnimation]
 name = formats.fbx?Armature|Chin
+speed = 40
 
 []
 formats.fbx

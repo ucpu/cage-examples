@@ -60,11 +60,11 @@ int main(int argc, char *args[])
 		{ // monkeys
 			uint32 i = 0;
 			constexpr const char *objects[] = {
-				//"cage-tests/formats/formats_fbx_chin.object",
-				//"cage-tests/formats/formats_fbx_ears.object",
+				"cage-tests/formats/formats_fbx_chin.object",
+				"cage-tests/formats/formats_fbx_ears.object",
 				"cage-tests/formats/formats_glb_chin.object",
 				"cage-tests/formats/formats_glb_ears.object",
-				//"cage-tests/formats/formats_obj.object",
+				"cage-tests/formats/formats_obj.object",
 			};
 			for (const char *object : objects)
 			{
