@@ -60,6 +60,7 @@ textures/vase_plant_mask.png
 []
 scheme = texture
 convert = heightToNormal
+normal = true
 textures/background_bump.png
 textures/chain_texture_bump.png
 textures/lion_bump.png

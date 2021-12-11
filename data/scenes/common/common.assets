@@ -18,6 +18,7 @@ ground.jpg;d
 scheme = texture
 convert = heightToNormal
 normalStrength = 0.3
+normal = true
 ground.jpg;n
 
 []

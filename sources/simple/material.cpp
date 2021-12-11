@@ -90,6 +90,7 @@ int main(int argc, char *args[])
 		Holder<FpsCamera> fpsCamera = newFpsCamera(ents->get(3));
 		fpsCamera->mouseButton = MouseButtonsFlags::Left;
 		fpsCamera->movementSpeed = 0.3;
+		Holder<StatisticsGui> statistics = newStatisticsGui();
 
 		engineAssets()->add(assetsName);
 		engineStart();
