@@ -11,7 +11,7 @@ class guiTestImpl : public guiTestClass
 		pr = pe;
 		pe.parent = r->name();
 		pe.order = 0;
-		GuiScrollbarsComponent &sc = r->value<GuiScrollbarsComponent>();
+		r->value<GuiScrollbarsComponent>();
 		return r;
 	}
 
@@ -22,7 +22,7 @@ class guiTestImpl : public guiTestClass
 		guiBasicLayout();
 		{
 			Entity *e = ents->get(3);
-			GuiLayoutTableComponent &layout = e->value<GuiLayoutTableComponent>();
+			e->value<GuiLayoutTableComponent>();
 		}
 
 		uint32 index = 1;
@@ -33,7 +33,7 @@ class guiTestImpl : public guiTestClass
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			GuiSliderBarComponent &s = e->value<GuiSliderBarComponent>();
+			e->value<GuiSliderBarComponent>();
 			envelopeInScrollbars(e);
 		}
 

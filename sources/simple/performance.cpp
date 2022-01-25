@@ -128,15 +128,15 @@ void guiInit()
 
 	Entity *root = g->entities()->createUnique();
 	{
-		GuiScrollbarsComponent &sc = root->value<GuiScrollbarsComponent>();
+		root->value<GuiScrollbarsComponent>();
 	}
 
 	Entity *panel = g->entities()->createUnique();
 	{
 		GuiParentComponent &child = panel->value<GuiParentComponent>();
 		child.parent = root->name();
-		GuiPanelComponent &c = panel->value<GuiPanelComponent>();
-		GuiLayoutTableComponent &l = panel->value<GuiLayoutTableComponent>();
+		panel->value<GuiPanelComponent>();
+		panel->value<GuiLayoutTableComponent>();
 	}
 
 	{ // boxes count
@@ -145,7 +145,7 @@ void guiInit()
 			GuiParentComponent &child = lab->value<GuiParentComponent>();
 			child.parent = panel->name();
 			child.order = 1;
-			GuiLabelComponent &c = lab->value<GuiLabelComponent>();
+			lab->value<GuiLabelComponent>();
 			GuiTextComponent &t = lab->value<GuiTextComponent>();
 			t.value = "boxes: ";
 		}
@@ -169,7 +169,7 @@ void guiInit()
 			GuiParentComponent &child = lab->value<GuiParentComponent>();
 			child.parent = panel->name();
 			child.order = 3;
-			GuiLabelComponent &c = lab->value<GuiLabelComponent>();
+			lab->value<GuiLabelComponent>();
 			GuiTextComponent &t = lab->value<GuiTextComponent>();
 			t.value = "camera range: ";
 		}
@@ -189,7 +189,7 @@ void guiInit()
 			GuiParentComponent &child = lab->value<GuiParentComponent>();
 			child.parent = panel->name();
 			child.order = 5;
-			GuiLabelComponent &c = lab->value<GuiLabelComponent>();
+			lab->value<GuiLabelComponent>();
 			GuiTextComponent &t = lab->value<GuiTextComponent>();
 			t.value = "enable shadow: ";
 		}

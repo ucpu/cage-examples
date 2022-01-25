@@ -271,7 +271,7 @@ void updateInitialize()
 		Entity *e = cage::engineGuiEntities()->create(1);
 		GuiParentComponent &parent = e->value<GuiParentComponent>();
 		parent.parent = a->name();
-		GuiButtonComponent &c = e->value<GuiButtonComponent>();
+		e->value<GuiButtonComponent>();
 		GuiTextComponent &t = e->value<GuiTextComponent>();
 		t.value = "< prev";
 	}
@@ -284,7 +284,7 @@ void updateInitialize()
 		Entity *e = cage::engineGuiEntities()->create(2);
 		GuiParentComponent &parent = e->value<GuiParentComponent>();
 		parent.parent = a->name();
-		GuiButtonComponent &c = e->value<GuiButtonComponent>();
+		e->value<GuiButtonComponent>();
 		GuiTextComponent &t = e->value<GuiTextComponent>();
 		t.value = "next >";
 	}

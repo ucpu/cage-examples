@@ -66,7 +66,7 @@ public:
 			{
 			case 0:
 			{
-				GuiButtonComponent &b = e->value<GuiButtonComponent>();
+				e->value<GuiButtonComponent>();
 				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = Stringizer() + e->name();
 			} break;
@@ -82,7 +82,7 @@ public:
 			} break;
 			case 3:
 			{
-				GuiComboBoxComponent &cb = e->value<GuiComboBoxComponent>();
+				e->value<GuiComboBoxComponent>();
 				generateList(e->name());
 			} break;
 			case 4:
@@ -92,18 +92,18 @@ public:
 			} break;
 			case 5:
 			{
-				GuiLabelComponent &l = e->value<GuiLabelComponent>();
+				e->value<GuiLabelComponent>();
 				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = Stringizer() + e->name();
 			} break;
 			case 6:
 			{
-				GuiListBoxComponent &lb = e->value<GuiListBoxComponent>();
+				e->value<GuiListBoxComponent>();
 				generateList(e->name());
 			} break;
 			case 7:
 			{
-				GuiPanelComponent &p = e->value<GuiPanelComponent>();
+				e->value<GuiPanelComponent>();
 				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = Stringizer() + e->name();
 			} break;
@@ -115,7 +115,7 @@ public:
 			} break;
 			case 9:
 			{
-				GuiRadioBoxComponent &rb = e->value<GuiRadioBoxComponent>();
+				e->value<GuiRadioBoxComponent>();
 			} break;
 			case 10:
 			{
@@ -124,13 +124,13 @@ public:
 			} break;
 			case 11:
 			{
-				GuiSpoilerComponent &s = e->value<GuiSpoilerComponent>();
+				e->value<GuiSpoilerComponent>();
 				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = Stringizer() + e->name();
 			} break;
 			case 12:
 			{
-				GuiTextAreaComponent &ta = e->value<GuiTextAreaComponent>();
+				e->value<GuiTextAreaComponent>();
 			} break;
 			}
 		}

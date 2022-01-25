@@ -10,7 +10,7 @@ public:
 
 		Entity *cell = ents->createUnique();
 		{
-			GuiPanelComponent &b = cell->value<GuiPanelComponent>();
+			cell->value<GuiPanelComponent>();
 		}
 
 		if (depth == 15)
@@ -18,7 +18,7 @@ public:
 			Entity *e = ents->createUnique();
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = cell->name();
-			GuiLabelComponent &l = e->value<GuiLabelComponent>();
+			e->value<GuiLabelComponent>();
 			GuiTextComponent &t = e->value<GuiTextComponent>();
 			t.value = "Hi";
 		}
@@ -32,7 +32,7 @@ public:
 				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = cell->name();
 				p.order = s.inverse;
-				GuiButtonComponent &l = e->value<GuiButtonComponent>();
+				e->value<GuiButtonComponent>();
 				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = Stringizer() + "Item: " + (depth + 1);
 			}
@@ -49,8 +49,7 @@ public:
 
 	void initialize() override
 	{
-		EntityManager *ents = engineGuiEntities();
-		Entity *e = makeSplitterRec(0);
+		makeSplitterRec(0);
 	}
 
 };

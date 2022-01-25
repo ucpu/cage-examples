@@ -22,7 +22,7 @@ public:
 			bn = e->name();
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = an;
-			GuiPanelComponent &panel = e->value<GuiPanelComponent>();
+			e->value<GuiPanelComponent>();
 			GuiTextComponent &text = e->value<GuiTextComponent>();
 			text.value = "Outer";
 			GuiExplicitSizeComponent &size = e->value<GuiExplicitSizeComponent>();
@@ -37,7 +37,7 @@ public:
 			cn = e->name();
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = bn;
-			GuiSpoilerComponent &spoiler = e->value<GuiSpoilerComponent>();
+			e->value<GuiSpoilerComponent>();
 			GuiTextComponent &text = e->value<GuiTextComponent>();
 			text.value = "Inner";
 		}
@@ -46,7 +46,7 @@ public:
 			Entity *e = ents->createUnique();
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = cn;
-			GuiLabelComponent &lab = e->value<GuiLabelComponent>();
+			e->value<GuiLabelComponent>();
 			GuiImageComponent &img = e->value<GuiImageComponent>();
 			img.textureName = HashString("cage/texture/helper.jpg");
 			GuiExplicitSizeComponent &size = e->value<GuiExplicitSizeComponent>();

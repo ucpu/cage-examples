@@ -10,7 +10,7 @@ class guiTestImpl : public guiTestClass
 		guiBasicLayout();
 		{
 			Entity *e = ents->get(3);
-			GuiLayoutTableComponent &layout = e->value<GuiLayoutTableComponent>();
+			e->value<GuiLayoutTableComponent>();
 		}
 
 		uint32 index = 1;
@@ -21,7 +21,7 @@ class guiTestImpl : public guiTestClass
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
+			e->value<GuiCheckBoxComponent>();
 		}
 
 		{ // with label
@@ -30,7 +30,7 @@ class guiTestImpl : public guiTestClass
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
+			e->value<GuiCheckBoxComponent>();
 			GuiTextComponent &t = e->value<GuiTextComponent>();
 			t.value = "label";
 		}

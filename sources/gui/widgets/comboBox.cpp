@@ -10,7 +10,7 @@ class guiTestImpl : public guiTestClass
 		guiBasicLayout();
 		{
 			Entity *e = ents->get(3);
-			GuiLayoutTableComponent &layout = e->value<GuiLayoutTableComponent>();
+			e->value<GuiLayoutTableComponent>();
 		}
 
 		uint32 index = 1;
@@ -21,7 +21,7 @@ class guiTestImpl : public guiTestClass
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			GuiComboBoxComponent &cb = e->value<GuiComboBoxComponent>();
+			e->value<GuiComboBoxComponent>();
 			GuiTextComponent &t = e->value<GuiTextComponent>();
 			t.value = "placeholder";
 		}
@@ -31,7 +31,7 @@ class guiTestImpl : public guiTestClass
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			GuiComboBoxComponent &cb = e->value<GuiComboBoxComponent>();
+			e->value<GuiComboBoxComponent>();
 			GuiTextComponent &t = e->value<GuiTextComponent>();
 			t.value = "select one:";
 			for (uint32 i = 0; i < 4; i++)

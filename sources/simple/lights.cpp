@@ -89,7 +89,7 @@ void initializeGui()
 	EntityManager *ents = engineGuiEntities();
 	Entity *layout = ents->create(1);
 	{ // layout
-		GuiScrollbarsComponent &sc = layout->value<GuiScrollbarsComponent>();
+		layout->value<GuiScrollbarsComponent>();
 		GuiLayoutLineComponent &l = layout->value<GuiLayoutLineComponent>();
 		l.vertical = true;
 	}
@@ -100,7 +100,7 @@ void initializeGui()
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = layout->name();
 			p.order = 1;
-			GuiSpoilerComponent &c = panel->value<GuiSpoilerComponent>();
+			panel->value<GuiSpoilerComponent>();
 			GuiTextComponent &t = panel->value<GuiTextComponent>();
 			t.value = "Ambient";
 			GuiLayoutLineComponent &l = panel->value<GuiLayoutLineComponent>();
@@ -124,7 +124,7 @@ void initializeGui()
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = layout->name();
 			p.order = 5 + i;
-			GuiSpoilerComponent &c = panel->value<GuiSpoilerComponent>();
+			panel->value<GuiSpoilerComponent>();
 			GuiTextComponent &t = panel->value<GuiTextComponent>();
 			t.value = Stringizer() + "Spot light [" + i + "]:";
 			GuiLayoutLineComponent &l = panel->value<GuiLayoutLineComponent>();

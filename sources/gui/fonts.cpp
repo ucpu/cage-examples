@@ -43,7 +43,7 @@ public:
 
 		Entity *panel = ents->create(2);
 		{
-			GuiPanelComponent &gp = panel->value<GuiPanelComponent>();
+			panel->value<GuiPanelComponent>();
 			GuiScrollbarsComponent &sc = panel->value<GuiScrollbarsComponent>();
 			sc.alignment = Vec2(0.5, 0.5);
 			GuiLayoutLineComponent &ll = panel->value<GuiLayoutLineComponent>();
@@ -56,7 +56,7 @@ public:
 			GuiParentComponent &parent = e->value<GuiParentComponent>();
 			parent.parent = panel->name();
 			parent.order = i;
-			GuiLabelComponent &label = e->value<GuiLabelComponent>();
+			e->value<GuiLabelComponent>();
 			GuiTextComponent &text = e->value<GuiTextComponent>();
 			text.value = labelTexts[i];
 			GuiTextFormatComponent &format = e->value<GuiTextFormatComponent>();

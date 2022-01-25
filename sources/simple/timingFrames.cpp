@@ -30,7 +30,7 @@ void controlInit()
 	EntityManager *ents = engineEntities();
 	{ // camera
 		Entity *e = ents->create(1);
-		TransformComponent &t = e->value<TransformComponent>();
+		e->value<TransformComponent>();
 		CameraComponent &c = e->value<CameraComponent>();
 		c.ambientColor = Vec3(1);
 		c.ambientIntensity = 0.5;
@@ -40,7 +40,7 @@ void controlInit()
 	}
 	{ // box 1
 		Entity *e = ents->create(2);
-		TransformComponent &t = e->value<TransformComponent>();
+		e->value<TransformComponent>();
 		RenderComponent &r = e->value<RenderComponent>();
 		r.object = HashString("cage/model/fake.obj");
 	}
@@ -91,13 +91,13 @@ void guiInit()
 
 	Entity *panel = g->entities()->createUnique();
 	{
-		GuiScrollbarsComponent &sc = panel->value<GuiScrollbarsComponent>();
+		panel->value<GuiScrollbarsComponent>();
 	}
 
 	Entity *layout = g->entities()->createUnique();
 	{
-		GuiPanelComponent &c = layout->value<GuiPanelComponent>();
-		GuiLayoutTableComponent &l = layout->value<GuiLayoutTableComponent>();
+		layout->value<GuiPanelComponent>();
+		layout->value<GuiLayoutTableComponent>();
 		GuiParentComponent &child = layout->value<GuiParentComponent>();
 		child.parent = panel->name();
 	}
@@ -113,7 +113,7 @@ void guiInit()
 			GuiParentComponent &child = lab->value<GuiParentComponent>();
 			child.parent = layout->name();
 			child.order = i * 2 + 0;
-			GuiLabelComponent &c = lab->value<GuiLabelComponent>();
+			lab->value<GuiLabelComponent>();
 			GuiTextComponent &t = lab->value<GuiTextComponent>();
 			t.value = names[i];
 		}

@@ -72,7 +72,7 @@ Entity *makeParticle(const Vec3 &position, Real scale, uint32 object, uint32 ttl
 	TextureAnimationComponent &ta = e->value<TextureAnimationComponent>();
 	ta.startTime = engineControlTime();
 	ta.speed = 18.0 / ttl;
-	ParticleComponent &p = e->value<ParticleComponent>(ParticleComponent::component);
+	e->value<ParticleComponent>(ParticleComponent::component);
 	TtlComponent &ttlc = e->value<TtlComponent>(TtlComponent::component);
 	ttlc.ttl = ttl;
 	return e;
@@ -277,8 +277,6 @@ void windowClose(InputWindow)
 
 void update()
 {
-	EntityManager *ents = engineEntities();
-
 	updateScreamers();
 	updateParticles();
 
@@ -360,7 +358,7 @@ int main(int argc, char *args[])
 			Entity *e = ents->create(4);
 			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("scenes/common/ground.obj");
-			TransformComponent &t = e->value<TransformComponent>();
+			e->value<TransformComponent>();
 		}
 
 		Holder<FpsCamera> cameraCtrl = newFpsCamera(ents->get(1));

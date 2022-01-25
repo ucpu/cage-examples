@@ -167,8 +167,6 @@ void update()
 	Holder<Collider> collider = engineAssets()->get<AssetSchemeIndexCollider, Collider>(HashString("cage-tests/explosion/floor.obj;collider"));
 	if (!collider)
 		return;
-	
-	EntityManager *ents = engineEntities();
 
 	Vec3 cameraCenter;
 	{

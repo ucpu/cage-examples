@@ -16,7 +16,7 @@ public:
 
 		Entity *panel = ents->create(2);
 		{
-			GuiPanelComponent &gp = panel->value<GuiPanelComponent>();
+			panel->value<GuiPanelComponent>();
 			GuiLayoutLineComponent &ll = panel->value<GuiLayoutLineComponent>();
 			ll.vertical = true;
 			GuiScrollbarsComponent &sc = panel->value<GuiScrollbarsComponent>();
@@ -29,7 +29,7 @@ public:
 			GuiParentComponent &parent = e->value<GuiParentComponent>();
 			parent.parent = panel->name();
 			parent.order = i;
-			GuiLabelComponent &label = e->value<GuiLabelComponent>();
+			e->value<GuiLabelComponent>();
 			GuiTextComponent &text = e->value<GuiTextComponent>();
 			text.assetName = HashString("cage-tests/gui/utf8test.textpack");
 			text.textName = HashString(String(Stringizer() + "utf8test/" + i));

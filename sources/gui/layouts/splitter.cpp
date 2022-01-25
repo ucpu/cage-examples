@@ -35,21 +35,21 @@ public:
 			GuiTextComponent &t = e->value<GuiTextComponent>();
 			if (order == 1)
 			{
-				GuiPanelComponent &panel = e->value<GuiPanelComponent>();
+				e->value<GuiPanelComponent>();
 				t.value = "Panel";
 			}
 			else
 			{
-				GuiSpoilerComponent &spoiler = e->value<GuiSpoilerComponent>();
+				e->value<GuiSpoilerComponent>();
 				t.value = "Spoiler";
 			}
-			GuiLayoutLineComponent &l = e->value<GuiLayoutLineComponent>();
+			e->value<GuiLayoutLineComponent>();
 		}
 		Entity *b = ents->create(100 + order);
 		{
 			GuiParentComponent &p = b->value<GuiParentComponent>();
 			p.parent = e->name();
-			GuiButtonComponent &but = b->value<GuiButtonComponent>();
+			b->value<GuiButtonComponent>();
 			GuiTextComponent &t = b->value<GuiTextComponent>();
 			t.value = "Button";
 		}
@@ -71,8 +71,8 @@ public:
 				GuiParentComponent &p = menu->value<GuiParentComponent>();
 				p.parent = mainSplitter->name();
 				p.order = 1;
-				GuiPanelComponent &b = menu->value<GuiPanelComponent>();
-				GuiLayoutLineComponent &l = menu->value<GuiLayoutLineComponent>();
+				menu->value<GuiPanelComponent>();
+				menu->value<GuiLayoutLineComponent>();
 			}
 
 			{ // vertical
@@ -80,7 +80,7 @@ public:
 				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = menu->name();
 				p.order = 3;
-				GuiCheckBoxComponent &b = e->value<GuiCheckBoxComponent>();
+				e->value<GuiCheckBoxComponent>();
 				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = "vertical";
 			}
@@ -90,7 +90,7 @@ public:
 				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = menu->name();
 				p.order = 4;
-				GuiCheckBoxComponent &b = e->value<GuiCheckBoxComponent>();
+				e->value<GuiCheckBoxComponent>();
 				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = "inverse";
 			}
@@ -102,8 +102,8 @@ public:
 			GuiParentComponent &p = presentation->value<GuiParentComponent>();
 			p.parent = mainSplitter->name();
 			p.order = 2;
-			
-			GuiLayoutSplitterComponent &l = presentation->value<GuiLayoutSplitterComponent>();
+
+			presentation->value<GuiLayoutSplitterComponent>();
 		}
 
 		genContent(1);

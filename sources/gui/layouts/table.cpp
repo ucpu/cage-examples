@@ -21,7 +21,7 @@ public:
 			GuiCheckBoxComponent &b = ents->get(in.widget)->value<GuiCheckBoxComponent>();
 			if (b.state == CheckBoxStateEnum::Checked)
 			{
-				GuiScrollbarsComponent &sc = ents->get(42)->value<GuiScrollbarsComponent>();
+				ents->get(42)->value<GuiScrollbarsComponent>();
 			}
 			else
 				ents->get(42)->remove<GuiScrollbarsComponent>();
@@ -80,9 +80,9 @@ public:
 				GuiParentComponent &p = menu->value<GuiParentComponent>();
 				p.parent = mainSplitter->name();
 				p.order = 1;
-				GuiPanelComponent &b = menu->value<GuiPanelComponent>();
-				GuiLayoutLineComponent &l = menu->value<GuiLayoutLineComponent>();
-				GuiScrollbarsComponent &sc = menu->value<GuiScrollbarsComponent>();
+				menu->value<GuiPanelComponent>();
+				menu->value<GuiLayoutLineComponent>();
+				menu->value<GuiScrollbarsComponent>();
 			}
 
 			{ // scrollbar
@@ -90,7 +90,7 @@ public:
 				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = menu->name();
 				p.order = 2;
-				GuiCheckBoxComponent &b = e->value<GuiCheckBoxComponent>();
+				e->value<GuiCheckBoxComponent>();
 				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = "scrollbar";
 			}
@@ -111,7 +111,7 @@ public:
 				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = menu->name();
 				p.order = 4;
-				GuiCheckBoxComponent &b = e->value<GuiCheckBoxComponent>();
+				e->value<GuiCheckBoxComponent>();
 				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = "grid";
 			}
@@ -121,7 +121,7 @@ public:
 				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = menu->name();
 				p.order = 5;
-				GuiCheckBoxComponent &b = e->value<GuiCheckBoxComponent>();
+				e->value<GuiCheckBoxComponent>();
 				GuiTextComponent &t = e->value<GuiTextComponent>();
 				t.value = "scrollbars";
 			}
@@ -148,7 +148,7 @@ public:
 			GuiParentComponent &p = presentation->value<GuiParentComponent>();
 			p.parent = mainSplitter->name();
 			p.order = 2;
-			GuiPanelComponent &b = presentation->value<GuiPanelComponent>();
+			presentation->value<GuiPanelComponent>();
 			GuiLayoutTableComponent &t = presentation->value<GuiLayoutTableComponent>();
 			t.sections = 0;
 		}
@@ -162,7 +162,7 @@ public:
 				GuiParentComponent &p = o->value<GuiParentComponent>();
 				p.parent = 42;
 				p.order = i;
-				GuiPanelComponent &panel = o->value<GuiPanelComponent>();
+				o->value<GuiPanelComponent>();
 			}
 			items.push_back(o);
 			// button
@@ -170,7 +170,7 @@ public:
 			{
 				GuiParentComponent &p = b->value<GuiParentComponent>();
 				p.parent = o->name();
-				GuiButtonComponent &but = b->value<GuiButtonComponent>();
+				b->value<GuiButtonComponent>();
 				GuiTextComponent &t = b->value<GuiTextComponent>();
 				t.value = Stringizer() + "item " + i;
 				GuiExplicitSizeComponent &size = b->value<GuiExplicitSizeComponent>();

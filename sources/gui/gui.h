@@ -26,7 +26,7 @@ public:
 		GuiParentComponent &p = e->value<GuiParentComponent>();
 		p.parent = parentName;
 		p.order = index++;
-		GuiLabelComponent &l = e->value<GuiLabelComponent>();
+		e->value<GuiLabelComponent>();
 		GuiTextComponent &t = e->value<GuiTextComponent>();
 		t.value = name;
 	}
@@ -45,15 +45,15 @@ public:
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = 1;
 			p.order = 1;
-			GuiPanelComponent &gp = panel->value<GuiPanelComponent>();
-			GuiScrollbarsComponent &sc = panel->value<GuiScrollbarsComponent>();
+			panel->value<GuiPanelComponent>();
+			panel->value<GuiScrollbarsComponent>();
 		}
 		{ // bottom panel
 			Entity *panel = ents->create(3);
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = 1;
 			p.order = 2;
-			GuiPanelComponent &pan = panel->value<GuiPanelComponent>();
+			panel->value<GuiPanelComponent>();
 			
 			//lt.vertical = true;
 			GuiScrollbarsComponent &sc = panel->value<GuiScrollbarsComponent>();

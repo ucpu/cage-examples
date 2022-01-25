@@ -88,7 +88,7 @@ struct Gp : Immovable
 		for (Entity *&e : es)
 		{
 			e = ents->createUnique();
-			TransformComponent &t = e->value<TransformComponent>();
+			e->value<TransformComponent>();
 			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage/model/fake.obj");
 		}

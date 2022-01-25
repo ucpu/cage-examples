@@ -73,7 +73,7 @@ public:
 			Entity *e = ents->create(100);
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 2;
-			GuiComboBoxComponent &input = e->value<GuiComboBoxComponent>();
+			e->value<GuiComboBoxComponent>();
 			GuiTextComponent &text = e->value<GuiTextComponent>();
 			text.value = "animation";
 			static const char *options[] = {
@@ -95,7 +95,7 @@ public:
 		{ // main
 			Entity *panel = ents->get(3);
 			//panel->remove(gui()->components().LayoutTable);
-			GuiLayoutLineComponent &ll = panel->value<GuiLayoutLineComponent>();
+			panel->value<GuiLayoutLineComponent>();
 			GuiScrollbarsComponent &sc = panel->value<GuiScrollbarsComponent>();
 			sc.alignment = Vec2(0.5, 0);
 		}
@@ -104,7 +104,7 @@ public:
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = 1;
-			GuiPanelComponent &gp = panel->value<GuiPanelComponent>();
+			panel->value<GuiPanelComponent>();
 			GuiLayoutLineComponent &ll = panel->value<GuiLayoutLineComponent>();
 			ll.vertical = true;
 		}
@@ -113,7 +113,7 @@ public:
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = 2;
-			GuiPanelComponent &gp = panel->value<GuiPanelComponent>();
+			panel->value<GuiPanelComponent>();
 			GuiLayoutLineComponent &ll = panel->value<GuiLayoutLineComponent>();
 			ll.vertical = true;
 			GuiWidgetStateComponent &ws = panel->value<GuiWidgetStateComponent>();
@@ -127,7 +127,7 @@ public:
 				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = side;
 				p.order = index++;
-				GuiLabelComponent &label = e->value<GuiLabelComponent>();
+				e->value<GuiLabelComponent>();
 				GuiTextComponent &text = e->value<GuiTextComponent>();
 				text.value = "People shouldn't be afraid of their government.\nGovernments should be afraid of their people.";
 				GuiTextFormatComponent &format = e->value<GuiTextFormatComponent>();
@@ -138,7 +138,7 @@ public:
 				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = side;
 				p.order = index++;
-				GuiButtonComponent &button = e->value<GuiButtonComponent>();
+				e->value<GuiButtonComponent>();
 				GuiTextComponent &text = e->value<GuiTextComponent>();
 				text.value = "button";
 			}
@@ -147,7 +147,7 @@ public:
 				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = side;
 				p.order = index++;
-				GuiInputComponent &input = e->value<GuiInputComponent>();
+				e->value<GuiInputComponent>();
 				GuiTextComponent &text = e->value<GuiTextComponent>();
 				text.value = "text input box";
 			}
@@ -169,7 +169,7 @@ public:
 				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = side;
 				p.order = index++;
-				GuiCheckBoxComponent &box = e->value<GuiCheckBoxComponent>();
+				e->value<GuiCheckBoxComponent>();
 				GuiTextComponent &text = e->value<GuiTextComponent>();
 				text.value = "checkbox";
 			}
@@ -178,7 +178,7 @@ public:
 				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = side;
 				p.order = index++;
-				GuiRadioBoxComponent &box = e->value<GuiRadioBoxComponent>();
+				e->value<GuiRadioBoxComponent>();
 				GuiTextComponent &text = e->value<GuiTextComponent>();
 				text.value = "radiobox";
 			}
@@ -187,7 +187,7 @@ public:
 				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = side;
 				p.order = index++;
-				GuiComboBoxComponent &input = e->value<GuiComboBoxComponent>();
+				e->value<GuiComboBoxComponent>();
 				GuiTextComponent &text = e->value<GuiTextComponent>();
 				text.value = "combo box";
 				for (uint32 i = 0; i < 5; i++)
@@ -205,14 +205,14 @@ public:
 				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = side;
 				p.order = index++;
-				GuiSliderBarComponent &slider = e->value<GuiSliderBarComponent>();
+				e->value<GuiSliderBarComponent>();
 			}
 			{ // color picker
 				Entity *e = ents->createUnique();
 				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = side;
 				p.order = index++;
-				GuiColorPickerComponent &picker = e->value<GuiColorPickerComponent>();
+				e->value<GuiColorPickerComponent>();
 			}
 		}
 	}

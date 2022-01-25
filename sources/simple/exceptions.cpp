@@ -144,13 +144,13 @@ int main(int argc, char *args[])
 
 			{ // camera
 				Entity *e = engineEntities()->create(1);
-				TransformComponent &t = e->value<TransformComponent>();
+				e->value<TransformComponent>();
 				CameraComponent &c = e->value<CameraComponent>();
 				c.ambientColor = Vec3(1);
 			}
 			{ // box 1
 				Entity *e = engineEntities()->create(2);
-				TransformComponent &t = e->value<TransformComponent>();
+				e->value<TransformComponent>();
 				RenderComponent &r = e->value<RenderComponent>();
 				r.object = HashString("cage/model/fake.obj");
 			}
