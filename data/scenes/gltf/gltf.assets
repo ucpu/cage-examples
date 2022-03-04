@@ -1,0 +1,20 @@
+[]
+scheme = model
+MetalRoughSpheres.glb?Spheres.001_
+MetalRoughSpheres.glb?Spheres.002_
+MetalRoughSpheres.glb?Spheres.003_
+MetalRoughSpheres.glb?Spheres.004_
+MetalRoughSpheres.glb?Spheres_
+[]
+scheme = object
+MetalRoughSpheres.object
+[]
+scheme = pack
+gltf.pack
+[]
+scheme = texture
+srgb = true
+MetalRoughSpheres.glb?0
+[]
+scheme = texture
+MetalRoughSpheres.glb?special_1_1

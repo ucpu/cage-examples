@@ -1,0 +1,5 @@
+scenes/gltf/gltf.pack
+
+scenes/gltf/MetalRoughSpheres.object
+0 0 0
+0

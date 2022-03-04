@@ -3,6 +3,7 @@
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/guiManager.h>
 #include <cage-engine/window.h>
+#include <cage-simple/statisticsGui.h>
 #include <cage-simple/fullscreenSwitcher.h>
 #include <cage-simple/engine.h>
 
@@ -44,6 +45,7 @@ int main(int argc, const char *args[])
 	updateInitialize();
 	{
 		Holder<FullscreenSwitcher> fullscreen = newFullscreenSwitcher({});
+		Holder<StatisticsGui> statistics = newStatisticsGui();
 		engineStart();
 	}
 	updateFinalize();
