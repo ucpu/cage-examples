@@ -1,5 +1,9 @@
 scenes/gltf/gltf.pack
 
 scenes/gltf/MetalRoughSpheres.object
-0 0 0
+-10 0 0
+0
+
+scenes/gltf/MosquitoInAmber.object
+10 0 0
 0

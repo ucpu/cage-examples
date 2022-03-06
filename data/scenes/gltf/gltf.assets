@@ -5,9 +5,16 @@ MetalRoughSpheres.glb?Spheres.002_
 MetalRoughSpheres.glb?Spheres.003_
 MetalRoughSpheres.glb?Spheres.004_
 MetalRoughSpheres.glb?Spheres_
+MosquitoInAmber.glb?6_eclats_eclats_0_eclats
+[]
+scheme = model
+tangents = true
+MosquitoInAmber.glb?5_amber_lr_PBR_0_material
+MosquitoInAmber.glb?2_mosquito_lr_original.o_material_0_0_original.o_material_0
 []
 scheme = object
 MetalRoughSpheres.object
+MosquitoInAmber.object
 []
 scheme = pack
 gltf.pack
@@ -15,6 +22,11 @@ gltf.pack
 scheme = texture
 srgb = true
 MetalRoughSpheres.glb?0
+MosquitoInAmber.glb?0
+MosquitoInAmber.glb?2
+MosquitoInAmber.glb?3
+MosquitoInAmber.glb?4
 []
 scheme = texture
-MetalRoughSpheres.glb?special_1_1
+MetalRoughSpheres.glb?special_1_ch1_1_ch2
+MosquitoInAmber.glb?special_1_ch1_1_ch2
