@@ -5,28 +5,53 @@ MetalRoughSpheres.glb?Spheres.002_
 MetalRoughSpheres.glb?Spheres.003_
 MetalRoughSpheres.glb?Spheres.004_
 MetalRoughSpheres.glb?Spheres_
+[]
+scheme = model
+scale = 5
 MosquitoInAmber.glb?6_eclats_eclats_0_eclats
 []
 scheme = model
 tangents = true
+scale = 5
 MosquitoInAmber.glb?5_amber_lr_PBR_0_material
 MosquitoInAmber.glb?2_mosquito_lr_original.o_material_0_0_original.o_material_0
+[]
+scheme = model
+scale = 0.02
+axes = +x-z+y
+ToyCar.glb?Glass_Glass
+[]
+scheme = model
+tangents = true
+scale = 0.02
+axes = +x-z+y
+ToyCar.glb?Fabric_Fabric
+ToyCar.glb?ToyCar_ToyCar
+
 []
 scheme = object
 MetalRoughSpheres.object
 MosquitoInAmber.object
+ToyCar.object
+
 []
 scheme = pack
 gltf.pack
+
 []
 scheme = texture
 srgb = true
 MetalRoughSpheres.glb?0
 MosquitoInAmber.glb?0
-MosquitoInAmber.glb?2
 MosquitoInAmber.glb?3
-MosquitoInAmber.glb?4
+ToyCar.glb?0
+ToyCar.glb?5
 []
 scheme = texture
 MetalRoughSpheres.glb?special_1_ch1_1_ch2
 MosquitoInAmber.glb?special_1_ch1_1_ch2
+MosquitoInAmber.glb?2
+MosquitoInAmber.glb?4
+ToyCar.glb?special_1_ch1_1_ch2
+ToyCar.glb?2
+ToyCar.glb?6
