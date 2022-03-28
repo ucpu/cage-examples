@@ -9,7 +9,6 @@ albedo = explosion/2/$$.png
 noLighting
 noShadowCast
 noDepthWrite
-noVelocityWrite
 translucent
 
 

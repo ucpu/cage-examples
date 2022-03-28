@@ -6,4 +6,5 @@ albedo = leaves.png
 
 [flags]
 twoSided
+alphaClip
 

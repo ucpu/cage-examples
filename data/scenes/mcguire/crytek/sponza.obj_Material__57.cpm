@@ -1,0 +1,6 @@
+[textures]
+albedo = textures\vase_plant.png
+special = textures\vase_plant_spec.png
+
+[flags]
+alphaClip

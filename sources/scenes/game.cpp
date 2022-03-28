@@ -121,7 +121,7 @@ void sceneReload()
 		c.cameraOrder = 1;
 		c.near = 0.1;
 		c.far = 50;
-		c.effects = CameraEffectsFlags::MotionBlur; // need to enable motion blur to make sure that velocity buffer is cleared
+		c.effects = CameraEffectsFlags::None;
 		Entity *sky = engineEntities()->create(3);
 		TransformComponent &ts = sky->value<TransformComponent>();
 		(void)ts;

@@ -144,7 +144,7 @@ int main(int argc, char *args[])
 			c.far = 100;
 			c.cameraOrder = 2;
 			c.sceneMask = 2;
-			c.effects = CameraEffectsFlags::AmbientOcclusion | CameraEffectsFlags::MotionBlur;
+			c.effects = CameraEffectsFlags::AmbientOcclusion;
 		}
 
 		Holder<FpsCamera> fpsCamera = newFpsCamera(eye);

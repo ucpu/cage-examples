@@ -20,12 +20,28 @@ shapes.blend?Plane
 
 []
 scheme = model
+axes = +x+z-y
+scale = 2.5
+material = shapes.blend_Plane_alphaClip.cpm
+shapes.blend?Plane;alphaClip
+
+[]
+scheme = model
 uvs = false
 tangents = false
 axes = +x+z-y
 scale = 0.5
 shapes.blend?Sphere
 shapes.blend?Cube
+
+[]
+scheme = model
+uvs = false
+tangents = false
+axes = +x+z-y
+scale = 0.5
+material = shapes.blend_Sphere_shadow.cpm
+shapes.blend?Sphere;shadow
 
 []
 scheme = model

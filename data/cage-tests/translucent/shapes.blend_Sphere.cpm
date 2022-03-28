@@ -1,5 +1,5 @@
 
-# receive light and cast shadows
+# receive light but cast no shadows
 
 [base]
 albedo = 0.11, 0.62, 0.14
@@ -11,5 +11,5 @@ opacity = 0.51
 [flags]
 translucent
 noDepthWrite
-noVelocityWrite
+noShadowCast
 

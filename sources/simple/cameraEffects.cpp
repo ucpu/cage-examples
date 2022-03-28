@@ -128,15 +128,6 @@ void update()
 		}
 	}
 
-	{ // motion blur
-		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::MotionBlur);
-		{ // enable
-			Entity *e = ents->get(baseName);
-			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
-			enableEffect(CameraEffectsFlags::MotionBlur, cb.state == CheckBoxStateEnum::Checked);
-		}
-	}
-
 	{ // bloom
 		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::Bloom);
 		{ // enable
@@ -395,31 +386,6 @@ void initializeGui()
 		genInputFloat(table, childIndex, baseName, "Focus radius:", 0, 20, 0.5, CameraEffects().depthOfField.focusRadius);
 		genInputFloat(table, childIndex, baseName, "Blend radius:", 0, 20, 0.5, CameraEffects().depthOfField.blendRadius);
 		genInputInt(table, childIndex, baseName, "Blur passes:", 0, 10, 1, CameraEffects().depthOfField.blurPasses);
-	}
-
-	{ // motion blur
-		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::MotionBlur);
-		Entity *panel = ents->createUnique();
-		{
-			GuiParentComponent &p = panel->value<GuiParentComponent>();
-			p.parent = layout->name();
-			p.order = baseName;
-			GuiSpoilerComponent &c = panel->value<GuiSpoilerComponent>();
-			GuiTextComponent &t = panel->value<GuiTextComponent>();
-			t.value = "Motion Blur";
-			GuiLayoutLineComponent &l = panel->value<GuiLayoutLineComponent>();
-			l.vertical = true;
-		}
-		{ // enabled
-			Entity *e = ents->create(baseName);
-			GuiParentComponent &p = e->value<GuiParentComponent>();
-			p.parent = panel->name();
-			p.order = 1;
-			GuiTextComponent &t = e->value<GuiTextComponent>();
-			t.value = "Enabled";
-			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
-			cb.state = genEnabled(CameraEffectsFlags::MotionBlur);
-		}
 	}
 
 	{ // bloom

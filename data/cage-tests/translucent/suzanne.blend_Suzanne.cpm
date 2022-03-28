@@ -12,6 +12,5 @@ opacity = 0.6
 [flags]
 translucent
 noDepthWrite
-noVelocityWrite
 
 

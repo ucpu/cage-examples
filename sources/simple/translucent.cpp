@@ -184,20 +184,36 @@ int main(int argc, char *args[])
 			t.position = Vec3(-3, 1, -2);
 			t.orientation = randomDirectionQuat();
 		}
-		{ // sphere
+		{ // sphere with shadow
 			Entity *e = ents->create(12);
+			RenderComponent &r = e->value<RenderComponent>();
+			r.object = HashString("cage-tests/translucent/shapes.blend?Sphere;shadow");
+			TransformComponent &t = e->value<TransformComponent>();
+			t.position = Vec3(2, 1, 3.5);
+			t.orientation = randomDirectionQuat();
+		}
+		{ // sphere no shadow
+			Entity *e = ents->create(16);
 			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/translucent/shapes.blend?Sphere");
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(-0.5, 1, 3.5);
 			t.orientation = randomDirectionQuat();
 		}
-		{ // plane
+		{ // plane translucent
 			Entity *e = ents->create(13);
 			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/translucent/shapes.blend?Plane");
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(-0.5, 1, -1);
+			t.orientation = Quat(Degs(), Degs(80), Degs());
+		}
+		{ // plane alphaClip
+			Entity *e = ents->create(15);
+			RenderComponent &r = e->value<RenderComponent>();
+			r.object = HashString("cage-tests/translucent/shapes.blend?Plane;alphaClip");
+			TransformComponent &t = e->value<TransformComponent>();
+			t.position = Vec3(4.5, 1, -1);
 			t.orientation = Quat(Degs(), Degs(80), Degs());
 		}
 		{ // bottle

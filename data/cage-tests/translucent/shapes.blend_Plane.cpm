@@ -12,7 +12,6 @@ albedo = Plane.png
 twoSided
 translucent
 noDepthWrite
-noVelocityWrite
 noLighting
 noShadowCast
 

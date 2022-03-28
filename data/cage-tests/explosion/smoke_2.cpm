@@ -9,7 +9,6 @@ albedo = smoke/2/$$.png
 noLighting
 noShadowCast
 noDepthWrite
-noVelocityWrite
 translucent
 
 
