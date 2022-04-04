@@ -343,12 +343,12 @@ void initializeGui()
 			GuiLayoutTableComponent &t = table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
-		genInputFloat(table, childIndex, baseName, "World Radius:", 0.1, 3, 0.05, CameraEffects().ssao.worldRadius);
-		genInputFloat(table, childIndex, baseName, "Strength:", 0, 3, 0.1, CameraEffects().ssao.strength);
-		genInputFloat(table, childIndex, baseName, "Bias:", -0.5, 0.5, 0.01, CameraEffects().ssao.bias);
-		genInputFloat(table, childIndex, baseName, "Power:", 0.1, 2, 0.02, CameraEffects().ssao.power);
-		genInputInt(table, childIndex, baseName, "Samples:", 1, 128, 1, CameraEffects().ssao.samplesCount);
-		genInputInt(table, childIndex, baseName, "Blur Passes:", 0, 10, 1, CameraEffects().ssao.blurPasses);
+		genInputFloat(table, childIndex, baseName, "World Radius:", 0.1, 3, 0.05, CameraProperties().ssao.worldRadius);
+		genInputFloat(table, childIndex, baseName, "Strength:", 0, 3, 0.1, CameraProperties().ssao.strength);
+		genInputFloat(table, childIndex, baseName, "Bias:", -0.5, 0.5, 0.01, CameraProperties().ssao.bias);
+		genInputFloat(table, childIndex, baseName, "Power:", 0.1, 2, 0.02, CameraProperties().ssao.power);
+		genInputInt(table, childIndex, baseName, "Samples:", 1, 128, 1, CameraProperties().ssao.samplesCount);
+		genInputInt(table, childIndex, baseName, "Blur Passes:", 0, 10, 1, CameraProperties().ssao.blurPasses);
 	}
 
 	{ // depth of field
@@ -382,10 +382,10 @@ void initializeGui()
 			GuiLayoutTableComponent &t = table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
-		genInputFloat(table, childIndex, baseName, "Focus distance:", 0, 20, 0.5, CameraEffects().depthOfField.focusDistance);
-		genInputFloat(table, childIndex, baseName, "Focus radius:", 0, 20, 0.5, CameraEffects().depthOfField.focusRadius);
-		genInputFloat(table, childIndex, baseName, "Blend radius:", 0, 20, 0.5, CameraEffects().depthOfField.blendRadius);
-		genInputInt(table, childIndex, baseName, "Blur passes:", 0, 10, 1, CameraEffects().depthOfField.blurPasses);
+		genInputFloat(table, childIndex, baseName, "Focus distance:", 0, 20, 0.5, CameraProperties().depthOfField.focusDistance);
+		genInputFloat(table, childIndex, baseName, "Focus radius:", 0, 20, 0.5, CameraProperties().depthOfField.focusRadius);
+		genInputFloat(table, childIndex, baseName, "Blend radius:", 0, 20, 0.5, CameraProperties().depthOfField.blendRadius);
+		genInputInt(table, childIndex, baseName, "Blur passes:", 0, 10, 1, CameraProperties().depthOfField.blurPasses);
 	}
 
 	{ // bloom
@@ -419,8 +419,8 @@ void initializeGui()
 			GuiLayoutTableComponent &t = table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
-		genInputFloat(table, childIndex, baseName, "Threshold:", 0, 5, 0.01, CameraEffects().bloom.threshold);
-		genInputInt(table, childIndex, baseName, "Blur Passes:", 1, 10, 1, CameraEffects().bloom.blurPasses);
+		genInputFloat(table, childIndex, baseName, "Threshold:", 0, 5, 0.01, CameraProperties().bloom.threshold);
+		genInputInt(table, childIndex, baseName, "Blur Passes:", 1, 10, 1, CameraProperties().bloom.blurPasses);
 	}
 
 	{ // eye adaptation
@@ -454,10 +454,10 @@ void initializeGui()
 			GuiLayoutTableComponent &t = table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
-		genInputFloat(table, childIndex, baseName, "Key:", 0, 1, 0.02, CameraEffects().eyeAdaptation.key);
-		genInputFloat(table, childIndex, baseName, "Strength:", 0, 1, 0.02, CameraEffects().eyeAdaptation.strength);
-		genInputFloat(table, childIndex, baseName, "Darker speed:", 0, 5, 0.02, CameraEffects().eyeAdaptation.darkerSpeed);
-		genInputFloat(table, childIndex, baseName, "Lighter speed:", 0, 5, 0.02, CameraEffects().eyeAdaptation.lighterSpeed);
+		genInputFloat(table, childIndex, baseName, "Key:", 0, 1, 0.02, CameraProperties().eyeAdaptation.key);
+		genInputFloat(table, childIndex, baseName, "Strength:", 0, 1, 0.02, CameraProperties().eyeAdaptation.strength);
+		genInputFloat(table, childIndex, baseName, "Darker speed:", 0, 5, 0.02, CameraProperties().eyeAdaptation.darkerSpeed);
+		genInputFloat(table, childIndex, baseName, "Lighter speed:", 0, 5, 0.02, CameraProperties().eyeAdaptation.lighterSpeed);
 	}
 
 	{ // tone mapping
@@ -491,13 +491,13 @@ void initializeGui()
 			GuiLayoutTableComponent &t = table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
-		genInputFloat(table, childIndex, baseName, "Shoulder Strength:", 0, 1, 0.02, CameraEffects().tonemap.shoulderStrength);
-		genInputFloat(table, childIndex, baseName, "Linear Strength:", 0, 1, 0.02, CameraEffects().tonemap.linearStrength);
-		genInputFloat(table, childIndex, baseName, "Linear Angle:", 0, 1, 0.02, CameraEffects().tonemap.linearAngle);
-		genInputFloat(table, childIndex, baseName, "Toe Strength:", 0, 1, 0.02, CameraEffects().tonemap.toeStrength);
-		genInputFloat(table, childIndex, baseName, "Toe Numerator:", 0, 1, 0.02, CameraEffects().tonemap.toeNumerator);
-		genInputFloat(table, childIndex, baseName, "Toe Denominator:", 0, 1, 0.02, CameraEffects().tonemap.toeDenominator);
-		genInputFloat(table, childIndex, baseName, "White:", 0, 100, 1, CameraEffects().tonemap.white);
+		genInputFloat(table, childIndex, baseName, "Shoulder Strength:", 0, 1, 0.02, CameraProperties().tonemap.shoulderStrength);
+		genInputFloat(table, childIndex, baseName, "Linear Strength:", 0, 1, 0.02, CameraProperties().tonemap.linearStrength);
+		genInputFloat(table, childIndex, baseName, "Linear Angle:", 0, 1, 0.02, CameraProperties().tonemap.linearAngle);
+		genInputFloat(table, childIndex, baseName, "Toe Strength:", 0, 1, 0.02, CameraProperties().tonemap.toeStrength);
+		genInputFloat(table, childIndex, baseName, "Toe Numerator:", 0, 1, 0.02, CameraProperties().tonemap.toeNumerator);
+		genInputFloat(table, childIndex, baseName, "Toe Denominator:", 0, 1, 0.02, CameraProperties().tonemap.toeDenominator);
+		genInputFloat(table, childIndex, baseName, "White:", 0, 100, 1, CameraProperties().tonemap.white);
 	}
 
 	{ // gamma
@@ -531,7 +531,7 @@ void initializeGui()
 			GuiLayoutTableComponent &t = table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
-		genInputFloat(table, childIndex, baseName, "Gamma:", 1, 5, 0.1, CameraEffects().gamma);
+		genInputFloat(table, childIndex, baseName, "Gamma:", 1, 5, 0.1, CameraProperties().gamma);
 	}
 
 	{ // antialiasing

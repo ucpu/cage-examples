@@ -29,9 +29,9 @@ namespace
 	uint32 sceneIndexLoaded;
 	uint32 sceneHashCurrent;
 
-	static const uint32 directionalLightsCount = 1;
+	constexpr uint32 directionalLightsCount = 1;
 	Entity *directionalLights[directionalLightsCount];
-	static const uint32 pointLightsCount = 50;
+	constexpr uint32 pointLightsCount = 50;
 	Entity *pointLights[pointLightsCount];
 
 	std::vector<String> maps;
@@ -97,39 +97,22 @@ void sceneReload()
 
 	{ // camera
 		Entity *cam = engineEntities()->create(1);
-		TransformComponent &t = cam->value<TransformComponent>();
-		t.position = Vec3(0, 10, 30);
+		cam->value<TransformComponent>().position = Vec3(0, 10, 30);
 		CameraComponent &c = cam->value<CameraComponent>();
 		c.ambientColor = Vec3(1);
 		c.ambientIntensity = 0.03;
 		c.ambientDirectionalColor = Vec3(1);
 		c.ambientDirectionalIntensity = 0.07;
-		c.cameraOrder = 2;
 		c.near = 0.1;
 		c.far = 200;
-		c.clear = CameraClearFlags::None;
-		c.effects = CameraEffectsFlags::Default;
 		cameraCtrl->setEntity(cam);
 	}
 
 	{ // skybox
-		Entity *cam = engineEntities()->create(2);
-		TransformComponent &tc = cam->value<TransformComponent>();
-		(void)tc;
-		CameraComponent &c = cam->value<CameraComponent>();
-		c.sceneMask = 2;
-		c.cameraOrder = 1;
-		c.near = 0.1;
-		c.far = 50;
-		c.effects = CameraEffectsFlags::None;
 		Entity *sky = engineEntities()->create(3);
-		TransformComponent &ts = sky->value<TransformComponent>();
-		(void)ts;
-		RenderComponent &r = sky->value<RenderComponent>();
-		TextureAnimationComponent &a = sky->value<TextureAnimationComponent>();
-		(void)a;
-		r.object = HashString("scenes/common/skybox.obj");
-		r.sceneMask = 2;
+		sky->value<TransformComponent>();
+		sky->value<RenderComponent>().object = HashString("scenes/common/skybox.obj");
+		sky->value<TextureAnimationComponent>();
 	}
 	
 	// directional lights
@@ -192,7 +175,7 @@ void keyPress(InputKey in)
 
 void update()
 {
-#if 0
+#if 1
 	{ // automatic reloading -> used for engine testing
 		static uint64 last = 0;
 		uint64 now = applicationTime();
@@ -210,12 +193,6 @@ void update()
 	{
 		sceneReload();
 		sceneIndexLoaded = sceneIndexCurrent;
-	}
-
-	{ // update camera for skybox
-		TransformComponent &t1 = engineEntities()->get(1)->value<TransformComponent>();
-		TransformComponent &t2 = engineEntities()->get(2)->value<TransformComponent>();
-		t2.orientation = t1.orientation;
 	}
 
 	{ // update shadowmaps

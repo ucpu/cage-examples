@@ -95,8 +95,7 @@ int main(int argc, char *args[])
 		Entity *eye = nullptr;
 		{ // eye
 			Entity *e = eye = ents->create(1);
-			TransformComponent &t = e->value<TransformComponent>();
-			t.position = Vec3(0, 1.7, 0);
+			e->value<TransformComponent>().position = Vec3(0, 1.7, 0);
 			CameraComponent &c = e->value<CameraComponent>();
 			c.ambientColor = Vec3(1);
 			c.ambientIntensity = 0.3;
@@ -104,7 +103,6 @@ int main(int argc, char *args[])
 			c.ambientDirectionalIntensity = 0.5;
 			c.near = 0.2;
 			c.far = 100;
-			c.cameraOrder = 3;
 			c.sceneMask = 1;
 			c.effects = CameraEffectsFlags::Default;
 			RenderComponent &r = e->value<RenderComponent>();
@@ -122,16 +120,14 @@ int main(int argc, char *args[])
 		}
 		{ // camera lens
 			Entity *e = ents->create(3);
-			TransformComponent &t = e->value<TransformComponent>();
-			t.position = Vec3(2.5, 2.5, -1.3);
+			e->value<TransformComponent>().position = Vec3(2.5, 2.5, -1.3);
 			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/room/camera.obj?lens");
 			r.sceneMask = 1;
 		}
 		{ // camera body
 			Entity *e = ents->create(4);
-			TransformComponent &t = e->value<TransformComponent>();
-			t.position = Vec3(2.5, 2.5, -1.3);
+			e->value<TransformComponent>().position = Vec3(2.5, 2.5, -1.3);
 			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/room/camera.obj?camera");
 			r.sceneMask = 1;
@@ -142,7 +138,6 @@ int main(int argc, char *args[])
 			c.ambientDirectionalIntensity = 0.5;
 			c.near = 0.2;
 			c.far = 100;
-			c.cameraOrder = 2;
 			c.sceneMask = 2;
 			c.effects = CameraEffectsFlags::AmbientOcclusion;
 		}

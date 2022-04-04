@@ -321,31 +321,24 @@ int main(int argc, char *args[])
 		entsToDestroy = ents->defineGroup();
 		{ // camera
 			Entity *e = ents->create(1);
-			TransformComponent &t = e->value<TransformComponent>();
-			t.position = cameraCenter;
+			e->value<TransformComponent>().position = cameraCenter;
 			CameraComponent &c = e->value<CameraComponent>();
 			c.near = 0.03;
 			c.far = 500;
-			c.effects = CameraEffectsFlags::Default;
 			c.ambientColor = Vec3(1);
 			c.ambientIntensity = 0.1;
 			c.ambientDirectionalColor = Vec3(1);
 			c.ambientDirectionalIntensity = 0.2;
-			ListenerComponent &l = e->value<ListenerComponent>();
-			l.rolloffFactor = 0.1;
+			e->value<ListenerComponent>().rolloffFactor = 0.1;
 		}
 		{ // skybox
 			Entity *e = ents->create(2);
-			RenderComponent &r = e->value<RenderComponent>();
-			r.object = HashString("cage-tests/screamers/skybox.obj");
-			TransformComponent &t = e->value<TransformComponent>();
-			t.position = Vec3(0, 2, 0);
-			t.scale = 200;
+			e->value<TransformComponent>();
+			e->value<RenderComponent>().object = HashString("cage-tests/screamers/skybox.obj");
 		}
 		{ // sun
 			Entity *e = ents->create(3);
-			TransformComponent &t = e->value<TransformComponent>();
-			t.orientation = Quat(Degs(-50), Degs(-42 + 180), Degs());
+			e->value<TransformComponent>().orientation = Quat(Degs(-50), Degs(-42 + 180), Degs());
 			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Directional;
 			l.color = Vec3(1);
@@ -356,9 +349,8 @@ int main(int argc, char *args[])
 		}
 		{ // floor
 			Entity *e = ents->create(4);
-			RenderComponent &r = e->value<RenderComponent>();
-			r.object = HashString("scenes/common/ground.obj");
 			e->value<TransformComponent>();
+			e->value<RenderComponent>().object = HashString("scenes/common/ground.obj");
 		}
 
 		Holder<FpsCamera> cameraCtrl = newFpsCamera(ents->get(1));
