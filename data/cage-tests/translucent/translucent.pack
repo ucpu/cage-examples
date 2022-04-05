@@ -6,6 +6,7 @@ shapes.blend?Knot
 shapes.blend?Bulb
 shapes.blend?Plane
 shapes.blend?Plane;alphaClip
+shapes.blend?Plane;billboard
 shapes.blend?Sphere
 shapes.blend?Sphere;shadow
 shapes.blend?Cube

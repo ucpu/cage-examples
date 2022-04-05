@@ -1,0 +1,11 @@
+
+[size]
+world = 4
+pixels = 700
+
+[]
+tree-1-1.glb?BillboardCloudProxy_0_LOD1.024_SimplygonCastMaterial.024
+tree-1-1.glb?Trunk_LOD1.003_Adansonia_bark_baked.004
+
+[]
+tree-1-2.glb

@@ -1,0 +1,10 @@
+[textures]
+albedo = tree-2-2.glb?Basecolor_0
+normal = tree-2-2.glb?Normals_0
+
+[shaders]
+depth = wind.glsl
+color = wind.glsl
+
+[flags]
+alphaClip

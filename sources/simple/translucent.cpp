@@ -46,8 +46,8 @@ void update()
 		t.position[1] += sin(Degs(engineControlTime() * 1e-5)) * 0.05;
 	}
 
-	// rotate cube, sphere and suzanne
-	for (uint32 i = 10; i < 13; i++)
+	// rotate cube, spheres, suzanne and bottle
+	for (uint32 i = 10; i < 15; i++)
 	{
 		Entity *e = ents->get(i);
 		TransformComponent &t = e->value<TransformComponent>();
@@ -156,80 +156,75 @@ int main(int argc, char *args[])
 		}
 		{ // floor
 			Entity *e = ents->create(5);
-			RenderComponent &r = e->value<RenderComponent>();
-			r.object = HashString("cage-tests/translucent/shapes.blend?Ground");
-			TransformComponent &t = e->value<TransformComponent>();
-			t.position = Vec3(0, -0.2, 0);
+			e->value<RenderComponent>().object = HashString("cage-tests/translucent/shapes.blend?Ground");
+			e->value<TransformComponent>().position = Vec3(0, -0.2, 0);
 		}
 		{ // flying knot
 			Entity *e = ents->create(6);
-			RenderComponent &r = e->value<RenderComponent>();
-			r.object = HashString("cage-tests/translucent/shapes.blend?Knot");
+			e->value<RenderComponent>().object = HashString("cage-tests/translucent/shapes.blend?Knot");
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(5, 2, -5);
 			t.scale = 3;
 		}
 		{ // suzanne
 			Entity *e = ents->create(10);
-			RenderComponent &r = e->value<RenderComponent>();
-			r.object = HashString("cage-tests/translucent/suzanne.blend");
-			TransformComponent &t = e->value<TransformComponent>();
-			t.position = Vec3(2, 1, 0);
+			e->value<RenderComponent>().object = HashString("cage-tests/translucent/suzanne.blend");
+			e->value<TransformComponent>().position = Vec3(2, 1, 0);
 		}
 		{ // cube
 			Entity *e = ents->create(11);
-			RenderComponent &r = e->value<RenderComponent>();
-			r.object = HashString("cage-tests/translucent/shapes.blend?Cube");
+			e->value<RenderComponent>().object = HashString("cage-tests/translucent/shapes.blend?Cube");
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(-3, 1, -2);
 			t.orientation = randomDirectionQuat();
 		}
 		{ // sphere with shadow
 			Entity *e = ents->create(12);
-			RenderComponent &r = e->value<RenderComponent>();
-			r.object = HashString("cage-tests/translucent/shapes.blend?Sphere;shadow");
+			e->value<RenderComponent>().object = HashString("cage-tests/translucent/shapes.blend?Sphere;shadow");
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(2, 1, 3.5);
 			t.orientation = randomDirectionQuat();
 		}
 		{ // sphere no shadow
-			Entity *e = ents->create(16);
-			RenderComponent &r = e->value<RenderComponent>();
-			r.object = HashString("cage-tests/translucent/shapes.blend?Sphere");
+			Entity *e = ents->create(13);
+			e->value<RenderComponent>().object = HashString("cage-tests/translucent/shapes.blend?Sphere");
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(-0.5, 1, 3.5);
 			t.orientation = randomDirectionQuat();
 		}
-		{ // plane translucent
-			Entity *e = ents->create(13);
-			RenderComponent &r = e->value<RenderComponent>();
-			r.object = HashString("cage-tests/translucent/shapes.blend?Plane");
-			TransformComponent &t = e->value<TransformComponent>();
-			t.position = Vec3(-0.5, 1, -1);
-			t.orientation = Quat(Degs(), Degs(80), Degs());
-		}
-		{ // plane alphaClip
-			Entity *e = ents->create(15);
-			RenderComponent &r = e->value<RenderComponent>();
-			r.object = HashString("cage-tests/translucent/shapes.blend?Plane;alphaClip");
-			TransformComponent &t = e->value<TransformComponent>();
-			t.position = Vec3(4.5, 1, -1);
-			t.orientation = Quat(Degs(), Degs(80), Degs());
-		}
 		{ // bottle
 			Entity *e = ents->create(14);
-			RenderComponent &r = e->value<RenderComponent>();
-			r.object = HashString("cage-tests/bottle/bottle.obj");
+			e->value<RenderComponent>().object = HashString("cage-tests/bottle/bottle.obj");
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(-1.1, -0.2, 5.8);
 			t.scale = 0.6;
+		}
+		{ // plane translucent
+			Entity *e = ents->create(15);
+			e->value<RenderComponent>().object = HashString("cage-tests/translucent/shapes.blend?Plane");
+			TransformComponent &t = e->value<TransformComponent>();
+			t.position = Vec3(-0.5, 1, -1);
+			t.orientation = Quat(Degs(), randomAngle(), Degs());
+		}
+		{ // plane alphaClip
+			Entity *e = ents->create(16);
+			e->value<RenderComponent>().object = HashString("cage-tests/translucent/shapes.blend?Plane;alphaClip");
+			TransformComponent &t = e->value<TransformComponent>();
+			t.position = Vec3(4.5, 1, -1);
+			t.orientation = Quat(Degs(), randomAngle(), Degs());
+		}
+		{ // plane billboard
+			Entity *e = ents->create(17);
+			e->value<RenderComponent>().object = HashString("cage-tests/translucent/shapes.blend?Plane;billboard");
+			TransformComponent &t = e->value<TransformComponent>();
+			t.position = Vec3(-3.5, 1, 4);
+			t.orientation = randomDirectionQuat();
 		}
 		// animated knots
 		for (uint32 i = 0; i < knotsCount; i++)
 		{
 			Entity *e = ents->create(20 + i);
-			RenderComponent &r = e->value<RenderComponent>();
-			r.object = HashString("cage-tests/translucent/shapes.blend?Knot");
+			e->value<RenderComponent>().object = HashString("cage-tests/translucent/shapes.blend?Knot");
 			TransformComponent &t = e->value<TransformComponent>();
 			Rads angle = Degs(i * 360.0 / knotsCount);
 			t.position = Vec3(sin(angle) * 8, 0.5, cos(angle) * 8);

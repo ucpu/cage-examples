@@ -1,0 +1,53 @@
+[]
+scheme = model
+tangents = false
+uvs = false
+tower.obj?black_black
+tower.obj?ceiling_ceiling
+tower.obj?darkRock_darkRock
+tower.obj?tower-heavy_lightRock
+
+[]
+scheme = model
+tangents = true
+scale = 0.3
+tree-1-1.glb?BillboardCloudProxy_0_LOD1.024_SimplygonCastMaterial.024
+tree-1-1.glb?Trunk_LOD1.003_Adansonia_bark_baked.004
+tree-1-2.glb
+
+[]
+scheme = model
+tangents = true
+scale = 0.7
+tree-2-1.glb
+tree-2-2.glb
+
+[]
+scheme = object
+tower-wind.object
+tree-1-wind.object
+tree-2-wind.object
+
+[]
+scheme = pack
+shaderanim.pack
+
+[]
+scheme = texture
+srgb = true
+tree-1-1.glb?Adansonia_digitata_LD_Adansonia_bark_baked_Color
+tree-1-1.glb?Basecolor_0
+tree-1-2.glb?Basecolor_0
+tree-2-1.glb?Basecolor_0
+tree-2-2.glb?Basecolor_0
+
+[]
+scheme = texture
+tree-1-1.glb?Normals_0
+tree-1-2.glb?Normals_0
+tree-2-1.glb?Normals_0
+tree-2-2.glb?Normals_0
+
+[]
+scheme = shader
+wind.glsl

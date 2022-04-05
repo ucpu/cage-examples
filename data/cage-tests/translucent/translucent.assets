@@ -27,6 +27,13 @@ shapes.blend?Plane;alphaClip
 
 []
 scheme = model
+axes = +x+z-y
+scale = 2.5
+material = shapes.blend_Plane_billboard.cpm
+shapes.blend?Plane;billboard
+
+[]
+scheme = model
 uvs = false
 tangents = false
 axes = +x+z-y
