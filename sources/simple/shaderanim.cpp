@@ -46,7 +46,7 @@ int main(int argc, char *args[])
 
 		// window
 		engineWindow()->setMaximized();
-		engineWindow()->title("maze");
+		engineWindow()->title("shaderanim");
 
 		// entities
 		EntityManager *ents = engineEntities();
@@ -85,20 +85,30 @@ int main(int argc, char *args[])
 			e->value<RenderComponent>().object = HashString("cage-tests/screamers/skybox.obj");
 			e->value<TransformComponent>();
 		}
-		{ // tower
+		{ // tower wind
 			Entity *e = ents->createUnique();
 			e->value<RenderComponent>().object = HashString("cage-tests/shaderanim/tower-wind.object");
 			e->value<TransformComponent>().position = Vec3();
 		}
+		{ // tower blueprint
+			Entity *e = ents->createUnique();
+			e->value<RenderComponent>().object = HashString("cage-tests/shaderanim/tower-blueprint.object");
+			e->value<TransformComponent>().position = Vec3(-4, 0, -4);
+		}
+		{ // statue blueprint
+			Entity *e = ents->createUnique();
+			e->value<RenderComponent>().object = HashString("cage-tests/shaderanim/statue-blueprint.object");
+			e->value<TransformComponent>().position = Vec3(-4, 0, 4);
+		}
 		{ // tree 1
 			Entity *e = ents->createUnique();
 			e->value<RenderComponent>().object = HashString("cage-tests/shaderanim/tree-1-wind.object");
-			e->value<TransformComponent>().position = Vec3(-4, 0, 0);
+			e->value<TransformComponent>().position = Vec3(4, 0, -4);
 		}
 		{ // tree 2
 			Entity *e = ents->createUnique();
 			e->value<RenderComponent>().object = HashString("cage-tests/shaderanim/tree-2-wind.object");
-			e->value<TransformComponent>().position = Vec3(4, 0, 0);
+			e->value<TransformComponent>().position = Vec3(4, 0, 4);
 		}
 
 		Holder<FpsCamera> cameraCtrl = newFpsCamera(ents->get(1));

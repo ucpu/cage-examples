@@ -1,11 +1,73 @@
+
 []
 scheme = model
 tangents = false
 uvs = false
-tower.obj?black_black
-tower.obj?ceiling_ceiling
-tower.obj?darkRock_darkRock
-tower.obj?tower-heavy_lightRock
+material = statue.cpm
+statue.obj;blueprint
+
+[]
+scheme = model
+tangents = false
+uvs = false
+material = pedestal.cpm
+pedestal.obj;blueprint
+
+[]
+scheme = model
+tangents = false
+uvs = false
+material = tower.obj_black_blueprint.cpm
+tower.obj?black_black;blueprint
+
+[]
+scheme = model
+tangents = false
+uvs = false
+material = tower.obj_ceiling_blueprint.cpm
+tower.obj?ceiling_ceiling;blueprint
+
+[]
+scheme = model
+tangents = false
+uvs = false
+material = tower.obj_darkRock_blueprint.cpm
+tower.obj?darkRock_darkRock;blueprint
+
+[]
+scheme = model
+tangents = false
+uvs = false
+material = tower.obj_lightRock_blueprint.cpm
+tower.obj?tower-heavy_lightRock;blueprint
+
+[]
+scheme = model
+tangents = false
+uvs = false
+material = tower.obj_black_wind.cpm
+tower.obj?black_black;wind
+
+[]
+scheme = model
+tangents = false
+uvs = false
+material = tower.obj_ceiling_wind.cpm
+tower.obj?ceiling_ceiling;wind
+
+[]
+scheme = model
+tangents = false
+uvs = false
+material = tower.obj_darkRock_wind.cpm
+tower.obj?darkRock_darkRock;wind
+
+[]
+scheme = model
+tangents = false
+uvs = false
+material = tower.obj_lightRock_wind.cpm
+tower.obj?tower-heavy_lightRock;wind
 
 []
 scheme = model
@@ -24,6 +86,8 @@ tree-2-2.glb
 
 []
 scheme = object
+statue-blueprint.object
+tower-blueprint.object
 tower-wind.object
 tree-1-wind.object
 tree-2-wind.object
@@ -50,4 +114,5 @@ tree-2-2.glb?Normals_0
 
 []
 scheme = shader
+blueprint.glsl
 wind.glsl

@@ -1,6 +1,8 @@
 []
 ../skeletons/floor/floor.pack
 ../screamers/skybox.obj
+statue-blueprint.object
+tower-blueprint.object
 tower-wind.object
 tree-1-wind.object
 tree-2-wind.object

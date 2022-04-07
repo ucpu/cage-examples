@@ -1,0 +1,11 @@
+[base]
+albedo = 0.6, 0.6, 0.65
+roughness = 0.7
+
+[shaders]
+depth = blueprint.glsl
+color = blueprint.glsl
+
+[flags]
+translucent
+noShadowCast
