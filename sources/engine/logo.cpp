@@ -15,7 +15,6 @@
 #include <cage-engine/voices.h>
 #include <cage-engine/opengl.h>
 #include <cage-engine/highPerformanceGpuHint.h>
-#include <cage-engine/shaderConventions.h>
 
 using namespace cage;
 
@@ -72,7 +71,7 @@ int main(int argc, char *args[])
 
 			// initialize graphics
 			model->bind();
-			glActiveTexture(GL_TEXTURE0 + CAGE_SHADER_TEXTURE_COLOR);
+			glActiveTexture(GL_TEXTURE0);
 			texture->bind();
 			shader->bind();
 

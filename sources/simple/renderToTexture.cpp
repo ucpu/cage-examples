@@ -28,7 +28,7 @@ void windowClose(InputWindow)
 void graphicsInitialize()
 {
 	Holder<Texture> fabScreenTex = newTexture();
-	fabScreenTex->image2d(Vec2i(800, 500), GL_RGB16F);
+	fabScreenTex->initialize(Vec2i(800, 500), 1, GL_RGB16F);
 	fabScreenTex->filters(GL_LINEAR, GL_LINEAR, 16);
 	fabScreenTex->wraps(GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);
 	fabScreenTex->setDebugName("fabScreenTex");
