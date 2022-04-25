@@ -46,7 +46,7 @@ int main(int argc, char *args[])
 		// assets
 		Holder<AssetManager> assets = newAssetManager(AssetManagerCreateConfig());
 		assets->defineScheme<AssetSchemeIndexPack, AssetPack>(genAssetSchemePack());
-		assets->defineScheme<AssetSchemeIndexShaderProgram, ShaderProgram>(genAssetSchemeShaderProgram(0));
+		assets->defineScheme<AssetSchemeIndexShaderProgram, MultiShaderProgram>(genAssetSchemeShaderProgram(0));
 		assets->defineScheme<AssetSchemeIndexTexture, Texture>(genAssetSchemeTexture(0));
 		assets->defineScheme<AssetSchemeIndexModel, Model>(genAssetSchemeModel(0));
 		assets->defineScheme<AssetSchemeIndexFont, Font>(genAssetSchemeFont(0));
@@ -66,7 +66,7 @@ int main(int argc, char *args[])
 			// fetch assets
 			Holder<Model> model = assets->get<AssetSchemeIndexModel, Model>(HashString("cage/model/square.obj"));
 			Holder<Texture> texture = assets->get<AssetSchemeIndexTexture, Texture>(HashString("cage-tests/logo/logo.png"));
-			Holder<ShaderProgram> shader = assets->get<AssetSchemeIndexShaderProgram, ShaderProgram>(HashString("cage/shader/engine/blit.glsl"));
+			Holder<ShaderProgram> shader = assets->get<AssetSchemeIndexShaderProgram, MultiShaderProgram>(HashString("cage/shader/engine/blit.glsl"))->get(0);
 			Holder<Sound> sound = assets->get<AssetSchemeIndexSound, Sound>(HashString("cage-tests/logo/logo.ogg"));
 
 			// initialize graphics

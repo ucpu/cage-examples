@@ -2,9 +2,8 @@
 albedo = tree-2-1.glb?Basecolor_0
 normal = tree-2-1.glb?Normals_0
 
-[shaders]
-depth = wind.glsl
-color = wind.glsl
+[render]
+shader = wind.glsl
 
 [flags]
 alphaClip

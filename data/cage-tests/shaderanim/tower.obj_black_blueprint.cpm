@@ -2,9 +2,8 @@
 albedo = 0.4, 0.4, 0.4
 roughness = 0.7
 
-[shaders]
-depth = blueprint.glsl
-color = blueprint.glsl
+[render]
+shader = blueprint.glsl
 
 [flags]
 translucent
