@@ -600,8 +600,14 @@ int main(int argc, char *args[])
 			c.far = 100;
 			c.effects = CameraEffectsFlags::Default;
 		}
+		{ // skybox
+			Entity *e = engineEntities()->createAnonymous();
+			e->value<TransformComponent>();
+			e->value<RenderComponent>().object = HashString("scenes/common/skybox.obj");
+			e->value<TextureAnimationComponent>();
+		}
 		{ // sun
-			Entity *e = ents->create(2);
+			Entity *e = ents->createAnonymous();
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(0, 5, 0);
 			t.orientation = Quat(Degs(-75), Degs(-120), Degs());
@@ -614,14 +620,14 @@ int main(int argc, char *args[])
 			s.worldSize = Vec3(30);
 		}
 		{ // floor
-			Entity *e = ents->create(10);
+			Entity *e = ents->createAnonymous();
 			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("scenes/common/ground.obj");
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(0, -1.264425, 0);
 		}
 		{ // sponza
-			Entity *e = ents->create(11);
+			Entity *e = ents->createAnonymous();
 			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("scenes/mcguire/crytek/sponza.object");
 			TransformComponent &t = e->value<TransformComponent>();
