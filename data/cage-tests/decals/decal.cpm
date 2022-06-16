@@ -13,5 +13,6 @@ shader = /cage/shader/engine/decal.glsl
 
 [flags]
 alphaClip
-noShadowCast
+noDepthTest
 noDepthWrite
+noShadowCast
