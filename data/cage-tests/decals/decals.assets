@@ -1,0 +1,43 @@
+
+[]
+scheme = pack
+decals.pack
+
+[]
+scheme = model
+uvs = false
+tangents = false
+floor.obj
+
+[]
+scheme = model
+tangents = true
+material = decal.cpm
+decal.obj
+
+[]
+scheme = model
+material = pedestal.cpm
+pedestal.obj
+
+[]
+scheme = model
+material = statue.cpm
+statue.obj
+
+[]
+scheme = texture
+srgb = true
+premultiplyAlpha = true
+albedo.png
+
+[]
+scheme = texture
+normals.jpg
+
+[]
+scheme = collider
+floor.obj;collider
+pedestal.obj;collider
+statue.obj;collider
+

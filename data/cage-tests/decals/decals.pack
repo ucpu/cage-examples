@@ -1,0 +1,8 @@
+[]
+floor.obj
+pedestal.obj
+statue.obj
+decal.obj
+floor.obj;collider
+pedestal.obj;collider
+statue.obj;collider
