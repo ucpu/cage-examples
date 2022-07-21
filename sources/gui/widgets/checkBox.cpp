@@ -54,6 +54,26 @@ class guiTestImpl : public guiTestClass
 			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
 			cb.state = CheckBoxStateEnum::Indeterminate;
 		}
+
+		{ // disabled
+			guiLabel(3, index, "disabled");
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = 3;
+			p.order = index++;
+			e->value<GuiCheckBoxComponent>();
+			e->value<GuiWidgetStateComponent>().disabled = true;
+		}
+
+		{ // disabled checked
+			guiLabel(3, index, "disabled checked");
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = 3;
+			p.order = index++;
+			e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Checked;
+			e->value<GuiWidgetStateComponent>().disabled = true;
+		}
 	}
 
 };

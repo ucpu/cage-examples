@@ -60,6 +60,17 @@ class guiTestImpl : public guiTestClass
 			s.value = 21;
 			envelopeInScrollbars(e);
 		}
+
+		{ // disabled
+			guiLabel(3, index, "disabled");
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = 3;
+			p.order = index++;
+			e->value<GuiSliderBarComponent>();
+			e->value<GuiWidgetStateComponent>().disabled = true;
+			envelopeInScrollbars(e);
+		}
 	}
 
 };

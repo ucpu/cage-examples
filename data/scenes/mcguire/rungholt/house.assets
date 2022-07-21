@@ -20,7 +20,7 @@ house-RGB.png
 
 []
 scheme = texture
-house-Alpha.png
+#house-Alpha.png
 
 []
 scheme = model

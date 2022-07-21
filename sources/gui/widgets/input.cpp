@@ -56,10 +56,8 @@ class guiTestImpl : public guiTestClass
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			GuiInputComponent &ib = e->value<GuiInputComponent>();
-			ib.type = InputTypeEnum::Password;
-			GuiTextComponent &t = e->value<GuiTextComponent>();
-			t.value = "password";
+			e->value<GuiInputComponent>().type = InputTypeEnum::Password;
+			e->value<GuiTextComponent>().value = "password";
 		}
 
 		{ // email
@@ -68,10 +66,8 @@ class guiTestImpl : public guiTestClass
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			GuiInputComponent &ib = e->value<GuiInputComponent>();
-			ib.type = InputTypeEnum::Email;
-			GuiTextComponent &t = e->value<GuiTextComponent>();
-			t.value = "@";
+			e->value<GuiInputComponent>().type = InputTypeEnum::Email;
+			e->value<GuiTextComponent>().value = "@";
 		}
 
 		{ // url
@@ -80,10 +76,18 @@ class guiTestImpl : public guiTestClass
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			GuiInputComponent &ib = e->value<GuiInputComponent>();
-			ib.type = InputTypeEnum::Url;
-			GuiTextComponent &t = e->value<GuiTextComponent>();
-			t.value = "http://";
+			e->value<GuiInputComponent>().type = InputTypeEnum::Url;
+			e->value<GuiTextComponent>().value = "http://";
+		}
+
+		{ // disabled
+			guiLabel(3, index, "disabled");
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = 3;
+			p.order = index++;
+			e->value<GuiInputComponent>();
+			e->value<GuiWidgetStateComponent>().disabled = true;
 		}
 	}
 

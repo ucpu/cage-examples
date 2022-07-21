@@ -22,8 +22,7 @@ class guiTestImpl : public guiTestClass
 			p.parent = 3;
 			p.order = index++;
 			e->value<GuiComboBoxComponent>();
-			GuiTextComponent &t = e->value<GuiTextComponent>();
-			t.value = "placeholder";
+			e->value<GuiTextComponent>().value = "placeholder";
 		}
 		{ // items
 			guiLabel(3, index, "items");
@@ -32,16 +31,14 @@ class guiTestImpl : public guiTestClass
 			p.parent = 3;
 			p.order = index++;
 			e->value<GuiComboBoxComponent>();
-			GuiTextComponent &t = e->value<GuiTextComponent>();
-			t.value = "select one:";
+			e->value<GuiTextComponent>().value = "select one:";
 			for (uint32 i = 0; i < 4; i++)
 			{
 				Entity *o = ents->createUnique();
 				GuiParentComponent &p = o->value<GuiParentComponent>();
 				p.parent = e->name();
 				p.order = index++;
-				GuiTextComponent &t = o->value<GuiTextComponent>();
-				t.value = Stringizer() + "option " + i;
+				o->value<GuiTextComponent>().value = Stringizer() + "option " + i;
 			}
 		}
 		{ // preselected
@@ -50,18 +47,52 @@ class guiTestImpl : public guiTestClass
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			GuiComboBoxComponent &cb = e->value<GuiComboBoxComponent>();
-			cb.selected = 2;
-			GuiTextComponent &t = e->value<GuiTextComponent>();
-			t.value = "select one:";
+			e->value<GuiComboBoxComponent>().selected = 2;
+			e->value<GuiTextComponent>().value = "select one:";
 			for (uint32 i = 0; i < 4; i++)
 			{
 				Entity *o = ents->createUnique();
 				GuiParentComponent &p = o->value<GuiParentComponent>();
 				p.parent = e->name();
 				p.order = index++;
-				GuiTextComponent &t = o->value<GuiTextComponent>();
-				t.value = Stringizer() + "option " + i;
+				o->value<GuiTextComponent>().value = Stringizer() + "option " + i;
+			}
+		}
+		{ // disabled combo
+			guiLabel(3, index, "disabled combo");
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = 3;
+			p.order = index++;
+			e->value<GuiComboBoxComponent>();
+			e->value<GuiWidgetStateComponent>().disabled = true;
+			e->value<GuiTextComponent>().value = "select one:";
+			for (uint32 i = 0; i < 4; i++)
+			{
+				Entity *o = ents->createUnique();
+				GuiParentComponent &p = o->value<GuiParentComponent>();
+				p.parent = e->name();
+				p.order = index++;
+				o->value<GuiTextComponent>().value = Stringizer() + "option " + i;
+			}
+		}
+		{ // disabled items
+			guiLabel(3, index, "disabled items");
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = 3;
+			p.order = index++;
+			e->value<GuiComboBoxComponent>();
+			e->value<GuiTextComponent>().value = "select one:";
+			for (uint32 i = 0; i < 4; i++)
+			{
+				Entity *o = ents->createUnique();
+				GuiParentComponent &p = o->value<GuiParentComponent>();
+				p.parent = e->name();
+				p.order = index++;
+				o->value<GuiTextComponent>().value = Stringizer() + "option " + i;
+				if (i == 2)
+					o->value<GuiWidgetStateComponent>().disabled = true;
 			}
 		}
 	}

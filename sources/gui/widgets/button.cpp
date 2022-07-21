@@ -22,9 +22,9 @@ class guiTestImpl : public guiTestClass
 			p.parent = 3;
 			p.order = index++;
 			e->value<GuiButtonComponent>();
-			GuiTextComponent &t = e->value<GuiTextComponent>();
-			t.value = "text";
+			e->value<GuiTextComponent>().value = "text";
 		}
+
 		{ // horizontal
 			guiLabel(3, index, "horizontal");
 			Entity *layout = ents->createUnique();
@@ -39,10 +39,10 @@ class guiTestImpl : public guiTestClass
 				p.parent = layout->name();
 				p.order = index++;
 				e->value<GuiButtonComponent>();
-				GuiTextComponent &t = e->value<GuiTextComponent>();
-				t.value = Stringizer() + i;
+				e->value<GuiTextComponent>().value = Stringizer() + i;
 			}
 		}
+
 		{ // vertical
 			guiLabel(3, index, "vertical");
 			Entity *layout = ents->createUnique();
@@ -58,10 +58,10 @@ class guiTestImpl : public guiTestClass
 				p.parent = layout->name();
 				p.order = index++;
 				e->value<GuiButtonComponent>();
-				GuiTextComponent &t = e->value<GuiTextComponent>();
-				t.value = Stringizer() + i;
+				e->value<GuiTextComponent>().value = Stringizer() + i;
 			}
 		}
+
 		{ // with image
 			guiLabel(3, index, "with image");
 			Entity *e = ents->createUnique();
@@ -74,6 +74,7 @@ class guiTestImpl : public guiTestClass
 			m.textureUvOffset = Vec2(5 / 8.f, 2 / 8.f);
 			m.textureUvSize = Vec2(1 / 8.f, 1 / 8.f);
 		}
+
 		{ // with custom event
 			guiLabel(3, index, "with custom event");
 			Entity *e = ents->createUnique();
@@ -81,10 +82,19 @@ class guiTestImpl : public guiTestClass
 			p.parent = 3;
 			p.order = index++;
 			e->value<GuiButtonComponent>();
-			GuiTextComponent &t = e->value<GuiTextComponent>();
-			t.value = "custom event";
-			GuiEventComponent &ev = e->value<GuiEventComponent>();
-			ev.event.bind<guiTestImpl, &guiTestImpl::onButtonPressed>(this);
+			e->value<GuiTextComponent>().value = "custom event";
+			e->value<GuiEventComponent>().event.bind<guiTestImpl, &guiTestImpl::onButtonPressed>(this);
+		}
+
+		{ // disabled
+			guiLabel(3, index, "disabled");
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = 3;
+			p.order = index++;
+			e->value<GuiButtonComponent>();
+			e->value<GuiTextComponent>().value = "text";
+			e->value<GuiWidgetStateComponent>().disabled = true;
 		}
 	}
 
