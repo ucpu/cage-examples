@@ -1,6 +1,6 @@
 
 message(STATUS "----------------------------------------------------------------")
-message(STATUS "cage-tests")
+message(STATUS "cage-examples")
 message(STATUS "----------------------------------------------------------------")
 
 add_subdirectory(engine)
