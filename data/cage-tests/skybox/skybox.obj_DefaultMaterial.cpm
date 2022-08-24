@@ -1,0 +1,17 @@
+
+[base]
+emission = 2
+
+[textures]
+albedo = skybox.png
+
+[render]
+shader = /cage/shader/engine/skybox.glsl
+layer = -10000
+
+[flags]
+noDepthTest
+noDepthWrite
+noLighting
+noShadowCast
+noCulling

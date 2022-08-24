@@ -21,3 +21,8 @@ skin.png
 []
 scheme = textpack
 utf8test.textpack
+
+[]
+scheme = texture
+czech.png
+english.png

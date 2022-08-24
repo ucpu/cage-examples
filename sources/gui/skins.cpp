@@ -76,7 +76,7 @@ public:
 			e->value<GuiComboBoxComponent>();
 			GuiTextComponent &text = e->value<GuiTextComponent>();
 			text.value = "animation";
-			static const char *options[] = {
+			static constexpr const char *options[] = {
 				"margins",
 				"borders",
 				"paddings",
@@ -94,7 +94,6 @@ public:
 		}
 		{ // main
 			Entity *panel = ents->get(3);
-			//panel->remove(gui()->components().LayoutTable);
 			panel->value<GuiLayoutLineComponent>();
 			GuiScrollbarsComponent &sc = panel->value<GuiScrollbarsComponent>();
 			sc.alignment = Vec2(0.5, 0);
@@ -213,6 +212,22 @@ public:
 				p.parent = side;
 				p.order = index++;
 				e->value<GuiColorPickerComponent>();
+			}
+			{ // image czech flag
+				Entity *e = ents->createUnique();
+				GuiParentComponent &p = e->value<GuiParentComponent>();
+				p.parent = side;
+				p.order = index++;
+				e->value<GuiLabelComponent>();
+				e->value<GuiImageComponent>().textureName = HashString("cage-tests/gui/czech.png");
+			}
+			{ // image english flag
+				Entity *e = ents->createUnique();
+				GuiParentComponent &p = e->value<GuiParentComponent>();
+				p.parent = side;
+				p.order = index++;
+				e->value<GuiButtonComponent>();
+				e->value<GuiImageComponent>().textureName = HashString("cage-tests/gui/english.png");
 			}
 		}
 	}

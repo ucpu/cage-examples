@@ -1,0 +1,33 @@
+
+[]
+scheme = pack
+skybox.pack
+
+[]
+scheme = model
+scale = 2
+tangents = true
+ground.obj
+
+[]
+scheme = texture
+srgb = true
+ground.jpg;d
+
+[]
+scheme = texture
+convert = heightToNormal
+normalStrength = 0.3
+normal = true
+ground.jpg;n
+
+[]
+scheme = model
+skybox.obj
+
+[]
+scheme = texture
+target = cubeMap
+convert = skyboxToCube
+srgb = true
+skybox.png

@@ -1,0 +1,4 @@
+
+newmtl ground
+map_Kd ground.jpg;d
+map_Bump ground.jpg;n
