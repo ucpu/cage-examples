@@ -1,0 +1,6 @@
+[textures]
+albedo = water-3-albedo.png
+special = water-3-pbr.png
+normal = water-3-normal.png
+[flags]
+translucent

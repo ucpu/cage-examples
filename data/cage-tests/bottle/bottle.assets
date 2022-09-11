@@ -17,7 +17,7 @@ other.obj?arrow
 []
 scheme = model
 uvs = false
-scale = 5
+scale = 25
 other.obj?plane
 
 []

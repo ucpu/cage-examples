@@ -1,0 +1,5 @@
+[textures]
+albedo = land-71-albedo.png
+special = land-71-pbr.png
+normal = land-71-normal.png
+[flags]

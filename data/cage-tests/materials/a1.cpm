@@ -1,0 +1,6 @@
+
+[base]
+albedo = 0.3, 0.7, 0.2
+
+[textures]
+special = a1.png

@@ -1,5 +1,6 @@
 #include <cage-core/files.h>
 #include <cage-core/meshShapes.h>
+#include <cage-core/meshExport.h>
 
 using namespace cage;
 
@@ -31,6 +32,8 @@ int main(int argc, const char *args[])
 	fs->writeLine("0");
 	fs->writeLine("");
 
+	Holder<Mesh> msh = newMeshSphereRegular(1, 0.2);
+
 	for (uint32 r = 0; r < RoughnessSteps; r++)
 	{
 		for (uint32 m = 0; m < MetallicSteps; m++)
@@ -38,10 +41,10 @@ int main(int argc, const char *args[])
 			const String mat = Stringizer() + "mat_" + r + "_" + m;
 
 			{
-				Holder<Mesh> msh = newMeshSphereRegular(1, 0.2);
 				MeshExportObjConfig cfg;
 				cfg.objectName = mat;
-				msh->exportObjFile(pathJoin(basePath, mat + ".obj"), cfg);
+				cfg.mesh = +msh;
+				meshExportFiles(pathJoin(basePath, mat + ".obj"), cfg);
 			}
 
 			{

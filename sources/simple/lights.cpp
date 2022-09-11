@@ -106,17 +106,17 @@ void initializeGui()
 			GuiLayoutLineComponent &l = panel->value<GuiLayoutLineComponent>();
 			l.vertical = true;
 		}
-		initializeGuiColors(panel->name(), 27, Vec3(0, 0, 0.02));
-		initializeGuiColors(panel->name(), 28, Vec3(0, 0, 0.02));
+		initializeGuiColors(panel->name(), 27, Vec3(0, 0, 0.1));
+		initializeGuiColors(panel->name(), 28, Vec3(0, 0, 0.1));
 	}
 
-	Vec3 colors[3] = {
+	static constexpr const Vec3 colors[3] = {
 		Vec3(0.11, 0.95, 0.8),
 		Vec3(0.44, 0.95, 0.8),
 		Vec3(0.77, 0.95, 0.8)
 	};
-	Real pitches[3] = { 0.25 * 90, 0.3 * 90, 0.55 * 90 };
-	Real yaws[3] = { 0.1 * 360, 0.2 * 360, 0.6 * 360 };
+	static constexpr const Real pitches[3] = { 0.25 * 90, 0.3 * 90, 0.55 * 90 };
+	static constexpr const Real yaws[3] = { 0.1 * 360, 0.2 * 360, 0.6 * 360 };
 	for (uint32 i = 0; i < 3; i++)
 	{ // spot lights
 		Entity *panel = ents->create(30 + i * 10);
@@ -182,31 +182,27 @@ int main(int argc, char *args[])
 		EntityManager *ents = engineEntities();
 		{ // floor
 			Entity *e = ents->create(1);
-			RenderComponent &r = e->value<RenderComponent>();
-			r.object = HashString("cage-tests/bottle/other.obj?plane");
-			TransformComponent &t = e->value<TransformComponent>();
-			t.scale = 5;
+			e->value<RenderComponent>().object = HashString("cage-tests/bottle/other.obj?plane");
+			e->value<TransformComponent>();
 		}
 		{ // bottle
 			Entity *e = ents->create(2);
-			RenderComponent &r = e->value<RenderComponent>();
-			r.object = HashString("cage-tests/bottle/bottle.obj");
-			TransformComponent &t = e->value<TransformComponent>();
-			t.position += Vec3(1, 0, 0);
+			e->value<RenderComponent>().object = HashString("cage-tests/bottle/bottle.obj");
+			e->value<TransformComponent>().position += Vec3(1, 0, 0);
 		}
 		for (uint32 i = 0; i < 3; i++)
 		{ // spot lights
 			Entity *e = ents->create(5 + i);
-			RenderComponent &r = e->value<RenderComponent>();
-			r.object = HashString("cage-tests/bottle/other.obj?arrow");
+			e->value<RenderComponent>().object = HashString("cage-tests/bottle/other.obj?arrow");
 			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Spot;
 			l.spotAngle = Degs(40);
 			l.spotExponent = 40;
 			l.attenuation = Vec3(1, 0, 0.005);
-			ShadowmapComponent &s = e->value<ShadowmapComponent>();
-			s.resolution = 512;
-			s.worldSize = Vec3(3, 50, 0);
+			l.intensity = 3;
+			//ShadowmapComponent &s = e->value<ShadowmapComponent>();
+			//s.resolution = 1024;
+			//s.worldSize = Vec3(3, 50, 0);
 		}
 		{ // camera
 			Entity *e = ents->create(10);

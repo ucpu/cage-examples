@@ -1,0 +1,5 @@
+scenes/uwplanet/planet.pack
+
+scenes/uwplanet/planet.object
+0 0 0
+0

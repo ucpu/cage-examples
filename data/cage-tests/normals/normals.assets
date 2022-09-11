@@ -1,0 +1,15 @@
+
+[]
+scheme = pack
+normals.pack
+
+[]
+scheme = model
+tangents = true
+real.obj
+flat.obj
+
+[]
+scheme = texture
+normal = true
+normalmap.png
