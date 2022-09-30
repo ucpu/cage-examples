@@ -9,7 +9,7 @@ albedo = 0.53, 0.09, 0.8
 opacity = 0.1
 
 [flags]
-translucent
+transparent
 noDepthWrite
 noLighting
 noShadowCast

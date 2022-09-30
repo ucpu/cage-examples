@@ -5,4 +5,4 @@ albedo = tree-1-1.glb?Adansonia_digitata_LD_Adansonia_bark_baked_Color
 shader = wind.glsl
 
 [flags]
-alphaClip
+cutOut

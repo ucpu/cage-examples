@@ -9,6 +9,4 @@ albedo = smoke/1/$$.png
 noLighting
 noShadowCast
 noDepthWrite
-translucent
-
-
+fade

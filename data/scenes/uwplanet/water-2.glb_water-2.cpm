@@ -3,4 +3,4 @@ albedo = water-2-albedo.png
 special = water-2-pbr.png
 normal = water-2-normal.png
 [flags]
-translucent
+transparent

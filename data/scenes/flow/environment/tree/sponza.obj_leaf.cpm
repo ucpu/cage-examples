@@ -4,4 +4,4 @@ special = textures\sponza_thorn_spec.png
 normal = textures\sponza_thorn_bump.png
 
 [flags]
-alphaClip
+cutOut

@@ -6,4 +6,4 @@ normal = tree-2-1.glb?Normals_0
 shader = wind.glsl
 
 [flags]
-alphaClip
+cutOut

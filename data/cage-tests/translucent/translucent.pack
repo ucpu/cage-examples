@@ -3,6 +3,7 @@
 ../bottle/bottle.pack
 shapes.blend?Ground
 shapes.blend?Knot
+shapes.blend?Knot;fade
 shapes.blend?Bulb
 shapes.blend?Plane
 shapes.blend?Plane;alphaClip

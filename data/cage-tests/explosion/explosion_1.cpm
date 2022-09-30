@@ -9,6 +9,4 @@ albedo = explosion/1/$$.png
 noLighting
 noShadowCast
 noDepthWrite
-translucent
-
-
+fade

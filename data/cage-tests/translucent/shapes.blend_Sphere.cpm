@@ -9,7 +9,7 @@ roughness = 0.2
 opacity = 0.51
 
 [flags]
-translucent
+transparent
 noDepthWrite
 noShadowCast
 

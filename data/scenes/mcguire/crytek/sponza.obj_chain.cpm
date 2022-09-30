@@ -3,4 +3,4 @@ albedo = textures\chain_texture.png
 normal = textures\chain_texture_bump.png
 
 [flags]
-alphaClip
+cutOut

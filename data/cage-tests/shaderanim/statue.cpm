@@ -7,5 +7,5 @@ metallic = 1
 shader = blueprint.glsl
 
 [flags]
-translucent
+transparent
 noShadowCast

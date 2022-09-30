@@ -10,7 +10,7 @@ albedo = Plane.png
 
 [flags]
 twoSided
-translucent
+transparent
 noDepthWrite
 noLighting
 noShadowCast

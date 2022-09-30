@@ -55,12 +55,11 @@ void update()
 	}
 
 	// animated knot opacities
-	for (uint32 i = 0; i < knotsCount; i++)
+	for (uint32 i = 0; i < knotsCount * 2; i++)
 	{
 		Entity *e = ents->get(20 + i);
-		RenderComponent &r = e->value<RenderComponent>();
-		Real p = ((Real(i) + engineControlTime() * 3e-6) % knotsCount) / knotsCount;
-		r.opacity = smootherstep(clamp(p * 2, 0, 1));
+		const Real p = ((Real(i) + engineControlTime() * 3e-6) % knotsCount) / knotsCount;
+		e->value<RenderComponent>().opacity = smootherstep(clamp(p * 2, 0, 1));
 	}
 
 	// moving light bulbs
@@ -220,7 +219,7 @@ int main(int argc, char *args[])
 			t.position = Vec3(-3.5, 1, 4);
 			t.orientation = randomDirectionQuat();
 		}
-		// animated knots
+		// animated knots (transparent)
 		for (uint32 i = 0; i < knotsCount; i++)
 		{
 			Entity *e = ents->create(20 + i);
@@ -228,6 +227,17 @@ int main(int argc, char *args[])
 			TransformComponent &t = e->value<TransformComponent>();
 			Rads angle = Degs(i * 360.0 / knotsCount);
 			t.position = Vec3(sin(angle) * 8, 0.5, cos(angle) * 8);
+			t.orientation = Quat(Degs(), angle, Degs());
+			t.scale = 0.6;
+		}
+		// animated knots (fading)
+		for (uint32 i = 0; i < knotsCount; i++)
+		{
+			Entity *e = ents->create(20 + knotsCount + i);
+			e->value<RenderComponent>().object = HashString("cage-tests/translucent/shapes.blend?Knot;fade");
+			TransformComponent &t = e->value<TransformComponent>();
+			Rads angle = Degs(i * 360.0 / knotsCount);
+			t.position = Vec3(sin(angle) * 10, 0.5, cos(angle) * 10);
 			t.orientation = Quat(Degs(), angle, Degs());
 			t.scale = 0.6;
 		}

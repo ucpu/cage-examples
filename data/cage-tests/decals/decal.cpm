@@ -12,7 +12,7 @@ layer = 500
 shader = /cage/shader/engine/decal.glsl
 
 [flags]
-alphaClip
+cutOut
 noDepthTest
 noDepthWrite
 noShadowCast
