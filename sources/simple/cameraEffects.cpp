@@ -3,6 +3,7 @@
 #include <cage-core/assetManager.h>
 #include <cage-core/hashString.h>
 #include <cage-core/string.h>
+#include <cage-core/config.h>
 #include <cage-engine/window.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/guiComponents.h>
@@ -271,10 +272,11 @@ void update()
 			enableEffect(CameraEffectsFlags::GammaCorrection, cb.state == CheckBoxStateEnum::Checked);
 		}
 		{ // gamma
+			ConfigFloat confRenderGamma("cage/graphics/gamma");
 			Entity *e = ents->get(baseName + 1);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.gamma = toFloat(in.value);
+				confRenderGamma = toFloat(in.value);
 		}
 	}
 
