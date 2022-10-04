@@ -156,29 +156,59 @@ void update()
 			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
 			enableEffect(CameraEffectsFlags::EyeAdaptation, cb.state == CheckBoxStateEnum::Checked);
 		}
-		{ // key
-			Entity *e = ents->get(baseName + 1);
-			GuiInputComponent &in = e->value<GuiInputComponent>();
-			if (in.valid)
-				cam.eyeAdaptation.key = toFloat(in.value);
-		}
-		{ // strength
-			Entity *e = ents->get(baseName + 2);
-			GuiInputComponent &in = e->value<GuiInputComponent>();
-			if (in.valid)
-				cam.eyeAdaptation.strength = toFloat(in.value);
-		}
 		{ // darkerSpeed
-			Entity *e = ents->get(baseName + 3);
+			Entity *e = ents->get(baseName + 1);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.eyeAdaptation.darkerSpeed = toFloat(in.value);
 		}
 		{ // lighterSpeed
-			Entity *e = ents->get(baseName + 4);
+			Entity *e = ents->get(baseName + 2);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
 				cam.eyeAdaptation.lighterSpeed = toFloat(in.value);
+		}
+		{ // lowLogLum
+			Entity *e = ents->get(baseName + 3);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
+			if (in.valid)
+				cam.eyeAdaptation.lowLogLum = toFloat(in.value);
+		}
+		{ // highLogLum
+			Entity *e = ents->get(baseName + 4);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
+			if (in.valid)
+				cam.eyeAdaptation.highLogLum = toFloat(in.value);
+		}
+		{ // nightOffset
+			Entity *e = ents->get(baseName + 5);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
+			if (in.valid)
+				cam.eyeAdaptation.nightOffset = toFloat(in.value);
+		}
+		{ // nightDesaturate
+			Entity *e = ents->get(baseName + 6);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
+			if (in.valid)
+				cam.eyeAdaptation.nightDesaturate = toFloat(in.value);
+		}
+		{ // nightContrast
+			Entity *e = ents->get(baseName + 7);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
+			if (in.valid)
+				cam.eyeAdaptation.nightContrast = toFloat(in.value);
+		}
+		{ // key
+			Entity *e = ents->get(baseName + 8);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
+			if (in.valid)
+				cam.eyeAdaptation.key = toFloat(in.value);
+		}
+		{ // strength
+			Entity *e = ents->get(baseName + 9);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
+			if (in.valid)
+				cam.eyeAdaptation.strength = toFloat(in.value);
 		}
 	}
 
@@ -256,6 +286,28 @@ void update()
 			enableEffect(CameraEffectsFlags::AntiAliasing, cb.state == CheckBoxStateEnum::Checked);
 		}
 	}
+
+	{ // lights intensities
+		constexpr sint32 baseName = 2000;
+		{ // sun
+			Entity *e = ents->get(baseName + 1);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
+			if (in.valid)
+				engineEntities()->get(2)->value<LightComponent>().intensity = toFloat(in.value);
+		}
+		{ // ambient
+			Entity *e = ents->get(baseName + 2);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
+			if (in.valid)
+				cam.ambientIntensity = toFloat(in.value);
+		}
+		{ // directional ambient
+			Entity *e = ents->get(baseName + 3);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
+			if (in.valid)
+				cam.ambientDirectionalIntensity = toFloat(in.value);
+		}
+	}
 }
 
 Entity *genInputFloat(Entity *table, sint32 &childIndex, uint32 nameBase, const String &labelText, Real rangeMin, Real rangeMax, Real step, Real current)
@@ -266,9 +318,8 @@ Entity *genInputFloat(Entity *table, sint32 &childIndex, uint32 nameBase, const 
 		GuiParentComponent &p = e->value<GuiParentComponent>();
 		p.parent = table->name();
 		p.order = childIndex++;
-		GuiLabelComponent &label = e->value<GuiLabelComponent>();
-		GuiTextComponent &t = e->value<GuiTextComponent>();
-		t.value = labelText;
+		e->value<GuiLabelComponent>();
+		e->value<GuiTextComponent>().value = labelText;
 	}
 	{
 		Entity *e = ents->create(nameBase + childIndex / 2);
@@ -297,19 +348,13 @@ Entity *genInputInt(Entity *table, sint32 &childIndex, uint32 nameBase, const St
 	return e;
 }
 
-constexpr CheckBoxStateEnum genEnabled(CameraEffectsFlags f)
-{
-	return any(CameraEffectsFlags::Default & f) ? CheckBoxStateEnum::Checked : CheckBoxStateEnum::Unchecked;
-}
-
 void initializeGui()
 {
 	EntityManager *ents = engineGuiEntities();
 	Entity *layout = ents->createUnique();
 	{ // layout
-		GuiScrollbarsComponent &sc = layout->value<GuiScrollbarsComponent>();
-		GuiLayoutLineComponent &l = layout->value<GuiLayoutLineComponent>();
-		l.vertical = true;
+		layout->value<GuiScrollbarsComponent>();
+		layout->value<GuiLayoutLineComponent>().vertical = true;
 	}
 
 	{ // ambient occlusion
@@ -319,28 +364,24 @@ void initializeGui()
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = layout->name();
 			p.order = baseName;
-			GuiSpoilerComponent &c = panel->value<GuiSpoilerComponent>();
-			GuiTextComponent &t = panel->value<GuiTextComponent>();
-			t.value = "Ambient Occlusion";
-			GuiLayoutLineComponent &l = panel->value<GuiLayoutLineComponent>();
-			l.vertical = true;
+			panel->value<GuiSpoilerComponent>();
+			panel->value<GuiTextComponent>().value = "Ambient Occlusion";
+			panel->value<GuiLayoutLineComponent>().vertical = true;
 		}
 		{ // enabled
 			Entity *e = ents->create(baseName);
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 1;
-			GuiTextComponent &t = e->value<GuiTextComponent>();
-			t.value = "Enabled";
-			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
-			cb.state = genEnabled(CameraEffectsFlags::AmbientOcclusion);
+			e->value<GuiTextComponent>().value = "Enabled";
+			e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Checked;
 		}
 		Entity *table = ents->createUnique();
 		{
 			GuiParentComponent &p = table->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 2;
-			GuiLayoutTableComponent &t = table->value<GuiLayoutTableComponent>();
+			table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
 		genInputFloat(table, childIndex, baseName, "World Radius:", 0.1, 3, 0.05, CameraProperties().ssao.worldRadius);
@@ -358,28 +399,24 @@ void initializeGui()
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = layout->name();
 			p.order = baseName;
-			GuiSpoilerComponent &c = panel->value<GuiSpoilerComponent>();
-			GuiTextComponent &t = panel->value<GuiTextComponent>();
-			t.value = "Depth of field";
-			GuiLayoutLineComponent &l = panel->value<GuiLayoutLineComponent>();
-			l.vertical = true;
+			panel->value<GuiSpoilerComponent>();
+			panel->value<GuiTextComponent>().value = "Depth of field";
+			panel->value<GuiLayoutLineComponent>().vertical = true;
 		}
 		{ // enabled
 			Entity *e = ents->create(baseName);
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 1;
-			GuiTextComponent &t = e->value<GuiTextComponent>();
-			t.value = "Enabled";
-			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
-			cb.state = genEnabled(CameraEffectsFlags::DepthOfField);
+			e->value<GuiTextComponent>().value = "Enabled";
+			e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Checked;
 		}
 		Entity *table = ents->createUnique();
 		{
 			GuiParentComponent &p = table->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 2;
-			GuiLayoutTableComponent &t = table->value<GuiLayoutTableComponent>();
+			table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
 		genInputFloat(table, childIndex, baseName, "Focus distance:", 0, 20, 0.5, CameraProperties().depthOfField.focusDistance);
@@ -395,21 +432,17 @@ void initializeGui()
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = layout->name();
 			p.order = baseName;
-			GuiSpoilerComponent &c = panel->value<GuiSpoilerComponent>();
-			GuiTextComponent &t = panel->value<GuiTextComponent>();
-			t.value = "Bloom";
-			GuiLayoutLineComponent &l = panel->value<GuiLayoutLineComponent>();
-			l.vertical = true;
+			panel->value<GuiSpoilerComponent>();
+			panel->value<GuiTextComponent>().value = "Bloom";
+			panel->value<GuiLayoutLineComponent>().vertical = true;
 		}
 		{ // enabled
 			Entity *e = ents->create(baseName);
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 1;
-			GuiTextComponent &t = e->value<GuiTextComponent>();
-			t.value = "Enabled";
-			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
-			cb.state = genEnabled(CameraEffectsFlags::Bloom);
+			e->value<GuiTextComponent>().value = "Enabled";
+			e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Checked;
 		}
 		Entity *table = ents->createUnique();
 		{
@@ -430,21 +463,17 @@ void initializeGui()
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = layout->name();
 			p.order = baseName;
-			GuiSpoilerComponent &c = panel->value<GuiSpoilerComponent>();
-			GuiTextComponent &t = panel->value<GuiTextComponent>();
-			t.value = "Eye Adaptation";
-			GuiLayoutLineComponent &l = panel->value<GuiLayoutLineComponent>();
-			l.vertical = true;
+			panel->value<GuiSpoilerComponent>();
+			panel->value<GuiTextComponent>().value = "Eye adaptation";
+			panel->value<GuiLayoutLineComponent>().vertical = true;
 		}
 		{ // enabled
 			Entity *e = ents->create(baseName);
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 1;
-			GuiTextComponent &t = e->value<GuiTextComponent>();
-			t.value = "Enabled";
-			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
-			cb.state = genEnabled(CameraEffectsFlags::EyeAdaptation);
+			e->value<GuiTextComponent>().value = "Enabled";
+			e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Checked;
 		}
 		Entity *table = ents->createUnique();
 		{
@@ -454,10 +483,15 @@ void initializeGui()
 			GuiLayoutTableComponent &t = table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
+		genInputFloat(table, childIndex, baseName, "Darker speed:", 0, 10, 0.02, CameraProperties().eyeAdaptation.darkerSpeed);
+		genInputFloat(table, childIndex, baseName, "Lighter speed:", 0, 10, 0.02, CameraProperties().eyeAdaptation.lighterSpeed);
+		genInputFloat(table, childIndex, baseName, "Low logLum:", -20, 10, 0.05, CameraProperties().eyeAdaptation.lowLogLum);
+		genInputFloat(table, childIndex, baseName, "High logLum:", -20, 10, 0.05, CameraProperties().eyeAdaptation.highLogLum);
+		genInputFloat(table, childIndex, baseName, "Night offset:", 0, 10, 0.02, CameraProperties().eyeAdaptation.nightOffset);
+		genInputFloat(table, childIndex, baseName, "Night desaturate:", 0, 1, 0.02, CameraProperties().eyeAdaptation.nightDesaturate);
+		genInputFloat(table, childIndex, baseName, "Night contrast:", 0, 0.1, 0.002, CameraProperties().eyeAdaptation.nightContrast);
 		genInputFloat(table, childIndex, baseName, "Key:", 0, 1, 0.02, CameraProperties().eyeAdaptation.key);
 		genInputFloat(table, childIndex, baseName, "Strength:", 0, 1, 0.02, CameraProperties().eyeAdaptation.strength);
-		genInputFloat(table, childIndex, baseName, "Darker speed:", 0, 5, 0.02, CameraProperties().eyeAdaptation.darkerSpeed);
-		genInputFloat(table, childIndex, baseName, "Lighter speed:", 0, 5, 0.02, CameraProperties().eyeAdaptation.lighterSpeed);
 	}
 
 	{ // tone mapping
@@ -467,21 +501,17 @@ void initializeGui()
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = layout->name();
 			p.order = baseName;
-			GuiSpoilerComponent &c = panel->value<GuiSpoilerComponent>();
-			GuiTextComponent &t = panel->value<GuiTextComponent>();
-			t.value = "Tone Mapping";
-			GuiLayoutLineComponent &l = panel->value<GuiLayoutLineComponent>();
-			l.vertical = true;
+			panel->value<GuiSpoilerComponent>();
+			panel->value<GuiTextComponent>().value = "Tone mapping";
+			panel->value<GuiLayoutLineComponent>().vertical = true;
 		}
 		{ // enabled
 			Entity *e = ents->create(baseName);
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 1;
-			GuiTextComponent &t = e->value<GuiTextComponent>();
-			t.value = "Enabled";
-			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
-			cb.state = genEnabled(CameraEffectsFlags::ToneMapping);
+			e->value<GuiTextComponent>().value = "Enabled";
+			e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Checked;
 		}
 		Entity *table = ents->createUnique();
 		{
@@ -507,21 +537,17 @@ void initializeGui()
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = layout->name();
 			p.order = baseName;
-			GuiSpoilerComponent &c = panel->value<GuiSpoilerComponent>();
-			GuiTextComponent &t = panel->value<GuiTextComponent>();
-			t.value = "Gamma";
-			GuiLayoutLineComponent &l = panel->value<GuiLayoutLineComponent>();
-			l.vertical = true;
+			panel->value<GuiSpoilerComponent>();
+			panel->value<GuiTextComponent>().value = "Gamma";
+			panel->value<GuiLayoutLineComponent>().vertical = true;
 		}
 		{ // enabled
 			Entity *e = ents->create(baseName);
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 1;
-			GuiTextComponent &t = e->value<GuiTextComponent>();
-			t.value = "Enabled";
-			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
-			cb.state = genEnabled(CameraEffectsFlags::GammaCorrection);
+			e->value<GuiTextComponent>().value = "Enabled";
+			e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Checked;
 		}
 		Entity *table = ents->createUnique();
 		{
@@ -541,22 +567,42 @@ void initializeGui()
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
 			p.parent = layout->name();
 			p.order = baseName;
-			GuiSpoilerComponent &c = panel->value<GuiSpoilerComponent>();
-			GuiTextComponent &t = panel->value<GuiTextComponent>();
-			t.value = "Antialiasing";
-			GuiLayoutLineComponent &l = panel->value<GuiLayoutLineComponent>();
-			l.vertical = true;
+			panel->value<GuiSpoilerComponent>();
+			panel->value<GuiTextComponent>().value = "Antialiasing";
+			panel->value<GuiLayoutLineComponent>().vertical = true;
 		}
 		{ // enabled
 			Entity *e = ents->create(baseName);
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 1;
-			GuiTextComponent &t = e->value<GuiTextComponent>();
-			t.value = "Enabled";
-			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
-			cb.state = genEnabled(CameraEffectsFlags::AntiAliasing);
+			e->value<GuiTextComponent>().value = "Enabled";
+			e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Checked;
 		}
+	}
+
+	{ // light intensities
+		constexpr sint32 baseName = 2000;
+		Entity *panel = ents->createUnique();
+		{
+			GuiParentComponent &p = panel->value<GuiParentComponent>();
+			p.parent = layout->name();
+			p.order = baseName;
+			panel->value<GuiSpoilerComponent>();
+			panel->value<GuiTextComponent>().value = "Lights Intensities";
+			panel->value<GuiLayoutLineComponent>().vertical = true;
+		}
+		Entity *table = ents->createUnique();
+		{
+			GuiParentComponent &p = table->value<GuiParentComponent>();
+			p.parent = panel->name();
+			p.order = 2;
+			table->value<GuiLayoutTableComponent>();
+		}
+		sint32 childIndex = 1;
+		genInputFloat(table, childIndex, baseName, "Sun:", 0, 100, 0.1, 3);
+		genInputFloat(table, childIndex, baseName, "Ambient:", 0, 1, 0.01, 0.02);
+		genInputFloat(table, childIndex, baseName, "Directional Ambient:", 0, 1, 0.01, 0.04);
 	}
 }
 
@@ -593,12 +639,11 @@ int main(int argc, char *args[])
 			t.orientation = Quat(Degs(10), Degs(110), Degs());
 			CameraComponent &c = e->value<CameraComponent>();
 			c.ambientColor = Vec3(1);
-			c.ambientIntensity = 0.01;
+			c.ambientIntensity = 0.02;
 			c.ambientDirectionalColor = Vec3(1);
-			c.ambientDirectionalIntensity = 0.03;
+			c.ambientDirectionalIntensity = 0.04;
 			c.near = 0.1;
 			c.far = 100;
-			c.effects = CameraEffectsFlags::Default;
 		}
 		{ // skybox
 			Entity *e = engineEntities()->createAnonymous();
@@ -607,7 +652,7 @@ int main(int argc, char *args[])
 			e->value<TextureAnimationComponent>();
 		}
 		{ // sun
-			Entity *e = ents->createAnonymous();
+			Entity *e = ents->create(2);
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(0, 5, 0);
 			t.orientation = Quat(Degs(-75), Degs(-120), Degs());

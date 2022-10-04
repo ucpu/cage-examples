@@ -71,8 +71,7 @@ int main(int argc, char *args[])
 
 			// initialize graphics
 			model->bind();
-			glActiveTexture(GL_TEXTURE0);
-			texture->bind();
+			texture->bind(0);
 			shader->bind();
 
 			// initialize sounds
