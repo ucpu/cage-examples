@@ -1,0 +1,159 @@
+#include <cage-core/logger.h>
+#include <cage-core/concurrent.h>
+#include <cage-core/assetContext.h>
+#include <cage-core/assetManager.h>
+#include <cage-core/hashString.h>
+
+#include <cage-engine/window.h>
+#include <cage-engine/renderObject.h>
+#include <cage-engine/model.h>
+#include <cage-engine/texture.h>
+#include <cage-engine/shaderProgram.h>
+#include <cage-engine/frameBuffer.h>
+#include <cage-engine/virtualReality.h>
+#include <cage-engine/opengl.h>
+#include <cage-engine/highPerformanceGpuHint.h>
+
+using namespace cage;
+
+bool closing = false;
+constexpr uint32 assetsName1 = HashString("scenes/mcguire/crytek/sponza.object");
+constexpr uint32 assetsName2 = HashString("cage-tests/shaderanim/raw.glsl");
+constexpr uint32 assetsName3 = HashString("cage/model/fake.obj");
+
+void windowClose(InputWindow)
+{
+	closing = true;
+}
+
+int main(int argc, char *args[])
+{
+	try
+	{
+		Holder<Logger> log1 = newLogger();
+		log1->format.bind<logFormatConsole>();
+		log1->output.bind<logOutputStdOut>();
+
+		Holder<Window> window = newWindow(WindowCreateConfig{ .vsync = 0 });
+		InputListener<InputClassEnum::WindowClose, InputWindow> windowCloseListener;
+		windowCloseListener.bind<&windowClose>();
+		windowCloseListener.attach(window->events);
+		window->title("cage test virtual reality");
+
+		// assets
+		Holder<AssetManager> assets = newAssetManager(AssetManagerCreateConfig());
+		assets->defineScheme<AssetSchemeIndexPack, AssetPack>(genAssetSchemePack());
+		assets->defineScheme<AssetSchemeIndexShaderProgram, MultiShaderProgram>(genAssetSchemeShaderProgram(0));
+		assets->defineScheme<AssetSchemeIndexTexture, Texture>(genAssetSchemeTexture(0));
+		assets->defineScheme<AssetSchemeIndexModel, Model>(genAssetSchemeModel(0));
+		assets->defineScheme<AssetSchemeIndexRenderObject, RenderObject>(genAssetSchemeRenderObject());
+
+		// load assets
+		assets->add(assetsName1);
+		assets->add(assetsName2);
+		assets->add(assetsName3);
+		while (true)
+		{
+			if (assets->get<AssetSchemeIndexRenderObject, RenderObject>(assetsName1)
+				&& assets->get<AssetSchemeIndexShaderProgram, MultiShaderProgram>(assetsName2)
+				&& assets->get<AssetSchemeIndexModel, Model>(assetsName3))
+				break;
+			assets->processCustomThread(0);
+			threadSleep(1000);
+		}
+
+		{
+			// fetch assets
+			Holder<RenderObject> object = assets->get<AssetSchemeIndexRenderObject, RenderObject>(assetsName1);
+			Holder<ShaderProgram> shader = assets->get<AssetSchemeIndexShaderProgram, MultiShaderProgram>(assetsName2)->get(0);
+			Holder<Model> cubeModel = assets->get<AssetSchemeIndexModel, Model>(assetsName3);
+			shader->bind();
+
+			// show window
+			window->windowedSize(Vec2i(800, 600));
+			window->setWindowed();
+			Holder<VirtualReality> virtualreality = newVirtualReality({});
+			Holder<FrameBuffer> fb = newFrameBufferDraw();
+			Holder<Texture> depthTexture = newTexture();
+			depthTexture->setDebugName("depth texture");
+
+			while (!closing)
+			{
+				window->processEvents();
+
+				// clear the window
+				const Vec2i res = window->resolution();
+				glViewport(0, 0, res[0], res[1]);
+				glBindFramebuffer(GL_FRAMEBUFFER, 0);
+				glClear(GL_COLOR_BUFFER_BIT);
+				window->swapBuffers();
+
+				// render to headset
+				virtualreality->processEvents();
+				Holder<VirtualRealityGraphicsFrame> frame = virtualreality->graphicsFrame();
+				frame->updateProjections();
+				fb->bind();
+				
+				if (depthTexture->internalFormat() == 0)
+				{
+					depthTexture->bind(0);
+					depthTexture->initialize(frame->cameras[0].resolution, 1, GL_DEPTH_COMPONENT32);
+					fb->depthTexture(+depthTexture);
+				}
+				glEnable(GL_DEPTH_TEST);
+
+				frame->renderBegin();
+				for (const auto &view : frame->cameras)
+				{
+					if (!view.colorTexture)
+						continue;
+
+					fb->colorTexture(0, view.colorTexture);
+					fb->checkStatus();
+
+					glViewport(0, 0, view.resolution[0], view.resolution[1]);
+					glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+					Mat4 viewM = inverse(Mat4(view.transform));
+					Mat4 projM = view.projection;
+					shader->uniform(0, projM * viewM);
+
+					for (uint32 name : object->models(0))
+					{
+						Holder<Model> model = assets->get<AssetSchemeIndexModel, Model>(name);
+						if (!model->textureNames[0])
+							continue;
+						model->bind();
+						assets->get<AssetSchemeIndexTexture, Texture>(model->textureNames[0])->bind(0);
+						model->dispatch();
+					}
+
+					cubeModel->bind();
+					assets->get<AssetSchemeIndexTexture, Texture>(cubeModel->textureNames[0])->bind(0);
+					for (const VirtualRealityController *it : { &virtualreality->leftController(), &virtualreality->rightController() })
+					{
+						const Mat4 sc = Mat4::scale(it->tracking() ? 0.025 : 0.015);
+						shader->uniform(0, projM * viewM * Mat4(it->gripPose()) * sc);
+						cubeModel->dispatch();
+						shader->uniform(0, projM * viewM * Mat4(it->aimPose()) * sc);
+						cubeModel->dispatch();
+					}
+				}
+				frame->renderCommit();
+			}
+		}
+
+		// unload assets
+		assets->remove(assetsName1);
+		assets->remove(assetsName2);
+		assets->remove(assetsName3);
+		assets->unloadCustomThread(0);
+
+		return 0;
+	}
+	catch (...)
+	{
+		detail::logCurrentCaughtException();
+		return 1;
+	}
+}

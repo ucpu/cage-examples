@@ -72,7 +72,7 @@ int main(int argc, char *args[])
 		log1->output.bind<logOutputStdOut>();
 
 		// contexts
-		window = newWindow();
+		window = newWindow({});
 		window->makeNotCurrent();
 
 		// asset schemes

@@ -21,7 +21,7 @@ public:
 	WindowTestClass() : index(globalWindowIndex++), hue(index * 0.33)
 	{
 		CAGE_LOG(SeverityEnum::Info, "test", Stringizer() + "creating window " + index);
-		window = newWindow();
+		window = newWindow({});
 		window->setWindowed();
 		window->windowedSize(Vec2i(400, 300));
 		window->title(Stringizer() + "window " + index);

@@ -36,7 +36,7 @@ int main(int argc, char *args[])
 		log1->output.bind<logOutputStdOut>();
 
 		// window
-		Holder<Window> window = newWindow();
+		Holder<Window> window = newWindow({});
 		InputListener<InputClassEnum::WindowClose, InputWindow> windowCloseListener;
 		windowCloseListener.bind<&windowClose>();
 		windowCloseListener.attach(window->events);

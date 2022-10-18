@@ -10,11 +10,11 @@ float sqr(float x)
 
 vec3 applyWind(vec3 p, vec3 origin)
 {
-	float y = p.y;
 	float k = length(vec2(p.x, p.z));
-	float f = sqr(abs(y) * 0.1) * clamp(k, 0.5, 1.5);
-	float x = f * sin(uniViewport.time.z * 520 + origin.x * 0.3 + 42);
-	float z = f * sin(uniViewport.time.z * 480 + origin.z * 0.3 + 13);
+	float f = sqr(abs(p.y) * 0.08) * clamp(k, 0.5, 1.5);
+	const float norm = 1 / length(vec3(17, 19, 23)) * 0.02;
+	float x = f * sin(uniViewport.time.z * 520 + dot(origin, vec3(17, 19, 23)) * norm + 42);
+	float z = f * sin(uniViewport.time.z * 480 + dot(origin, vec3(23, 17, 19)) * norm + 13);
 	return p + vec3(x, 0, z);
 }
 
@@ -25,9 +25,9 @@ void main()
 	varNormal = inNormal;
 	varTangent = inTangent;
 	varUv = inUv;
-	skeletalAnimation();
+	//skeletalAnimation();
 	vec3 origin = transpose(uniMeshes[varInstanceId].mMat) * vec4(0, 0, 0, 1);
-	varPosition = applyWind(varPosition - origin, origin) + origin;
+	varPosition = applyWind(varPosition, origin);
 	gl_Position = uniMeshes[varInstanceId].mvpMat * vec4(varPosition, 1);
 	varPosition = transpose(uniMeshes[varInstanceId].mMat) * vec4(varPosition, 1);
 }
