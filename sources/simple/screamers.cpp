@@ -191,13 +191,13 @@ void spawnScreamer()
 
 Line getCursorRay()
 {
-	const Vec2i cursor = engineWindow()->mousePosition();
+	const Vec2 cursor = engineWindow()->mousePosition();
 	const Vec2i res = engineWindow()->resolution();
-	const Vec2 p = Vec2(cursor) / Vec2(res) * 2 - 1;
+	const Vec2 p = cursor / Vec2(res) * 2 - 1;
 	const Real px = p[0], py = -p[1];
 	Entity *camera = engineEntities()->get(1);
-	TransformComponent &ts = camera->value<TransformComponent>();
-	CameraComponent &cs = camera->value<CameraComponent>();
+	const TransformComponent &ts = camera->value<TransformComponent>();
+	const CameraComponent &cs = camera->value<CameraComponent>();
 	const Mat4 view = inverse(Mat4(ts.position, ts.orientation, Vec3(ts.scale, ts.scale, ts.scale)));
 	const Mat4 proj = perspectiveProjection(cs.camera.perspectiveFov, Real(res[0]) / Real(res[1]), cs.near, cs.far);
 	const Mat4 inv = inverse(proj * view);
