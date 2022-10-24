@@ -8,6 +8,7 @@
 #include <cage-engine/guiComponents.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/scene.h>
+#include <cage-engine/sceneScreenSpaceEffects.h>
 
 #include <cage-simple/engine.h>
 #include <cage-simple/statisticsGui.h>
@@ -212,7 +213,7 @@ int main(int argc, char *args[])
 			CameraComponent &c = e->value<CameraComponent>();
 			c.near = 0.1;
 			c.far = 1000;
-			c.effects = CameraEffectsFlags::Default;
+			e->value<ScreenSpaceEffectsComponent>();
 		}
 
 		Holder<FpsCamera> fpsCamera = newFpsCamera(ents->get(10));

@@ -7,6 +7,7 @@
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/guiComponents.h>
 #include <cage-engine/scene.h>
+#include <cage-engine/sceneScreenSpaceEffects.h>
 #include <cage-engine/texture.h>
 #include <cage-engine/opengl.h>
 
@@ -104,7 +105,7 @@ int main(int argc, char *args[])
 			c.near = 0.2;
 			c.far = 100;
 			c.sceneMask = 1;
-			c.effects = CameraEffectsFlags::Default;
+			e->value<ScreenSpaceEffectsComponent>();
 			RenderComponent &r = e->value<RenderComponent>();
 			r.object = HashString("cage-tests/room/eye.obj");
 			r.sceneMask = 2;
@@ -139,7 +140,7 @@ int main(int argc, char *args[])
 			c.near = 0.2;
 			c.far = 100;
 			c.sceneMask = 2;
-			c.effects = CameraEffectsFlags::AmbientOcclusion;
+			e->value<ScreenSpaceEffectsComponent>().effects = ScreenSpaceEffectsFlags::AmbientOcclusion;
 		}
 
 		Holder<FpsCamera> fpsCamera = newFpsCamera(eye);

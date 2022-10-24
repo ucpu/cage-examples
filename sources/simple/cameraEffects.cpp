@@ -8,6 +8,7 @@
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/guiComponents.h>
 #include <cage-engine/scene.h>
+#include <cage-engine/sceneScreenSpaceEffects.h>
 
 #include <cage-simple/engine.h>
 #include <cage-simple/statisticsGui.h>
@@ -22,17 +23,17 @@ void windowClose(InputWindow)
 	engineStop();
 }
 
-void enableEffect(CameraEffectsFlags effect, bool enable)
+void enableEffect(ScreenSpaceEffectsFlags effect, bool enable)
 {
 	Entity *camera = engineEntities()->get(1);
-	CameraComponent &cam = camera->value<CameraComponent>();
+	ScreenSpaceEffectsComponent &eff = camera->value<ScreenSpaceEffectsComponent>();
 	if (enable)
-		cam.effects = cam.effects | effect;
+		eff.effects = eff.effects | effect;
 	else
-		cam.effects = cam.effects & ~effect;
+		eff.effects = eff.effects & ~effect;
 }
 
-constexpr sint32 genBaseName(CameraEffectsFlags f_)
+constexpr sint32 genBaseName(ScreenSpaceEffectsFlags f_)
 {
 	sint32 ret = 1;
 	uint32 f = (uint32)f_;
@@ -49,227 +50,227 @@ void update()
 	EntityManager *ents = engineGuiEntities();
 
 	Entity *camera = engineEntities()->get(1);
-	CameraComponent &cam = camera->value<CameraComponent>();
+	ScreenSpaceEffectsComponent &eff = camera->value<ScreenSpaceEffectsComponent>();
 
 	{ // ambient occlusion
-		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::AmbientOcclusion);
+		constexpr sint32 baseName = genBaseName(ScreenSpaceEffectsFlags::AmbientOcclusion);
 		{ // enable
 			Entity *e = ents->get(baseName);
 			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
-			enableEffect(CameraEffectsFlags::AmbientOcclusion, cb.state == CheckBoxStateEnum::Checked);
+			enableEffect(ScreenSpaceEffectsFlags::AmbientOcclusion, cb.state == CheckBoxStateEnum::Checked);
 		}
 		{ // world radius
 			Entity *e = ents->get(baseName + 1);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.ssao.worldRadius = toFloat(in.value);
+				eff.ssao.worldRadius = toFloat(in.value);
 		}
 		{ // strength
 			Entity *e = ents->get(baseName + 2);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.ssao.strength = toFloat(in.value);
+				eff.ssao.strength = toFloat(in.value);
 		}
 		{ // bias
 			Entity *e = ents->get(baseName + 3);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.ssao.bias = toFloat(in.value);
+				eff.ssao.bias = toFloat(in.value);
 		}
 		{ // power
 			Entity *e = ents->get(baseName + 4);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.ssao.power = toFloat(in.value);
+				eff.ssao.power = toFloat(in.value);
 		}
 		{ // samples count
 			Entity *e = ents->get(baseName + 5);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.ssao.samplesCount = toUint32(in.value);
+				eff.ssao.samplesCount = toUint32(in.value);
 		}
 		{ // blur passes
 			Entity *e = ents->get(baseName + 6);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.ssao.blurPasses = toUint32(in.value);
+				eff.ssao.blurPasses = toUint32(in.value);
 		}
 	}
 
 	{ // depth of field
-		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::DepthOfField);
+		constexpr sint32 baseName = genBaseName(ScreenSpaceEffectsFlags::DepthOfField);
 		{ // enable
 			Entity *e = ents->get(baseName);
 			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
-			enableEffect(CameraEffectsFlags::DepthOfField, cb.state == CheckBoxStateEnum::Checked);
+			enableEffect(ScreenSpaceEffectsFlags::DepthOfField, cb.state == CheckBoxStateEnum::Checked);
 		}
 		{ // focus distance
 			Entity *e = ents->get(baseName + 1);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.depthOfField.focusDistance = toFloat(in.value);
+				eff.depthOfField.focusDistance = toFloat(in.value);
 		}
 		{ // focus radius
 			Entity *e = ents->get(baseName + 2);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.depthOfField.focusRadius = toFloat(in.value);
+				eff.depthOfField.focusRadius = toFloat(in.value);
 		}
 		{ // blend radius
 			Entity *e = ents->get(baseName + 3);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.depthOfField.blendRadius = toFloat(in.value);
+				eff.depthOfField.blendRadius = toFloat(in.value);
 		}
 		{ // blur passes
 			Entity *e = ents->get(baseName + 4);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.depthOfField.blurPasses = toUint32(in.value);
+				eff.depthOfField.blurPasses = toUint32(in.value);
 		}
 	}
 
 	{ // bloom
-		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::Bloom);
+		constexpr sint32 baseName = genBaseName(ScreenSpaceEffectsFlags::Bloom);
 		{ // enable
 			Entity *e = ents->get(baseName);
 			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
-			enableEffect(CameraEffectsFlags::Bloom, cb.state == CheckBoxStateEnum::Checked);
+			enableEffect(ScreenSpaceEffectsFlags::Bloom, cb.state == CheckBoxStateEnum::Checked);
 		}
 		{ // threshold
 			Entity *e = ents->get(baseName + 1);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.bloom.threshold = toFloat(in.value);
+				eff.bloom.threshold = toFloat(in.value);
 		}
 		{ // blur passes
 			Entity *e = ents->get(baseName + 2);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.bloom.blurPasses = toUint32(in.value);
+				eff.bloom.blurPasses = toUint32(in.value);
 		}
 	}
 
 	{ // eye adaptation
-		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::EyeAdaptation);
+		constexpr sint32 baseName = genBaseName(ScreenSpaceEffectsFlags::EyeAdaptation);
 		{ // enable
 			Entity *e = ents->get(baseName);
 			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
-			enableEffect(CameraEffectsFlags::EyeAdaptation, cb.state == CheckBoxStateEnum::Checked);
+			enableEffect(ScreenSpaceEffectsFlags::EyeAdaptation, cb.state == CheckBoxStateEnum::Checked);
 		}
 		{ // darkerSpeed
 			Entity *e = ents->get(baseName + 1);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.eyeAdaptation.darkerSpeed = toFloat(in.value);
+				eff.eyeAdaptation.darkerSpeed = toFloat(in.value);
 		}
 		{ // lighterSpeed
 			Entity *e = ents->get(baseName + 2);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.eyeAdaptation.lighterSpeed = toFloat(in.value);
+				eff.eyeAdaptation.lighterSpeed = toFloat(in.value);
 		}
 		{ // lowLogLum
 			Entity *e = ents->get(baseName + 3);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.eyeAdaptation.lowLogLum = toFloat(in.value);
+				eff.eyeAdaptation.lowLogLum = toFloat(in.value);
 		}
 		{ // highLogLum
 			Entity *e = ents->get(baseName + 4);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.eyeAdaptation.highLogLum = toFloat(in.value);
+				eff.eyeAdaptation.highLogLum = toFloat(in.value);
 		}
 		{ // nightOffset
 			Entity *e = ents->get(baseName + 5);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.eyeAdaptation.nightOffset = toFloat(in.value);
+				eff.eyeAdaptation.nightOffset = toFloat(in.value);
 		}
 		{ // nightDesaturate
 			Entity *e = ents->get(baseName + 6);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.eyeAdaptation.nightDesaturate = toFloat(in.value);
+				eff.eyeAdaptation.nightDesaturate = toFloat(in.value);
 		}
 		{ // nightContrast
 			Entity *e = ents->get(baseName + 7);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.eyeAdaptation.nightContrast = toFloat(in.value);
+				eff.eyeAdaptation.nightContrast = toFloat(in.value);
 		}
 		{ // key
 			Entity *e = ents->get(baseName + 8);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.eyeAdaptation.key = toFloat(in.value);
+				eff.eyeAdaptation.key = toFloat(in.value);
 		}
 		{ // strength
 			Entity *e = ents->get(baseName + 9);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.eyeAdaptation.strength = toFloat(in.value);
+				eff.eyeAdaptation.strength = toFloat(in.value);
 		}
 	}
 
 	{ // tone mapping
-		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::ToneMapping);
+		constexpr sint32 baseName = genBaseName(ScreenSpaceEffectsFlags::ToneMapping);
 		{ // enable
 			Entity *e = ents->get(baseName);
 			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
-			enableEffect(CameraEffectsFlags::ToneMapping, cb.state == CheckBoxStateEnum::Checked);
+			enableEffect(ScreenSpaceEffectsFlags::ToneMapping, cb.state == CheckBoxStateEnum::Checked);
 		}
 		{ // shoulderStrength
 			Entity *e = ents->get(baseName + 1);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.tonemap.shoulderStrength = toFloat(in.value);
+				eff.tonemap.shoulderStrength = toFloat(in.value);
 		}
 		{ // linearStrength
 			Entity *e = ents->get(baseName + 2);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.tonemap.linearStrength = toFloat(in.value);
+				eff.tonemap.linearStrength = toFloat(in.value);
 		}
 		{ // linearAngle
 			Entity *e = ents->get(baseName + 3);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.tonemap.linearAngle = toFloat(in.value);
+				eff.tonemap.linearAngle = toFloat(in.value);
 		}
 		{ // toeStrength
 			Entity *e = ents->get(baseName + 4);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.tonemap.toeStrength = toFloat(in.value);
+				eff.tonemap.toeStrength = toFloat(in.value);
 		}
 		{ // toeNumerator
 			Entity *e = ents->get(baseName + 5);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.tonemap.toeNumerator = toFloat(in.value);
+				eff.tonemap.toeNumerator = toFloat(in.value);
 		}
 		{ // toeDenominator
 			Entity *e = ents->get(baseName + 6);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.tonemap.toeDenominator = toFloat(in.value);
+				eff.tonemap.toeDenominator = toFloat(in.value);
 		}
 		{ // white
 			Entity *e = ents->get(baseName + 7);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				cam.tonemap.white = toFloat(in.value);
+				eff.tonemap.white = toFloat(in.value);
 		}
 	}
 
 	{ // gamma
-		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::GammaCorrection);
+		constexpr sint32 baseName = genBaseName(ScreenSpaceEffectsFlags::GammaCorrection);
 		{ // enable
 			Entity *e = ents->get(baseName);
 			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
-			enableEffect(CameraEffectsFlags::GammaCorrection, cb.state == CheckBoxStateEnum::Checked);
+			enableEffect(ScreenSpaceEffectsFlags::GammaCorrection, cb.state == CheckBoxStateEnum::Checked);
 		}
 		{ // gamma
 			ConfigFloat confRenderGamma("cage/graphics/gamma");
@@ -281,11 +282,11 @@ void update()
 	}
 
 	{ // antialiasing
-		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::AntiAliasing);
+		constexpr sint32 baseName = genBaseName(ScreenSpaceEffectsFlags::AntiAliasing);
 		{ // enable
 			Entity *e = ents->get(baseName);
 			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
-			enableEffect(CameraEffectsFlags::AntiAliasing, cb.state == CheckBoxStateEnum::Checked);
+			enableEffect(ScreenSpaceEffectsFlags::AntiAliasing, cb.state == CheckBoxStateEnum::Checked);
 		}
 	}
 
@@ -297,6 +298,7 @@ void update()
 			if (in.valid)
 				engineEntities()->get(2)->value<LightComponent>().intensity = toFloat(in.value);
 		}
+		CameraComponent &cam = camera->value<CameraComponent>();
 		{ // ambient
 			Entity *e = ents->get(baseName + 2);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
@@ -360,7 +362,7 @@ void initializeGui()
 	}
 
 	{ // ambient occlusion
-		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::AmbientOcclusion);
+		constexpr sint32 baseName = genBaseName(ScreenSpaceEffectsFlags::AmbientOcclusion);
 		Entity *panel = ents->createUnique();
 		{
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
@@ -386,16 +388,16 @@ void initializeGui()
 			table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
-		genInputFloat(table, childIndex, baseName, "World Radius:", 0.1, 3, 0.05, CameraProperties().ssao.worldRadius);
-		genInputFloat(table, childIndex, baseName, "Strength:", 0, 3, 0.1, CameraProperties().ssao.strength);
-		genInputFloat(table, childIndex, baseName, "Bias:", -0.5, 0.5, 0.01, CameraProperties().ssao.bias);
-		genInputFloat(table, childIndex, baseName, "Power:", 0.1, 2, 0.02, CameraProperties().ssao.power);
-		genInputInt(table, childIndex, baseName, "Samples:", 1, 128, 1, CameraProperties().ssao.samplesCount);
-		genInputInt(table, childIndex, baseName, "Blur Passes:", 0, 10, 1, CameraProperties().ssao.blurPasses);
+		genInputFloat(table, childIndex, baseName, "World Radius:", 0.1, 3, 0.05, ScreenSpaceEffectsComponent().ssao.worldRadius);
+		genInputFloat(table, childIndex, baseName, "Strength:", 0, 3, 0.1, ScreenSpaceEffectsComponent().ssao.strength);
+		genInputFloat(table, childIndex, baseName, "Bias:", -0.5, 0.5, 0.01, ScreenSpaceEffectsComponent().ssao.bias);
+		genInputFloat(table, childIndex, baseName, "Power:", 0.1, 2, 0.02, ScreenSpaceEffectsComponent().ssao.power);
+		genInputInt(table, childIndex, baseName, "Samples:", 1, 128, 1, ScreenSpaceEffectsComponent().ssao.samplesCount);
+		genInputInt(table, childIndex, baseName, "Blur Passes:", 0, 10, 1, ScreenSpaceEffectsComponent().ssao.blurPasses);
 	}
 
 	{ // depth of field
-		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::DepthOfField);
+		constexpr sint32 baseName = genBaseName(ScreenSpaceEffectsFlags::DepthOfField);
 		Entity *panel = ents->createUnique();
 		{
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
@@ -421,14 +423,14 @@ void initializeGui()
 			table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
-		genInputFloat(table, childIndex, baseName, "Focus distance:", 0, 20, 0.5, CameraProperties().depthOfField.focusDistance);
-		genInputFloat(table, childIndex, baseName, "Focus radius:", 0, 20, 0.5, CameraProperties().depthOfField.focusRadius);
-		genInputFloat(table, childIndex, baseName, "Blend radius:", 0, 20, 0.5, CameraProperties().depthOfField.blendRadius);
-		genInputInt(table, childIndex, baseName, "Blur passes:", 0, 10, 1, CameraProperties().depthOfField.blurPasses);
+		genInputFloat(table, childIndex, baseName, "Focus distance:", 0, 20, 0.5, ScreenSpaceEffectsComponent().depthOfField.focusDistance);
+		genInputFloat(table, childIndex, baseName, "Focus radius:", 0, 20, 0.5, ScreenSpaceEffectsComponent().depthOfField.focusRadius);
+		genInputFloat(table, childIndex, baseName, "Blend radius:", 0, 20, 0.5, ScreenSpaceEffectsComponent().depthOfField.blendRadius);
+		genInputInt(table, childIndex, baseName, "Blur passes:", 0, 10, 1, ScreenSpaceEffectsComponent().depthOfField.blurPasses);
 	}
 
 	{ // bloom
-		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::Bloom);
+		constexpr sint32 baseName = genBaseName(ScreenSpaceEffectsFlags::Bloom);
 		Entity *panel = ents->createUnique();
 		{
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
@@ -454,12 +456,12 @@ void initializeGui()
 			GuiLayoutTableComponent &t = table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
-		genInputFloat(table, childIndex, baseName, "Threshold:", 0, 5, 0.01, CameraProperties().bloom.threshold);
-		genInputInt(table, childIndex, baseName, "Blur Passes:", 1, 10, 1, CameraProperties().bloom.blurPasses);
+		genInputFloat(table, childIndex, baseName, "Threshold:", 0, 5, 0.01, ScreenSpaceEffectsComponent().bloom.threshold);
+		genInputInt(table, childIndex, baseName, "Blur Passes:", 1, 10, 1, ScreenSpaceEffectsComponent().bloom.blurPasses);
 	}
 
 	{ // eye adaptation
-		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::EyeAdaptation);
+		constexpr sint32 baseName = genBaseName(ScreenSpaceEffectsFlags::EyeAdaptation);
 		Entity *panel = ents->createUnique();
 		{
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
@@ -485,19 +487,19 @@ void initializeGui()
 			GuiLayoutTableComponent &t = table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
-		genInputFloat(table, childIndex, baseName, "Darker speed:", 0, 10, 0.02, CameraProperties().eyeAdaptation.darkerSpeed);
-		genInputFloat(table, childIndex, baseName, "Lighter speed:", 0, 10, 0.02, CameraProperties().eyeAdaptation.lighterSpeed);
-		genInputFloat(table, childIndex, baseName, "Low logLum:", -20, 10, 0.05, CameraProperties().eyeAdaptation.lowLogLum);
-		genInputFloat(table, childIndex, baseName, "High logLum:", -20, 10, 0.05, CameraProperties().eyeAdaptation.highLogLum);
-		genInputFloat(table, childIndex, baseName, "Night offset:", 0, 10, 0.02, CameraProperties().eyeAdaptation.nightOffset);
-		genInputFloat(table, childIndex, baseName, "Night desaturate:", 0, 1, 0.02, CameraProperties().eyeAdaptation.nightDesaturate);
-		genInputFloat(table, childIndex, baseName, "Night contrast:", 0, 0.1, 0.002, CameraProperties().eyeAdaptation.nightContrast);
-		genInputFloat(table, childIndex, baseName, "Key:", 0, 1, 0.02, CameraProperties().eyeAdaptation.key);
-		genInputFloat(table, childIndex, baseName, "Strength:", 0, 1, 0.02, CameraProperties().eyeAdaptation.strength);
+		genInputFloat(table, childIndex, baseName, "Darker speed:", 0, 10, 0.02, ScreenSpaceEffectsComponent().eyeAdaptation.darkerSpeed);
+		genInputFloat(table, childIndex, baseName, "Lighter speed:", 0, 10, 0.02, ScreenSpaceEffectsComponent().eyeAdaptation.lighterSpeed);
+		genInputFloat(table, childIndex, baseName, "Low logLum:", -20, 10, 0.05, ScreenSpaceEffectsComponent().eyeAdaptation.lowLogLum);
+		genInputFloat(table, childIndex, baseName, "High logLum:", -20, 10, 0.05, ScreenSpaceEffectsComponent().eyeAdaptation.highLogLum);
+		genInputFloat(table, childIndex, baseName, "Night offset:", 0, 10, 0.02, ScreenSpaceEffectsComponent().eyeAdaptation.nightOffset);
+		genInputFloat(table, childIndex, baseName, "Night desaturate:", 0, 1, 0.02, ScreenSpaceEffectsComponent().eyeAdaptation.nightDesaturate);
+		genInputFloat(table, childIndex, baseName, "Night contrast:", 0, 0.1, 0.002, ScreenSpaceEffectsComponent().eyeAdaptation.nightContrast);
+		genInputFloat(table, childIndex, baseName, "Key:", 0, 1, 0.02, ScreenSpaceEffectsComponent().eyeAdaptation.key);
+		genInputFloat(table, childIndex, baseName, "Strength:", 0, 1, 0.02, ScreenSpaceEffectsComponent().eyeAdaptation.strength);
 	}
 
 	{ // tone mapping
-		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::ToneMapping);
+		constexpr sint32 baseName = genBaseName(ScreenSpaceEffectsFlags::ToneMapping);
 		Entity *panel = ents->createUnique();
 		{
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
@@ -523,17 +525,17 @@ void initializeGui()
 			GuiLayoutTableComponent &t = table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
-		genInputFloat(table, childIndex, baseName, "Shoulder Strength:", 0, 1, 0.02, CameraProperties().tonemap.shoulderStrength);
-		genInputFloat(table, childIndex, baseName, "Linear Strength:", 0, 1, 0.02, CameraProperties().tonemap.linearStrength);
-		genInputFloat(table, childIndex, baseName, "Linear Angle:", 0, 1, 0.02, CameraProperties().tonemap.linearAngle);
-		genInputFloat(table, childIndex, baseName, "Toe Strength:", 0, 1, 0.02, CameraProperties().tonemap.toeStrength);
-		genInputFloat(table, childIndex, baseName, "Toe Numerator:", 0, 1, 0.02, CameraProperties().tonemap.toeNumerator);
-		genInputFloat(table, childIndex, baseName, "Toe Denominator:", 0, 1, 0.02, CameraProperties().tonemap.toeDenominator);
-		genInputFloat(table, childIndex, baseName, "White:", 0, 100, 1, CameraProperties().tonemap.white);
+		genInputFloat(table, childIndex, baseName, "Shoulder Strength:", 0, 1, 0.02, ScreenSpaceEffectsComponent().tonemap.shoulderStrength);
+		genInputFloat(table, childIndex, baseName, "Linear Strength:", 0, 1, 0.02, ScreenSpaceEffectsComponent().tonemap.linearStrength);
+		genInputFloat(table, childIndex, baseName, "Linear Angle:", 0, 1, 0.02, ScreenSpaceEffectsComponent().tonemap.linearAngle);
+		genInputFloat(table, childIndex, baseName, "Toe Strength:", 0, 1, 0.02, ScreenSpaceEffectsComponent().tonemap.toeStrength);
+		genInputFloat(table, childIndex, baseName, "Toe Numerator:", 0, 1, 0.02, ScreenSpaceEffectsComponent().tonemap.toeNumerator);
+		genInputFloat(table, childIndex, baseName, "Toe Denominator:", 0, 1, 0.02, ScreenSpaceEffectsComponent().tonemap.toeDenominator);
+		genInputFloat(table, childIndex, baseName, "White:", 0, 100, 1, ScreenSpaceEffectsComponent().tonemap.white);
 	}
 
 	{ // gamma
-		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::GammaCorrection);
+		constexpr sint32 baseName = genBaseName(ScreenSpaceEffectsFlags::GammaCorrection);
 		Entity *panel = ents->createUnique();
 		{
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
@@ -559,11 +561,11 @@ void initializeGui()
 			GuiLayoutTableComponent &t = table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
-		genInputFloat(table, childIndex, baseName, "Gamma:", 1, 5, 0.1, CameraProperties().gamma);
+		genInputFloat(table, childIndex, baseName, "Gamma:", 1, 5, 0.1, ScreenSpaceEffectsComponent().gamma);
 	}
 
 	{ // antialiasing
-		constexpr sint32 baseName = genBaseName(CameraEffectsFlags::AntiAliasing);
+		constexpr sint32 baseName = genBaseName(ScreenSpaceEffectsFlags::AntiAliasing);
 		Entity *panel = ents->createUnique();
 		{
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
@@ -646,9 +648,10 @@ int main(int argc, char *args[])
 			c.ambientDirectionalIntensity = 0.04;
 			c.near = 0.1;
 			c.far = 100;
+			e->value<ScreenSpaceEffectsComponent>();
 		}
 		{ // skybox
-			Entity *e = engineEntities()->createAnonymous();
+			Entity *e = ents->createAnonymous();
 			e->value<TransformComponent>();
 			e->value<RenderComponent>().object = HashString("scenes/common/skybox.obj");
 			e->value<TextureAnimationComponent>();
@@ -668,16 +671,13 @@ int main(int argc, char *args[])
 		}
 		{ // floor
 			Entity *e = ents->createAnonymous();
-			RenderComponent &r = e->value<RenderComponent>();
-			r.object = HashString("scenes/common/ground.obj");
-			TransformComponent &t = e->value<TransformComponent>();
-			t.position = Vec3(0, -1.264425, 0);
+			e->value<RenderComponent>().object = HashString("scenes/common/ground.obj");
+			e->value<TransformComponent>().position = Vec3(0, -1.264425, 0);
 		}
 		{ // sponza
 			Entity *e = ents->createAnonymous();
-			RenderComponent &r = e->value<RenderComponent>();
-			r.object = HashString("scenes/mcguire/crytek/sponza.object");
-			TransformComponent &t = e->value<TransformComponent>();
+			e->value<RenderComponent>().object = HashString("scenes/mcguire/crytek/sponza.object");
+			e->value<TransformComponent>();
 		}
 
 		Holder<FpsCamera> fpsCamera = newFpsCamera(ents->get(1));

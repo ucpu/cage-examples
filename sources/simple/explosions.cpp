@@ -11,6 +11,7 @@
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/guiComponents.h>
 #include <cage-engine/scene.h>
+#include <cage-engine/sceneScreenSpaceEffects.h>
 
 #include <cage-simple/engine.h>
 #include <cage-simple/fpsCamera.h>
@@ -243,11 +244,11 @@ int main(int argc, char *args[])
 			CameraComponent &c = e->value<CameraComponent>();
 			c.near = 0.1;
 			c.far = 1000;
-			c.effects = CameraEffectsFlags::Default;
 			c.ambientColor = Vec3(1);
 			c.ambientIntensity = 0.1;
 			c.ambientDirectionalColor = Vec3(1);
 			c.ambientDirectionalIntensity = 0.2;
+			e->value<ScreenSpaceEffectsComponent>();
 		}
 		{ // sun
 			Entity *e = ents->create(2);

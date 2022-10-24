@@ -6,6 +6,7 @@
 #include <cage-engine/window.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/scene.h>
+#include <cage-engine/sceneScreenSpaceEffects.h>
 
 #include <cage-simple/engine.h>
 #include <cage-simple/fpsCamera.h>
@@ -74,7 +75,7 @@ int main(int argc, char *args[])
 			c.ambientIntensity = 0.01;
 			c.near = 0.1;
 			c.far = 100;
-			c.effects = CameraEffectsFlags::Default;
+			e->value<ScreenSpaceEffectsComponent>();
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(0, 5, 10);
 			t.orientation = Quat(Degs(-20), Degs(), Degs());

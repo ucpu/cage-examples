@@ -8,6 +8,7 @@
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/guiComponents.h>
 #include <cage-engine/scene.h>
+#include <cage-engine/sceneScreenSpaceEffects.h>
 
 #include <cage-simple/engine.h>
 #include <cage-simple/fpsCamera.h>
@@ -87,11 +88,11 @@ void init()
 		CameraComponent &c = e->value<CameraComponent>();
 		c.near = 0.1;
 		c.far = 1000;
-		c.effects = CameraEffectsFlags::Default;
 		c.ambientColor = Vec3(1);
 		c.ambientIntensity = 0.5;
 		c.ambientDirectionalColor = Vec3(1);
 		c.ambientDirectionalIntensity = 0.5;
+		e->value<ScreenSpaceEffectsComponent>();
 	}
 
 	// cubes

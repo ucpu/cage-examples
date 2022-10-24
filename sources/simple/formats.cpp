@@ -8,6 +8,7 @@
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/guiComponents.h>
 #include <cage-engine/scene.h>
+#include <cage-engine/sceneScreenSpaceEffects.h>
 
 #include <cage-simple/engine.h>
 #include <cage-simple/fpsCamera.h>
@@ -112,7 +113,7 @@ int main(int argc, char *args[])
 			c.ambientDirectionalIntensity = 0.2;
 			c.near = 0.1;
 			c.far = 100;
-			c.effects = CameraEffectsFlags::Default;
+			e->value<ScreenSpaceEffectsComponent>();
 		}
 
 		Holder<FpsCamera> cameraCtrl = newFpsCamera(ents->get(102));

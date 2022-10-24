@@ -10,6 +10,7 @@
 #include <cage-engine/guiComponents.h>
 #include <cage-engine/guiManager.h>
 #include <cage-engine/scene.h>
+#include <cage-engine/sceneScreenSpaceEffects.h>
 
 #include <cage-simple/engine.h>
 #include <cage-simple/fpsCamera.h>
@@ -70,7 +71,7 @@ void update()
 			c.ambientIntensity = 0.1;
 			c.ambientDirectionalColor = Vec3(1);
 			c.ambientDirectionalIntensity = 0.2;
-			c.effects = CameraEffectsFlags::Default;
+			e->value<ScreenSpaceEffectsComponent>();
 			cameraCtrl->setEntity(e);
 		}
 

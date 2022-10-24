@@ -10,6 +10,7 @@
 #include <cage-engine/guiComponents.h>
 #include <cage-engine/window.h>
 #include <cage-engine/scene.h>
+#include <cage-engine/sceneScreenSpaceEffects.h>
 
 #include <cage-simple/shadowmapHelpers.h>
 #include <cage-simple/statisticsGui.h>
@@ -105,7 +106,7 @@ void sceneReload()
 		c.ambientDirectionalIntensity = 0.02;
 		c.near = 0.1;
 		c.far = 200;
-		c.effects |= CameraEffectsFlags::EyeAdaptation;
+		cam->value<ScreenSpaceEffectsComponent>().effects |= ScreenSpaceEffectsFlags::EyeAdaptation;
 		cameraCtrl->setEntity(cam);
 	}
 

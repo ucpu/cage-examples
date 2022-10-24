@@ -7,6 +7,7 @@
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/guiComponents.h>
 #include <cage-engine/scene.h>
+#include <cage-engine/sceneScreenSpaceEffects.h>
 
 #include <cage-simple/engine.h>
 #include <cage-simple/fpsCamera.h>
@@ -121,7 +122,7 @@ int main(int argc, char *args[])
 			c.ambientIntensity = 0.02;
 			c.near = 0.1;
 			c.far = 100;
-			c.effects = CameraEffectsFlags::Default;
+			e->value<ScreenSpaceEffectsComponent>();
 		}
 		{ // text hello
 			Entity *e = ents->create(11);
