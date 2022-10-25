@@ -1,0 +1,17 @@
+[]
+scheme = shader
+raw.glsl
+
+[]
+scheme = model
+grip.obj
+aim.obj
+
+[]
+scheme = pack
+vr.pack
+
+[]
+scheme = texture
+srgb = true
+pink.png

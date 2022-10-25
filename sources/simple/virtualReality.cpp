@@ -14,7 +14,8 @@
 
 using namespace cage;
 
-constexpr uint32 assetsName = HashString("cage-tests/camera-effects/effects.pack");
+constexpr uint32 assetsName1 = HashString("cage-tests/camera-effects/effects.pack");
+constexpr uint32 assetsName2 = HashString("cage-tests/vr/vr.pack");
 
 void windowClose(InputWindow)
 {
@@ -23,7 +24,17 @@ void windowClose(InputWindow)
 
 void update()
 {
-	// todo
+	auto ents = engineEntities();
+	ents->get(5)->value<TransformComponent>() = ents->get(3)->value<VrControllerComponent>().aim;
+	ents->get(6)->value<TransformComponent>() = ents->get(4)->value<VrControllerComponent>().aim;
+
+	const auto leftAxes = engineVirtualReality()->leftController().axes();
+	const auto rightAxes = engineVirtualReality()->rightController().axes();
+	Real turning = leftAxes[0] * 1.5;
+	Real moving = rightAxes[1] * 0.03;
+	auto &t = ents->get(1)->value<TransformComponent>();
+	t.orientation = Quat(Degs(), Degs(-turning), Degs()) * t.orientation;
+	t.position += t.orientation * Vec3(0, 0, moving);
 }
 
 int main(int argc, char *args[])
@@ -52,7 +63,8 @@ int main(int argc, char *args[])
 
 		// window
 		engineWindow()->title("virtual reality");
-		engineWindow()->setMaximized();
+		engineWindow()->windowedSize(Vec2i(800, 600));
+		engineWindow()->setWindowed();
 
 		// entities
 		EntityManager *ents = engineEntities();
@@ -87,9 +99,9 @@ int main(int argc, char *args[])
 		}
 		{ // vr origin
 			Entity *e = ents->create(1);
-			TransformComponent &t = e->value<TransformComponent>();
-			// todo t
+			e->value<TransformComponent>();
 			e->value<VrOriginComponent>().virtualReality = +engineVirtualReality();
+			e->value<RenderComponent>().object = HashString("cage/model/fake.obj");
 		}
 		{ // vr camera
 			Entity *e = ents->create(2);
@@ -102,22 +114,36 @@ int main(int argc, char *args[])
 			c.virtualReality = +engineVirtualReality();
 			e->value<ScreenSpaceEffectsComponent>().effects |= ScreenSpaceEffectsFlags::EyeAdaptation;
 		}
-		{ // left controller
+		{ // left controller grip
 			Entity *e = ents->create(3);
 			e->value<TransformComponent>();
 			e->value<VrControllerComponent>().controller = &engineVirtualReality()->leftController();
+			e->value<RenderComponent>().object = HashString("cage-tests/vr/grip.obj");
 		}
-		{ // right controller
+		{ // right controller grip
 			Entity *e = ents->create(4);
 			e->value<TransformComponent>();
 			e->value<VrControllerComponent>().controller = &engineVirtualReality()->rightController();
+			e->value<RenderComponent>().object = HashString("cage-tests/vr/grip.obj");
+		}
+		{ // left controller aim
+			Entity *e = ents->create(5);
+			e->value<TransformComponent>();
+			e->value<RenderComponent>().object = HashString("cage-tests/vr/aim.obj");
+		}
+		{ // right controller aim
+			Entity *e = ents->create(6);
+			e->value<TransformComponent>();
+			e->value<RenderComponent>().object = HashString("cage-tests/vr/aim.obj");
 		}
 
 		Holder<StatisticsGui> statistics = newStatisticsGui();
 
-		engineAssets()->add(assetsName);
+		engineAssets()->add(assetsName1);
+		engineAssets()->add(assetsName2);
 		engineStart();
-		engineAssets()->remove(assetsName);
+		engineAssets()->remove(assetsName1);
+		engineAssets()->remove(assetsName2);
 		engineFinalize();
 
 		return 0;

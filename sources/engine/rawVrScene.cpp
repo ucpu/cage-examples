@@ -18,8 +18,7 @@ using namespace cage;
 
 bool closing = false;
 constexpr uint32 assetsName1 = HashString("scenes/mcguire/crytek/sponza.object");
-constexpr uint32 assetsName2 = HashString("cage-tests/shaderanim/raw.glsl");
-constexpr uint32 assetsName3 = HashString("cage/model/fake.obj");
+constexpr uint32 assetsName2 = HashString("cage-tests/vr/vr.pack");
 
 void windowClose(InputWindow)
 {
@@ -51,12 +50,10 @@ int main(int argc, char *args[])
 		// load assets
 		assets->add(assetsName1);
 		assets->add(assetsName2);
-		assets->add(assetsName3);
 		while (true)
 		{
 			if (assets->get<AssetSchemeIndexRenderObject, RenderObject>(assetsName1)
-				&& assets->get<AssetSchemeIndexShaderProgram, MultiShaderProgram>(assetsName2)
-				&& assets->get<AssetSchemeIndexModel, Model>(assetsName3))
+				&& assets->get<AssetSchemeIndexPack, AssetPack>(assetsName2))
 				break;
 			assets->processCustomThread(0);
 			threadSleep(1000);
@@ -64,9 +61,10 @@ int main(int argc, char *args[])
 
 		{
 			// fetch assets
-			Holder<RenderObject> object = assets->get<AssetSchemeIndexRenderObject, RenderObject>(assetsName1);
-			Holder<ShaderProgram> shader = assets->get<AssetSchemeIndexShaderProgram, MultiShaderProgram>(assetsName2)->get(0);
-			Holder<Model> cubeModel = assets->get<AssetSchemeIndexModel, Model>(assetsName3);
+			Holder<RenderObject> sponza = assets->get<AssetSchemeIndexRenderObject, RenderObject>(assetsName1);
+			Holder<ShaderProgram> shader = assets->get<AssetSchemeIndexShaderProgram, MultiShaderProgram>(HashString("cage-tests/vr/raw.glsl"))->get(0);
+			Holder<Model> gripModel = assets->get<AssetSchemeIndexModel, Model>(HashString("cage-tests/vr/grip.obj"));
+			Holder<Model> aimModel = assets->get<AssetSchemeIndexModel, Model>(HashString("cage-tests/vr/aim.obj"));
 			shader->bind();
 
 			// show window
@@ -118,7 +116,7 @@ int main(int argc, char *args[])
 					Mat4 projM = view.projection;
 					shader->uniform(0, projM * viewM);
 
-					for (uint32 name : object->models(0))
+					for (uint32 name : sponza->models(0))
 					{
 						Holder<Model> model = assets->get<AssetSchemeIndexModel, Model>(name);
 						if (!model->textureNames[0])
@@ -128,15 +126,19 @@ int main(int argc, char *args[])
 						model->dispatch();
 					}
 
-					cubeModel->bind();
-					assets->get<AssetSchemeIndexTexture, Texture>(cubeModel->textureNames[0])->bind(0);
 					for (const VirtualRealityController *it : { &virtualreality->leftController(), &virtualreality->rightController() })
 					{
-						const Mat4 sc = Mat4::scale(it->tracking() ? 0.025 : 0.015);
+						const Mat4 sc = Mat4::scale(it->tracking() ? 1 : 0.8);
+
 						shader->uniform(0, projM * viewM * Mat4(it->gripPose()) * sc);
-						cubeModel->dispatch();
+						gripModel->bind();
+						assets->get<AssetSchemeIndexTexture, Texture>(gripModel->textureNames[0])->bind(0);
+						gripModel->dispatch();
+
 						shader->uniform(0, projM * viewM * Mat4(it->aimPose()) * sc);
-						cubeModel->dispatch();
+						aimModel->bind();
+						assets->get<AssetSchemeIndexTexture, Texture>(aimModel->textureNames[0])->bind(0);
+						aimModel->dispatch();
 					}
 				}
 				frame->renderCommit();
@@ -146,7 +148,6 @@ int main(int argc, char *args[])
 		// unload assets
 		assets->remove(assetsName1);
 		assets->remove(assetsName2);
-		assets->remove(assetsName3);
 		assets->unloadCustomThread(0);
 
 		return 0;
