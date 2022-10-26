@@ -101,6 +101,7 @@ int main(int argc, char *args[])
 				glEnable(GL_DEPTH_TEST);
 
 				frame->renderBegin();
+				frame->acquireTextures();
 				for (const auto &view : frame->cameras)
 				{
 					if (!view.colorTexture)

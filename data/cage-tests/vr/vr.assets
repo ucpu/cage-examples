@@ -4,8 +4,10 @@ raw.glsl
 
 []
 scheme = model
+trianglesOnly = true
 grip.obj
 aim.obj
+wheelchair.glb
 
 []
 scheme = pack
@@ -15,3 +17,9 @@ vr.pack
 scheme = texture
 srgb = true
 pink.png
+wheelchair.glb?wheelchair_Bake1_PBR_Diffuse
+
+[]
+scheme = texture
+wheelchair.glb?special_wheelchair_Bake1_PBR_Metalness-wheelchair_Bake1_PBR_Roughness_ch1_wheelchair_Bake1_PBR_Metalness-wheelchair_Bake1_PBR_Roughness_ch2
+

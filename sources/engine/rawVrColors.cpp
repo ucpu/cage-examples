@@ -111,6 +111,7 @@ int main(int argc, char *args[])
 			fb->bind();
 
 			frame->renderBegin();
+			frame->acquireTextures();
 			uint32 index = 0;
 			for (const auto &view : frame->cameras)
 			{

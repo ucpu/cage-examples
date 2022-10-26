@@ -1,5 +1,6 @@
 #include <cage-core/logger.h>
 #include <cage-core/entities.h>
+#include <cage-core/entitiesVisitor.h>
 #include <cage-core/assetManager.h>
 #include <cage-core/hashString.h>
 #include <cage-engine/scene.h>
@@ -22,6 +23,21 @@ void windowClose(InputWindow)
 	engineStop();
 }
 
+struct ShotComponent
+{
+	uint32 ttl = 600;
+};
+
+void shoot(const Transform &where)
+{
+	auto ents = engineEntities();
+	Entity *e = ents->createAnonymous();
+	e->value<TransformComponent>() = where;
+	e->value<TransformComponent>().scale = 0.04;
+	e->value<ShotComponent>();
+	e->value<RenderComponent>().object = HashString("cage/model/fake.obj");
+}
+
 void update()
 {
 	auto ents = engineEntities();
@@ -30,11 +46,28 @@ void update()
 
 	const auto leftAxes = engineVirtualReality()->leftController().axes();
 	const auto rightAxes = engineVirtualReality()->rightController().axes();
-	Real turning = leftAxes[0] * 1.5;
-	Real moving = rightAxes[1] * 0.03;
+	const Real turning = leftAxes[0] * 1;
+	const Real moving = rightAxes[1] * 0.03;
 	auto &t = ents->get(1)->value<TransformComponent>();
 	t.orientation = Quat(Degs(), Degs(-turning), Degs()) * t.orientation;
-	t.position += t.orientation * Vec3(0, 0, moving);
+	t.position += t.orientation * Vec3(0, 0, -moving);
+
+	if (engineVirtualReality()->leftController().buttons()[1])
+		virtualRealitySceneRecenter(ents, 1.3); // 1.3 = sitting height; 1.7 = standing height
+
+	if (engineVirtualReality()->rightController().buttons()[0])
+		shoot(ents->get(1)->value<TransformComponent>() * Transform(Vec3(0, 0.7, 0)));
+	if (engineVirtualReality()->leftController().buttons()[8] || engineVirtualReality()->leftController().axes()[4] > 0.5)
+		shoot(ents->get(5)->value<TransformComponent>());
+	if (engineVirtualReality()->rightController().buttons()[8] || engineVirtualReality()->rightController().axes()[4] > 0.5)
+		shoot(ents->get(6)->value<TransformComponent>());
+
+	entitiesVisitor([&](Entity *e, TransformComponent &t, ShotComponent &s) {
+		if (s.ttl-- == 0)
+			e->destroy();
+		else
+			t.position += t.orientation * Vec3(0, 0, -0.12);
+	}, ents, true);
 }
 
 int main(int argc, char *args[])
@@ -68,6 +101,7 @@ int main(int argc, char *args[])
 
 		// entities
 		EntityManager *ents = engineEntities();
+		ents->defineComponent(ShotComponent());
 		{ // skybox
 			Entity *e = ents->createAnonymous();
 			e->value<TransformComponent>();
@@ -101,7 +135,7 @@ int main(int argc, char *args[])
 			Entity *e = ents->create(1);
 			e->value<TransformComponent>();
 			e->value<VrOriginComponent>().virtualReality = +engineVirtualReality();
-			e->value<RenderComponent>().object = HashString("cage/model/fake.obj");
+			e->value<RenderComponent>().object = HashString("cage-tests/vr/wheelchair.glb");
 		}
 		{ // vr camera
 			Entity *e = ents->create(2);
@@ -112,7 +146,7 @@ int main(int argc, char *args[])
 			c.ambientDirectionalColor = Vec3(1);
 			c.ambientDirectionalIntensity = 0.04;
 			c.virtualReality = +engineVirtualReality();
-			e->value<ScreenSpaceEffectsComponent>().effects |= ScreenSpaceEffectsFlags::EyeAdaptation;
+			e->value<ScreenSpaceEffectsComponent>().effects = (ScreenSpaceEffectsFlags::Default | ScreenSpaceEffectsFlags::EyeAdaptation) & ~ScreenSpaceEffectsFlags::AmbientOcclusion;
 		}
 		{ // left controller grip
 			Entity *e = ents->create(3);
