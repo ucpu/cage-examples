@@ -201,9 +201,9 @@ int main(int argc, char *args[])
 			l.spotExponent = 40;
 			l.attenuation = Vec3(1, 0, 0.005);
 			l.intensity = 3;
-			//ShadowmapComponent &s = e->value<ShadowmapComponent>();
-			//s.resolution = 1024;
-			//s.worldSize = Vec3(3, 50, 0);
+			ShadowmapComponent &s = e->value<ShadowmapComponent>();
+			s.resolution = 1024;
+			s.worldSize = Vec3(3, 50, 0);
 		}
 		{ // camera
 			Entity *e = ents->create(10);
