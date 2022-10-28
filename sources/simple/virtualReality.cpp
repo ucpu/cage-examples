@@ -44,22 +44,24 @@ void update()
 	ents->get(5)->value<TransformComponent>() = ents->get(3)->value<VrControllerComponent>().aim;
 	ents->get(6)->value<TransformComponent>() = ents->get(4)->value<VrControllerComponent>().aim;
 
-	const auto leftAxes = engineVirtualReality()->leftController().axes();
-	const auto rightAxes = engineVirtualReality()->rightController().axes();
-	const Real turning = leftAxes[0] * 1;
-	const Real moving = rightAxes[1] * 0.03;
+	const auto vr = engineVirtualReality();
+
+	const auto leftAxes = vr->leftController().axes();
+	const auto rightAxes = vr->rightController().axes();
+	const Real turning = leftAxes[0] * 1.0;
+	const Real moving = rightAxes[1] * 0.025;
 	auto &t = ents->get(1)->value<TransformComponent>();
 	t.orientation = Quat(Degs(), Degs(-turning), Degs()) * t.orientation;
 	t.position += t.orientation * Vec3(0, 0, -moving);
 
-	if (engineVirtualReality()->leftController().buttons()[1])
+	if (vr->leftController().buttons()[1])
 		virtualRealitySceneRecenter(ents, 1.3); // 1.3 = sitting height; 1.7 = standing height
 
-	if (engineVirtualReality()->rightController().buttons()[0])
+	if (vr->rightController().buttons()[0])
 		shoot(ents->get(1)->value<TransformComponent>() * Transform(Vec3(0, 0.7, 0)));
-	if (engineVirtualReality()->leftController().buttons()[8] || engineVirtualReality()->leftController().axes()[4] > 0.5)
+	if (vr->leftController().buttons()[8] || vr->leftController().axes()[4] > 0.5)
 		shoot(ents->get(5)->value<TransformComponent>());
-	if (engineVirtualReality()->rightController().buttons()[8] || engineVirtualReality()->rightController().axes()[4] > 0.5)
+	if (vr->rightController().buttons()[8] || vr->rightController().axes()[4] > 0.5)
 		shoot(ents->get(6)->value<TransformComponent>());
 
 	entitiesVisitor([&](Entity *e, TransformComponent &t, ShotComponent &s) {

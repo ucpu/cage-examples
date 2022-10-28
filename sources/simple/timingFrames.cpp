@@ -1,6 +1,7 @@
 #include <cage-core/logger.h>
 #include <cage-core/concurrent.h>
 #include <cage-core/entities.h>
+#include <cage-core/entitiesVisitor.h>
 #include <cage-core/hashString.h>
 #include <cage-core/string.h>
 #include <cage-engine/window.h>
@@ -21,6 +22,21 @@ uint64 prepareDelay = 0;
 uint64 renderDelay = 0;
 uint64 soundDelay = 0;
 
+struct ShotComponent
+{
+	uint32 ttl = 20;
+};
+
+void shoot(const Transform &where)
+{
+	auto ents = engineEntities();
+	Entity *e = ents->createAnonymous();
+	e->value<TransformComponent>() = where;
+	e->value<TransformComponent>().scale = 0.25;
+	e->value<ShotComponent>();
+	e->value<RenderComponent>().object = HashString("cage/model/fake.obj");
+}
+
 void windowClose(InputWindow)
 {
 	engineStop();
@@ -29,6 +45,7 @@ void windowClose(InputWindow)
 void controlInit()
 {
 	EntityManager *ents = engineEntities();
+	ents->defineComponent(ShotComponent());
 	{ // camera
 		Entity *e = ents->create(1);
 		e->value<TransformComponent>();
@@ -42,8 +59,7 @@ void controlInit()
 	{ // box 1
 		Entity *e = ents->create(2);
 		e->value<TransformComponent>();
-		RenderComponent &r = e->value<RenderComponent>();
-		r.object = HashString("cage/model/fake.obj");
+		e->value<RenderComponent>().object = HashString("cage/model/fake.obj");
 	}
 }
 
@@ -51,17 +67,22 @@ void guiUpdate();
 
 void update()
 {
-	uint64 time = engineControlTime();
+	const uint64 time = engineControlTime();
 	EntityManager *ents = engineEntities();
 	{ // box 1
 		Entity *e = ents->get(2);
 		TransformComponent &t = e->value<TransformComponent>();
 		t.position = Vec3(sin(Rads(time * 1e-6)) * 10, cos(Rads(time * 1e-6)) * 10, -20);
 	}
+	entitiesVisitor([&](Entity *e, TransformComponent &t, ShotComponent &s) {
+		if (s.ttl-- == 0)
+			e->destroy();
+		else
+			t.position += t.orientation * Vec3(0, 0, -2);
+	}, ents, true);
+	shoot(Transform(Vec3(-20, 0, -25), Quat(Degs(), Degs(-90), Degs())));
 	if (updateDelay)
-	{
 		threadSleep(updateDelay);
-	}
 	guiUpdate();
 }
 
