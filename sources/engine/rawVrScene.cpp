@@ -17,7 +17,7 @@
 using namespace cage;
 
 bool closing = false;
-constexpr uint32 assetsName1 = HashString("scenes/mcguire/crytek/sponza.object");
+constexpr uint32 assetsName1 = HashString("scenes/mcguire/crytek/sponza-preload.object");
 constexpr uint32 assetsName2 = HashString("cage-tests/vr/vr.pack");
 
 void windowClose(InputWindow)
@@ -50,11 +50,8 @@ int main(int argc, char *args[])
 		// load assets
 		assets->add(assetsName1);
 		assets->add(assetsName2);
-		while (true)
+		while (assets->processing())
 		{
-			if (assets->get<AssetSchemeIndexRenderObject, RenderObject>(assetsName1)
-				&& assets->get<AssetSchemeIndexPack, AssetPack>(assetsName2))
-				break;
 			assets->processCustomThread(0);
 			threadSleep(1000);
 		}
