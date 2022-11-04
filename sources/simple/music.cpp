@@ -32,9 +32,7 @@ void init()
 		t.position = Vec3(0, 1.7, 0);
 		CameraComponent &c = e->value<CameraComponent>();
 		c.ambientColor = Vec3(1);
-		c.ambientIntensity = 0.2;
-		c.ambientDirectionalColor = Vec3(1);
-		c.ambientDirectionalIntensity = 0.2;
+		c.ambientIntensity = 0.3;
 		c.near = 0.1;
 		c.far = 500;
 		ListenerComponent &l = e->value<ListenerComponent>();

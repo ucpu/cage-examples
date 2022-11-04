@@ -108,9 +108,7 @@ int main(int argc, char *args[])
 			c.near = 0.1;
 			c.far = 1000;
 			c.ambientColor = Vec3(1);
-			c.ambientIntensity = 0.1;
-			c.ambientDirectionalColor = Vec3(1);
-			c.ambientDirectionalIntensity = 0.2;
+			c.ambientIntensity = 0.2;
 			e->value<ScreenSpaceEffectsComponent>();
 		}
 		{ // sun

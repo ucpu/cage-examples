@@ -51,8 +51,9 @@ void update()
 	{ // update ambient light
 		Entity *e = ents->get(10);
 		CameraComponent &c = e->value<CameraComponent>();
-		c.ambientColor = getGuiColor(27);
-		c.ambientDirectionalColor = getGuiColor(28);
+		c.ambientColor = getGuiColor(27); // ambient light
+		LightComponent &l = e->value<LightComponent>();
+		l.color = getGuiColor(28); // headlight
 	}
 
 	for (uint32 i = 0; i < 3; i++)
@@ -103,12 +104,12 @@ void initializeGui()
 			p.order = 1;
 			panel->value<GuiSpoilerComponent>();
 			GuiTextComponent &t = panel->value<GuiTextComponent>();
-			t.value = "Ambient";
+			t.value = "Ambient & Headlight";
 			GuiLayoutLineComponent &l = panel->value<GuiLayoutLineComponent>();
 			l.vertical = true;
 		}
 		initializeGuiColors(panel->name(), 27, Vec3(0, 0, 0.1));
-		initializeGuiColors(panel->name(), 28, Vec3(0, 0, 0.1));
+		initializeGuiColors(panel->name(), 28, Vec3(0, 0, 0.2));
 	}
 
 	static constexpr const Vec3 colors[3] = {
@@ -214,6 +215,10 @@ int main(int argc, char *args[])
 			c.near = 0.1;
 			c.far = 1000;
 			e->value<ScreenSpaceEffectsComponent>();
+			LightComponent &l = e->value<LightComponent>();
+			l.lightType = LightTypeEnum::Directional;
+			l.intensity = 1;
+			l.ssaoFactor = 1;
 		}
 
 		Holder<FpsCamera> fpsCamera = newFpsCamera(ents->get(10));

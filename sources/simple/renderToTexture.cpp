@@ -99,9 +99,7 @@ int main(int argc, char *args[])
 			e->value<TransformComponent>().position = Vec3(0, 1.7, 0);
 			CameraComponent &c = e->value<CameraComponent>();
 			c.ambientColor = Vec3(1);
-			c.ambientIntensity = 0.3;
-			c.ambientDirectionalColor = Vec3(1);
-			c.ambientDirectionalIntensity = 0.5;
+			c.ambientIntensity = 0.7;
 			c.near = 0.2;
 			c.far = 100;
 			c.sceneMask = 1;
@@ -134,9 +132,7 @@ int main(int argc, char *args[])
 			r.sceneMask = 1;
 			CameraComponent &c = e->value<CameraComponent>();
 			c.ambientColor = Vec3(1);
-			c.ambientIntensity = 0.3;
-			c.ambientDirectionalColor = Vec3(1);
-			c.ambientDirectionalIntensity = 0.5;
+			c.ambientIntensity = 0.7;
 			c.near = 0.2;
 			c.far = 100;
 			c.sceneMask = 2;

@@ -144,9 +144,7 @@ int main(int argc, char *args[])
 			e->value<TransformComponent>();
 			VrCameraComponent &c = e->value<VrCameraComponent>();
 			c.ambientColor = Vec3(1);
-			c.ambientIntensity = 0.02;
-			c.ambientDirectionalColor = Vec3(1);
-			c.ambientDirectionalIntensity = 0.04;
+			c.ambientIntensity = 0.05;
 			c.virtualReality = +engineVirtualReality();
 			e->value<ScreenSpaceEffectsComponent>().effects = (ScreenSpaceEffectsFlags::Default | ScreenSpaceEffectsFlags::EyeAdaptation) & ~ScreenSpaceEffectsFlags::AmbientOcclusion;
 		}

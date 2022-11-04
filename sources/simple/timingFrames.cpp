@@ -51,9 +51,7 @@ void controlInit()
 		e->value<TransformComponent>();
 		CameraComponent &c = e->value<CameraComponent>();
 		c.ambientColor = Vec3(1);
-		c.ambientIntensity = 0.5;
-		c.ambientDirectionalColor = Vec3(1);
-		c.ambientDirectionalIntensity = 0.5;
+		c.ambientIntensity = 1;
 		e->value<ScreenSpaceEffectsComponent>();
 	}
 	{ // box 1

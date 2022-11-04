@@ -305,12 +305,6 @@ void update()
 			if (in.valid)
 				cam.ambientIntensity = toFloat(in.value);
 		}
-		{ // directional ambient
-			Entity *e = ents->get(baseName + 3);
-			GuiInputComponent &in = e->value<GuiInputComponent>();
-			if (in.valid)
-				cam.ambientDirectionalIntensity = toFloat(in.value);
-		}
 	}
 }
 
@@ -605,8 +599,7 @@ void initializeGui()
 		}
 		sint32 childIndex = 1;
 		genInputFloat(table, childIndex, baseName, "Sun:", 0, 100, 0.1, 3);
-		genInputFloat(table, childIndex, baseName, "Ambient:", 0, 1, 0.01, 0.02);
-		genInputFloat(table, childIndex, baseName, "Directional Ambient:", 0, 1, 0.01, 0.04);
+		genInputFloat(table, childIndex, baseName, "Ambient:", 0, 1, 0.01, 0.05);
 	}
 }
 
@@ -643,9 +636,7 @@ int main(int argc, char *args[])
 			t.orientation = Quat(Degs(10), Degs(110), Degs());
 			CameraComponent &c = e->value<CameraComponent>();
 			c.ambientColor = Vec3(1);
-			c.ambientIntensity = 0.02;
-			c.ambientDirectionalColor = Vec3(1);
-			c.ambientDirectionalIntensity = 0.04;
+			c.ambientIntensity = 0.05;
 			c.near = 0.1;
 			c.far = 100;
 			e->value<ScreenSpaceEffectsComponent>();

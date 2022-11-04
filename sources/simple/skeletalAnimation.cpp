@@ -231,9 +231,7 @@ int main(int argc, char *args[])
 			t.orientation = Quat(Degs(-15), Degs(180), Degs());
 			CameraComponent &c = e->value<CameraComponent>();
 			c.ambientColor = Vec3(1);
-			c.ambientIntensity = 0.1;
-			c.ambientDirectionalColor = Vec3(1);
-			c.ambientDirectionalIntensity = 0.2;
+			c.ambientIntensity = 0.2;
 			c.near = 0.1;
 			c.far = 100;
 			e->value<ScreenSpaceEffectsComponent>();

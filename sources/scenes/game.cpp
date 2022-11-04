@@ -101,9 +101,7 @@ void sceneReload()
 		cam->value<TransformComponent>().position = Vec3(0, 10, 30);
 		CameraComponent &c = cam->value<CameraComponent>();
 		c.ambientColor = Vec3(1);
-		c.ambientIntensity = 0.01;
-		c.ambientDirectionalColor = Vec3(1);
-		c.ambientDirectionalIntensity = 0.02;
+		c.ambientIntensity = 0.02;
 		c.near = 0.1;
 		c.far = 200;
 		cam->value<ScreenSpaceEffectsComponent>().effects |= ScreenSpaceEffectsFlags::EyeAdaptation;

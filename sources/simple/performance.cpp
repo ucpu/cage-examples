@@ -68,9 +68,7 @@ void update()
 			t.orientation = Quat(Degs(-30), Degs(), Degs());
 			CameraComponent &c = e->value<CameraComponent>();
 			c.ambientColor = Vec3(1);
-			c.ambientIntensity = 0.1;
-			c.ambientDirectionalColor = Vec3(1);
-			c.ambientDirectionalIntensity = 0.2;
+			c.ambientIntensity = 0.2;
 			e->value<ScreenSpaceEffectsComponent>();
 			cameraCtrl->setEntity(e);
 		}
