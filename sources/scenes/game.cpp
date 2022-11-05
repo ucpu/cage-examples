@@ -11,8 +11,8 @@
 #include <cage-engine/window.h>
 #include <cage-engine/scene.h>
 #include <cage-engine/sceneScreenSpaceEffects.h>
+#include <cage-engine/sceneShadowmapFitting.h>
 
-#include <cage-simple/shadowmapHelpers.h>
 #include <cage-simple/statisticsGui.h>
 #include <cage-simple/fpsCamera.h>
 #include <cage-simple/engine.h>
@@ -138,9 +138,6 @@ void sceneReload()
 		LightComponent &ls = pointLights[i]->value<LightComponent>();
 		ls.color = colorHsvToRgb(Vec3(randomChance(), 1, 1));
 		ls.lightType = LightTypeEnum::Point;
-		
-		//ss.worldSize = vec3(60);
-		//ss.resolution = 1024;
 		RenderComponent &r = pointLights[i]->value<RenderComponent>();
 		r.color = ls.color;
 		r.object = HashString("scenes/common/lightbulb.obj");
@@ -175,7 +172,7 @@ void keyPress(InputKey in)
 
 void update()
 {
-#if 1
+#if 0
 	{ // automatic reloading -> used for engine testing
 		static uint64 last = 0;
 		uint64 now = applicationTime();
@@ -195,13 +192,14 @@ void update()
 		sceneIndexLoaded = sceneIndexCurrent;
 	}
 
-	{ // update shadowmaps
-		if (*directionalLights)
-		{
-			Aabb sceneBox = getBoxForScene(1);
-			for (Entity *e : directionalLights)
-				fitShadowmapForDirectionalLight(e, sceneBox);
-		}
+	// update shadowmaps
+	for (int i = 0; i < directionalLightsCount; i++)
+	{
+		ShadowmapFittingConfig cfg;
+		cfg.assets = engineAssets();
+		cfg.light = directionalLights[i];
+		cfg.camera = engineEntities()->get(1);
+		shadowmapFitting(cfg);
 	}
 }
 
