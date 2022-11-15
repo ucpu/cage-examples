@@ -41,8 +41,6 @@ void shoot(const Transform &where)
 void update()
 {
 	auto ents = engineEntities();
-	ents->get(5)->value<TransformComponent>() = ents->get(3)->value<VrControllerComponent>().aim;
-	ents->get(6)->value<TransformComponent>() = ents->get(4)->value<VrControllerComponent>().aim;
 
 	const auto vr = engineVirtualReality();
 
@@ -56,6 +54,11 @@ void update()
 
 	if (vr->leftController().buttons()[1])
 		virtualRealitySceneRecenter(ents, 1.3); // 1.3 = sitting height; 1.7 = standing height
+
+	virtualRealitySceneUpdate(ents); // after updating the origin but before updating the controllers aims
+
+	ents->get(5)->value<TransformComponent>() = ents->get(3)->value<VrControllerComponent>().aim;
+	ents->get(6)->value<TransformComponent>() = ents->get(4)->value<VrControllerComponent>().aim;
 
 	if (vr->rightController().buttons()[0])
 		shoot(ents->get(1)->value<TransformComponent>() * Transform(Vec3(0, 0.7, 0)));
