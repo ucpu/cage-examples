@@ -21,7 +21,7 @@ class guiTestImpl : public guiTestClass
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			e->value<GuiButtonComponent>();
+			e->value<GuiLabelComponent>();
 			e->value<GuiTextComponent>().value = "text";
 		}
 
@@ -38,7 +38,7 @@ class guiTestImpl : public guiTestClass
 				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = layout->name();
 				p.order = index++;
-				e->value<GuiButtonComponent>();
+				e->value<GuiLabelComponent>();
 				e->value<GuiTextComponent>().value = Stringizer() + i;
 			}
 		}
@@ -57,7 +57,7 @@ class guiTestImpl : public guiTestClass
 				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = layout->name();
 				p.order = index++;
-				e->value<GuiButtonComponent>();
+				e->value<GuiLabelComponent>();
 				e->value<GuiTextComponent>().value = Stringizer() + i;
 			}
 		}
@@ -68,64 +68,14 @@ class guiTestImpl : public guiTestClass
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			e->value<GuiButtonComponent>();
+			e->value<GuiLabelComponent>();
 			GuiImageComponent &m = e->value<GuiImageComponent>();
 			m.textureName = HashString("cage/texture/helper.jpg");
 			m.textureUvOffset = Vec2(5 / 8.f, 2 / 8.f);
 			m.textureUvSize = Vec2(1 / 8.f, 1 / 8.f);
 		}
-
-		{ // with unloaded image
-			guiLabel(3, index, "with unloaded image");
-			Entity *e = ents->createUnique();
-			GuiParentComponent &p = e->value<GuiParentComponent>();
-			p.parent = 3;
-			p.order = index++;
-			e->value<GuiButtonComponent>();
-			e->value<GuiImageComponent>().textureName = HashString("cage-tests/decals/albedo.png");
-		}
-
-		/*
-		{ // with invalid image
-			guiLabel(3, index, "with invalid image");
-			Entity *e = ents->createUnique();
-			GuiParentComponent &p = e->value<GuiParentComponent>();
-			p.parent = 3;
-			p.order = index++;
-			e->value<GuiButtonComponent>();
-			e->value<GuiImageComponent>().textureName = HashString("cage/texture/helper.jpg___");
-		}
-		*/
-
-		{ // with custom event
-			guiLabel(3, index, "with custom event");
-			Entity *e = ents->createUnique();
-			GuiParentComponent &p = e->value<GuiParentComponent>();
-			p.parent = 3;
-			p.order = index++;
-			e->value<GuiButtonComponent>();
-			e->value<GuiTextComponent>().value = "custom event";
-			e->value<GuiEventComponent>().event.bind<guiTestImpl, &guiTestImpl::onButtonPressed>(this);
-		}
-
-		{ // disabled
-			guiLabel(3, index, "disabled");
-			Entity *e = ents->createUnique();
-			GuiParentComponent &p = e->value<GuiParentComponent>();
-			p.parent = 3;
-			p.order = index++;
-			e->value<GuiButtonComponent>();
-			e->value<GuiTextComponent>().value = "text";
-			e->value<GuiWidgetStateComponent>().disabled = true;
-		}
-	}
-
-	bool onButtonPressed(uint32 en)
-	{
-		CAGE_LOG(SeverityEnum::Info, "event", "button with custom event pressed");
-		return false;
 	}
 
 };
 
-MAIN(guiTestImpl, "buttons")
+MAIN(guiTestImpl, "labels")
