@@ -1,0 +1,16 @@
+
+# use alpha channel of albedo texture for alpha clipping
+# emit light, but do not receive it (hologram)
+
+[base]
+emission = 1
+
+[textures]
+albedo = Plane.png
+
+[flags]
+twoSided
+cutOut
+noLighting
+
+

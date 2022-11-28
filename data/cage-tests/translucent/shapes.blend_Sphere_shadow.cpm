@@ -1,0 +1,14 @@
+
+# receive light and cast shadows
+
+[base]
+albedo = 0.11, 0.62, 0.14
+roughness = 0.2
+
+[mult]
+opacity = 0.51
+
+[flags]
+transparent
+noDepthWrite
+
