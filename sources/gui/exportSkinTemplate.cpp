@@ -3,7 +3,7 @@
 
 #include "gui.h"
 
-class guiTestImpl : public guiTestClass
+class GuiTestImpl : public GuiTestClass
 {
 public:
 	void initialize() override
@@ -13,4 +13,4 @@ public:
 	}
 };
 
-MAIN(guiTestImpl, "export skin template")
+MAIN(GuiTestImpl, "export skin template")

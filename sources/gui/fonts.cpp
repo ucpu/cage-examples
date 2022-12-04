@@ -20,10 +20,9 @@ const String labelTexts[] = {
 const uint32 fontsCount = sizeof(fontNames) / sizeof(fontNames[0]);
 static_assert(sizeof(fontNames) / sizeof(fontNames[0]) == sizeof(labelTexts) / sizeof(labelTexts[0]), "arrays must have same number of elements");
 
-class guiTestImpl : public guiTestClass
+class GuiTestImpl : public GuiTestClass
 {
 public:
-
 	void update() override
 	{
 		EntityManager *ents = engineGuiEntities();
@@ -66,7 +65,6 @@ public:
 			format.color = colorHsvToRgb(Vec3(randomChance(), 1, 1));
 		}
 	}
-
 };
 
-MAIN(guiTestImpl, "fonts")
+MAIN(GuiTestImpl, "fonts")

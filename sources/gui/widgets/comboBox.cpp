@@ -1,8 +1,7 @@
 #include "../gui.h"
 
-class guiTestImpl : public guiTestClass
+class GuiTestImpl : public GuiTestClass
 {
-
 	void initialize() override
 	{
 		EntityManager *ents = engineGuiEntities();
@@ -96,7 +95,6 @@ class guiTestImpl : public guiTestClass
 			}
 		}
 	}
-
 };
 
-MAIN(guiTestImpl, "combo boxes")
+MAIN(GuiTestImpl, "combo boxes")

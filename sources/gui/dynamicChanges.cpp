@@ -1,14 +1,15 @@
+#include <cage-core/memoryBuffer.h>
 #include "gui.h"
 
 #include <vector>
 #include <algorithm>
 
-class guiTestImpl : public guiTestClass
+class GuiTestImpl : public GuiTestClass
 {
 	std::vector<uint32> widgets;
+	MemoryBuffer buffer;
 
 public:
-
 	void generateList(uint32 parent)
 	{
 		EntityManager *ents = engineGuiEntities();
@@ -20,8 +21,7 @@ public:
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = parent;
 			p.order = i;
-			GuiTextComponent &t = e->value<GuiTextComponent>();
-			t.value = Stringizer() + e->name();
+			e->value<GuiTextComponent>().value = Stringizer() + e->name();
 		}
 	}
 
@@ -62,23 +62,20 @@ public:
 				p.parent = 10;
 				p.order = e->name();
 			}
-			switch (randomRange(0, 13))
+			switch (randomRange(0, 12))
 			{
 			case 0:
 			{
 				e->value<GuiButtonComponent>();
-				GuiTextComponent &t = e->value<GuiTextComponent>();
-				t.value = Stringizer() + e->name();
+				e->value<GuiTextComponent>().value = Stringizer() + e->name();
 			} break;
 			case 1:
 			{
-				GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
-				cb.state = CheckBoxStateEnum::Indeterminate;
+				e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Indeterminate;
 			} break;
 			case 2:
 			{
-				GuiColorPickerComponent &cp = e->value<GuiColorPickerComponent>();
-				cp.color = Vec3(randomRange3(0, 1));
+				e->value<GuiColorPickerComponent>().color = randomChance3();
 			} break;
 			case 3:
 			{
@@ -87,50 +84,40 @@ public:
 			} break;
 			case 4:
 			{
-				GuiInputComponent &i = e->value<GuiInputComponent>();
-				i.value = Stringizer() + e->name();
+				e->value<GuiInputComponent>().value = Stringizer() + e->name();
 			} break;
 			case 5:
 			{
 				e->value<GuiLabelComponent>();
-				GuiTextComponent &t = e->value<GuiTextComponent>();
-				t.value = Stringizer() + e->name();
+				e->value<GuiTextComponent>().value = Stringizer() + e->name();
 			} break;
 			case 6:
 			{
-				e->value<GuiListBoxComponent>();
-				generateList(e->name());
+				e->value<GuiPanelComponent>();
+				e->value<GuiTextComponent>().value = Stringizer() + e->name();
 			} break;
 			case 7:
 			{
-				e->value<GuiPanelComponent>();
-				GuiTextComponent &t = e->value<GuiTextComponent>();
-				t.value = Stringizer() + e->name();
+				GuiProgressBarComponent &pb = e->value<GuiProgressBarComponent>();
+				pb.progress = randomChance();
+				pb.showValue = randomChance() < 0.5;
 			} break;
 			case 8:
 			{
-				GuiProgressBarComponent &pb = e->value<GuiProgressBarComponent>();
-				pb.progress = randomChance();
-				pb.showValue = !!(e->name() % 2);
+				e->value<GuiRadioBoxComponent>();
 			} break;
 			case 9:
 			{
-				e->value<GuiRadioBoxComponent>();
+				e->value<GuiSliderBarComponent>().value = randomChance();
 			} break;
 			case 10:
 			{
-				GuiSliderBarComponent &sb = e->value<GuiSliderBarComponent>();
-				sb.value = randomChance();
+				e->value<GuiSpoilerComponent>();
+				e->value<GuiTextComponent>().value = Stringizer() + e->name();
 			} break;
 			case 11:
 			{
-				e->value<GuiSpoilerComponent>();
-				GuiTextComponent &t = e->value<GuiTextComponent>();
-				t.value = Stringizer() + e->name();
-			} break;
-			case 12:
-			{
-				e->value<GuiTextAreaComponent>();
+				e->value<GuiTextAreaComponent>().buffer = &buffer;
 			} break;
 			}
 		}
@@ -144,13 +131,10 @@ public:
 
 		{
 			Entity *e = ents->create(10);
-			GuiParentComponent &p = e->value<GuiParentComponent>();
-			p.parent = 3;
-			GuiLayoutLineComponent &ll = e->value<GuiLayoutLineComponent>();
-			ll.vertical = true;
+			e->value<GuiParentComponent>().parent = 3;
+			e->value<GuiLayoutLineComponent>().vertical = true;
 		}
 	}
-
 };
 
-MAIN(guiTestImpl, "dynamicChanges")
+MAIN(GuiTestImpl, "dynamic changes")

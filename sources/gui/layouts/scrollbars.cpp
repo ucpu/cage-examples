@@ -1,9 +1,8 @@
 #include "../gui.h"
 
-class guiTestImpl : public guiTestClass
+class GuiTestImpl : public GuiTestClass
 {
 public:
-
 	void initialize() override
 	{
 		EntityManager *ents = engineGuiEntities();
@@ -53,7 +52,6 @@ public:
 			size.size = Vec2(500, 500);
 		}
 	}
-
 };
 
-MAIN(guiTestImpl, "scrollbars")
+MAIN(GuiTestImpl, "scrollbars")

@@ -1,8 +1,7 @@
 #include "../gui.h"
 
-class guiTestImpl : public guiTestClass
+class GuiTestImpl : public GuiTestClass
 {
-
 	void initialize() override
 	{
 		EntityManager *ents = engineGuiEntities();
@@ -90,7 +89,6 @@ class guiTestImpl : public guiTestClass
 			e->value<GuiWidgetStateComponent>().disabled = true;
 		}
 	}
-
 };
 
-MAIN(guiTestImpl, "input fields")
+MAIN(GuiTestImpl, "input fields")

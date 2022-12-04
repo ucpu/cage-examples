@@ -1,8 +1,7 @@
 #include "../gui.h"
 
-class guiTestImpl : public guiTestClass
+class GuiTestImpl : public GuiTestClass
 {
-
 	void initialize() override
 	{
 		EntityManager *ents = engineGuiEntities();
@@ -105,7 +104,7 @@ class guiTestImpl : public guiTestClass
 			p.order = index++;
 			e->value<GuiButtonComponent>();
 			e->value<GuiTextComponent>().value = "custom event";
-			e->value<GuiEventComponent>().event.bind<guiTestImpl, &guiTestImpl::onButtonPressed>(this);
+			e->value<GuiEventComponent>().event.bind<GuiTestImpl, &GuiTestImpl::onButtonPressed>(this);
 		}
 
 		{ // disabled
@@ -125,7 +124,6 @@ class guiTestImpl : public guiTestClass
 		CAGE_LOG(SeverityEnum::Info, "event", "button with custom event pressed");
 		return false;
 	}
-
 };
 
-MAIN(guiTestImpl, "buttons")
+MAIN(GuiTestImpl, "buttons")

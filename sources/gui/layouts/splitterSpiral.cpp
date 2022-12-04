@@ -1,9 +1,8 @@
 #include "../gui.h"
 
-class guiTestImpl : public guiTestClass
+class GuiTestImpl : public GuiTestClass
 {
 public:
-
 	Entity *makeSplitterRec(uint32 depth)
 	{
 		EntityManager *ents = engineGuiEntities();
@@ -51,7 +50,6 @@ public:
 	{
 		makeSplitterRec(0);
 	}
-
 };
 
-MAIN(guiTestImpl, "splitter spiral")
+MAIN(GuiTestImpl, "splitter spiral")

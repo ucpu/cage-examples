@@ -58,8 +58,7 @@ void update()
 		Entity *e = ents->get(10);
 		TransformComponent &t = e->value<TransformComponent>();
 		t.position = Vec3(noise1->evaluate(engineControlTime()) * 2, noise2->evaluate(engineControlTime()) * 2, 10);
-		TextComponent &r = e->value<TextComponent>();
-		r.value = Stringizer() + t.position[0] + "|" + t.position[1] + "|" + t.position[2];
+		e->value<TextComponent>().value = Stringizer() + t.position[0] + "|" + t.position[1] + "|" + t.position[2];
 	}
 
 	{
@@ -109,9 +108,6 @@ int main(int argc, char *args[])
 			l.lightType = LightTypeEnum::Directional;
 			l.color = Vec3(1);
 			l.intensity = 3;
-			
-			//s.resolution = 2048;
-			//s.worldSize = vec3(12, 12, 10);
 		}
 		{ // camera
 			Entity *e = ents->create(3);
@@ -133,7 +129,7 @@ int main(int argc, char *args[])
 			t.position = Vec3(0, 0, -10);
 			t.scale = 3;
 		}
-		{ // text long a
+		{ // text long
 			Entity *e = ents->createAnonymous();
 			TextComponent &r = e->value<TextComponent>();
 			r.assetName = HashString("cage-tests/texts/texts.textpack");
@@ -143,12 +139,13 @@ int main(int argc, char *args[])
 			t.position = Vec3(-10, 0, 0);
 			t.orientation = Quat(Degs(), Degs(90), Degs());
 		}
-		{ // text long b
+		{ // text lorem ipsum
 			Entity *e = ents->createAnonymous();
 			TextComponent &r = e->value<TextComponent>();
-			r.assetName = HashString("cage-tests/texts/texts.textpack");
-			r.textName = HashString("long/b");
+			r.value = "Lorem ipsum dolor sit amet,\nconsectetur adipisici elit,\nsed eiusmod tempor incidunt ut labore et dolore magna aliqua.\nUt enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.";
 			r.color = Vec3(0, 0, 1);
+			r.align = TextAlignEnum::Center;
+			r.lineSpacing = 0.5;
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(10, 0, 0);
 			t.orientation = Quat(Degs(), Degs(-90), Degs());

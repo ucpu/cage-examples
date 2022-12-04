@@ -1,8 +1,7 @@
 #include "../gui.h"
 
-class guiTestImpl : public guiTestClass
+class GuiTestImpl : public GuiTestClass
 {
-
 	void initialize() override
 	{
 		EntityManager *ents = engineGuiEntities();
@@ -75,7 +74,6 @@ class guiTestImpl : public guiTestClass
 			m.textureUvSize = Vec2(1 / 8.f, 1 / 8.f);
 		}
 	}
-
 };
 
-MAIN(guiTestImpl, "labels")
+MAIN(GuiTestImpl, "labels")

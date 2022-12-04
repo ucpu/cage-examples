@@ -3,15 +3,14 @@
 
 #include <vector>
 
-class guiTestImpl : public guiTestClass
+class GuiTestImpl : public GuiTestClass
 {
 public:
-
 	std::vector<Entity *> items;
 
 	void guiEvent(InputGuiWidget in) override
 	{
-		guiTestClass::guiEvent(in);
+		GuiTestClass::guiEvent(in);
 		EntityManager *ents = engineGuiEntities();
 		GuiLayoutTableComponent &s = ents->get(42)->value<GuiLayoutTableComponent>();
 		switch (in.widget)
@@ -178,7 +177,6 @@ public:
 			}
 		}
 	}
-
 };
 
-MAIN(guiTestImpl, "table")
+MAIN(GuiTestImpl, "table")

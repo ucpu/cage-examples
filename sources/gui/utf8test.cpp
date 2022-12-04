@@ -6,10 +6,9 @@
 // in debug build.
 // *************************************************************************
 
-class guiTestImpl : public guiTestClass
+class GuiTestImpl : public GuiTestClass
 {
 public:
-
 	void initialize() override
 	{
 		EntityManager *ents = engineGuiEntities();
@@ -37,7 +36,6 @@ public:
 			format.font = HashString("cage-tests/gui/DroidSansMono.ttf");
 		}
 	}
-
 };
 
-MAIN(guiTestImpl, "utf8 test")
+MAIN(GuiTestImpl, "utf8 test")

@@ -1,12 +1,11 @@
 #include "../gui.h"
 
-class guiTestImpl : public guiTestClass
+class GuiTestImpl : public GuiTestClass
 {
 public:
-
 	void guiEvent(InputGuiWidget in) override
 	{
-		guiTestClass::guiEvent(in);
+		GuiTestClass::guiEvent(in);
 		EntityManager *ents = engineGuiEntities();
 		GuiLayoutSplitterComponent &s = ents->get(42)->value<GuiLayoutSplitterComponent>();
 		switch (in.widget)
@@ -111,7 +110,6 @@ public:
 
 		//gui()->setZoom(10);
 	}
-
 };
 
-MAIN(guiTestImpl, "splitter")
+MAIN(GuiTestImpl, "splitter")

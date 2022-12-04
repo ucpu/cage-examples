@@ -11,7 +11,7 @@
 
 using namespace cage;
 
-class guiTestClass
+class GuiTestClass
 {
 public:
 	static Real steeper(Rads x)
@@ -59,6 +59,18 @@ public:
 			GuiScrollbarsComponent &sc = panel->value<GuiScrollbarsComponent>();
 			sc.alignment = Vec2(0.5, 0);
 		}
+	}
+
+	Entity *envelopeInScrollbars(Entity *e)
+	{
+		Entity *r = engineGuiEntities()->createUnique();
+		GuiParentComponent &pr = r->value<GuiParentComponent>();
+		GuiParentComponent &pe = e->value<GuiParentComponent>();
+		pr = pe;
+		pe.parent = r->name();
+		pe.order = 0;
+		r->value<GuiScrollbarsComponent>();
+		return r;
 	}
 
 	virtual void windowClose()
@@ -137,11 +149,11 @@ public:
 
 			// events
 			windowCloseListener.attach(engineWindow()->events, -5156);
-			windowCloseListener.bind<guiTestClass, &guiTestClass::onWindowClose>(this);
+			windowCloseListener.bind<GuiTestClass, &GuiTestClass::onWindowClose>(this);
 			updateListener.attach(controlThread().update);
-			updateListener.bind<guiTestClass, &guiTestClass::update>(this);
+			updateListener.bind<GuiTestClass, &GuiTestClass::update>(this);
 			guiListener.attach(engineGuiManager()->widgetEvent);
-			guiListener.bind<guiTestClass, &guiTestClass::guiEvent>(this);
+			guiListener.bind<GuiTestClass, &GuiTestClass::guiEvent>(this);
 
 			// window
 			engineWindow()->windowedSize(Vec2i(800, 600));

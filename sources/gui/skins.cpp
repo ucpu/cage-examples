@@ -1,10 +1,20 @@
+#include <cage-core/memoryBuffer.h>
 #include <cage-engine/guiSkins.h>
-
 #include "gui.h"
 
-class guiTestImpl : public guiTestClass
+class GuiTestImpl : public GuiTestClass
 {
 public:
+	static MemoryBuffer makeBufferWithText()
+	{
+		static constexpr const char str[] = "Alea iacta est\nThe die is cast";
+		MemoryBuffer buf;
+		buf.resize(sizeof(str));
+		detail::memcpy(buf.data(), str, sizeof(str));
+		return buf;
+	}
+
+	MemoryBuffer buffer = makeBufferWithText();
 
 	void update() override
 	{
@@ -23,44 +33,217 @@ public:
 		for (uint32 i = 0; i < 4; i++)
 			a4[i] = (steeper(Rads(t) + Rads::Full() * Real(i) / 4) * 0.5 + 0.5) * 20;
 
-		GuiSkinConfig skin;
-		switch (animateOption)
-		{
-		case 0: // margins
-			skin.defaults.button.margin = a4;
-			skin.defaults.checkBox.margin = a4;
-			skin.defaults.radioBox.margin = a4;
-			skin.defaults.colorPicker.margin = a4;
-			skin.defaults.comboBox.baseMargin = a4;
-			skin.defaults.panel.baseMargin = a4;
-			skin.defaults.inputBox.margin = a4;
-			skin.defaults.label.margin = a4;
-			skin.defaults.sliderBar.horizontal.margin = a4;
-			break;
-		case 1: // borders
-			for (uint32 i = 0; i < (uint32)GuiElementTypeEnum::TotalElements; i++)
-				skin.layouts[i].border = a4;
-			break;
-		case 2: // paddings
-			skin.defaults.button.padding = a4;
-			skin.defaults.comboBox.basePadding = a4;
-			skin.defaults.panel.captionPadding = a4;
-			skin.defaults.panel.contentPadding = a4;
-			skin.defaults.inputBox.basePadding = a4;
-			skin.defaults.sliderBar.horizontal.padding = a4;
-			break;
-		}
-		engineGuiManager()->skin(0) = engineGuiManager()->skin(1) = skin;
-		engineGuiManager()->skin(1).textureName = HashString("cage-tests/gui/skin.png");
+		const auto &generate = [&](uint32 styleIndex) {
+			GuiSkinConfig skin = detail::guiSkinGenerate(styleIndex);
+			switch (animateOption)
+			{
+			case 0: // margins
+				skin.defaults.label.margin = a4;
+				skin.defaults.button.margin = a4;
+				skin.defaults.inputBox.margin = a4;
+				skin.defaults.textArea.margin = a4;
+				skin.defaults.checkBox.margin = a4;
+				skin.defaults.radioBox.margin = a4;
+				skin.defaults.comboBox.baseMargin = a4;
+				skin.defaults.progressBar.baseMargin = a4;
+				skin.defaults.sliderBar.horizontal.margin = a4;
+				skin.defaults.colorPicker.margin = a4;
+				skin.defaults.panel.baseMargin = a4;
+				skin.defaults.spoiler.baseMargin = a4;
+				break;
+			case 1: // borders
+				for (uint32 i = 0; i < (uint32)GuiElementTypeEnum::TotalElements; i++)
+					skin.layouts[i].border = a4;
+				break;
+			case 2: // paddings
+				skin.defaults.button.padding = a4;
+				skin.defaults.inputBox.basePadding = a4;
+				skin.defaults.textArea.padding = a4;
+				skin.defaults.comboBox.basePadding = a4;
+				skin.defaults.progressBar.textPadding = a4;
+				skin.defaults.progressBar.fillingPadding = a4;
+				skin.defaults.sliderBar.horizontal.padding = a4;
+				skin.defaults.panel.captionPadding = a4;
+				skin.defaults.panel.contentPadding = a4;
+				skin.defaults.spoiler.captionPadding = a4;
+				skin.defaults.spoiler.contentPadding = a4;
+				break;
+			}
+			return skin;
+		};
+
+		engineGuiManager()->skin(0) = generate(0);
+		engineGuiManager()->skin(1) = generate(1);
+		engineGuiManager()->skin(2) = generate(2);
+		engineGuiManager()->skin(3) = generate(0);
+		engineGuiManager()->skin(3).textureName = HashString("cage-tests/gui/skin.png");
 	}
 
 	void initializeEngine() override
 	{
 		GuiManagerCreateConfig g;
-		g.skinsCount = 2;
+		g.skinsCount = 4;
 		EngineCreateConfig e;
 		e.gui = &g;
 		engineInitialize(e);
+	}
+
+	void initializeSide(uint32 side, const String &name)
+	{
+		EntityManager *ents = engineGuiEntities();
+		{ // panel
+			Entity *panel = ents->create(side);
+			GuiParentComponent &p = panel->value<GuiParentComponent>();
+			p.parent = 3;
+			p.order = side;
+			panel->value<GuiPanelComponent>();
+			panel->value<GuiLayoutLineComponent>().vertical = true;
+			panel->value<GuiTextComponent>().value = name;
+			panel->value<GuiScrollbarsComponent>();
+		}
+		uint32 index = 0;
+		{ // label
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = side;
+			p.order = index++;
+			e->value<GuiLabelComponent>();
+			e->value<GuiTextComponent>().value = "People shouldn't be afraid of their government.\nGovernments should be afraid of their people.";
+			e->value<GuiTextFormatComponent>().align = TextAlignEnum::Left;
+		}
+		{ // button
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = side;
+			p.order = index++;
+			e->value<GuiButtonComponent>();
+			e->value<GuiTextComponent>().value = "button";
+		}
+		{ // text input box
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = side;
+			p.order = index++;
+			e->value<GuiInputComponent>();
+			e->value<GuiTextComponent>().value = "text input box";
+		}
+		{ // real input box
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = side;
+			p.order = index++;
+			GuiInputComponent &input = e->value<GuiInputComponent>();
+			input.type = InputTypeEnum::Real;
+			input.min.f = -5;
+			input.max.f = 5;
+			input.step.f = 0.1;
+			e->value<GuiTextComponent>().value = "real input box";
+		}
+		{ // checkbox
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = side;
+			p.order = index++;
+			e->value<GuiCheckBoxComponent>();
+			e->value<GuiTextComponent>().value = "checkbox";
+		}
+		{ // radiobox
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = side;
+			p.order = index++;
+			e->value<GuiRadioBoxComponent>();
+			e->value<GuiTextComponent>().value = "radiobox";
+		}
+		{ // combo box
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = side;
+			p.order = index++;
+			e->value<GuiComboBoxComponent>();
+			e->value<GuiTextComponent>().value = "combo box";
+			for (uint32 i = 0; i < 5; i++)
+			{
+				Entity *ee = ents->createUnique();
+				GuiParentComponent &p = ee->value<GuiParentComponent>();
+				p.parent = e->name();
+				p.order = i;
+				ee->value<GuiTextComponent>().value = Stringizer() + i;
+			}
+		}
+		{ // slider
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = side;
+			p.order = index++;
+			e->value<GuiSliderBarComponent>().value = 0.7;
+		}
+		{ // progress bar
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = side;
+			p.order = index++;
+			e->value<GuiProgressBarComponent>().progress = 0.2;
+			e->value<GuiTextComponent>().value = "progress bar";
+		}
+		{ // color picker
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = side;
+			p.order = index++;
+			e->value<GuiColorPickerComponent>();
+			envelopeInScrollbars(e);
+		}
+		{ // image czech flag label
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = side;
+			p.order = index++;
+			e->value<GuiLabelComponent>();
+			e->value<GuiImageComponent>().textureName = HashString("cage-tests/gui/czech.png");
+			envelopeInScrollbars(e);
+		}
+		{ // image english flag button
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = side;
+			p.order = index++;
+			e->value<GuiButtonComponent>();
+			e->value<GuiImageComponent>().textureName = HashString("cage-tests/gui/english.png");
+		}
+		{ // panel
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = side;
+			p.order = index++;
+			e->value<GuiPanelComponent>();
+			e->value<GuiTextComponent>().value = "caption";
+			envelopeInScrollbars(e);
+			Entity *f = ents->createUnique();
+			f->value<GuiParentComponent>().parent = e->name();
+			f->value<GuiLabelComponent>();
+			f->value<GuiTextComponent>().value = "hello";
+		}
+		{ // spoiler
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = side;
+			p.order = index++;
+			e->value<GuiSpoilerComponent>();
+			e->value<GuiTextComponent>().value = "caption";
+			envelopeInScrollbars(e);
+			Entity *f = ents->createUnique();
+			f->value<GuiParentComponent>().parent = e->name();
+			f->value<GuiLabelComponent>();
+			f->value<GuiTextComponent>().value = "world";
+		}
+		{ // text area
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = side;
+			p.order = index++;
+			e->value<GuiTextAreaComponent>().buffer = &buffer;
+		}
 	}
 
 	void initialize() override
@@ -71,11 +254,9 @@ public:
 
 		{ // animate option
 			Entity *e = ents->create(100);
-			GuiParentComponent &p = e->value<GuiParentComponent>();
-			p.parent = 2;
+			e->value<GuiParentComponent>().parent = 2;
 			e->value<GuiComboBoxComponent>();
-			GuiTextComponent &text = e->value<GuiTextComponent>();
-			text.value = "animation";
+			e->value<GuiTextComponent>().value = "animation";
 			static constexpr const char *options[] = {
 				"margins",
 				"borders",
@@ -88,150 +269,22 @@ public:
 				GuiParentComponent &p = ee->value<GuiParentComponent>();
 				p.parent = 100;
 				p.order = i;
-				GuiTextComponent &text = ee->value<GuiTextComponent>();
-				text.value = options[i];
+				ee->value<GuiTextComponent>().value = options[i];
 			}
 		}
 		{ // main
 			Entity *panel = ents->get(3);
 			panel->value<GuiLayoutLineComponent>();
-			GuiScrollbarsComponent &sc = panel->value<GuiScrollbarsComponent>();
-			sc.alignment = Vec2(0.5, 0);
+			panel->value<GuiScrollbarsComponent>().alignment = Vec2(0.5, 0);
 		}
-		{ // left panel
-			Entity *panel = ents->create(4);
-			GuiParentComponent &p = panel->value<GuiParentComponent>();
-			p.parent = 3;
-			p.order = 1;
-			panel->value<GuiPanelComponent>();
-			GuiLayoutLineComponent &ll = panel->value<GuiLayoutLineComponent>();
-			ll.vertical = true;
-		}
-		{ // right panel
-			Entity *panel = ents->create(5);
-			GuiParentComponent &p = panel->value<GuiParentComponent>();
-			p.parent = 3;
-			p.order = 2;
-			panel->value<GuiPanelComponent>();
-			GuiLayoutLineComponent &ll = panel->value<GuiLayoutLineComponent>();
-			ll.vertical = true;
-			GuiWidgetStateComponent &ws = panel->value<GuiWidgetStateComponent>();
-			ws.skinIndex = 1;
-		}
-		for (uint32 side = 4; side < 6; side++)
-		{
-			uint32 index = 0;
-			{ // label
-				Entity *e = ents->createUnique();
-				GuiParentComponent &p = e->value<GuiParentComponent>();
-				p.parent = side;
-				p.order = index++;
-				e->value<GuiLabelComponent>();
-				GuiTextComponent &text = e->value<GuiTextComponent>();
-				text.value = "People shouldn't be afraid of their government.\nGovernments should be afraid of their people.";
-				GuiTextFormatComponent &format = e->value<GuiTextFormatComponent>();
-				format.align = TextAlignEnum::Left;
-			}
-			{ // button
-				Entity *e = ents->createUnique();
-				GuiParentComponent &p = e->value<GuiParentComponent>();
-				p.parent = side;
-				p.order = index++;
-				e->value<GuiButtonComponent>();
-				GuiTextComponent &text = e->value<GuiTextComponent>();
-				text.value = "button";
-			}
-			{ // text input box
-				Entity *e = ents->createUnique();
-				GuiParentComponent &p = e->value<GuiParentComponent>();
-				p.parent = side;
-				p.order = index++;
-				e->value<GuiInputComponent>();
-				GuiTextComponent &text = e->value<GuiTextComponent>();
-				text.value = "text input box";
-			}
-			{ // real input box
-				Entity *e = ents->createUnique();
-				GuiParentComponent &p = e->value<GuiParentComponent>();
-				p.parent = side;
-				p.order = index++;
-				GuiInputComponent &input = e->value<GuiInputComponent>();
-				input.type = InputTypeEnum::Real;
-				input.min.f = -5;
-				input.max.f = 5;
-				input.step.f = 0.1;
-				GuiTextComponent &text = e->value<GuiTextComponent>();
-				text.value = "real input box";
-			}
-			{ // checkbox
-				Entity *e = ents->createUnique();
-				GuiParentComponent &p = e->value<GuiParentComponent>();
-				p.parent = side;
-				p.order = index++;
-				e->value<GuiCheckBoxComponent>();
-				GuiTextComponent &text = e->value<GuiTextComponent>();
-				text.value = "checkbox";
-			}
-			{ // radiobox
-				Entity *e = ents->createUnique();
-				GuiParentComponent &p = e->value<GuiParentComponent>();
-				p.parent = side;
-				p.order = index++;
-				e->value<GuiRadioBoxComponent>();
-				GuiTextComponent &text = e->value<GuiTextComponent>();
-				text.value = "radiobox";
-			}
-			{ // combo box
-				Entity *e = ents->createUnique();
-				GuiParentComponent &p = e->value<GuiParentComponent>();
-				p.parent = side;
-				p.order = index++;
-				e->value<GuiComboBoxComponent>();
-				GuiTextComponent &text = e->value<GuiTextComponent>();
-				text.value = "combo box";
-				for (uint32 i = 0; i < 5; i++)
-				{
-					Entity *ee = ents->createUnique();
-					GuiParentComponent &p = ee->value<GuiParentComponent>();
-					p.parent = e->name();
-					p.order = i;
-					GuiTextComponent &text = ee->value<GuiTextComponent>();
-					text.value = Stringizer() + i;
-				}
-			}
-			{ // slider
-				Entity *e = ents->createUnique();
-				GuiParentComponent &p = e->value<GuiParentComponent>();
-				p.parent = side;
-				p.order = index++;
-				e->value<GuiSliderBarComponent>();
-			}
-			{ // color picker
-				Entity *e = ents->createUnique();
-				GuiParentComponent &p = e->value<GuiParentComponent>();
-				p.parent = side;
-				p.order = index++;
-				e->value<GuiColorPickerComponent>();
-			}
-			{ // image czech flag
-				Entity *e = ents->createUnique();
-				GuiParentComponent &p = e->value<GuiParentComponent>();
-				p.parent = side;
-				p.order = index++;
-				e->value<GuiLabelComponent>();
-				e->value<GuiImageComponent>().textureName = HashString("cage-tests/gui/czech.png");
-			}
-			{ // image english flag
-				Entity *e = ents->createUnique();
-				GuiParentComponent &p = e->value<GuiParentComponent>();
-				p.parent = side;
-				p.order = index++;
-				e->value<GuiButtonComponent>();
-				e->value<GuiImageComponent>().textureName = HashString("cage-tests/gui/english.png");
-			}
-		}
+		initializeSide(4, "default skin");
+		initializeSide(5, "large skin");
+		initializeSide(6, "compact skin");
+		initializeSide(7, "default skin - texture template");
+		ents->get(5)->value<GuiWidgetStateComponent>().skinIndex = 1;
+		ents->get(6)->value<GuiWidgetStateComponent>().skinIndex = 2;
+		ents->get(7)->value<GuiWidgetStateComponent>().skinIndex = 3;
 	}
-
 };
 
-MAIN(guiTestImpl, "skins")
+MAIN(GuiTestImpl, "skins")

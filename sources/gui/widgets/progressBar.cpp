@@ -1,7 +1,15 @@
+#include <cage-core/entitiesVisitor.h>
 #include "../gui.h"
 
 class GuiTestImpl : public GuiTestClass
 {
+	void update() override
+	{
+		entitiesVisitor([](Entity *e, GuiProgressBarComponent &p) {
+			p.progress = (p.progress + 0.003) % 1;
+		}, engineGuiEntities(), false);
+	}
+
 	void initialize() override
 	{
 		EntityManager *ents = engineGuiEntities();
@@ -20,32 +28,36 @@ class GuiTestImpl : public GuiTestClass
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			e->value<GuiSliderBarComponent>();
-			envelopeInScrollbars(e);
+			e->value<GuiProgressBarComponent>();
 		}
 
-		{ // vertical
-			guiLabel(3, index, "vertical");
+		{ // progressed
+			guiLabel(3, index, "progressed");
 			Entity *e = ents->createUnique();
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			GuiSliderBarComponent &s = e->value<GuiSliderBarComponent>();
-			s.vertical = true;
-			envelopeInScrollbars(e);
+			e->value<GuiProgressBarComponent>().progress = 0.5;
 		}
 
-		{ // range
-			guiLabel(3, index, "range");
+		{ // with text
+			guiLabel(3, index, "with text");
 			Entity *e = ents->createUnique();
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			GuiSliderBarComponent &s = e->value<GuiSliderBarComponent>();
-			s.min = 13;
-			s.max = 42;
-			s.value = 21;
-			envelopeInScrollbars(e);
+			e->value<GuiProgressBarComponent>();
+			e->value<GuiTextComponent>().value = "hello";
+		}
+
+		{ // with value
+			guiLabel(3, index, "with value");
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = 3;
+			p.order = index++;
+			e->value<GuiProgressBarComponent>().showValue = true;
+			e->value<GuiTextComponent>().value = "value";
 		}
 
 		{ // disabled
@@ -54,11 +66,10 @@ class GuiTestImpl : public GuiTestClass
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			e->value<GuiSliderBarComponent>();
+			e->value<GuiProgressBarComponent>();
 			e->value<GuiWidgetStateComponent>().disabled = true;
-			envelopeInScrollbars(e);
 		}
 	}
 };
 
-MAIN(GuiTestImpl, "sliders")
+MAIN(GuiTestImpl, "progress bars")

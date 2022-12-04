@@ -20,7 +20,7 @@ class GuiTestImpl : public GuiTestClass
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			e->value<GuiCheckBoxComponent>();
+			e->value<GuiRadioBoxComponent>();
 		}
 
 		{ // with label
@@ -29,7 +29,7 @@ class GuiTestImpl : public GuiTestClass
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			e->value<GuiCheckBoxComponent>();
+			e->value<GuiRadioBoxComponent>();
 			e->value<GuiTextComponent>().value = "label";
 		}
 
@@ -39,7 +39,7 @@ class GuiTestImpl : public GuiTestClass
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Checked;
+			e->value<GuiRadioBoxComponent>().state = CheckBoxStateEnum::Checked;
 		}
 
 		{ // indeterminate
@@ -48,7 +48,7 @@ class GuiTestImpl : public GuiTestClass
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Indeterminate;
+			e->value<GuiRadioBoxComponent>().state = CheckBoxStateEnum::Indeterminate;
 		}
 
 		{ // disabled
@@ -57,7 +57,7 @@ class GuiTestImpl : public GuiTestClass
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			e->value<GuiCheckBoxComponent>();
+			e->value<GuiRadioBoxComponent>();
 			e->value<GuiWidgetStateComponent>().disabled = true;
 		}
 
@@ -67,10 +67,46 @@ class GuiTestImpl : public GuiTestClass
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = index++;
-			e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Checked;
+			e->value<GuiRadioBoxComponent>().state = CheckBoxStateEnum::Checked;
 			e->value<GuiWidgetStateComponent>().disabled = true;
+		}
+
+		{ // group 1
+			guiLabel(3, index, "group 1");
+			Entity *layout = ents->createUnique();
+			GuiParentComponent &p = layout->value<GuiParentComponent>();
+			p.parent = 3;
+			p.order = index++;
+			layout->value<GuiLayoutLineComponent>();
+			for (uint32 i = 0; i < 4; i++)
+			{
+				Entity *e = ents->createUnique();
+				GuiParentComponent &p = e->value<GuiParentComponent>();
+				p.parent = layout->name();
+				p.order = index++;
+				e->value<GuiRadioBoxComponent>();
+				e->value<GuiTextComponent>().value = Stringizer() + i;
+			}
+		}
+
+		{ // group 2
+			guiLabel(3, index, "group 2");
+			Entity *layout = ents->createUnique();
+			GuiParentComponent &p = layout->value<GuiParentComponent>();
+			p.parent = 3;
+			p.order = index++;
+			layout->value<GuiLayoutLineComponent>();
+			for (uint32 i = 0; i < 4; i++)
+			{
+				Entity *e = ents->createUnique();
+				GuiParentComponent &p = e->value<GuiParentComponent>();
+				p.parent = layout->name();
+				p.order = index++;
+				e->value<GuiRadioBoxComponent>();
+				e->value<GuiTextComponent>().value = Stringizer() + i;
+			}
 		}
 	}
 };
 
-MAIN(GuiTestImpl, "check boxes")
+MAIN(GuiTestImpl, "radio boxes")

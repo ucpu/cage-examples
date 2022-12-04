@@ -2,9 +2,8 @@
 
 #include <cage-core/color.h>
 
-class guiTestImpl : public guiTestClass
+class GuiTestImpl : public GuiTestClass
 {
-
 	void initialize() override
 	{
 		EntityManager *ents = engineGuiEntities();
@@ -39,7 +38,6 @@ class guiTestImpl : public guiTestClass
 			cp.color = colorValueToHeatmapRgb(randomChance());
 		}
 	}
-
 };
 
-MAIN(guiTestImpl, "color pickers")
+MAIN(GuiTestImpl, "color pickers")
