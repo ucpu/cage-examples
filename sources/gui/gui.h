@@ -162,7 +162,7 @@ public:
 
 			// run
 			initialize();
-			static const uint32 assetsName = HashString("cage-tests/gui/gui.pack");
+			static constexpr const uint32 assetsName = HashString("cage-tests/gui/gui.pack");
 			engineAssets()->add(assetsName);
 			engineStart();
 			engineAssets()->remove(assetsName);

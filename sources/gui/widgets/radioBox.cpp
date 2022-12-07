@@ -21,6 +21,7 @@ class GuiTestImpl : public GuiTestClass
 			p.parent = 3;
 			p.order = index++;
 			e->value<GuiRadioBoxComponent>();
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"this widget is called radio box, yet it has nothing to do with music">();
 		}
 
 		{ // with label

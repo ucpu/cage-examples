@@ -21,6 +21,7 @@ class GuiTestImpl : public GuiTestClass
 			p.parent = 3;
 			p.order = index++;
 			e->value<GuiCheckBoxComponent>();
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"yes or no, that is the question">();
 		}
 
 		{ // with label

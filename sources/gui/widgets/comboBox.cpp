@@ -22,6 +22,7 @@ class GuiTestImpl : public GuiTestClass
 			p.order = index++;
 			e->value<GuiComboBoxComponent>();
 			e->value<GuiTextComponent>().value = "placeholder";
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"nothing to choose from?">();
 		}
 		{ // items
 			guiLabel(3, index, "items");

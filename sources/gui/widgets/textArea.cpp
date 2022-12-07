@@ -40,6 +40,7 @@ Nulla et ipsum ligula. Nunc tristique ut felis in tristique. Suspendisse sit ame
 			p.parent = 3;
 			p.order = index++;
 			e->value<GuiTextAreaComponent>().buffer = &buffer;
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"tooltip: in case you need more text for this text">();
 		}
 
 		{ // disabled

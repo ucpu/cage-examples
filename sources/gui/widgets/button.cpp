@@ -24,6 +24,18 @@ class GuiTestImpl : public GuiTestClass
 			e->value<GuiTextComponent>().value = "text";
 		}
 
+		{ // with tooltip
+			guiLabel(3, index, "with tooltip");
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = 3;
+			p.order = index++;
+			e->value<GuiButtonComponent>();
+			e->value<GuiTextComponent>().value = "text";
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"press me">();
+			e->value<GuiTooltipComponent>().delay = 1000;
+		}
+
 		{ // horizontal
 			guiLabel(3, index, "horizontal");
 			Entity *layout = ents->createUnique();
