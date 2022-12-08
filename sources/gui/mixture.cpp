@@ -34,6 +34,7 @@ public:
 				"default",
 				"large",
 				"compact",
+				"tooltips",
 			};
 			for (uint32 i = 0; i < sizeof(options) / sizeof(options[0]); i++)
 			{
@@ -178,6 +179,20 @@ public:
 			ib.min.i = -13;
 			ib.max.i = 42;
 			ib.step.i = 5;
+		}
+
+		{ // disabled input
+			guiLabel(3, index, "disabled input");
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = 3;
+			p.order = index++;
+			GuiInputComponent &ib = e->value<GuiInputComponent>();
+			ib.type = InputTypeEnum::Integer;
+			ib.min.i = -13;
+			ib.max.i = 42;
+			ib.step.i = 5;
+			e->value<GuiWidgetStateComponent>().disabled = true;
 		}
 
 		{ // text area

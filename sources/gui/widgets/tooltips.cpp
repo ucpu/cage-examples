@@ -1,5 +1,87 @@
 #include "../gui.h"
 
+void tooltipMultiline(const GuiTooltipConfig &cfg)
+{
+	cfg.tooltip->value<GuiPanelComponent>();
+	cfg.tooltip->value<GuiLayoutLineComponent>().vertical = true;
+	for (uint32 i = 0; i < 4; i++)
+	{
+		Entity *e = cfg.tooltip->manager()->createUnique();
+		e->value<GuiParentComponent>().parent = cfg.tooltip->name();
+		e->value<GuiParentComponent>().order = i;
+		e->value<GuiLabelComponent>();
+		e->value<GuiTextComponent>().value = Stringizer() + "text " + i;
+	}
+}
+
+void tooltipCenteredOverLabel(const GuiTooltipConfig &cfg)
+{
+	cfg.placement = TooltipPlacementEnum::Center;
+	cfg.tooltip->value<GuiPanelComponent>();
+	Entity *e = cfg.tooltip->manager()->createUnique();
+	e->value<GuiParentComponent>().parent = cfg.tooltip->name();
+	e->value<GuiLabelComponent>();
+	e->value<GuiTextComponent>().value = "centered over label";
+}
+
+void tooltipCenteredInScreen(const GuiTooltipConfig &cfg)
+{
+	cfg.placement = TooltipPlacementEnum::Manual;
+	cfg.tooltip->value<GuiScrollbarsComponent>().alignment = Vec2(0.5);
+	Entity *f = cfg.tooltip->manager()->createUnique();
+	f->value<GuiParentComponent>().parent = cfg.tooltip->name();
+	f->value<GuiPanelComponent>();
+	f->value<GuiExplicitSizeComponent>().size = Vec2(120);
+	Entity *e = cfg.tooltip->manager()->createUnique();
+	e->value<GuiParentComponent>().parent = f->name();
+	e->value<GuiLabelComponent>();
+	e->value<GuiTextComponent>().value = "centered in the screen";
+}
+
+void tooltipScrollbars(const GuiTooltipConfig &cfg)
+{
+	cfg.closeCondition = TooltipCloseConditionEnum::Modal;
+	cfg.tooltip->value<GuiPanelComponent>();
+	cfg.tooltip->value<GuiScrollbarsComponent>();
+	cfg.tooltip->value<GuiExplicitSizeComponent>().size = Vec2(120);
+	cfg.tooltip->value<GuiLayoutLineComponent>().vertical = true;
+	for (uint32 i = 0; i < 20; i++)
+	{
+		Entity *e = cfg.tooltip->manager()->createUnique();
+		e->value<GuiParentComponent>().parent = cfg.tooltip->name();
+		e->value<GuiParentComponent>().order = i;
+		e->value<GuiLabelComponent>();
+		e->value<GuiTextComponent>().value = Stringizer() + "text " + i;
+	}
+}
+
+void tooltipModal(const GuiTooltipConfig &cfg)
+{
+	cfg.closeCondition = TooltipCloseConditionEnum::Modal;
+	Entity *f = cfg.tooltip->manager()->createUnique();
+	f->value<GuiParentComponent>().parent = cfg.tooltip->name();
+	f->value<GuiPanelComponent>();
+	f->value<GuiExplicitSizeComponent>().size = Vec2(120);
+	Entity *e = cfg.tooltip->manager()->createUnique();
+	e->value<GuiParentComponent>().parent = f->name();
+	e->value<GuiLabelComponent>();
+	e->value<GuiTextComponent>().value = "modal";
+}
+
+void tooltipRecursive(uint32 depth, const GuiTooltipConfig &cfg)
+{
+	cfg.closeCondition = TooltipCloseConditionEnum::Modal;
+	Entity *f = cfg.tooltip->manager()->createUnique();
+	f->value<GuiParentComponent>().parent = cfg.tooltip->name();
+	f->value<GuiPanelComponent>();
+	f->value<GuiExplicitSizeComponent>().size = Vec2(120);
+	Entity *e = cfg.tooltip->manager()->createUnique();
+	e->value<GuiParentComponent>().parent = f->name();
+	e->value<GuiLabelComponent>();
+	e->value<GuiTextComponent>().value = Stringizer() + "depth: " + depth;
+	e->value<GuiTooltipComponent>().tooltip.bind<uint32, &tooltipRecursive>(depth + 1);
+}
+
 class GuiTestImpl : public GuiTestClass
 {
 	void initialize() override
@@ -33,18 +115,18 @@ class GuiTestImpl : public GuiTestClass
 			p.order = index++;
 			e->value<GuiLabelComponent>();
 			e->value<GuiTextComponent>().value = "label";
-			e->value<GuiTooltipComponent>().tooltip.bind<+[](const GuiTooltipConfig &cfg) -> void {
-				cfg.tooltip->value<GuiPanelComponent>();
-				cfg.tooltip->value<GuiLayoutLineComponent>().vertical = true;
-				for (uint32 i = 0; i < 4; i++)
-				{
-					Entity *e = cfg.tooltip->manager()->createUnique();
-					e->value<GuiParentComponent>().parent = cfg.tooltip->name();
-					e->value<GuiParentComponent>().order = i;
-					e->value<GuiLabelComponent>();
-					e->value<GuiTextComponent>().value = Stringizer() + "text " + i;
-				}
-			}>();
+			e->value<GuiTooltipComponent>().tooltip.bind<tooltipMultiline>();
+		}
+
+		{ // label center
+			guiLabel(3, index, "label center");
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = 3;
+			p.order = index++;
+			e->value<GuiLabelComponent>();
+			e->value<GuiTextComponent>().value = "label";
+			e->value<GuiTooltipComponent>().tooltip.bind<tooltipCenteredOverLabel>();
 		}
 
 		{ // screen center
@@ -55,18 +137,7 @@ class GuiTestImpl : public GuiTestClass
 			p.order = index++;
 			e->value<GuiLabelComponent>();
 			e->value<GuiTextComponent>().value = "label";
-			e->value<GuiTooltipComponent>().tooltip.bind<+[](const GuiTooltipConfig &cfg) -> void {
-				cfg.reposition = false;
-				cfg.tooltip->value<GuiScrollbarsComponent>().alignment = Vec2(0.5);
-				Entity *f = cfg.tooltip->manager()->createUnique();
-				f->value<GuiParentComponent>().parent = cfg.tooltip->name();
-				f->value<GuiPanelComponent>();
-				f->value<GuiExplicitSizeComponent>().size = Vec2(120);
-				Entity *e = cfg.tooltip->manager()->createUnique();
-				e->value<GuiParentComponent>().parent = f->name();
-				e->value<GuiLabelComponent>();
-				e->value<GuiTextComponent>().value = "centered";
-			}>();
+			e->value<GuiTooltipComponent>().tooltip.bind<tooltipCenteredInScreen>();
 		}
 
 		{ // short delay
@@ -127,20 +198,7 @@ class GuiTestImpl : public GuiTestClass
 			p.order = index++;
 			e->value<GuiLabelComponent>();
 			e->value<GuiTextComponent>().value = "label";
-			e->value<GuiTooltipComponent>().tooltip.bind<+[](const GuiTooltipConfig &cfg) -> void {
-				cfg.tooltip->value<GuiPanelComponent>();
-				cfg.tooltip->value<GuiScrollbarsComponent>();
-				cfg.tooltip->value<GuiExplicitSizeComponent>().size = Vec2(120);
-				cfg.tooltip->value<GuiLayoutLineComponent>().vertical = true;
-				for (uint32 i = 0; i < 20; i++)
-				{
-					Entity *e = cfg.tooltip->manager()->createUnique();
-					e->value<GuiParentComponent>().parent = cfg.tooltip->name();
-					e->value<GuiParentComponent>().order = i;
-					e->value<GuiLabelComponent>();
-					e->value<GuiTextComponent>().value = Stringizer() + "text " + i;
-				}
-			}>();
+			e->value<GuiTooltipComponent>().tooltip.bind<tooltipScrollbars>();
 		}
 
 		{ // modal
@@ -151,17 +209,18 @@ class GuiTestImpl : public GuiTestClass
 			p.order = index++;
 			e->value<GuiLabelComponent>();
 			e->value<GuiTextComponent>().value = "label";
-			e->value<GuiTooltipComponent>().tooltip.bind < +[](const GuiTooltipConfig &cfg) -> void {
-				cfg.closeCondition = TooltipCloseConditionEnum::Modal;
-				Entity *f = cfg.tooltip->manager()->createUnique();
-				f->value<GuiParentComponent>().parent = cfg.tooltip->name();
-				f->value<GuiPanelComponent>();
-				f->value<GuiExplicitSizeComponent>().size = Vec2(120);
-				Entity *e = cfg.tooltip->manager()->createUnique();
-				e->value<GuiParentComponent>().parent = f->name();
-				e->value<GuiLabelComponent>();
-				e->value<GuiTextComponent>().value = "modal";
-			} > ();
+			e->value<GuiTooltipComponent>().tooltip.bind<tooltipModal>();
+		}
+
+		{ // recursive
+			guiLabel(3, index, "recursive");
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = 3;
+			p.order = index++;
+			e->value<GuiLabelComponent>();
+			e->value<GuiTextComponent>().value = "label";
+			e->value<GuiTooltipComponent>().tooltip.bind<uint32, &tooltipRecursive>(1);
 		}
 	}
 };

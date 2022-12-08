@@ -75,14 +75,15 @@ public:
 		engineGuiManager()->skin(0) = generate(0);
 		engineGuiManager()->skin(1) = generate(1);
 		engineGuiManager()->skin(2) = generate(2);
-		engineGuiManager()->skin(3) = generate(0);
-		engineGuiManager()->skin(3).textureName = HashString("cage-tests/gui/skin.png");
+		engineGuiManager()->skin(3) = generate(3);
+		engineGuiManager()->skin(4) = generate(0);
+		engineGuiManager()->skin(4).textureName = HashString("cage-tests/gui/skin.png");
 	}
 
 	void initializeEngine() override
 	{
 		GuiManagerCreateConfig g;
-		g.skinsCount = 4;
+		g.skinsCount = 5;
 		EngineCreateConfig e;
 		e.gui = &g;
 		engineInitialize(e);
@@ -138,6 +139,37 @@ public:
 			input.max.f = 5;
 			input.step.f = 0.1;
 			e->value<GuiTextComponent>().value = "real input box";
+		}
+		{ // disabled input box
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = side;
+			p.order = index++;
+			GuiInputComponent &input = e->value<GuiInputComponent>();
+			input.type = InputTypeEnum::Real;
+			input.min.f = -5;
+			input.max.f = 5;
+			input.step.f = 0.1;
+			e->value<GuiTextComponent>().value = "disabled input box";
+			e->value<GuiWidgetStateComponent>().disabled = true;
+		}
+		{ // large input box
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = side;
+			p.order = index++;
+			e->value<GuiInputComponent>();
+			e->value<GuiTextComponent>().value = "large input box";
+			e->value<GuiWidgetStateComponent>().skinIndex = 1;
+		}
+		{ // compact input box
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = side;
+			p.order = index++;
+			e->value<GuiInputComponent>();
+			e->value<GuiTextComponent>().value = "compact input box";
+			e->value<GuiWidgetStateComponent>().skinIndex = 2;
 		}
 		{ // checkbox
 			Entity *e = ents->createUnique();
@@ -280,10 +312,12 @@ public:
 		initializeSide(4, "default skin");
 		initializeSide(5, "large skin");
 		initializeSide(6, "compact skin");
-		initializeSide(7, "default skin - texture template");
+		initializeSide(7, "tooltips skin");
+		initializeSide(8, "default skin - texture template");
 		ents->get(5)->value<GuiWidgetStateComponent>().skinIndex = 1;
 		ents->get(6)->value<GuiWidgetStateComponent>().skinIndex = 2;
 		ents->get(7)->value<GuiWidgetStateComponent>().skinIndex = 3;
+		ents->get(8)->value<GuiWidgetStateComponent>().skinIndex = 4;
 	}
 };
 
