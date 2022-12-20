@@ -3,6 +3,7 @@
 #include <cage-core/entitiesVisitor.h>
 #include <cage-core/assetManager.h>
 #include <cage-core/hashString.h>
+#include <cage-core/variableSmoothingBuffer.h> // averageQuaternions
 #include <cage-engine/scene.h>
 #include <cage-engine/sceneVirtualReality.h>
 #include <cage-engine/sceneScreenSpaceEffects.h>
@@ -38,27 +39,77 @@ void shoot(const Transform &where)
 	e->value<RenderComponent>().object = HashString("cage/model/fake.obj");
 }
 
+struct Smoother
+{
+	void add(const Transform &tr)
+	{
+		t.push_back(tr.position);
+		r.push_back(tr.orientation);
+		s.push_back(tr.scale);
+		static constexpr uint32 cap = 15;
+		if (t.size() > cap)
+			t.erase(t.begin());
+		if (r.size() > cap)
+			r.erase(r.begin());
+		if (s.size() > cap)
+			s.erase(s.begin());
+	}
+
+	void clear()
+	{
+		t.clear();
+		r.clear();
+		s.clear();
+	}
+
+	Transform smooth() const
+	{
+		if (t.empty())
+			return Transform();
+		Vec3 ts;
+		for (auto it : t)
+			ts += it;
+		ts /= t.size();
+		Quat rs = privat::averageQuaternions(r);
+		Real ss;
+		for (auto it : s)
+			ss += it;
+		ss /= s.size();
+		return Transform(ts, rs, ss);
+	}
+
+	std::vector<Vec3> t;
+	std::vector<Quat> r;
+	std::vector<Real> s;
+} smoother;
+
+Transform grabbedHand, grabbedCar;
+bool carGrabbed;
+
 void update()
 {
 	auto ents = engineEntities();
 
 	const auto vr = engineVirtualReality();
 
-	const auto leftAxes = vr->leftController().axes();
-	const auto rightAxes = vr->rightController().axes();
-	const Real turning = leftAxes[0] * 1.0;
-	const Real moving = rightAxes[1] * 0.025;
-	auto &t = ents->get(1)->value<TransformComponent>();
-	t.orientation = Quat(Degs(), Degs(-turning), Degs()) * t.orientation;
-	t.position += t.orientation * Vec3(0, 0, -moving);
-
+	// recenter headset
 	if (vr->leftController().buttons()[1])
 		virtualRealitySceneRecenter(ents, 1.3); // 1.3 = sitting height; 1.7 = standing height
+
+	{ // movement
+		const Real turning = vr->leftController().axes()[0] * 1.0;
+		const Real moving = vr->rightController().axes()[1] * 0.025;
+		auto &t = ents->get(1)->value<TransformComponent>();
+		t.orientation = Quat(Degs(), Degs(-turning), Degs()) * t.orientation;
+		t.position += t.orientation * Vec3(0, 0, -moving);
+	}
 
 	virtualRealitySceneUpdate(ents); // after updating the origin but before updating the controllers aims
 
 	ents->get(5)->value<TransformComponent>() = ents->get(3)->value<VrControllerComponent>().aim;
 	ents->get(6)->value<TransformComponent>() = ents->get(4)->value<VrControllerComponent>().aim;
+
+#if 0
 
 	if (vr->rightController().buttons()[0])
 		shoot(ents->get(1)->value<TransformComponent>() * Transform(Vec3(0, 0.7, 0)));
@@ -73,6 +124,40 @@ void update()
 		else
 			t.position += t.orientation * Vec3(0, 0, -0.12);
 	}, ents, true);
+
+#else
+
+	// recenter the car
+	if (vr->leftController().buttons()[0])
+	{
+		ents->get(10)->value<TransformComponent>().position = Vec3();
+		ents->get(10)->value<TransformComponent>().orientation = Quat();
+		carGrabbed = false;
+	}
+
+	// grab the car
+	if (vr->leftController().buttons()[8] || vr->leftController().axes()[4] > 0.5)
+	{
+		const Transform o = ents->get(1)->value<TransformComponent>();
+		const Transform h = ents->get(5)->value<TransformComponent>();
+		Transform &c = ents->get(10)->value<TransformComponent>();
+		if (carGrabbed)
+		{
+			smoother.add(inverse(o) * h);
+			c = o * smoother.smooth() * inverse(grabbedHand) * grabbedCar;
+		}
+		else
+		{
+			grabbedHand = h;
+			grabbedCar = c;
+			smoother.clear();
+			carGrabbed = true;
+		}
+	}
+	else
+		carGrabbed = false;
+
+#endif
 }
 
 int main(int argc, char *args[])
@@ -172,6 +257,12 @@ int main(int argc, char *args[])
 			Entity *e = ents->create(6);
 			e->value<TransformComponent>();
 			e->value<RenderComponent>().object = HashString("cage-tests/vr/aim.obj");
+		}
+		{ // car model
+			Entity *e = ents->create(10);
+			e->value<TransformComponent>().position = Vec3(5, 1, 0);
+			e->value<TransformComponent>().scale = 0.1;
+			e->value<RenderComponent>().object = HashString("cage-tests/vr/car.object");
 		}
 
 		Holder<StatisticsGui> statistics = newStatisticsGui();

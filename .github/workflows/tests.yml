@@ -15,10 +15,6 @@ jobs:
         exclude:
         - build-arch: Win32
           build-tool: "-T ClangCL"
-        - os-version: 2022 # https://github.com/ucpu/cage/issues/14
-          build-config: relwithdebinfo
-          build-arch: x64
-          build-tool: "-T ClangCL"
 
     steps:
     - name: Versions
@@ -27,7 +23,7 @@ jobs:
         cmake --version
         git --version
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         submodules: recursive
 
@@ -91,7 +87,7 @@ jobs:
         ${{ matrix.compiler.cxx }} --version
         git --version
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         submodules: recursive
 
@@ -105,6 +101,7 @@ jobs:
       run: |
         cd build
         cmake --build . --config ${{ matrix.build-config }} -- -j3
+
 
   Assets:
     name: Assets
@@ -129,7 +126,7 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y xorg-dev nasm ${{ matrix.compiler.install }}
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         submodules: recursive
 
