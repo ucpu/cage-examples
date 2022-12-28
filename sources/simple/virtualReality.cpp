@@ -3,7 +3,7 @@
 #include <cage-core/entitiesVisitor.h>
 #include <cage-core/assetManager.h>
 #include <cage-core/hashString.h>
-#include <cage-core/variableSmoothingBuffer.h> // averageQuaternions
+#include <cage-core/variableSmoothingBuffer.h>
 #include <cage-engine/scene.h>
 #include <cage-engine/sceneVirtualReality.h>
 #include <cage-engine/sceneScreenSpaceEffects.h>
@@ -39,50 +39,7 @@ void shoot(const Transform &where)
 	e->value<RenderComponent>().object = HashString("cage/model/fake.obj");
 }
 
-struct Smoother
-{
-	void add(const Transform &tr)
-	{
-		t.push_back(tr.position);
-		r.push_back(tr.orientation);
-		s.push_back(tr.scale);
-		static constexpr uint32 cap = 15;
-		if (t.size() > cap)
-			t.erase(t.begin());
-		if (r.size() > cap)
-			r.erase(r.begin());
-		if (s.size() > cap)
-			s.erase(s.begin());
-	}
-
-	void clear()
-	{
-		t.clear();
-		r.clear();
-		s.clear();
-	}
-
-	Transform smooth() const
-	{
-		if (t.empty())
-			return Transform();
-		Vec3 ts;
-		for (auto it : t)
-			ts += it;
-		ts /= t.size();
-		Quat rs = privat::averageQuaternions(r);
-		Real ss;
-		for (auto it : s)
-			ss += it;
-		ss /= s.size();
-		return Transform(ts, rs, ss);
-	}
-
-	std::vector<Vec3> t;
-	std::vector<Quat> r;
-	std::vector<Real> s;
-} smoother;
-
+VariableSmoothingBuffer<Transform, 15> smoother;
 Transform grabbedHand, grabbedCar;
 bool carGrabbed;
 
@@ -150,7 +107,7 @@ void update()
 		{
 			grabbedHand = h;
 			grabbedCar = c;
-			smoother.clear();
+			smoother.seed(inverse(o) * h);
 			carGrabbed = true;
 		}
 	}
