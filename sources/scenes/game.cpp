@@ -35,25 +35,20 @@ namespace
 	constexpr uint32 pointLightsCount = 50;
 	Entity *pointLights[pointLightsCount];
 
-	std::vector<String> maps;
+	Holder<PointerRange<String>> maps;
 }
 
 void loadMapsList()
 {
-	String root = pathSearchTowardsRoot("scenes-maps", PathTypeFlags::Directory | PathTypeFlags::Archive);
-	Holder<DirectoryList> list = newDirectoryList(root);
-	while (list->valid())
-	{
-		maps.push_back(pathJoin(root, list->name()));
-		list->next();
-	}
+	const String root = pathSearchTowardsRoot("scenes-maps", PathTypeFlags::Directory | PathTypeFlags::Archive);
+	maps = pathListDirectory(root);
 	CAGE_LOG(SeverityEnum::Info, "scenes", Stringizer() + "found " + maps.size() + " maps");
 }
 
 void sceneReload()
 {
 	CAGE_LOG(SeverityEnum::Info, "scenes", Stringizer() + "loading scene index: " + sceneIndexCurrent);
-	String scenePath = maps[sceneIndexCurrent];
+	const String scenePath = maps[sceneIndexCurrent];
 	CAGE_LOG(SeverityEnum::Info, "scenes", Stringizer() + "loading scene description from file: '" + scenePath + "'");
 	engineWindow()->title(String() + "scene: " + pathExtractFilename(scenePath));
 	engineEntities()->destroy();
@@ -61,7 +56,7 @@ void sceneReload()
 	// load new entities
 	try
 	{
-		Holder<File> f = newFile(scenePath, FileMode(true, false));
+		Holder<File> f = readFile(scenePath);
 		String name;
 		f->readLine(name);
 		if (sceneHashCurrent)

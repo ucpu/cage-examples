@@ -21,14 +21,20 @@ constexpr const char *fontNames[] = {
 	"cage-tests/gui/immortal.ttf",
 	"cage-tests/gui/roboto.ttf",
 	"cage-tests/gui/asimov.otf",
-	"cage/font/ubuntu/Ubuntu-R.ttf",
+	"cage/font/ubuntu/regular.ttf",
+	"cage/font/ubuntu/bold.ttf",
+	"cage/font/ubuntu/italic.ttf",
+	"cage/font/ubuntu/monospace.ttf",
 };
 constexpr const char *labelTexts[] = {
 	"Droid Sans Mono",
 	"Immortal",
 	"Roboto",
 	"Asimov",
-	"Ubuntu",
+	"Ubuntu Regular",
+	"Ubuntu Bold",
+	"Ubuntu Italic",
+	"Ubuntu Mono",
 };
 
 constexpr uint32 fontsCount = sizeof(fontNames) / sizeof(fontNames[0]);
