@@ -151,7 +151,6 @@ int main(int argc, char *args[])
 			r.value = "Lorem ipsum dolor sit amet,\nconsectetur adipisici elit,\nsed eiusmod tempor incidunt ut labore et dolore magna aliqua.\nUt enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.";
 			r.color = Vec3(0, 0, 1);
 			r.align = TextAlignEnum::Center;
-			r.lineSpacing = 0.5;
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(10, 0, 0);
 			t.orientation = Quat(Degs(), Degs(-90), Degs());

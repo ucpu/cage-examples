@@ -7,7 +7,7 @@ class GuiTestImpl : public GuiTestClass
 public:
 	static MemoryBuffer makeBufferWithText()
 	{
-		static constexpr const char str[] = "Alea iacta est\nThe die is cast";
+		static constexpr const char str[] = "Alea iacta est\nThe die is cast\nVeni vidi vici\nI came, I saw, I conquered\nAve Imperator, morituri te salutant\nHail, Emperor, those who are about to die salute you";
 		MemoryBuffer buf;
 		buf.resize(sizeof(str));
 		detail::memcpy(buf.data(), str, sizeof(str));
@@ -103,13 +103,22 @@ public:
 			panel->value<GuiScrollbarsComponent>();
 		}
 		uint32 index = 0;
-		{ // label
+		{ // label 1
 			Entity *e = ents->createUnique();
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = side;
 			p.order = index++;
 			e->value<GuiLabelComponent>();
 			e->value<GuiTextComponent>().value = "People shouldn't be afraid of their government.\nGovernments should be afraid of their people.";
+			e->value<GuiTextFormatComponent>().align = TextAlignEnum::Left;
+		}
+		{ // label 2
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = side;
+			p.order = index++;
+			e->value<GuiLabelComponent>();
+			e->value<GuiTextComponent>().value = "Remember, remember the fifth of November\nof gunpowder treason and plot.\nI know of no reason why the gun powder\ntreason should ever be forgot.";
 			e->value<GuiTextFormatComponent>().align = TextAlignEnum::Left;
 		}
 		{ // button
@@ -275,6 +284,7 @@ public:
 			p.parent = side;
 			p.order = index++;
 			e->value<GuiTextAreaComponent>().buffer = &buffer;
+			//e->value<GuiTextFormatComponent>().lineSpacing = 2;
 		}
 	}
 

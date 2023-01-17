@@ -32,13 +32,12 @@ public:
 	void update() override
 	{
 		EntityManager *ents = engineGuiEntities();
-		static Real offset = randomChance() * 1000;
-		Real t = applicationTime() / 2e7f + offset;
+		static const Real offset = randomChance() * 1000;
+		const Real t = applicationTime() / 2e7f + offset;
 		for (uint32 i = 0; i < fontsCount; i++)
 		{
 			Entity * e = ents->get(100 + i);
-			GuiTextFormatComponent &format = e->value<GuiTextFormatComponent>();
-			format.size = (steeper(Rads(t) + Rads::Full() * Real(i) / fontsCount) * 0.5 + 0.5) * 80 + 10;
+			e->value<GuiTextFormatComponent>().size = (steeper(Rads(t) + Rads::Full() * Real(i) / fontsCount) * 0.5 + 0.5) * 80 + 10;
 		}
 	}
 
@@ -46,31 +45,26 @@ public:
 	{
 		EntityManager *ents = engineGuiEntities();
 
-		Entity *panel = ents->create(2);
 		{
+			Entity *panel = ents->create(2);
 			panel->value<GuiPanelComponent>();
-			GuiScrollbarsComponent &sc = panel->value<GuiScrollbarsComponent>();
-			sc.alignment = Vec2(0.5, 0.5);
-			GuiLayoutLineComponent &ll = panel->value<GuiLayoutLineComponent>();
-			ll.vertical = true;
+			panel->value<GuiScrollbarsComponent>().alignment = Vec2(0.5);
+			panel->value<GuiLayoutLineComponent>().vertical = true;
 		}
 
 		for (uint32 i = 0; i < fontsCount; i++)
 		{
 			Entity * e = ents->create(100 + i);
-			GuiParentComponent &parent = e->value<GuiParentComponent>();
-			parent.parent = panel->name();
-			parent.order = i;
+			e->value<GuiParentComponent>().parent = 2;
+			e->value<GuiParentComponent>().order = i;
 			e->value<GuiLabelComponent>();
-			GuiTextComponent &text = e->value<GuiTextComponent>();
-			text.value = labelTexts[i];
+			e->value<GuiTextComponent>().value = labelTexts[i];
 			GuiTextFormatComponent &format = e->value<GuiTextFormatComponent>();
 			format.font = HashString(fontNames[i]);
 			format.align = TextAlignEnum::Center;
-			format.lineSpacing = 1;
 			format.color = colorHsvToRgb(Vec3(randomChance(), 1, 1));
 		}
 	}
 };
 
-MAIN(GuiTestImpl, "fonts")
+MAIN(GuiTestImpl, "font scaling")
