@@ -26,8 +26,9 @@ void update()
 {
 	EntityManager *ents = engineEntities();
 
+	for (uint32 i = 10; i < 13; i++)
 	{ // rotate the material plane
-		Entity *e = ents->get(1);
+		Entity *e = ents->get(i);
 		TransformComponent &t = e->value<TransformComponent>();
 		t.orientation = Quat(Degs(), Degs(1), Degs()) * t.orientation;
 	}
@@ -58,13 +59,10 @@ int main(int argc, char *args[])
 
 		// entities
 		EntityManager *ents = engineEntities();
-		{ // material
+		{ // skybox
 			Entity *e = ents->create(1);
-			RenderComponent &r = e->value<RenderComponent>();
-			r.object = HashString("cage-tests/material/plane.obj");
-			r.color = Vec3(255, 226, 155) / 255;
-			TransformComponent &t = e->value<TransformComponent>();
-			t.scale = 5;
+			e->value<RenderComponent>().object = HashString("cage-tests/skybox/skybox.obj");
+			e->value<TransformComponent>().orientation = Quat(Degs(180), Degs(), Degs());
 		}
 		{ // sun
 			Entity *e = ents->create(2);
@@ -72,8 +70,7 @@ int main(int argc, char *args[])
 			l.lightType = LightTypeEnum::Directional;
 			l.color = Vec3(1);
 			l.intensity = 3;
-			TransformComponent &t = e->value<TransformComponent>();
-			t.orientation = Quat(Degs(-30), Degs(180), Degs());
+			e->value<TransformComponent>().orientation = Quat(Degs(-30), Degs(180), Degs());
 		}
 		{ // camera
 			Entity *e = ents->create(3);
@@ -82,10 +79,29 @@ int main(int argc, char *args[])
 			c.ambientIntensity = 0.01;
 			c.near = 0.1;
 			c.far = 100;
-			e->value<ScreenSpaceEffectsComponent>();
+			e->value<ScreenSpaceEffectsComponent>().effects &= ~ScreenSpaceEffectsFlags::Bloom;
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(0, 3, 10);
 			t.orientation = Quat(Degs(-10), Degs(), Degs());
+		}
+
+		{ // a
+			Entity *e = ents->create(10);
+			e->value<RenderComponent>().object = HashString("cage-tests/material/plane.obj;a");
+			e->value<TransformComponent>().position = Vec3(-10, 0.001, 0);
+			e->value<TransformComponent>().scale = 4;
+		}
+		{ // b
+			Entity *e = ents->create(11);
+			e->value<RenderComponent>().object = HashString("cage-tests/material/plane.obj;b");
+			e->value<TransformComponent>().position = Vec3();
+			e->value<TransformComponent>().scale = 4;
+		}
+		{ // c
+			Entity *e = ents->create(12);
+			e->value<RenderComponent>().object = HashString("cage-tests/material/plane.obj;c");
+			e->value<TransformComponent>().position = Vec3(10, 0.001, 0);
+			e->value<TransformComponent>().scale = 4;
 		}
 
 		Holder<FpsCamera> fpsCamera = newFpsCamera(ents->get(3));

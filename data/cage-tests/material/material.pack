@@ -1,3 +1,5 @@
-
 []
-plane.obj
+plane.obj;a
+plane.obj;b
+plane.obj;c
+../skybox/skybox.obj

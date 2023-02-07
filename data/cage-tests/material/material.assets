@@ -1,7 +1,12 @@
-
 []
 scheme = pack
 material.pack
+
+[]
+scheme = texture
+premultiplyAlpha = true
+srgb = true
+albedo.png
 
 []
 scheme = texture
@@ -9,5 +14,15 @@ special.png
 
 []
 scheme = model
-material = plane.cpm
-plane.obj
+material = a.cpm
+plane.obj;a
+
+[]
+scheme = model
+material = b.cpm
+plane.obj;b
+
+[]
+scheme = model
+material = c.cpm
+plane.obj;c
