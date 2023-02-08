@@ -1,5 +1,6 @@
 []
 scheme = texture
+premultiplyAlpha = true
 srgb = true
 water-6-albedo.png
 water-5-albedo.png
@@ -9,6 +10,9 @@ water-7-albedo.png
 water-3-albedo.png
 water-0-albedo.png
 water-2-albedo.png
+[]
+scheme = texture
+srgb = true
 land-61-albedo.png
 land-88-albedo.png
 land-65-albedo.png
