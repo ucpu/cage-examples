@@ -5,7 +5,6 @@ normals.pack
 
 []
 scheme = model
-tangents = true
 real.obj
 flat.obj
 

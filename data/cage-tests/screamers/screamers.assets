@@ -6,7 +6,6 @@ screamers.pack
 []
 scheme = model
 uvs = false
-tangents = false
 axes = +x+z-y
 suzanne.blend
 

@@ -7,7 +7,6 @@ lods.pack
 scheme = model
 scale = 5
 uvs = false
-tangents = false
 lods.obj?sphere_3
 lods.obj?sphere_2
 lods.obj?sphere_1

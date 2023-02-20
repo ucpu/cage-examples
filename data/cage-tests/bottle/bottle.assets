@@ -5,7 +5,6 @@ bottle.pack
 
 []
 scheme = model
-tangents = true
 bottle.obj
 
 []

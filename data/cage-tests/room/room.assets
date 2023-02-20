@@ -13,7 +13,6 @@ eye.obj
 
 []
 scheme = model
-tangents = true
 room.obj?door_front_Door
 
 []

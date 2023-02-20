@@ -6,7 +6,6 @@ translucent.pack
 []
 scheme = model
 uvs = false
-tangents = false
 axes = +x+z-y
 shapes.blend?Ground
 shapes.blend?Knot
@@ -15,7 +14,6 @@ shapes.blend?Bulb
 []
 scheme = model
 uvs = false
-tangents = false
 axes = +x+z-y
 material = shapes.blend_Knot_fade.cpm
 shapes.blend?Knot;fade
@@ -43,7 +41,6 @@ shapes.blend?Plane;billboard
 []
 scheme = model
 uvs = false
-tangents = false
 axes = +x+z-y
 scale = 0.5
 shapes.blend?Sphere
@@ -52,7 +49,6 @@ shapes.blend?Cube
 []
 scheme = model
 uvs = false
-tangents = false
 axes = +x+z-y
 scale = 0.5
 material = shapes.blend_Sphere_shadow.cpm
@@ -61,7 +57,6 @@ shapes.blend?Sphere;shadow
 []
 scheme = model
 uvs = false
-tangents = false
 axes = +x+z-y
 scale = 0.9
 suzanne.blend

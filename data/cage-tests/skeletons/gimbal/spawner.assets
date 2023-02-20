@@ -10,7 +10,6 @@ spawner.glb
 []
 scheme = model
 uvs = false
-tangents = false
 bones = true
 material = spawner.cpm
 scale = 0.01

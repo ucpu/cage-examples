@@ -1,77 +1,66 @@
 
 []
 scheme = model
-tangents = false
 uvs = false
 material = statue.cpm
 statue.obj;blueprint
 
 []
 scheme = model
-tangents = false
 uvs = false
 material = pedestal.cpm
 pedestal.obj;blueprint
 
 []
 scheme = model
-tangents = false
 uvs = false
 material = tower.obj_black_blueprint.cpm
 tower.obj?black_black;blueprint
 
 []
 scheme = model
-tangents = false
 uvs = false
 material = tower.obj_ceiling_blueprint.cpm
 tower.obj?ceiling_ceiling;blueprint
 
 []
 scheme = model
-tangents = false
 uvs = false
 material = tower.obj_darkRock_blueprint.cpm
 tower.obj?darkRock_darkRock;blueprint
 
 []
 scheme = model
-tangents = false
 uvs = false
 material = tower.obj_lightRock_blueprint.cpm
 tower.obj?tower-heavy_lightRock;blueprint
 
 []
 scheme = model
-tangents = false
 uvs = false
 material = tower.obj_black_wind.cpm
 tower.obj?black_black;wind
 
 []
 scheme = model
-tangents = false
 uvs = false
 material = tower.obj_ceiling_wind.cpm
 tower.obj?ceiling_ceiling;wind
 
 []
 scheme = model
-tangents = false
 uvs = false
 material = tower.obj_darkRock_wind.cpm
 tower.obj?darkRock_darkRock;wind
 
 []
 scheme = model
-tangents = false
 uvs = false
 material = tower.obj_lightRock_wind.cpm
 tower.obj?tower-heavy_lightRock;wind
 
 []
 scheme = model
-tangents = true
 scale = 0.3
 tree-1-1.glb?BillboardCloudProxy_0_LOD1.024_SimplygonCastMaterial.024
 tree-1-1.glb?Trunk_LOD1.003_Adansonia_bark_baked.004
@@ -79,7 +68,6 @@ tree-1-2.glb
 
 []
 scheme = model
-tangents = true
 scale = 0.7
 tree-2-1.glb
 tree-2-2.glb

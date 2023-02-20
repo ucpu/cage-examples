@@ -2,7 +2,6 @@
 []
 scheme = model
 bakeModel = true
-tangents = true
 scale = 0.01
 sponza.obj?0
 sponza.obj?2

@@ -6,12 +6,10 @@ decals.pack
 []
 scheme = model
 uvs = false
-tangents = false
 floor.obj
 
 []
 scheme = model
-tangents = true
 material = decal.cpm
 decal.obj
 

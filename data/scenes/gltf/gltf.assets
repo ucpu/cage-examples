@@ -11,7 +11,6 @@ scale = 5
 MosquitoInAmber.glb?6_eclats_eclats_0_eclats
 []
 scheme = model
-tangents = true
 scale = 5
 MosquitoInAmber.glb?5_amber_lr_PBR_0_material
 MosquitoInAmber.glb?2_mosquito_lr_original.o_material_0_0_original.o_material_0
@@ -22,7 +21,6 @@ axes = +x-z+y
 ToyCar.glb?Glass_Glass
 []
 scheme = model
-tangents = true
 scale = 0.02
 axes = +x-z+y
 ToyCar.glb?Fabric_Fabric

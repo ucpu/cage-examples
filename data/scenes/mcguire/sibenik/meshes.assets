@@ -2,7 +2,6 @@
 []
 scheme = model
 bakeModel = true
-tangents = true
 sibenik.obj?0
 sibenik.obj?1
 sibenik.obj?2

@@ -6,7 +6,6 @@ common.pack
 []
 scheme = model
 scale = 2
-tangents = true
 ground.obj
 
 []
