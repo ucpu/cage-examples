@@ -104,3 +104,30 @@ tree-2-2.glb?Normals_0
 scheme = shader
 blueprint.glsl
 wind.glsl
+mage.glsl
+
+[]
+scheme = model
+scale = 0.7
+mage_tower.glb;orig
+
+[]
+scheme = model
+scale = 0.7
+material = mage.cpm
+mage_tower.glb;mage
+
+[]
+scheme = texture
+srgb = true
+mage_tower.glb?mage_tower_uv
+
+[]
+scheme = texture
+channels = 3
+normal = true
+mage_tower.glb?mage_tower_nrm
+
+[]
+scheme = texture
+mage_tower.glb?special_mage_tower_SPEC_ch1_mage_tower_SPEC_ch2

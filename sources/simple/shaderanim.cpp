@@ -91,12 +91,12 @@ int main(int argc, char *args[])
 		{ // tower blueprint
 			Entity *e = ents->createUnique();
 			e->value<RenderComponent>().object = HashString("cage-tests/shaderanim/tower-blueprint.object");
-			e->value<TransformComponent>().position = Vec3(-4, 0, -4);
+			e->value<TransformComponent>().position = Vec3(-3, 0, -4);
 		}
 		{ // statue blueprint
 			Entity *e = ents->createUnique();
 			e->value<RenderComponent>().object = HashString("cage-tests/shaderanim/statue-blueprint.object");
-			e->value<TransformComponent>().position = Vec3(-4, 0, 4);
+			e->value<TransformComponent>().position = Vec3(-3, 0, 4);
 		}
 		{ // tree 1
 			Entity *e = ents->createUnique();
@@ -107,6 +107,16 @@ int main(int argc, char *args[])
 			Entity *e = ents->createUnique();
 			e->value<RenderComponent>().object = HashString("cage-tests/shaderanim/tree-2-wind.object");
 			e->value<TransformComponent>().position = Vec3(4, 0, 4);
+		}
+		{ // mage orig
+			Entity *e = ents->createUnique();
+			e->value<RenderComponent>().object = HashString("cage-tests/shaderanim/mage_tower.glb;orig");
+			e->value<TransformComponent>().position = Vec3(-7, 0, -4);
+		}
+		{ // mage material
+			Entity *e = ents->createUnique();
+			e->value<RenderComponent>().object = HashString("cage-tests/shaderanim/mage_tower.glb;mage");
+			e->value<TransformComponent>().position = Vec3(-7, 0, 4);
 		}
 
 		Holder<FpsCamera> cameraCtrl = newFpsCamera(ents->get(1));

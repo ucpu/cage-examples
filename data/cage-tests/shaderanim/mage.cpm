@@ -1,0 +1,9 @@
+[textures]
+albedo = mage_tower.glb?mage_tower_uv
+special = mage_tower.glb?special_mage_tower_SPEC_ch1_mage_tower_SPEC_ch2
+normal = mage_tower.glb?mage_tower_nrm
+
+[render]
+shader = mage.glsl
+
+[flags]

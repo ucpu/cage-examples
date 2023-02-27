@@ -23,7 +23,6 @@ void main()
 	varInstanceId = gl_InstanceID;
 	varPosition = inPosition;
 	varNormal = inNormal;
-	varTangent = inTangent;
 	varUv = inUv;
 	//skeletalAnimation();
 	vec3 origin = transpose(uniMeshes[varInstanceId].mMat) * vec4(0, 0, 0, 1);
