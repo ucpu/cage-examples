@@ -3,7 +3,7 @@
 #include <cage-core/entities.h>
 #include <cage-core/hashString.h>
 #include <cage-core/noiseFunction.h>
-#include <cage-core/threadPool.h>
+#include <cage-core/tasks.h>
 #include <cage-core/string.h>
 #include <cage-engine/window.h>
 #include <cage-engine/highPerformanceGpuHint.h>
@@ -21,7 +21,6 @@
 using namespace cage;
 
 Holder<FpsCamera> cameraCtrl;
-Holder<ThreadPool> updateThreads;
 Holder<NoiseFunction> noise;
 uint32 boxesCount;
 Real cameraRange;
@@ -35,23 +34,26 @@ void windowClose(InputWindow)
 
 void guiUpdate();
 
-void updateBoxes(uint32 thrIndex, uint32 thrCount)
+struct BoxUpdater
 {
-	const uint64 time = engineControlTime();
-	const uint32 boxesCount = engineEntities()->component<RenderComponent>()->count();
-	auto boxesEntities = engineEntities()->component<RenderComponent>()->entities();
+	uint64 time = engineControlTime();
+	uint32 boxesCount = engineEntities()->component<RenderComponent>()->count();
+	PointerRange<Entity *const> boxesEntities = engineEntities()->component<RenderComponent>()->entities();
+	EntityComponent *transformComponent = engineEntities()->component<TransformComponent>();
 
-	const uint32 myCount = boxesCount / thrCount;
-	const uint32 start = thrIndex * myCount;
-	const uint32 end = thrIndex == thrCount - 1 ? boxesCount : start + myCount;
-
-	for (uint32 i = start; i != end; i++)
+	void operator() (uint32 grp) const
 	{
-		Entity *e = boxesEntities[i];
-		TransformComponent &t = e->value<TransformComponent>();
-		t.position[1] = noise->evaluate(Vec3(Vec2(t.position[0], t.position[2]) * 0.15, time * 5e-8)) - 2;
+		const auto r = tasksSplit(grp, Groups, boxesCount);
+		for (uint32 i = r.first; i < r.second; i++)
+		{
+			Entity *e = boxesEntities[i];
+			TransformComponent &t = e->value<TransformComponent>(transformComponent);
+			t.position[1] = noise->evaluate(Vec3(Vec2(t.position[0], t.position[2]) * 0.15, time * 5e-8)) - 2;
+		}
 	}
-}
+
+	static const uint32 Groups = 64;
+};
 
 void update()
 {
@@ -115,7 +117,8 @@ void update()
 	}
 
 	{ // update boxes
-		updateThreads->run();
+		BoxUpdater updater;
+		tasksRunBlocking<BoxUpdater>("update boxes", updater, BoxUpdater::Groups);
 	}
 
 	guiUpdate();
@@ -265,9 +268,6 @@ int main(int argc, char *args[])
 
 		Holder<StatisticsGui> statistics = newStatisticsGui();
 
-		updateThreads = newThreadPool();
-		updateThreads->function.bind<&updateBoxes>();
-
 		{
 			NoiseFunctionCreateConfig cfg;
 			cfg.type = NoiseTypeEnum::Cellular;
@@ -277,8 +277,6 @@ int main(int argc, char *args[])
 
 		engineStart();
 		engineFinalize();
-
-		updateThreads.clear();
 
 		cameraCtrl.clear();
 
