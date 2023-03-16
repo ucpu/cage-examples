@@ -23,12 +23,10 @@ public:
 	{
 		EntityManager *ents = engineGuiEntities();
 		Entity *e = ents->createUnique();
-		GuiParentComponent &p = e->value<GuiParentComponent>();
-		p.parent = parentName;
-		p.order = index++;
+		e->value<GuiParentComponent>().parent = parentName;
+		e->value<GuiParentComponent>().order = index++;
 		e->value<GuiLabelComponent>();
-		GuiTextComponent &t = e->value<GuiTextComponent>();
-		t.value = name;
+		e->value<GuiTextComponent>().value = name;
 	}
 
 	static void guiBasicLayout()
@@ -37,27 +35,21 @@ public:
 
 		{ // splitter
 			Entity *split = ents->create(1);
-			GuiLayoutSplitterComponent &ls = split->value<GuiLayoutSplitterComponent>();
-			ls.vertical = true;
+			split->value<GuiLayoutSplitterComponent>().vertical = true;
 		}
 		{ // top panel
 			Entity *panel = ents->create(2);
-			GuiParentComponent &p = panel->value<GuiParentComponent>();
-			p.parent = 1;
-			p.order = 1;
+			panel->value<GuiParentComponent>().parent = 1;
+			panel->value<GuiParentComponent>().order = 1;
 			panel->value<GuiPanelComponent>();
 			panel->value<GuiScrollbarsComponent>();
 		}
 		{ // bottom panel
 			Entity *panel = ents->create(3);
-			GuiParentComponent &p = panel->value<GuiParentComponent>();
-			p.parent = 1;
-			p.order = 2;
+			panel->value<GuiParentComponent>().parent = 1;
+			panel->value<GuiParentComponent>().order = 2;
 			panel->value<GuiPanelComponent>();
-			
-			//lt.vertical = true;
-			GuiScrollbarsComponent &sc = panel->value<GuiScrollbarsComponent>();
-			sc.alignment = Vec2(0.5, 0);
+			panel->value<GuiScrollbarsComponent>().alignment = Vec2(0.5, 0);
 		}
 	}
 
@@ -162,7 +154,7 @@ public:
 
 			// run
 			initialize();
-			static constexpr const uint32 assetsName = HashString("cage-tests/gui/gui.pack");
+			static constexpr uint32 assetsName = HashString("cage-tests/gui/gui.pack");
 			engineAssets()->add(assetsName);
 			engineStart();
 			engineAssets()->remove(assetsName);
