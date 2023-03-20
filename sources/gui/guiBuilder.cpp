@@ -2,6 +2,20 @@
 #include <cage-core/memoryBuffer.h>
 #include "gui.h"
 
+namespace
+{
+	void buttonActionSimple()
+	{
+		// nothing
+	}
+
+	bool buttonActionOriginal(uint32)
+	{
+		buttonActionSimple();
+		return true;
+	}
+}
+
 class GuiTestImpl : public GuiTestClass
 {
 public:
@@ -64,10 +78,10 @@ public:
 			g->colorPicker(Vec3(1, 0, 0), true);
 
 			g->label().text("button 1");
-			g->button().text("text");
+			g->button().text("text").bind<&buttonActionSimple>();
 
 			g->label().text("button 2");
-			g->button().size(Vec2(120)).image(GuiImageComponent{ .textureUvOffset = Vec2(5 / 8.f, 2 / 8.f), .textureUvSize = Vec2(1 / 8.f, 1 / 8.f), .textureName = HashString("cage/texture/helper.jpg") });
+			g->button().size(Vec2(120)).image(GuiImageComponent{ .textureUvOffset = Vec2(5 / 8.f, 2 / 8.f), .textureUvSize = Vec2(1 / 8.f, 1 / 8.f), .textureName = HashString("cage/texture/helper.jpg") }).bind<&buttonActionOriginal>();
 
 			g->label().text("slider");
 			g->horizontalSliderBar(0.3);
