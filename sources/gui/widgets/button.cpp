@@ -131,7 +131,7 @@ class GuiTestImpl : public GuiTestClass
 		}
 	}
 
-	bool onButtonPressed(uint32 en)
+	bool onButtonPressed(Entity *)
 	{
 		CAGE_LOG(SeverityEnum::Info, "event", "button with custom event pressed");
 		return false;

@@ -7,10 +7,10 @@ class GuiTestImpl : public GuiTestClass
 public:
 	MemoryBuffer buffer;
 
-	bool switchSkin(uint32 comboBox)
+	bool switchSkin(Entity *comboBox)
 	{
 		EntityManager *ents = engineGuiEntities();
-		ents->get(3)->value<GuiWidgetStateComponent>().skinIndex = ents->get(comboBox)->value<GuiComboBoxComponent>().selected;
+		ents->get(3)->value<GuiWidgetStateComponent>().skinIndex = comboBox->value<GuiComboBoxComponent>().selected;
 		return true;
 	}
 

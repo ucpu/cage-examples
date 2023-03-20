@@ -9,7 +9,7 @@ namespace
 		// nothing
 	}
 
-	bool buttonActionOriginal(uint32)
+	bool buttonActionOriginal(Entity *)
 	{
 		buttonActionSimple();
 		return true;
@@ -21,10 +21,10 @@ class GuiTestImpl : public GuiTestClass
 public:
 	MemoryBuffer buffer;
 
-	bool switchSkin(uint32 comboBox)
+	bool switchSkin(Entity *comboBox)
 	{
 		EntityManager *ents = engineGuiEntities();
-		ents->get(3)->value<GuiWidgetStateComponent>().skinIndex = ents->get(comboBox)->value<GuiComboBoxComponent>().selected;
+		ents->get(3)->value<GuiWidgetStateComponent>().skinIndex = comboBox->value<GuiComboBoxComponent>().selected;
 		return true;
 	}
 
@@ -34,7 +34,7 @@ public:
 
 		{
 			Holder<GuiBuilder> g = newGuiBuilder(engineGuiEntities()->get(2));
-			auto _ = g->comboBox().text("skins").event(Delegate<bool(uint32)>().bind<GuiTestImpl, &GuiTestImpl::switchSkin>(this));
+			auto _ = g->comboBox().text("skins").event(Delegate<bool(Entity *)>().bind<GuiTestImpl, &GuiTestImpl::switchSkin>(this));
 			static constexpr const char *options[] = {
 				"default",
 				"large",
