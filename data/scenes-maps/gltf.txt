@@ -5,10 +5,14 @@ scenes/gltf/MetalRoughSpheres.object
 0
 
 scenes/gltf/MosquitoInAmber.object
-10 0 5
+10 0 15
 0
 
 scenes/gltf/ToyCar.object
-10 0 -10
+10 0 0
+0
+
+scenes/gltf/turtle.object
+10 0 -15
 0
 

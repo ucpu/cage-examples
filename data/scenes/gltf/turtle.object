@@ -1,0 +1,10 @@
+[]
+turtle.glb?BackFlippers_BackFeetMat
+turtle.glb?Eyes_Eyes
+turtle.glb?Shell_ShellMat
+turtle.glb?UpperBody_UpperBodyMat
+
+[skeletalAnimation]
+name = turtle.glb?Turtle_Swim
+speed = 1
+offset = 0

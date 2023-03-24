@@ -17,11 +17,11 @@ vr.pack
 scheme = texture
 srgb = true
 pink.png
-wheelchair.glb?wheelchair_Bake1_PBR_Diffuse
+wheelchair.glb?wheelchairData.007_albedo
 
 []
 scheme = texture
-wheelchair.glb?special_wheelchair_Bake1_PBR_Metalness-wheelchair_Bake1_PBR_Roughness_ch1_wheelchair_Bake1_PBR_Metalness-wheelchair_Bake1_PBR_Roughness_ch2
+wheelchair.glb?wheelchairData.007_special
 
 []
 scheme = object

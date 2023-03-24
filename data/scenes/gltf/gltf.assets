@@ -39,17 +39,28 @@ gltf.pack
 []
 scheme = texture
 srgb = true
-MetalRoughSpheres.glb?0
-MosquitoInAmber.glb?0
-MosquitoInAmber.glb?3
-ToyCar.glb?0
-ToyCar.glb?5
+MetalRoughSpheres.glb?Spheres.001_albedo
+MetalRoughSpheres.glb?Spheres.002_albedo
+MetalRoughSpheres.glb?Spheres.003_albedo
+MetalRoughSpheres.glb?Spheres.004_albedo
+MetalRoughSpheres.glb?Spheres_albedo
+MosquitoInAmber.glb?5_amber_lr_PBR_0_albedo
+ToyCar.glb?Fabric_albedo
+ToyCar.glb?ToyCar_albedo
+MosquitoInAmber.glb?2_mosquito_lr_original.o_material_0_0_albedo
 []
 scheme = texture
-MetalRoughSpheres.glb?special_1_ch1_1_ch2
-MosquitoInAmber.glb?special_1_ch1_1_ch2
-MosquitoInAmber.glb?2
-MosquitoInAmber.glb?4
-ToyCar.glb?special_1_ch1_1_ch2
-ToyCar.glb?2
-ToyCar.glb?6
+MetalRoughSpheres.glb?Spheres.001_special
+MetalRoughSpheres.glb?Spheres.002_special
+MetalRoughSpheres.glb?Spheres.003_special
+MetalRoughSpheres.glb?Spheres.004_special
+MetalRoughSpheres.glb?Spheres_special
+MosquitoInAmber.glb?2_mosquito_lr_original.o_material_0_0_normal
+MosquitoInAmber.glb?5_amber_lr_PBR_0_special
+ToyCar.glb?ToyCar_special
+[]
+scheme = texture
+normal = true
+MosquitoInAmber.glb?5_amber_lr_PBR_0_normal
+ToyCar.glb?Fabric_normal
+ToyCar.glb?ToyCar_normal

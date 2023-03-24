@@ -1,6 +1,6 @@
 [textures]
-albedo = tree-2-2.glb?Basecolor_0
-normal = tree-2-2.glb?Normals_0
+albedo = tree-2-2.glb?BillboardCloudProxy_0_LOD1.017_albedo
+normal = tree-2-2.glb?BillboardCloudProxy_0_LOD1.017_normal
 
 [render]
 shader = wind.glsl

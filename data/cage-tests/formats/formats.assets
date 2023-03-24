@@ -38,7 +38,7 @@ formats.glb?Chin
 []
 scheme = texture
 srgb = true
-formats.glb?albedo
+formats.glb?Suzanne_albedo
 albedo.png
 
 []

@@ -1,0 +1,41 @@
+[]
+scheme = animation
+turtle.glb?Turtle_Swim
+
+[]
+scheme = model
+bones = true
+scale = 0.3
+turtle.glb?BackFlippers_BackFeetMat
+turtle.glb?Eyes_Eyes
+turtle.glb?Shell_ShellMat
+turtle.glb?UpperBody_UpperBodyMat
+
+[]
+scheme = skeleton
+scale = 0.3
+turtle.glb;skeleton
+
+[]
+scheme = texture
+srgb = true
+turtle.glb?BackFlippers_albedo
+turtle.glb?Shell_albedo
+turtle.glb?UpperBody_albedo
+
+[]
+scheme = texture
+turtle.glb?BackFlippers_special
+turtle.glb?Shell_special
+turtle.glb?UpperBody_special
+
+[]
+scheme = texture
+normal = true
+turtle.glb?BackFlippers_normal
+turtle.glb?Shell_normal
+turtle.glb?UpperBody_normal
+
+[]
+scheme = object
+turtle.object
