@@ -91,9 +91,9 @@ void initializeGui()
 	EntityManager *ents = engineGuiEntities();
 	Entity *layout = ents->create(1);
 	{ // layout
-		layout->value<GuiScrollbarsComponent>();
-		GuiLayoutLineComponent &l = layout->value<GuiLayoutLineComponent>();
-		l.vertical = true;
+		layout->value<GuiLayoutScrollbarsComponent>();
+		layout->value<GuiLayoutAlignmentComponent>().alignment = Vec2(0);
+		layout->value<GuiLayoutLineComponent>().vertical = true;
 	}
 
 	{ // ambient

@@ -24,6 +24,17 @@ class GuiTestImpl : public GuiTestClass
 			e->value<GuiTextComponent>().value = "text";
 		}
 
+		{ // with explicit size
+			guiLabel(3, index, "with explicit size");
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = 3;
+			p.order = index++;
+			e->value<GuiButtonComponent>();
+			e->value<GuiTextComponent>().value = "text";
+			e->value<GuiExplicitSizeComponent>().size = Vec2(0, 100);
+		}
+
 		{ // with tooltip
 			guiLabel(3, index, "with tooltip");
 			Entity *e = ents->createUnique();

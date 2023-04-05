@@ -9,6 +9,12 @@ namespace
 		// nothing
 	}
 
+	bool buttonActionWithUint32(uint32, Entity *)
+	{
+		buttonActionSimple();
+		return true;
+	}
+
 	bool buttonActionOriginal(Entity *)
 	{
 		buttonActionSimple();
@@ -75,7 +81,7 @@ public:
 			g->label().text("lorem ipsum dolor sit amet\nthe quick brown fox jumps over the lazy dog\n1 + 1 = 3\n\nlast line");
 
 			g->label().text("color picker");
-			g->colorPicker(Vec3(1, 0, 0), true);
+			g->colorPicker(Vec3(1, 0, 0), true).bind<uint32, &buttonActionWithUint32>(42);
 
 			g->label().text("button 1");
 			g->button().text("text").bind<&buttonActionSimple>();

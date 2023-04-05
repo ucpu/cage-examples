@@ -7,7 +7,7 @@
 #include <cage-core/timer.h>
 #include <cage-core/color.h>
 
-#include <cage-engine/guiComponents.h>
+#include <cage-engine/guiBuilder.h>
 #include <cage-engine/window.h>
 #include <cage-engine/scene.h>
 #include <cage-engine/sceneScreenSpaceEffects.h>
@@ -198,24 +198,19 @@ void update()
 	}
 }
 
-bool guiFunction(InputGuiWidget in)
+void actionPrev()
 {
-	switch (in.widget)
-	{
-	case 1: // prev
-		if (sceneIndexCurrent == 0)
-			sceneIndexCurrent = numeric_cast<uint32>(maps.size()) - 1;
-		else
-			sceneIndexCurrent--;
-		return true;
-	case 2: // next
-		sceneIndexCurrent++;
-		if (sceneIndexCurrent == maps.size())
-			sceneIndexCurrent = 0;
-		return true;
-	}
+	if (sceneIndexCurrent == 0)
+		sceneIndexCurrent = numeric_cast<uint32>(maps.size()) - 1;
+	else
+		sceneIndexCurrent--;
+}
 
-	return false;
+void actionNext()
+{
+	sceneIndexCurrent++;
+	if (sceneIndexCurrent == maps.size())
+		sceneIndexCurrent = 0;
 }
 
 void cameraInitialize()
@@ -231,32 +226,14 @@ void updateInitialize()
 	loadMapsList();
 	sceneReload();
 	engineAssets()->add(HashString("scenes/common/common.pack"));
-
-	{ // prev
-		Entity *a = cage::engineGuiEntities()->createUnique();
-		{ // a
-			GuiScrollbarsComponent &sc = a->value<GuiScrollbarsComponent>();
-			sc.alignment = Vec2(0, 1);
-		}
-		Entity *e = cage::engineGuiEntities()->create(1);
-		GuiParentComponent &parent = e->value<GuiParentComponent>();
-		parent.parent = a->name();
-		e->value<GuiButtonComponent>();
-		GuiTextComponent &t = e->value<GuiTextComponent>();
-		t.value = "< prev";
+	Holder<GuiBuilder> g = newGuiBuilder(engineGuiEntities());
+	{
+		auto _ = g->alignment(Vec2(0, 1));
+		g->button().text("< prev").bind<&actionPrev>();
 	}
-	{ // next
-		Entity *a = cage::engineGuiEntities()->createUnique();
-		{ // a
-			GuiScrollbarsComponent &sc = a->value<GuiScrollbarsComponent>();
-			sc.alignment = Vec2(1, 1);
-		}
-		Entity *e = cage::engineGuiEntities()->create(2);
-		GuiParentComponent &parent = e->value<GuiParentComponent>();
-		parent.parent = a->name();
-		e->value<GuiButtonComponent>();
-		GuiTextComponent &t = e->value<GuiTextComponent>();
-		t.value = "next >";
+	{
+		auto _ = g->alignment(Vec2(1, 1));
+		g->button().text("next >").bind<&actionNext>();
 	}
 }
 

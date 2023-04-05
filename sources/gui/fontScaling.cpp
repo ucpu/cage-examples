@@ -48,7 +48,8 @@ public:
 		{
 			Entity *panel = ents->create(2);
 			panel->value<GuiPanelComponent>();
-			panel->value<GuiScrollbarsComponent>().alignment = Vec2(0.5);
+			panel->value<GuiLayoutScrollbarsComponent>();
+			panel->value<GuiLayoutAlignmentComponent>().alignment = Vec2(0.5);
 			panel->value<GuiLayoutLineComponent>().vertical = true;
 		}
 

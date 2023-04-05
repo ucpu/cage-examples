@@ -111,7 +111,8 @@ void guiInit()
 
 	Entity *panel = g->entities()->createUnique();
 	{
-		panel->value<GuiScrollbarsComponent>();
+		panel->value<GuiLayoutScrollbarsComponent>();
+		panel->value<GuiLayoutAlignmentComponent>().alignment = Vec2(0);
 	}
 
 	Entity *layout = g->entities()->createUnique();

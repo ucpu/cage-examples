@@ -13,13 +13,12 @@ public:
 			{
 				const Vec2 a = Vec2(x, y) * 0.5;
 				auto _1 = g->panel();
-				auto _2 = g->scrollbars();
-				auto _3 = g->alignment(a);
-				auto _4 = g->panel().text(Stringizer() + "x: " + x + ", y: " + y);
-				g->label().text(Stringizer() + a).textSize(200);
+				auto _2 = g->alignment(a);
+				auto _3 = g->panel().text(Stringizer() + "x: " + x + ", y: " + y);
+				g->label().text(Stringizer() + a).textSize(60);
 			}
 		}
 	}
 };
 
-MAIN(GuiTestImpl, "scrollbars")
+MAIN(GuiTestImpl, "alignment")

@@ -125,13 +125,12 @@ public:
 
 	void initialize() override
 	{
-		guiBasicLayout();
-
 		EntityManager *ents = engineGuiEntities();
 
 		{
 			Entity *e = ents->create(10);
-			e->value<GuiParentComponent>().parent = 3;
+			e->value<GuiPanelComponent>();
+			e->value<GuiLayoutAlignmentComponent>().alignment = Vec2(0.5, 0);
 			e->value<GuiLayoutLineComponent>().vertical = true;
 		}
 	}

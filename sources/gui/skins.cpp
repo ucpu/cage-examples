@@ -100,7 +100,7 @@ public:
 			panel->value<GuiPanelComponent>();
 			panel->value<GuiLayoutLineComponent>().vertical = true;
 			panel->value<GuiTextComponent>().value = name;
-			panel->value<GuiScrollbarsComponent>();
+			panel->value<GuiLayoutScrollbarsComponent>();
 		}
 		uint32 index = 0;
 		{ // label 1
@@ -317,7 +317,7 @@ public:
 		{ // main
 			Entity *panel = ents->get(3);
 			panel->value<GuiLayoutLineComponent>();
-			panel->value<GuiScrollbarsComponent>().alignment = Vec2(0.5, 0);
+			panel->value<GuiLayoutAlignmentComponent>().alignment = Vec2(0.5, 0);
 		}
 		initializeSide(4, "default skin");
 		initializeSide(5, "large skin");

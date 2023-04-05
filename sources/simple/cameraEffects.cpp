@@ -351,7 +351,8 @@ void initializeGui()
 	EntityManager *ents = engineGuiEntities();
 	Entity *layout = ents->createUnique();
 	{ // layout
-		layout->value<GuiScrollbarsComponent>();
+		layout->value<GuiLayoutScrollbarsComponent>();
+		layout->value<GuiLayoutAlignmentComponent>().alignment = Vec2(0);
 		layout->value<GuiLayoutLineComponent>().vertical = true;
 	}
 

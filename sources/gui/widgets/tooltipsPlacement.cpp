@@ -9,7 +9,7 @@ class GuiTestImpl : public GuiTestClass
 		guiBasicLayout();
 		{
 			Entity *e = ents->get(3);
-			e->remove<GuiScrollbarsComponent>();
+			e->remove<GuiLayoutAlignmentComponent>();
 			e->value<GuiLayoutTableComponent>().sections = 7;
 			e->value<GuiLayoutTableComponent>().grid = true;
 		}
@@ -20,7 +20,7 @@ class GuiTestImpl : public GuiTestClass
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = 3;
 			p.order = i;
-			e->value<GuiScrollbarsComponent>().alignment = Vec2(0.5);
+			e->value<GuiLayoutAlignmentComponent>().alignment = Vec2(0.5);
 			Entity *f = ents->createUnique();
 			f->value<GuiParentComponent>().parent = e->name();
 			f->value<GuiLabelComponent>();

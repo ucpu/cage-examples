@@ -16,10 +16,9 @@ public:
 		Entity *panel = ents->create(2);
 		{
 			panel->value<GuiPanelComponent>();
-			GuiLayoutLineComponent &ll = panel->value<GuiLayoutLineComponent>();
-			ll.vertical = true;
-			GuiScrollbarsComponent &sc = panel->value<GuiScrollbarsComponent>();
-			sc.alignment = Vec2(0.5, 0);
+			panel->value<GuiLayoutLineComponent>().vertical = true;
+			panel->value<GuiLayoutScrollbarsComponent>();
+			panel->value<GuiLayoutAlignmentComponent>().alignment = Vec2(0.5, 0);
 		}
 
 		for (uint32 i = 0; i < 300; i++)

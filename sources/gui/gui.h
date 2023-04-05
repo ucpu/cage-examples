@@ -4,7 +4,7 @@
 #include <cage-core/assetManager.h>
 #include <cage-engine/window.h>
 #include <cage-engine/guiManager.h>
-#include <cage-engine/guiComponents.h>
+#include <cage-engine/guiBuilder.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 
 #include <cage-simple/engine.h>
@@ -35,21 +35,24 @@ public:
 
 		{ // splitter
 			Entity *split = ents->create(1);
-			split->value<GuiLayoutSplitterComponent>().vertical = true;
+			split->value<GuiLayoutLineComponent>().vertical = true;
+			split->value<GuiLayoutLineComponent>().end = LineEdgeModeEnum::Flexible;
 		}
 		{ // top panel
 			Entity *panel = ents->create(2);
 			panel->value<GuiParentComponent>().parent = 1;
 			panel->value<GuiParentComponent>().order = 1;
 			panel->value<GuiPanelComponent>();
-			panel->value<GuiScrollbarsComponent>();
+			panel->value<GuiLayoutScrollbarsComponent>();
+			panel->value<GuiLayoutAlignmentComponent>().alignment = Vec2(0);
 		}
 		{ // bottom panel
 			Entity *panel = ents->create(3);
 			panel->value<GuiParentComponent>().parent = 1;
 			panel->value<GuiParentComponent>().order = 2;
 			panel->value<GuiPanelComponent>();
-			panel->value<GuiScrollbarsComponent>().alignment = Vec2(0.5, 0);
+			panel->value<GuiLayoutScrollbarsComponent>();
+			panel->value<GuiLayoutAlignmentComponent>().alignment = Vec2(0.5, 0);
 		}
 	}
 
@@ -61,7 +64,7 @@ public:
 		pr = pe;
 		pe.parent = r->name();
 		pe.order = 0;
-		r->value<GuiScrollbarsComponent>();
+		r->value<GuiLayoutScrollbarsComponent>();
 		return r;
 	}
 

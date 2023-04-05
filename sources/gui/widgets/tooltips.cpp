@@ -27,7 +27,7 @@ void tooltipCenteredOverLabel(const GuiTooltipConfig &cfg)
 void tooltipCenteredInScreen(const GuiTooltipConfig &cfg)
 {
 	cfg.placement = TooltipPlacementEnum::Manual;
-	cfg.tooltip->value<GuiScrollbarsComponent>().alignment = Vec2(0.5);
+	cfg.tooltip->value<GuiLayoutAlignmentComponent>().alignment = Vec2(0.5);
 	Entity *f = cfg.tooltip->manager()->createUnique();
 	f->value<GuiParentComponent>().parent = cfg.tooltip->name();
 	f->value<GuiPanelComponent>();
@@ -42,7 +42,7 @@ void tooltipScrollbars(const GuiTooltipConfig &cfg)
 {
 	cfg.closeCondition = TooltipCloseConditionEnum::Modal;
 	cfg.tooltip->value<GuiPanelComponent>();
-	cfg.tooltip->value<GuiScrollbarsComponent>();
+	cfg.tooltip->value<GuiLayoutScrollbarsComponent>();
 	cfg.tooltip->value<GuiExplicitSizeComponent>().size = Vec2(120);
 	cfg.tooltip->value<GuiLayoutLineComponent>().vertical = true;
 	for (uint32 i = 0; i < 20; i++)

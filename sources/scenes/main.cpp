@@ -11,7 +11,6 @@ using namespace cage;
 
 void windowClose(InputWindow);
 void keyPress(InputKey in);
-bool guiFunction(InputGuiWidget);
 void update();
 
 void cameraInitialize();
@@ -38,9 +37,6 @@ int main(int argc, const char *args[])
 	InputListener<InputClassEnum::KeyPress, InputKey> keyPressListener;
 	keyPressListener.attach(engineWindow()->events);
 	keyPressListener.bind<&keyPress>();
-	InputListener<InputClassEnum::GuiWidget, InputGuiWidget, bool> guiListener;
-	guiListener.attach(engineGuiManager()->widgetEvent);
-	guiListener.bind<&guiFunction>();
 
 	updateInitialize();
 	{
