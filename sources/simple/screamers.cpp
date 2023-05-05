@@ -14,6 +14,7 @@
 #include <cage-simple/engine.h>
 #include <cage-simple/fpsCamera.h>
 #include <cage-simple/statisticsGui.h>
+#include <cage-simple/cameraRay.h>
 
 #include <vector>
 
@@ -189,26 +190,6 @@ void spawnScreamer()
 	scr.velocity = randomDirection3();
 }
 
-Line getCursorRay()
-{
-	const Vec2 cursor = engineWindow()->mousePosition();
-	const Vec2i res = engineWindow()->resolution();
-	const Vec2 p = cursor / Vec2(res) * 2 - 1;
-	const Real px = p[0], py = -p[1];
-	Entity *camera = engineEntities()->get(1);
-	const TransformComponent &ts = camera->value<TransformComponent>();
-	const CameraComponent &cs = camera->value<CameraComponent>();
-	const Mat4 view = inverse(Mat4(ts.position, ts.orientation, Vec3(ts.scale, ts.scale, ts.scale)));
-	const Mat4 proj = perspectiveProjection(cs.camera.perspectiveFov, Real(res[0]) / Real(res[1]), cs.near, cs.far);
-	const Mat4 inv = inverse(proj * view);
-	const Vec4 pn = inv * Vec4(px, py, -1, 1);
-	const Vec4 pf = inv * Vec4(px, py, 1, 1);
-	const Vec3 near = Vec3(pn) / pn[3];
-	const Vec3 far = Vec3(pf) / pf[3];
-	const Line ray = makeRay(near, far);
-	return ray;
-}
-
 void updateScreamers()
 {
 	Holder<Collider> collider = engineAssets()->get<AssetSchemeIndexCollider, Collider>(HashString("cage-tests/screamers/suzanne.blend;collider"));
@@ -226,7 +207,7 @@ void updateScreamers()
 	if (ScreamerComponent::component->group()->count() < screamersCapacity && randomChance() / screamersCapacity < 0.01)
 		spawnScreamer();
 
-	const Line cursorRay = getCursorRay();
+	const Line cursorRay = cameraMouseRay(engineEntities()->get(1));
 
 	std::vector<Vec3> newSmokes, newExplosions;
 	for (Entity *e : ScreamerComponent::component->group()->entities())
@@ -358,7 +339,7 @@ int main(int argc, char *args[])
 		Holder<StatisticsGui> statistics = newStatisticsGui();
 
 		engineAssets()->add(assetsName);
-		engineStart();
+		engineRun();
 		engineAssets()->remove(assetsName);
 		engineFinalize();
 

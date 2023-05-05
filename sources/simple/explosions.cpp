@@ -16,6 +16,7 @@
 #include <cage-simple/engine.h>
 #include <cage-simple/fpsCamera.h>
 #include <cage-simple/statisticsGui.h>
+#include <cage-simple/cameraRay.h>
 
 #include <vector>
 
@@ -122,29 +123,11 @@ void mousePress(InputMouse in)
 	if (none(in.buttons & MouseButtonsFlags::Left))
 		return;
 
-	Vec3 position;
-	{
-		Vec2i res = engineWindow()->resolution();
-		Vec2 p = Vec2(in.position);
-		p /= Vec2(res[0], res[1]);
-		p = p * 2 - 1;
-		Real px = p[0], py = -p[1];
-		Entity *camera = engineEntities()->get(1);
-		TransformComponent &ts = camera->value<TransformComponent>();
-		CameraComponent &cs = camera->value<CameraComponent>();
-		Mat4 view = inverse(Mat4(ts.position, ts.orientation, Vec3(ts.scale, ts.scale, ts.scale)));
-		Mat4 proj = perspectiveProjection(cs.camera.perspectiveFov, Real(res[0]) / Real(res[1]), cs.near, cs.far);
-		Mat4 inv = inverse(proj * view);
-		Vec4 pn = inv * Vec4(px, py, -1, 1);
-		Vec4 pf = inv * Vec4(px, py, 1, 1);
-		Vec3 near = Vec3(pn) / pn[3];
-		Vec3 far = Vec3(pf) / pf[3];
-		Line ray = makeRay(near, far);
-		Plane floor = Plane(Vec3(), Vec3(0, 1, 0));
-		position = intersection(ray, floor);
-		if (!position.valid())
-			return; // click outside floor
-	}
+	const Line ray = cameraMouseRay(engineEntities()->get(1));
+	const Plane floor = Plane(Vec3(), Vec3(0, 1, 0));
+	const Vec3 position = intersection(ray, floor);
+	if (!position.valid())
+		return; // click outside floor
 
 	makeExplosion(position);
 }
@@ -277,7 +260,7 @@ int main(int argc, char *args[])
 		Holder<StatisticsGui> statistics = newStatisticsGui();
 
 		engineAssets()->add(assetsName);
-		engineStart();
+		engineRun();
 		engineAssets()->remove(assetsName);
 		engineFinalize();
 

@@ -269,7 +269,7 @@ int main(int argc, char *args[])
 		Holder<StatisticsGui> statistics = newStatisticsGui();
 
 		engineAssets()->add(assetsName);
-		engineStart();
+		engineRun();
 		engineAssets()->remove(assetsName);
 		engineFinalize();
 

@@ -42,7 +42,7 @@ int main(int argc, const char *args[])
 	{
 		Holder<FullscreenSwitcher> fullscreen = newFullscreenSwitcher({});
 		Holder<StatisticsGui> statistics = newStatisticsGui();
-		engineStart();
+		engineRun();
 	}
 	updateFinalize();
 	engineFinalize();

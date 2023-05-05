@@ -164,7 +164,7 @@ int main(int argc, char *args[])
 			Holder<StatisticsGui> statistics = newStatisticsGui();
 			Holder<FpsCamera> fps = newFpsCamera(engineEntities()->get(1));
 			fps->mouseButton = MouseButtonsFlags::Left;
-			engineStart();
+			engineRun();
 		}
 		engineAssets()->remove(assetsName);
 		engineFinalize();

@@ -181,7 +181,7 @@ int main(int argc, char *args[])
 
 		Holder<StatisticsGui> statistics = newStatisticsGui();
 
-		engineStart();
+		engineRun();
 
 		gps.clear();
 

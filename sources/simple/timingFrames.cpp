@@ -229,7 +229,7 @@ int main(int argc, char *args[])
 		controlInit();
 		Holder<StatisticsGui> statistics = newStatisticsGui();
 
-		engineStart();
+		engineRun();
 		engineFinalize();
 
 		return 0;

@@ -226,7 +226,7 @@ int main(int argc, char *args[])
 
 		engineAssets()->add(assetsName1);
 		engineAssets()->add(assetsName2);
-		engineStart();
+		engineRun();
 		engineAssets()->remove(assetsName1);
 		engineAssets()->remove(assetsName2);
 		engineFinalize();

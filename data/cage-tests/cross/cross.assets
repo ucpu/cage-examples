@@ -1,0 +1,13 @@
+
+[]
+scheme = pack
+cross.pack
+
+[]
+scheme = model
+cross.obj
+
+[]
+scheme = texture
+srgb = true
+albedo.png

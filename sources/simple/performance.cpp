@@ -276,7 +276,7 @@ int main(int argc, char *args[])
 			noise = newNoiseFunction(cfg);
 		}
 
-		engineStart();
+		engineRun();
 		engineFinalize();
 
 		cameraCtrl.clear();

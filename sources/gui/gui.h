@@ -159,7 +159,7 @@ public:
 			initialize();
 			static constexpr uint32 assetsName = HashString("cage-tests/gui/gui.pack");
 			engineAssets()->add(assetsName);
-			engineStart();
+			engineRun();
 			engineAssets()->remove(assetsName);
 			engineFinalize();
 

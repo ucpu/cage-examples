@@ -136,7 +136,7 @@ int main(int argc, char *args[])
 		fpsCamera->mouseButton = MouseButtonsFlags::Left;
 		Holder<StatisticsGui> statistics = newStatisticsGui();
 
-		engineStart();
+		engineRun();
 		engineFinalize();
 
 		return 0;

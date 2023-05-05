@@ -174,7 +174,7 @@ int main(int argc, char *args[])
 
 			Holder<StatisticsGui> statistics = newStatisticsGui();
 
-			engineStart();
+			engineRun();
 			engineFinalize();
 
 			threadSleep(200000);
