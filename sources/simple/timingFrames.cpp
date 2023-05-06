@@ -124,8 +124,8 @@ void guiInit()
 	}
 
 	// controls
-	constexpr const char *names[] = { "control tick", "sound tick", "control delay", "prepare delay", "dispatch delay", "sound delay" };
-	constexpr const uint64 values[] = { 1000 / 30, 1000 / 60, 0, 0, 0, 0 };
+	static constexpr const char *names[] = { "control tick", "control delay", "prepare delay", "dispatch delay", "sound delay" };
+	static constexpr const uint64 values[] = { 1000 / 20, 0, 0, 0, 0 };
 	static_assert(sizeof(names) / sizeof(names[0]) == sizeof(values) / sizeof(values[0]), "arrays must have same length");
 	for (uint32 i = 0; i < sizeof(names) / sizeof(names[0]); i++)
 	{
@@ -145,7 +145,7 @@ void guiInit()
 			child.order = i * 2 + 1;
 			GuiInputComponent &c = con->value<GuiInputComponent>();
 			c.type = InputTypeEnum::Integer;
-			c.min.i = i >= 2 ? 0 : 1;
+			c.min.i = i >= 1 ? 0 : 1;
 			c.max.i = 1000;
 			c.step.i = 1;
 			c.value = Stringizer() + values[i];
@@ -158,7 +158,7 @@ namespace
 	void setIntValue(uint32 index, uint64 &value)
 	{
 		Entity *control = cage::engineGuiEntities()->get(20 + index);
-		GuiInputComponent &t = control->value<GuiInputComponent>();
+		const GuiInputComponent &t = control->value<GuiInputComponent>();
 		if (t.valid)
 		{
 			CAGE_ASSERT(isDigitsOnly(t.value) && !t.value.empty());
@@ -171,26 +171,17 @@ void guiUpdate()
 {
 	{
 		Entity *control = cage::engineGuiEntities()->get(20 + 0);
-		GuiInputComponent &t = control->value<GuiInputComponent>();
+		const GuiInputComponent &t = control->value<GuiInputComponent>();
 		if (t.valid)
 		{
 			CAGE_ASSERT(isDigitsOnly(t.value) && !t.value.empty());
 			controlThread().updatePeriod(toUint32(t.value) * 1000);
 		}
 	}
-	{
-		Entity *control = cage::engineGuiEntities()->get(20 + 1);
-		GuiInputComponent &t = control->value<GuiInputComponent>();
-		if (t.valid)
-		{
-			CAGE_ASSERT(isDigitsOnly(t.value) && !t.value.empty());
-			soundThread().updatePeriod(toUint32(t.value) * 1000);
-		}
-	}
-	setIntValue(2, updateDelay);
-	setIntValue(3, prepareDelay);
-	setIntValue(4, renderDelay);
-	setIntValue(5, soundDelay);
+	setIntValue(1, updateDelay);
+	setIntValue(2, prepareDelay);
+	setIntValue(3, renderDelay);
+	setIntValue(4, soundDelay);
 }
 
 int main(int argc, char *args[])
