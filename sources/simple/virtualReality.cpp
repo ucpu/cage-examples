@@ -53,8 +53,13 @@ void update()
 	if (vr->leftController().buttons()[1])
 		virtualRealitySceneRecenter(ents, 1.3); // 1.3 = sitting height; 1.7 = standing height
 
+	{ // growing
+		const Real sc = vr->leftController().axes()[1];
+		ents->get(1)->value<TransformComponent>().scale *= sc * 0.01 + 1;
+	}
+
 	{ // movement
-		const Real turning = vr->leftController().axes()[0] * 1.0;
+		const Real turning = vr->rightController().axes()[0] * 1.0;
 		const Real moving = vr->rightController().axes()[1] * 0.025;
 		auto &t = ents->get(1)->value<TransformComponent>();
 		t.orientation = Quat(Degs(), Degs(-turning), Degs()) * t.orientation;
