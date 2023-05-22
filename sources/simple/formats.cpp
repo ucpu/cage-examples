@@ -47,9 +47,7 @@ int main(int argc, char *args[])
 		engineInitialize(EngineCreateConfig());
 
 		// events
-		InputListener<InputClassEnum::WindowClose, InputWindow> closeListener;
-		closeListener.attach(engineWindow()->events);
-		closeListener.bind<&windowClose>();
+		const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
 
 		// window
 		engineWindow()->setMaximized();

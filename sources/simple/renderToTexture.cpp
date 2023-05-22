@@ -66,18 +66,10 @@ int main(int argc, char *args[])
 		engineInitialize(EngineCreateConfig());
 
 		// events
-		EventListener<void()> updateListener;
-		updateListener.attach(controlThread().update);
-		updateListener.bind<&update>();
-		InputListener<InputClassEnum::WindowClose, InputWindow> closeListener;
-		closeListener.attach(engineWindow()->events);
-		closeListener.bind<&windowClose>();
-		EventListener<void()> graphicsInitListener;
-		graphicsInitListener.attach(graphicsDispatchThread().initialize);
-		graphicsInitListener.bind<&graphicsInitialize>();
-		EventListener<void()> graphicsFinisListener;
-		graphicsFinisListener.attach(graphicsDispatchThread().finalize);
-		graphicsFinisListener.bind<&graphicsFinalize>();
+		const auto updateListener = controlThread().update.listen(&update);
+		const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
+		const auto graphicsInitListener = graphicsDispatchThread().initialize.listen(&graphicsInitialize);
+		const auto graphicsFinisListener = graphicsDispatchThread().finalize.listen(&graphicsFinalize);
 
 		// window
 		engineWindow()->setMaximized();

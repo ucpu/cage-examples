@@ -249,15 +249,9 @@ int main(int argc, char *args[])
 		engineInitialize(EngineCreateConfig());
 
 		// events
-		EventListener<void()> updateListener;
-		updateListener.attach(controlThread().update);
-		updateListener.bind<&update>();
-		EventListener<void()> initListener;
-		initListener.attach(controlThread().initialize);
-		initListener.bind<&guiInit>();
-		InputListener<InputClassEnum::WindowClose, InputWindow> closeListener;
-		closeListener.attach(engineWindow()->events);
-		closeListener.bind<&windowClose>();
+		const auto updateListener = controlThread().update.listen(&update);
+		const auto initListener = controlThread().initialize.listen(&guiInit);
+		const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
 
 		engineWindow()->setMaximized();
 		engineWindow()->title("performance");

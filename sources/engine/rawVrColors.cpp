@@ -61,43 +61,22 @@ int main(int argc, char *args[])
 		log1->output.bind<logOutputStdOut>();
 
 		Holder<Window> window = newWindow(WindowCreateConfig{ .vsync = 0 });
-		InputListener<InputClassEnum::WindowClose, InputWindow> windowCloseListener;
-		windowCloseListener.bind<&windowClose>();
-		windowCloseListener.attach(window->events);
+		const auto closeListener = window->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
 		window->title("cage test virtual reality");
 		window->windowedSize(Vec2i(800, 600));
 		window->setWindowed();
-
 		window->makeCurrent();
-		Holder<VirtualReality> virtualreality = newVirtualReality({});
 
-		InputListener<InputClassEnum::HeadsetConnected, InputHeadsetState> headsetConnectedListener;
-		InputListener<InputClassEnum::HeadsetDisconnected, InputHeadsetState> headsetDisconnectedListener;
-		InputListener<InputClassEnum::HeadsetPose, InputHeadsetPose> headsetPoseListener;
-		InputListener<InputClassEnum::ControllerConnected, InputControllerState> controllerConnectedListener;
-		InputListener<InputClassEnum::ControllerDisconnected, InputControllerState> controllerDisconnectedListener;
-		InputListener<InputClassEnum::ControllerPose, InputControllerPose> controllerPoseListener;
-		InputListener<InputClassEnum::ControllerPress, InputControllerKey> pressListener;
-		InputListener<InputClassEnum::ControllerRelease, InputControllerKey> releaseListener;
-		InputListener<InputClassEnum::ControllerAxis, InputControllerAxis> axisListener;
-		headsetConnectedListener.attach(virtualreality->events);
-		headsetDisconnectedListener.attach(virtualreality->events);
-		headsetPoseListener.attach(virtualreality->events);
-		controllerConnectedListener.attach(virtualreality->events);
-		controllerDisconnectedListener.attach(virtualreality->events);
-		controllerPoseListener.attach(virtualreality->events);
-		pressListener.attach(virtualreality->events);
-		releaseListener.attach(virtualreality->events);
-		axisListener.attach(virtualreality->events);
-		headsetConnectedListener.bind<headsetConnected>();
-		headsetDisconnectedListener.bind<headsetDiconnected>();
-		headsetPoseListener.bind<headsetPose>();
-		controllerConnectedListener.bind<controllerConnected>();
-		controllerDisconnectedListener.bind<controllerDiconnected>();
-		controllerPoseListener.bind<controllerPose>();
-		pressListener.bind<press>();
-		releaseListener.bind<release>();
-		axisListener.bind<axis>();
+		Holder<VirtualReality> virtualreality = newVirtualReality({});
+		const auto headsetConnectedListener = virtualreality->events.listen(inputListener<InputClassEnum::HeadsetConnected, InputHeadsetState>([](auto in) { return headsetConnected(in); }));
+		const auto headsetDisconnectedListener = virtualreality->events.listen(inputListener<InputClassEnum::HeadsetDisconnected, InputHeadsetState>([](auto in) { return headsetDiconnected(in); }));
+		const auto headsetPoseListener = virtualreality->events.listen(inputListener<InputClassEnum::HeadsetPose, InputHeadsetPose>([](auto in) { return headsetPose(in); }));
+		const auto controllerConnectedListener = virtualreality->events.listen(inputListener<InputClassEnum::ControllerConnected, InputControllerState>([](auto in) { return controllerConnected(in); }));
+		const auto controllerDisconnectedListener = virtualreality->events.listen(inputListener<InputClassEnum::ControllerDisconnected, InputControllerState>([](auto in) { return controllerDiconnected(in); }));
+		const auto controllerPoseListener = virtualreality->events.listen(inputListener<InputClassEnum::ControllerPose, InputControllerPose>([](auto in) { return controllerPose(in); }));
+		const auto pressListener = virtualreality->events.listen(inputListener<InputClassEnum::ControllerPress, InputControllerKey>([](auto in) { return press(in); }));
+		const auto releaseListener = virtualreality->events.listen(inputListener<InputClassEnum::ControllerRelease, InputControllerKey>([](auto in) { return release(in); }));
+		const auto axisListener = virtualreality->events.listen(inputListener<InputClassEnum::ControllerAxis, InputControllerAxis>([](auto in) { return axis(in); }));
 
 		Holder<FrameBuffer> fb = newFrameBufferDraw();
 

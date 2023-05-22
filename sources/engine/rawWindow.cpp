@@ -37,9 +37,7 @@ int main(int argc, char *args[])
 
 		// window
 		Holder<Window> window = newWindow({});
-		InputListener<InputClassEnum::WindowClose, InputWindow> windowCloseListener;
-		windowCloseListener.bind<&windowClose>();
-		windowCloseListener.attach(window->events);
+		const auto closeListener = window->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
 		window->title("cage test logo");
 		detail::initializeOpengl();
 

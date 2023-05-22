@@ -143,12 +143,9 @@ public:
 			initializeEngine();
 
 			// events
-			windowCloseListener.attach(engineWindow()->events, -5156);
-			windowCloseListener.bind<GuiTestClass, &GuiTestClass::onWindowClose>(this);
-			updateListener.attach(controlThread().update);
-			updateListener.bind<GuiTestClass, &GuiTestClass::update>(this);
-			guiListener.attach(engineGuiManager()->widgetEvent);
-			guiListener.bind<GuiTestClass, &GuiTestClass::guiEvent>(this);
+			const auto windowCloseListener = engineWindow()->events.listen([&](const GenericInput &in) { if (in.type == InputClassEnum::WindowClose) this->windowClose(); }, -5156);
+			const auto updateListener = controlThread().update.listen([&]() { this->update(); });
+			const auto guiListener = engineGuiManager()->widgetEvent.listen([&](const GenericInput &in) { if (in.type == InputClassEnum::GuiWidget) this->guiEvent(in.data.get<InputGuiWidget>()); });
 
 			// window
 			engineWindow()->windowedSize(Vec2i(800, 600));
@@ -170,21 +167,6 @@ public:
 			detail::logCurrentCaughtException();
 			return 1;
 		}
-	}
-
-	EventListener<bool(const GenericInput &)> windowCloseListener;
-	EventListener<void()> updateListener;
-	InputListener<InputClassEnum::GuiWidget, InputGuiWidget> guiListener;
-
-protected:
-	bool onWindowClose(const GenericInput &in)
-	{
-		if (in.type == InputClassEnum::WindowClose)
-		{
-			windowClose();
-			return true;
-		}
-		return false;
 	}
 };
 

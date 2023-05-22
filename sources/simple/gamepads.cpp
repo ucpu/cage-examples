@@ -20,11 +20,11 @@ struct Gp : Immovable
 	Holder<Gamepad> g = newGamepad();
 	std::vector<Entity *> bs, as;
 
-	InputListener<InputClassEnum::GamepadConnected, InputGamepadState> connectedListener;
-	InputListener<InputClassEnum::GamepadDisconnected, InputGamepadState> disconnectedListener;
-	InputListener<InputClassEnum::GamepadPress, InputGamepadKey> pressListener;
-	InputListener<InputClassEnum::GamepadRelease, InputGamepadKey> releaseListener;
-	InputListener<InputClassEnum::GamepadAxis, InputGamepadAxis> axisListener;
+	const EventListener<bool(const GenericInput &)> connectedListener = g->events.listen(inputListener<InputClassEnum::GamepadConnected, InputGamepadState>([this](InputGamepadState in) { return this->connected(in); }));
+	const EventListener<bool(const GenericInput &)> disconnectedListener = g->events.listen(inputListener<InputClassEnum::GamepadDisconnected, InputGamepadState>([this](InputGamepadState in) { return this->disconnected(in); }));
+	const EventListener<bool(const GenericInput &)> pressListener = g->events.listen(inputListener<InputClassEnum::GamepadPress, InputGamepadKey>([this](InputGamepadKey in) { return this->press(in); }));
+	const EventListener<bool(const GenericInput &)> releaseListener = g->events.listen(inputListener<InputClassEnum::GamepadRelease, InputGamepadKey>([this](InputGamepadKey in) { return this->release(in); }));
+	const EventListener<bool(const GenericInput &)> axisListener = g->events.listen(inputListener<InputClassEnum::GamepadAxis, InputGamepadAxis>([this](InputGamepadAxis in) { return this->axis(in); }));
 
 	void connected(InputGamepadState in)
 	{
@@ -53,16 +53,6 @@ struct Gp : Immovable
 
 	Gp()
 	{
-		connectedListener.attach(g->events);
-		disconnectedListener.attach(g->events);
-		pressListener.attach(g->events);
-		releaseListener.attach(g->events);
-		axisListener.attach(g->events);
-		connectedListener.bind<Gp, &Gp::connected>(this);
-		disconnectedListener.bind<Gp, &Gp::disconnected>(this);
-		pressListener.bind<Gp, &Gp::press>(this);
-		releaseListener.bind<Gp, &Gp::release>(this);
-		axisListener.bind<Gp, &Gp::axis>(this);
 		CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "name: " + g->name());
 	}
 
@@ -156,13 +146,11 @@ int main(int argc, char *args[])
 
 		engineInitialize(EngineCreateConfig());
 
-		EventListener<void()> updateListener;
-		updateListener.attach(controlThread().update);
-		updateListener.bind<&update>();
-		InputListener<InputClassEnum::WindowClose, InputWindow> closeListener;
-		closeListener.attach(engineWindow()->events);
-		closeListener.bind<&windowClose>();
+		// events
+		const auto updateListener = controlThread().update.listen(&update);
+		const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
 
+		// window
 		engineWindow()->setMaximized();
 		engineWindow()->title("gamepads");
 

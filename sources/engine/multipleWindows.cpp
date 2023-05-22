@@ -18,7 +18,7 @@ Holder<Mutex> openglInitMut = newMutex();
 class WindowTestClass
 {
 public:
-	WindowTestClass() : index(globalWindowIndex++), hue(index * 0.33)
+	WindowTestClass()
 	{
 		CAGE_LOG(SeverityEnum::Info, "test", Stringizer() + "creating window " + index);
 		window = newWindow({});
@@ -31,11 +31,11 @@ public:
 		}
 
 		listeners.attach(&dispatchers);
-#define GCHL_GENERATE(N) listeners.N.bind<WindowTestClass, &WindowTestClass::N>(this);
+#define GCHL_GENERATE(N) listeners.N.bind([this](auto in) { return this->N(in); });
 		CAGE_EVAL_MEDIUM(CAGE_EXPAND_ARGS(GCHL_GENERATE, windowClose, windowShow, windowHide, windowMove, windowResize, mouseMove, mousePress, mouseDoublePress, mouseRelease, mouseWheel, focusGain, focusLose, keyPress, keyRelease, keyRepeat, keyChar));
 #undef GCHL_GENERATE
 		listener.attach(window->events);
-		listener.bind<InputsDispatchers, &InputsDispatchers::dispatch>(&dispatchers);
+		listener.bind([this](const GenericInput &in) { return this->dispatchers.dispatch(in); });
 
 		CAGE_LOG(SeverityEnum::Info, "test", Stringizer() + "window " + index + " created");
 	}
@@ -159,8 +159,8 @@ public:
 	InputsDispatchers dispatchers;
 	InputsListeners listeners;
 	EventListener<bool(const GenericInput &)> listener;
-	const uint32 index;
-	Real hue;
+	const uint32 index = globalWindowIndex++;
+	Real hue = index * 0.33;
 	bool closing = false;
 };
 

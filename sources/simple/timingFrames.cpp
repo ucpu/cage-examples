@@ -196,24 +196,12 @@ int main(int argc, char *args[])
 		engineInitialize(EngineCreateConfig());
 
 		// events
-		EventListener<void()> updateListener;
-		updateListener.attach(controlThread().update);
-		updateListener.bind<&update>();
-		EventListener<void()> prepareListener;
-		prepareListener.attach(graphicsPrepareThread().prepare);
-		prepareListener.bind<&prepare>();
-		EventListener<void()> renderListener;
-		renderListener.attach(graphicsDispatchThread().dispatch);
-		renderListener.bind<&render>();
-		EventListener<void()> soundListener;
-		soundListener.attach(soundThread().sound);
-		soundListener.bind<&soundUpdate>();
-		EventListener<void()> guiInitListener;
-		guiInitListener.attach(controlThread().initialize);
-		guiInitListener.bind<&guiInit>();
-		InputListener<InputClassEnum::WindowClose, InputWindow> closeListener;
-		closeListener.attach(engineWindow()->events);
-		closeListener.bind<&windowClose>();
+		const auto updateListener = controlThread().update.listen(&update);
+		const auto prepareListener = graphicsPrepareThread().prepare.listen(&prepare);
+		const auto renderListener = graphicsDispatchThread().dispatch.listen(&render);
+		const auto soundListener = soundThread().sound.listen(&soundUpdate);
+		const auto guiInitListener = controlThread().initialize.listen(&guiInit);
+		const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
 
 		engineWindow()->setMaximized();
 		engineWindow()->title("timing frames");

@@ -34,9 +34,7 @@ int main(int argc, char *args[])
 		log1->output.bind<logOutputStdOut>();
 
 		Holder<Window> window = newWindow(WindowCreateConfig{ .vsync = 0 });
-		InputListener<InputClassEnum::WindowClose, InputWindow> windowCloseListener;
-		windowCloseListener.bind<&windowClose>();
-		windowCloseListener.attach(window->events);
+		const auto closeListener = window->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
 		window->title("cage test virtual reality");
 
 		// assets

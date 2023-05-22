@@ -139,12 +139,8 @@ int main(int argc, char *args[])
 		}
 
 		// events
-		EventListener<void()> updateListener;
-		updateListener.attach(controlThread().update);
-		updateListener.bind<&update>();
-		InputListener<InputClassEnum::WindowClose, InputWindow> closeListener;
-		closeListener.attach(engineWindow()->events);
-		closeListener.bind<&windowClose>();
+		const auto updateListener = controlThread().update.listen(&update);
+		const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
 
 		// window
 		engineWindow()->title("virtual reality");

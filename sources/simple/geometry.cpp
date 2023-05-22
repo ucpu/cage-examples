@@ -116,15 +116,10 @@ int main(int argc, char *args[])
 
 		engineInitialize(EngineCreateConfig());
 
-		EventListener<void()> updateListener;
-		updateListener.attach(controlThread().update);
-		updateListener.bind<&update>();
-		InputListener<InputClassEnum::WindowClose, InputWindow> closeListener;
-		closeListener.attach(engineWindow()->events);
-		closeListener.bind<&windowClose>();
-		InputListener<InputClassEnum::KeyPress, InputKey> keyPressListener;
-		keyPressListener.attach(engineWindow()->events);
-		keyPressListener.bind<&keyPress>();
+		// events
+		const auto updateListener = controlThread().update.listen(&update);
+		const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
+		const auto keyPressListener = engineWindow()->events.listen(inputListener<InputClassEnum::KeyPress, InputKey>(&keyPress));
 
 		// window
 		engineWindow()->setMaximized();

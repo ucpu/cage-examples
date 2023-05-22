@@ -119,7 +119,7 @@ int main(int argc, char *args[])
 			engineInitialize(EngineCreateConfig());
 
 			// events
-#define GCHL_GENERATE(FUNC, EVENT) EventListener<void()> FUNC##Listener; FUNC##Listener.bind<&FUNC>(); FUNC##Listener.attach(EVENT);
+#define GCHL_GENERATE(FUNC, EVENT) const EventListener<bool()> FUNC##Listener = EVENT.listen(&FUNC);
 			GCHL_GENERATE(controlUpdate, controlThread().update);
 			GCHL_GENERATE(controlInit, controlThread().initialize);
 			GCHL_GENERATE(controlFinish, controlThread().finalize);
@@ -134,9 +134,7 @@ int main(int argc, char *args[])
 			GCHL_GENERATE(soundFinish, soundThread().finalize);
 			GCHL_GENERATE(soundSound, soundThread().sound);
 #undef GCHL_GENERATE
-			InputListener<InputClassEnum::WindowClose, InputWindow> closeListener;
-			closeListener.attach(engineWindow()->events);
-			closeListener.bind<&windowClose>();
+			const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
 
 			engineWindow()->setWindowed();
 			engineWindow()->windowedSize(Vec2i(800, 600));
