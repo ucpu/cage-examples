@@ -1,21 +1,21 @@
 #include <cage-core/assetManager.h>
-#include <cage-core/hashString.h>
-#include <cage-core/entities.h>
-#include <cage-core/geometry.h>
-#include <cage-core/string.h>
-#include <cage-core/files.h>
-#include <cage-core/timer.h>
 #include <cage-core/color.h>
+#include <cage-core/entities.h>
+#include <cage-core/files.h>
+#include <cage-core/geometry.h>
+#include <cage-core/hashString.h>
+#include <cage-core/string.h>
+#include <cage-core/timer.h>
 
 #include <cage-engine/guiBuilder.h>
-#include <cage-engine/window.h>
 #include <cage-engine/scene.h>
 #include <cage-engine/sceneScreenSpaceEffects.h>
 #include <cage-engine/sceneShadowmapFitting.h>
+#include <cage-engine/window.h>
 
-#include <cage-simple/statisticsGui.h>
-#include <cage-simple/fpsCamera.h>
 #include <cage-simple/engine.h>
+#include <cage-simple/fpsCamera.h>
+#include <cage-simple/statisticsGui.h>
 
 #include <vector>
 
@@ -109,7 +109,7 @@ void sceneReload()
 		sky->value<RenderComponent>().object = HashString("scenes/common/skybox.obj");
 		sky->value<TextureAnimationComponent>();
 	}
-	
+
 	// directional lights
 	for (int i = 0; i < directionalLightsCount; i++)
 	{
@@ -123,7 +123,7 @@ void sceneReload()
 		ShadowmapComponent &ss = directionalLights[i]->value<ShadowmapComponent>();
 		ss.resolution = 2048;
 	}
-	
+
 	// point lights
 	for (int i = 0; i < pointLightsCount; i++)
 	{
@@ -148,20 +148,20 @@ void keyPress(InputKey in)
 {
 	switch (in.key)
 	{
-	case 256: // esc
-		engineStop();
-		break;
-	case 82: // R
-		if (sceneIndexCurrent == 0)
-			sceneIndexCurrent = numeric_cast<uint32>(maps.size()) - 1;
-		else
-			sceneIndexCurrent--;
-		break;
-	case 70: // F
-		sceneIndexCurrent++;
-		if (sceneIndexCurrent == maps.size())
-			sceneIndexCurrent = 0;
-		break;
+		case 256: // esc
+			engineStop();
+			break;
+		case 82: // R
+			if (sceneIndexCurrent == 0)
+				sceneIndexCurrent = numeric_cast<uint32>(maps.size()) - 1;
+			else
+				sceneIndexCurrent--;
+			break;
+		case 70: // F
+			sceneIndexCurrent++;
+			if (sceneIndexCurrent == maps.size())
+				sceneIndexCurrent = 0;
+			break;
 	}
 }
 

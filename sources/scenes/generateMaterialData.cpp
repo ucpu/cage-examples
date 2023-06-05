@@ -1,6 +1,6 @@
 #include <cage-core/files.h>
-#include <cage-core/meshShapes.h>
 #include <cage-core/meshExport.h>
+#include <cage-core/meshShapes.h>
 
 using namespace cage;
 

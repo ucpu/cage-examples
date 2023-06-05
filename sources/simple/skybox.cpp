@@ -1,12 +1,12 @@
-#include <cage-core/logger.h>
-#include <cage-core/entities.h>
-#include <cage-core/config.h>
 #include <cage-core/assetManager.h>
+#include <cage-core/config.h>
+#include <cage-core/entities.h>
 #include <cage-core/hashString.h>
-#include <cage-engine/window.h>
+#include <cage-core/logger.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/scene.h>
 #include <cage-engine/sceneScreenSpaceEffects.h>
+#include <cage-engine/window.h>
 
 #include <cage-simple/engine.h>
 #include <cage-simple/fpsCamera.h>
@@ -20,9 +20,7 @@ void windowClose(InputWindow)
 	engineStop();
 }
 
-void update()
-{
-}
+void update() {}
 
 int main(int argc, char *args[])
 {

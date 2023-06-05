@@ -1,11 +1,11 @@
-#include <cage-core/logger.h>
 #include <cage-core/concurrent.h>
+#include <cage-core/debug.h>
 #include <cage-core/entities.h>
 #include <cage-core/hashString.h>
-#include <cage-core/debug.h>
-#include <cage-engine/window.h>
+#include <cage-core/logger.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/scene.h>
+#include <cage-engine/window.h>
 
 #include <cage-simple/engine.h>
 #include <cage-simple/statisticsGui.h>

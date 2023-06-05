@@ -1,6 +1,6 @@
-#include <cage-engine/guiBuilder.h>
-#include <cage-core/memoryBuffer.h>
 #include "gui.h"
+#include <cage-core/memoryBuffer.h>
+#include <cage-engine/guiBuilder.h>
 
 namespace
 {

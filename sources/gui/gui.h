@@ -1,11 +1,11 @@
-#include <cage-core/logger.h>
+#include <cage-core/assetManager.h>
 #include <cage-core/entities.h>
 #include <cage-core/hashString.h>
-#include <cage-core/assetManager.h>
-#include <cage-engine/window.h>
-#include <cage-engine/guiManager.h>
+#include <cage-core/logger.h>
 #include <cage-engine/guiBuilder.h>
+#include <cage-engine/guiManager.h>
 #include <cage-engine/highPerformanceGpuHint.h>
+#include <cage-engine/window.h>
 
 #include <cage-simple/engine.h>
 
@@ -14,10 +14,7 @@ using namespace cage;
 class GuiTestClass
 {
 public:
-	static Real steeper(Rads x)
-	{
-		return (9 * sin(x) + sin(x * 3)) / 8;
-	}
+	static Real steeper(Rads x) { return (9 * sin(x) + sin(x * 3)) / 8; }
 
 	static void guiLabel(uint32 parentName, uint32 &index, const String &name)
 	{
@@ -68,13 +65,9 @@ public:
 		return r;
 	}
 
-	virtual void windowClose()
-	{
-		engineStop();
-	}
+	virtual void windowClose() { engineStop(); }
 
-	virtual void update()
-	{}
+	virtual void update() {}
 
 	virtual void guiEvent(InputGuiWidget in)
 	{
@@ -124,10 +117,7 @@ public:
 		}
 	}
 
-	virtual void initializeEngine()
-	{
-		engineInitialize(EngineCreateConfig());
-	}
+	virtual void initializeEngine() { engineInitialize(EngineCreateConfig()); }
 
 	virtual void initialize() = 0;
 
@@ -143,9 +133,20 @@ public:
 			initializeEngine();
 
 			// events
-			const auto windowCloseListener = engineWindow()->events.listen([&](const GenericInput &in) { if (in.type == InputClassEnum::WindowClose) this->windowClose(); }, -5156);
+			const auto windowCloseListener = engineWindow()->events.listen(
+				[&](const GenericInput &in)
+				{
+					if (in.type == InputClassEnum::WindowClose)
+						this->windowClose();
+				},
+				-5156);
 			const auto updateListener = controlThread().update.listen([&]() { this->update(); });
-			const auto guiListener = engineGuiManager()->widgetEvent.listen([&](const GenericInput &in) { if (in.type == InputClassEnum::GuiWidget) this->guiEvent(in.data.get<InputGuiWidget>()); });
+			const auto guiListener = engineGuiManager()->widgetEvent.listen(
+				[&](const GenericInput &in)
+				{
+					if (in.type == InputClassEnum::GuiWidget)
+						this->guiEvent(in.data.get<InputGuiWidget>());
+				});
 
 			// window
 			engineWindow()->windowedSize(Vec2i(800, 600));
@@ -170,4 +171,8 @@ public:
 	}
 };
 
-#define MAIN(CLASS_NAME, TITLE) int main() { return CLASS_NAME().run(TITLE); }
+#define MAIN(CLASS_NAME, TITLE) \
+	int main() \
+	{ \
+		return CLASS_NAME().run(TITLE); \
+	}

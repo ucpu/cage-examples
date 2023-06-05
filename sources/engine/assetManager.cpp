@@ -1,17 +1,17 @@
-#include <cage-core/logger.h>
-#include <cage-core/concurrent.h>
 #include <cage-core/assetContext.h>
 #include <cage-core/assetManager.h>
-#include <cage-core/timer.h>
+#include <cage-core/concurrent.h>
 #include <cage-core/hashString.h>
+#include <cage-core/logger.h>
+#include <cage-core/timer.h>
 
-#include <cage-engine/window.h>
 #include <cage-engine/font.h>
-#include <cage-engine/shaderProgram.h>
-#include <cage-engine/texture.h>
-#include <cage-engine/model.h>
-#include <cage-engine/sound.h>
 #include <cage-engine/highPerformanceGpuHint.h>
+#include <cage-engine/model.h>
+#include <cage-engine/shaderProgram.h>
+#include <cage-engine/sound.h>
+#include <cage-engine/texture.h>
+#include <cage-engine/window.h>
 
 #include <atomic>
 
@@ -43,7 +43,8 @@ void glThread()
 	window->makeCurrent();
 	while (!destroying)
 	{
-		while (assets->processCustomThread(1));
+		while (assets->processCustomThread(1))
+			;
 		threadSleep(1000);
 		for (uint32 i = 0; i < 50; i++)
 			assets->get<AssetSchemeIndexPack, AssetPack>(names[randomRange(0u, count)]);
@@ -140,4 +141,3 @@ int main(int argc, char *args[])
 		return 1;
 	}
 }
-

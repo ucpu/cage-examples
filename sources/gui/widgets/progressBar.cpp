@@ -1,13 +1,11 @@
-#include <cage-core/entitiesVisitor.h>
 #include "../gui.h"
+#include <cage-core/entitiesVisitor.h>
 
 class GuiTestImpl : public GuiTestClass
 {
 	void update() override
 	{
-		entitiesVisitor([](Entity *e, GuiProgressBarComponent &p) {
-			p.progress = (p.progress + 0.003) % 1;
-		}, engineGuiEntities(), false);
+		entitiesVisitor([](Entity *e, GuiProgressBarComponent &p) { p.progress = (p.progress + 0.003) % 1; }, engineGuiEntities(), false);
 	}
 
 	void initialize() override

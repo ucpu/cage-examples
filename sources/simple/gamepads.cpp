@@ -1,15 +1,15 @@
 #include <cage-core/assetManager.h>
-#include <cage-core/hashString.h>
-#include <cage-core/entities.h>
-#include <cage-core/logger.h>
 #include <cage-core/debug.h>
-#include <cage-engine/highPerformanceGpuHint.h>
-#include <cage-engine/guiComponents.h>
+#include <cage-core/entities.h>
+#include <cage-core/hashString.h>
+#include <cage-core/logger.h>
 #include <cage-engine/gamepad.h>
-#include <cage-engine/window.h>
+#include <cage-engine/guiComponents.h>
+#include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/scene.h>
-#include <cage-simple/statisticsGui.h>
+#include <cage-engine/window.h>
 #include <cage-simple/engine.h>
+#include <cage-simple/statisticsGui.h>
 
 #include <vector>
 
@@ -26,40 +26,19 @@ struct Gp : Immovable
 	const EventListener<bool(const GenericInput &)> releaseListener = g->events.listen(inputListener<InputClassEnum::GamepadRelease, InputGamepadKey>([this](InputGamepadKey in) { return this->release(in); }));
 	const EventListener<bool(const GenericInput &)> axisListener = g->events.listen(inputListener<InputClassEnum::GamepadAxis, InputGamepadAxis>([this](InputGamepadAxis in) { return this->axis(in); }));
 
-	void connected(InputGamepadState in)
-	{
-		CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "connected");
-	}
+	void connected(InputGamepadState in) { CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "connected"); }
 
-	void disconnected(InputGamepadState in)
-	{
-		CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "disconnected");
-	}
+	void disconnected(InputGamepadState in) { CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "disconnected"); }
 
-	void press(InputGamepadKey in)
-	{
-		CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "press: " + in.key);
-	}
+	void press(InputGamepadKey in) { CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "press: " + in.key); }
 
-	void release(InputGamepadKey in)
-	{
-		CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "release: " + in.key);
-	}
+	void release(InputGamepadKey in) { CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "release: " + in.key); }
 
-	void axis(InputGamepadAxis in)
-	{
-		CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "axis: " + in.axis + ", value: " + in.value);
-	}
+	void axis(InputGamepadAxis in) { CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "axis: " + in.axis + ", value: " + in.value); }
 
-	Gp()
-	{
-		CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "name: " + g->name());
-	}
+	Gp() { CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "name: " + g->name()); }
 
-	~Gp()
-	{
-		destroy();
-	}
+	~Gp() { destroy(); }
 
 	void destroy()
 	{

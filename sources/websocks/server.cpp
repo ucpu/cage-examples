@@ -1,9 +1,9 @@
+#include <algorithm>
+#include <cage-core/concurrent.h>
 #include <cage-core/config.h>
 #include <cage-core/logger.h>
 #include <cage-core/networkWebsocket.h>
-#include <cage-core/concurrent.h>
 #include <vector>
-#include <algorithm>
 
 using namespace cage;
 
@@ -22,36 +22,40 @@ void update()
 	std::vector<Holder<PointerRange<const char>>> messages;
 
 	// receive messages
-	std::erase_if(connections, [&](const Holder<WebsocketConnection> &it) {
-		try
+	std::erase_if(connections,
+		[&](const Holder<WebsocketConnection> &it)
 		{
-			while (it->size() > 0)
+			try
 			{
-				Holder<PointerRange<const char>> msg = it->readAll();
-				CAGE_LOG(SeverityEnum::Info, "message", String(msg));
-				messages.push_back(std::move(msg));
+				while (it->size() > 0)
+				{
+					Holder<PointerRange<const char>> msg = it->readAll();
+					CAGE_LOG(SeverityEnum::Info, "message", String(msg));
+					messages.push_back(std::move(msg));
+				}
+				return false;
 			}
-			return false;
-		}
-		catch (const cage::Disconnected &)
-		{
-			return true; // erase the connection
-		}
-	});
+			catch (const cage::Disconnected &)
+			{
+				return true; // erase the connection
+			}
+		});
 
 	// send messages
-	std::erase_if(connections, [&](const Holder<WebsocketConnection> &it) {
-		try
+	std::erase_if(connections,
+		[&](const Holder<WebsocketConnection> &it)
 		{
-			for (const auto &msg : messages)
-				it->write(msg);
-			return false;
-		}
-		catch (const cage::Disconnected &)
-		{
-			return true; // erase the connection
-		}
-	});
+			try
+			{
+				for (const auto &msg : messages)
+					it->write(msg);
+				return false;
+			}
+			catch (const cage::Disconnected &)
+			{
+				return true; // erase the connection
+			}
+		});
 }
 
 int main(int argc, const char *args[])

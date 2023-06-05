@@ -1,15 +1,15 @@
-#include <cage-core/logger.h>
 #include <cage-core/concurrent.h>
 #include <cage-core/entities.h>
 #include <cage-core/entitiesVisitor.h>
 #include <cage-core/hashString.h>
+#include <cage-core/logger.h>
 #include <cage-core/string.h>
-#include <cage-engine/window.h>
-#include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/guiComponents.h>
 #include <cage-engine/guiManager.h>
+#include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/scene.h>
 #include <cage-engine/sceneScreenSpaceEffects.h>
+#include <cage-engine/window.h>
 
 #include <cage-simple/engine.h>
 #include <cage-simple/fpsCamera.h>
@@ -72,12 +72,15 @@ void update()
 		TransformComponent &t = e->value<TransformComponent>();
 		t.position = Vec3(sin(Rads(time * 1e-6)) * 10, cos(Rads(time * 1e-6)) * 10, -20);
 	}
-	entitiesVisitor([&](Entity *e, TransformComponent &t, ShotComponent &s) {
-		if (s.ttl-- == 0)
-			e->destroy();
-		else
-			t.position += t.orientation * Vec3(0, 0, -2);
-	}, ents, true);
+	entitiesVisitor(
+		[&](Entity *e, TransformComponent &t, ShotComponent &s)
+		{
+			if (s.ttl-- == 0)
+				e->destroy();
+			else
+				t.position += t.orientation * Vec3(0, 0, -2);
+		},
+		ents, true);
 	shoot(Transform(Vec3(-20, 0, -25), Quat(Degs(), Degs(-90), Degs())));
 	if (updateDelay)
 		threadSleep(updateDelay);

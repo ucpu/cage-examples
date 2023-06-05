@@ -1,18 +1,18 @@
-#include <cage-core/logger.h>
-#include <cage-core/entities.h>
-#include <cage-core/config.h>
 #include <cage-core/assetManager.h>
-#include <cage-core/hashString.h>
 #include <cage-core/color.h>
-#include <cage-engine/window.h>
+#include <cage-core/config.h>
+#include <cage-core/entities.h>
+#include <cage-core/hashString.h>
+#include <cage-core/logger.h>
 #include <cage-engine/guiComponents.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/scene.h>
 #include <cage-engine/sceneScreenSpaceEffects.h>
+#include <cage-engine/window.h>
 
 #include <cage-simple/engine.h>
-#include <cage-simple/statisticsGui.h>
 #include <cage-simple/fpsCamera.h>
+#include <cage-simple/statisticsGui.h>
 
 #include <vector>
 
@@ -112,11 +112,7 @@ void initializeGui()
 		initializeGuiColors(panel->name(), 28, Vec3(0, 0, 0.2));
 	}
 
-	static constexpr const Vec3 colors[3] = {
-		Vec3(0.11, 0.95, 0.8),
-		Vec3(0.44, 0.95, 0.8),
-		Vec3(0.77, 0.95, 0.8)
-	};
+	static constexpr const Vec3 colors[3] = { Vec3(0.11, 0.95, 0.8), Vec3(0.44, 0.95, 0.8), Vec3(0.77, 0.95, 0.8) };
 	static constexpr const Real pitches[3] = { 0.25 * 90, 0.3 * 90, 0.55 * 90 };
 	static constexpr const Real yaws[3] = { 0.1 * 360, 0.2 * 360, 0.6 * 360 };
 	for (uint32 i = 0; i < 3; i++)

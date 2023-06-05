@@ -23,7 +23,7 @@ public:
 
 		for (uint32 i = 0; i < 300; i++)
 		{
-			Entity * e = ents->create(100 + i);
+			Entity *e = ents->create(100 + i);
 			GuiParentComponent &parent = e->value<GuiParentComponent>();
 			parent.parent = panel->name();
 			parent.order = i;

@@ -1,16 +1,16 @@
-#include <cage-core/logger.h>
 #include <cage-core/concurrent.h>
 #include <cage-core/entities.h>
 #include <cage-core/hashString.h>
+#include <cage-core/logger.h>
 #include <cage-core/noiseFunction.h>
-#include <cage-core/tasks.h>
 #include <cage-core/string.h>
-#include <cage-engine/window.h>
-#include <cage-engine/highPerformanceGpuHint.h>
+#include <cage-core/tasks.h>
 #include <cage-engine/guiComponents.h>
 #include <cage-engine/guiManager.h>
+#include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/scene.h>
 #include <cage-engine/sceneScreenSpaceEffects.h>
+#include <cage-engine/window.h>
 
 #include <cage-simple/engine.h>
 #include <cage-simple/fpsCamera.h>
@@ -41,7 +41,7 @@ struct BoxUpdater
 	PointerRange<Entity *const> boxesEntities = engineEntities()->component<RenderComponent>()->entities();
 	EntityComponent *transformComponent = engineEntities()->component<TransformComponent>();
 
-	void operator() (uint32 grp) const
+	void operator()(uint32 grp) const
 	{
 		const auto r = tasksSplit(grp, Groups, boxesCount);
 		for (uint32 i = r.first; i < r.second; i++)

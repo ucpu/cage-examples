@@ -1,13 +1,13 @@
-#include <cage-core/logger.h>
-#include <cage-core/entities.h>
 #include <cage-core/assetManager.h>
-#include <cage-core/hashString.h>
+#include <cage-core/entities.h>
 #include <cage-core/enumerate.h>
+#include <cage-core/hashString.h>
+#include <cage-core/logger.h>
 #include <cage-core/string.h>
-#include <cage-engine/window.h>
-#include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/guiComponents.h>
+#include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/scene.h>
+#include <cage-engine/window.h>
 
 #include <cage-simple/engine.h>
 #include <cage-simple/fpsCamera.h>
@@ -88,7 +88,8 @@ void update()
 {
 	EntityManager *ents = engineEntities();
 
-	const Vec3 cameraPos = [&]() {
+	const Vec3 cameraPos = [&]()
+	{
 		Entity *e = ents->get(1);
 		TransformComponent &t = e->value<TransformComponent>();
 		return t.position;

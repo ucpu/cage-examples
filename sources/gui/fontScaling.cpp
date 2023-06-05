@@ -36,7 +36,7 @@ public:
 		const Real t = applicationTime() / 2e7f + offset;
 		for (uint32 i = 0; i < fontsCount; i++)
 		{
-			Entity * e = ents->get(100 + i);
+			Entity *e = ents->get(100 + i);
 			e->value<GuiTextFormatComponent>().size = (steeper(Rads(t) + Rads::Full() * Real(i) / fontsCount) * 0.5 + 0.5) * 80 + 10;
 		}
 	}
@@ -55,7 +55,7 @@ public:
 
 		for (uint32 i = 0; i < fontsCount; i++)
 		{
-			Entity * e = ents->create(100 + i);
+			Entity *e = ents->create(100 + i);
 			e->value<GuiParentComponent>().parent = 2;
 			e->value<GuiParentComponent>().order = i;
 			e->value<GuiLabelComponent>();

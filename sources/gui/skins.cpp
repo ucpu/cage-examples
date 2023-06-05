@@ -1,6 +1,6 @@
+#include "gui.h"
 #include <cage-core/memoryBuffer.h>
 #include <cage-engine/guiSkins.h>
-#include "gui.h"
 
 class GuiTestImpl : public GuiTestClass
 {
@@ -33,41 +33,42 @@ public:
 		for (uint32 i = 0; i < 4; i++)
 			a4[i] = (steeper(Rads(t) + Rads::Full() * Real(i) / 4) * 0.5 + 0.5) * 20;
 
-		const auto &generate = [&](uint32 styleIndex) {
+		const auto &generate = [&](uint32 styleIndex)
+		{
 			GuiSkinConfig skin = detail::guiSkinGenerate(styleIndex);
 			switch (animateOption)
 			{
-			case 0: // margins
-				skin.defaults.label.margin = a4;
-				skin.defaults.button.margin = a4;
-				skin.defaults.inputBox.margin = a4;
-				skin.defaults.textArea.margin = a4;
-				skin.defaults.checkBox.margin = a4;
-				skin.defaults.radioBox.margin = a4;
-				skin.defaults.comboBox.baseMargin = a4;
-				skin.defaults.progressBar.baseMargin = a4;
-				skin.defaults.sliderBar.horizontal.margin = a4;
-				skin.defaults.colorPicker.margin = a4;
-				skin.defaults.panel.baseMargin = a4;
-				skin.defaults.spoiler.baseMargin = a4;
-				break;
-			case 1: // borders
-				for (uint32 i = 0; i < (uint32)GuiElementTypeEnum::TotalElements; i++)
-					skin.layouts[i].border = a4;
-				break;
-			case 2: // paddings
-				skin.defaults.button.padding = a4;
-				skin.defaults.inputBox.basePadding = a4;
-				skin.defaults.textArea.padding = a4;
-				skin.defaults.comboBox.basePadding = a4;
-				skin.defaults.progressBar.textPadding = a4;
-				skin.defaults.progressBar.fillingPadding = a4;
-				skin.defaults.sliderBar.horizontal.padding = a4;
-				skin.defaults.panel.captionPadding = a4;
-				skin.defaults.panel.contentPadding = a4;
-				skin.defaults.spoiler.captionPadding = a4;
-				skin.defaults.spoiler.contentPadding = a4;
-				break;
+				case 0: // margins
+					skin.defaults.label.margin = a4;
+					skin.defaults.button.margin = a4;
+					skin.defaults.inputBox.margin = a4;
+					skin.defaults.textArea.margin = a4;
+					skin.defaults.checkBox.margin = a4;
+					skin.defaults.radioBox.margin = a4;
+					skin.defaults.comboBox.baseMargin = a4;
+					skin.defaults.progressBar.baseMargin = a4;
+					skin.defaults.sliderBar.horizontal.margin = a4;
+					skin.defaults.colorPicker.margin = a4;
+					skin.defaults.panel.baseMargin = a4;
+					skin.defaults.spoiler.baseMargin = a4;
+					break;
+				case 1: // borders
+					for (uint32 i = 0; i < (uint32)GuiElementTypeEnum::TotalElements; i++)
+						skin.layouts[i].border = a4;
+					break;
+				case 2: // paddings
+					skin.defaults.button.padding = a4;
+					skin.defaults.inputBox.basePadding = a4;
+					skin.defaults.textArea.padding = a4;
+					skin.defaults.comboBox.basePadding = a4;
+					skin.defaults.progressBar.textPadding = a4;
+					skin.defaults.progressBar.fillingPadding = a4;
+					skin.defaults.sliderBar.horizontal.padding = a4;
+					skin.defaults.panel.captionPadding = a4;
+					skin.defaults.panel.contentPadding = a4;
+					skin.defaults.spoiler.captionPadding = a4;
+					skin.defaults.spoiler.contentPadding = a4;
+					break;
 			}
 			return skin;
 		};
@@ -305,7 +306,7 @@ public:
 				"paddings",
 				"none",
 			};
-			for (uint32 i = 0; i < sizeof(options)/sizeof(options[0]); i++)
+			for (uint32 i = 0; i < sizeof(options) / sizeof(options[0]); i++)
 			{
 				Entity *ee = ents->createUnique();
 				GuiParentComponent &p = ee->value<GuiParentComponent>();

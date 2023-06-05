@@ -1,5 +1,5 @@
-#include <cage-core/memoryBuffer.h>
 #include "../gui.h"
+#include <cage-core/memoryBuffer.h>
 
 class GuiTestImpl : public GuiTestClass
 {

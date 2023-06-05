@@ -1,14 +1,14 @@
-#include <cage-core/logger.h>
-#include <cage-core/entities.h>
-#include <cage-core/config.h>
 #include <cage-core/assetManager.h>
-#include <cage-core/hashString.h>
 #include <cage-core/color.h>
+#include <cage-core/config.h>
+#include <cage-core/entities.h>
+#include <cage-core/hashString.h>
+#include <cage-core/logger.h>
 #include <cage-core/noiseFunction.h>
-#include <cage-engine/window.h>
-#include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/guiComponents.h>
+#include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/scene.h>
+#include <cage-engine/window.h>
 
 #include <cage-simple/engine.h>
 #include <cage-simple/fpsCamera.h>
@@ -84,9 +84,7 @@ void generatePieces()
 		HashString("cage-tests/maze/wall.object"),
 	};
 
-	const auto &pick = [&]() {
-		return randomRange(std::size_t(0), sizeof(names) / sizeof(names[0]));
-	};
+	const auto &pick = [&]() { return randomRange(std::size_t(0), sizeof(names) / sizeof(names[0])); };
 
 	EntityManager *ents = engineEntities();
 	for (sint32 y = -5; y < 6; y++)

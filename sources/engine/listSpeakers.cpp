@@ -1,9 +1,9 @@
-#include <cage-core/logger.h>
 #include <cage-core/concurrent.h>
+#include <cage-core/logger.h>
 #include <cage-core/timer.h>
 
-#include <cage-engine/speakerList.h>
 #include <cage-engine/speaker.h>
+#include <cage-engine/speakerList.h>
 
 #include <cmath>
 

@@ -1,15 +1,15 @@
-#include <cage-core/logger.h>
+#include <cage-core/assetManager.h>
 #include <cage-core/entities.h>
 #include <cage-core/entitiesVisitor.h>
-#include <cage-core/assetManager.h>
 #include <cage-core/hashString.h>
+#include <cage-core/logger.h>
 #include <cage-core/variableSmoothingBuffer.h>
-#include <cage-engine/scene.h>
-#include <cage-engine/sceneVirtualReality.h>
-#include <cage-engine/sceneScreenSpaceEffects.h>
-#include <cage-engine/window.h>
-#include <cage-engine/virtualReality.h>
 #include <cage-engine/highPerformanceGpuHint.h>
+#include <cage-engine/scene.h>
+#include <cage-engine/sceneScreenSpaceEffects.h>
+#include <cage-engine/sceneVirtualReality.h>
+#include <cage-engine/virtualReality.h>
+#include <cage-engine/window.h>
 
 #include <cage-simple/engine.h>
 #include <cage-simple/statisticsGui.h>

@@ -1,11 +1,11 @@
-#include <cage-core/logger.h>
-#include <cage-core/concurrent.h>
 #include <cage-core/color.h>
+#include <cage-core/concurrent.h>
+#include <cage-core/logger.h>
 #include <cage-core/macros.h>
 
-#include <cage-engine/window.h>
-#include <cage-engine/opengl.h>
 #include <cage-engine/highPerformanceGpuHint.h>
+#include <cage-engine/opengl.h>
+#include <cage-engine/window.h>
 
 #include <atomic>
 
@@ -40,10 +40,7 @@ public:
 		CAGE_LOG(SeverityEnum::Info, "test", Stringizer() + "window " + index + " created");
 	}
 
-	~WindowTestClass()
-	{
-		CAGE_LOG(SeverityEnum::Info, "test", Stringizer() + "destroying window " + index);
-	}
+	~WindowTestClass() { CAGE_LOG(SeverityEnum::Info, "test", Stringizer() + "destroying window " + index); }
 
 	void tick()
 	{

@@ -14,7 +14,7 @@ class GuiTestImpl : public GuiTestClass
 			e->value<GuiLayoutTableComponent>().grid = true;
 		}
 
-		for (uint32 i = 0; i < 7*7; i++)
+		for (uint32 i = 0; i < 7 * 7; i++)
 		{
 			Entity *e = ents->createUnique();
 			GuiParentComponent &p = e->value<GuiParentComponent>();

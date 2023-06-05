@@ -1,10 +1,10 @@
 #include <cage-core/logger.h>
-#include <cage-engine/window.h>
-#include <cage-engine/virtualReality.h>
 #include <cage-engine/frameBuffer.h>
-#include <cage-engine/texture.h>
-#include <cage-engine/opengl.h>
 #include <cage-engine/highPerformanceGpuHint.h>
+#include <cage-engine/opengl.h>
+#include <cage-engine/texture.h>
+#include <cage-engine/virtualReality.h>
+#include <cage-engine/window.h>
 
 using namespace cage;
 

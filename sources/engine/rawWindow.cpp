@@ -1,20 +1,20 @@
-#include <cage-core/logger.h>
-#include <cage-core/concurrent.h>
 #include <cage-core/assetContext.h>
 #include <cage-core/assetManager.h>
-#include <cage-core/timer.h>
+#include <cage-core/concurrent.h>
 #include <cage-core/hashString.h>
+#include <cage-core/logger.h>
+#include <cage-core/timer.h>
 
-#include <cage-engine/window.h>
 #include <cage-engine/font.h>
+#include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/model.h>
-#include <cage-engine/texture.h>
+#include <cage-engine/opengl.h>
 #include <cage-engine/shaderProgram.h>
 #include <cage-engine/sound.h>
 #include <cage-engine/speaker.h>
+#include <cage-engine/texture.h>
 #include <cage-engine/voices.h>
-#include <cage-engine/opengl.h>
-#include <cage-engine/highPerformanceGpuHint.h>
+#include <cage-engine/window.h>
 
 using namespace cage;
 

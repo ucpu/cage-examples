@@ -1,18 +1,18 @@
-#include <cage-core/logger.h>
-#include <cage-core/concurrent.h>
 #include <cage-core/assetContext.h>
 #include <cage-core/assetManager.h>
+#include <cage-core/concurrent.h>
 #include <cage-core/hashString.h>
+#include <cage-core/logger.h>
 
-#include <cage-engine/window.h>
-#include <cage-engine/renderObject.h>
-#include <cage-engine/model.h>
-#include <cage-engine/texture.h>
-#include <cage-engine/shaderProgram.h>
 #include <cage-engine/frameBuffer.h>
-#include <cage-engine/virtualReality.h>
-#include <cage-engine/opengl.h>
 #include <cage-engine/highPerformanceGpuHint.h>
+#include <cage-engine/model.h>
+#include <cage-engine/opengl.h>
+#include <cage-engine/renderObject.h>
+#include <cage-engine/shaderProgram.h>
+#include <cage-engine/texture.h>
+#include <cage-engine/virtualReality.h>
+#include <cage-engine/window.h>
 
 using namespace cage;
 
@@ -86,7 +86,7 @@ int main(int argc, char *args[])
 				Holder<VirtualRealityGraphicsFrame> frame = virtualreality->graphicsFrame();
 				frame->updateProjections();
 				fb->bind();
-				
+
 				if (depthTexture->internalFormat() == 0)
 				{
 					depthTexture->bind(0);

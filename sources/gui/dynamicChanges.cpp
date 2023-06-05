@@ -1,8 +1,8 @@
-#include <cage-core/memoryBuffer.h>
 #include "gui.h"
+#include <cage-core/memoryBuffer.h>
 
-#include <vector>
 #include <algorithm>
+#include <vector>
 
 class GuiTestImpl : public GuiTestClass
 {
@@ -28,15 +28,17 @@ public:
 	void removeOrphanedWidgets()
 	{
 		EntityManager *ents = engineGuiEntities();
-		widgets.erase(std::remove_if(widgets.begin(), widgets.end(), [&](uint32 n)
-		{
-			Entity *e = ents->get(n);
-			GuiParentComponent &p = e->value<GuiParentComponent>();
-			bool ret = !ents->has(p.parent);
-			if (ret)
-				e->destroy();
-			return ret;
-		}), widgets.end());
+		widgets.erase(std::remove_if(widgets.begin(), widgets.end(),
+						  [&](uint32 n)
+						  {
+							  Entity *e = ents->get(n);
+							  GuiParentComponent &p = e->value<GuiParentComponent>();
+							  bool ret = !ents->has(p.parent);
+							  if (ret)
+								  e->destroy();
+							  return ret;
+						  }),
+			widgets.end());
 	}
 
 	void update() override
@@ -64,61 +66,73 @@ public:
 			}
 			switch (randomRange(0, 12))
 			{
-			case 0:
-			{
-				e->value<GuiButtonComponent>();
-				e->value<GuiTextComponent>().value = Stringizer() + e->name();
-			} break;
-			case 1:
-			{
-				e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Indeterminate;
-			} break;
-			case 2:
-			{
-				e->value<GuiColorPickerComponent>().color = randomChance3();
-			} break;
-			case 3:
-			{
-				e->value<GuiComboBoxComponent>();
-				generateList(e->name());
-			} break;
-			case 4:
-			{
-				e->value<GuiInputComponent>().value = Stringizer() + e->name();
-			} break;
-			case 5:
-			{
-				e->value<GuiLabelComponent>();
-				e->value<GuiTextComponent>().value = Stringizer() + e->name();
-			} break;
-			case 6:
-			{
-				e->value<GuiPanelComponent>();
-				e->value<GuiTextComponent>().value = Stringizer() + e->name();
-			} break;
-			case 7:
-			{
-				GuiProgressBarComponent &pb = e->value<GuiProgressBarComponent>();
-				pb.progress = randomChance();
-				pb.showValue = randomChance() < 0.5;
-			} break;
-			case 8:
-			{
-				e->value<GuiRadioBoxComponent>();
-			} break;
-			case 9:
-			{
-				e->value<GuiSliderBarComponent>().value = randomChance();
-			} break;
-			case 10:
-			{
-				e->value<GuiSpoilerComponent>();
-				e->value<GuiTextComponent>().value = Stringizer() + e->name();
-			} break;
-			case 11:
-			{
-				e->value<GuiTextAreaComponent>().buffer = &buffer;
-			} break;
+				case 0:
+				{
+					e->value<GuiButtonComponent>();
+					e->value<GuiTextComponent>().value = Stringizer() + e->name();
+				}
+				break;
+				case 1:
+				{
+					e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Indeterminate;
+				}
+				break;
+				case 2:
+				{
+					e->value<GuiColorPickerComponent>().color = randomChance3();
+				}
+				break;
+				case 3:
+				{
+					e->value<GuiComboBoxComponent>();
+					generateList(e->name());
+				}
+				break;
+				case 4:
+				{
+					e->value<GuiInputComponent>().value = Stringizer() + e->name();
+				}
+				break;
+				case 5:
+				{
+					e->value<GuiLabelComponent>();
+					e->value<GuiTextComponent>().value = Stringizer() + e->name();
+				}
+				break;
+				case 6:
+				{
+					e->value<GuiPanelComponent>();
+					e->value<GuiTextComponent>().value = Stringizer() + e->name();
+				}
+				break;
+				case 7:
+				{
+					GuiProgressBarComponent &pb = e->value<GuiProgressBarComponent>();
+					pb.progress = randomChance();
+					pb.showValue = randomChance() < 0.5;
+				}
+				break;
+				case 8:
+				{
+					e->value<GuiRadioBoxComponent>();
+				}
+				break;
+				case 9:
+				{
+					e->value<GuiSliderBarComponent>().value = randomChance();
+				}
+				break;
+				case 10:
+				{
+					e->value<GuiSpoilerComponent>();
+					e->value<GuiTextComponent>().value = Stringizer() + e->name();
+				}
+				break;
+				case 11:
+				{
+					e->value<GuiTextAreaComponent>().buffer = &buffer;
+				}
+				break;
 			}
 		}
 	}
