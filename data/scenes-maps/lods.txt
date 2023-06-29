@@ -1,0 +1,9 @@
+scenes/lods/lods.pack
+
+scenes/lods/lods.object
+0 1 0
+0
+
+scenes/common/ground.obj
+0 0 0
+0

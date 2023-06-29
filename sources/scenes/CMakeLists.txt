@@ -12,3 +12,8 @@ add_executable(generateMaterialData "generateMaterialData.cpp")
 target_link_libraries(generateMaterialData cage-core)
 cage_ide_category(generateMaterialData scenes)
 cage_ide_working_dir_in_place(generateMaterialData)
+
+add_executable(generateLodData "generateLodData.cpp")
+target_link_libraries(generateLodData cage-core)
+cage_ide_category(generateLodData scenes)
+cage_ide_working_dir_in_place(generateLodData)
