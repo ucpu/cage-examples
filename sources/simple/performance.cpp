@@ -1,3 +1,5 @@
+#include <atomic>
+
 #include <cage-core/concurrent.h>
 #include <cage-core/entities.h>
 #include <cage-core/hashString.h>
@@ -11,12 +13,9 @@
 #include <cage-engine/scene.h>
 #include <cage-engine/sceneScreenSpaceEffects.h>
 #include <cage-engine/window.h>
-
 #include <cage-simple/engine.h>
 #include <cage-simple/fpsCamera.h>
 #include <cage-simple/statisticsGui.h>
-
-#include <atomic>
 
 using namespace cage;
 

@@ -1,5 +1,7 @@
 #include "../gui.h"
 
+using namespace cage;
+
 void tooltipMultiline(const GuiTooltipConfig &cfg)
 {
 	cfg.tooltip->value<GuiPanelComponent>();

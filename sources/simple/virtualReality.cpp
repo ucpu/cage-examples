@@ -10,7 +10,6 @@
 #include <cage-engine/sceneVirtualReality.h>
 #include <cage-engine/virtualReality.h>
 #include <cage-engine/window.h>
-
 #include <cage-simple/engine.h>
 #include <cage-simple/statisticsGui.h>
 

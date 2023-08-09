@@ -7,7 +7,6 @@
 #include <cage-engine/scene.h>
 #include <cage-engine/sceneScreenSpaceEffects.h>
 #include <cage-engine/window.h>
-
 #include <cage-simple/engine.h>
 #include <cage-simple/fpsCamera.h>
 #include <cage-simple/guiInWorld.h>

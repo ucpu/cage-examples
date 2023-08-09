@@ -3,7 +3,6 @@
 #include <cage-core/concurrent.h>
 #include <cage-core/hashString.h>
 #include <cage-core/logger.h>
-
 #include <cage-engine/frameBuffer.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/model.h>

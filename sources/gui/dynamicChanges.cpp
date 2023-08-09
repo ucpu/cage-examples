@@ -1,8 +1,11 @@
-#include "gui.h"
-#include <cage-core/memoryBuffer.h>
-
 #include <algorithm>
 #include <vector>
+
+#include "gui.h"
+
+#include <cage-core/memoryBuffer.h>
+
+using namespace cage;
 
 class GuiTestImpl : public GuiTestClass
 {

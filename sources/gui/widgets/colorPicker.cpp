@@ -2,6 +2,8 @@
 
 #include <cage-core/color.h>
 
+using namespace cage;
+
 class GuiTestImpl : public GuiTestClass
 {
 	void initialize() override

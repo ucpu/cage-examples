@@ -1,7 +1,9 @@
+#include "gui.h"
+
 #include <cage-core/image.h>
 #include <cage-engine/guiSkins.h>
 
-#include "gui.h"
+using namespace cage;
 
 class GuiTestImpl : public GuiTestClass
 {

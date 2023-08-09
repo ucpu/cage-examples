@@ -4,7 +4,6 @@
 #include <cage-core/hashString.h>
 #include <cage-core/logger.h>
 #include <cage-core/timer.h>
-
 #include <cage-engine/font.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/model.h>

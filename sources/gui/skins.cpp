@@ -1,6 +1,9 @@
 #include "gui.h"
+
 #include <cage-core/memoryBuffer.h>
 #include <cage-engine/guiSkins.h>
+
+using namespace cage;
 
 class GuiTestImpl : public GuiTestClass
 {

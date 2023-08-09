@@ -6,6 +6,8 @@
 // in debug build.
 // *************************************************************************
 
+using namespace cage;
+
 class GuiTestImpl : public GuiTestClass
 {
 public:

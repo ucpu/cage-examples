@@ -1,5 +1,8 @@
 #include "../gui.h"
+
 #include <cage-core/string.h>
+
+using namespace cage;
 
 bool setGrid(Entity *c)
 {

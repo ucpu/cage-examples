@@ -1,6 +1,9 @@
 #include "gui.h"
+
 #include <cage-core/memoryBuffer.h>
 #include <cage-engine/guiBuilder.h>
+
+using namespace cage;
 
 namespace
 {

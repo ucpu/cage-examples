@@ -1,3 +1,5 @@
+#include <vector>
+
 #include <cage-core/assetManager.h>
 #include <cage-core/config.h>
 #include <cage-core/entities.h>
@@ -7,12 +9,9 @@
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/scene.h>
 #include <cage-engine/window.h>
-
 #include <cage-simple/engine.h>
 #include <cage-simple/fpsCamera.h>
 #include <cage-simple/statisticsGui.h>
-
-#include <vector>
 
 using namespace cage;
 constexpr uint32 assetsName = HashString("cage-tests/lods/lods.pack");

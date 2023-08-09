@@ -1,5 +1,7 @@
 #include "gui.h"
 
+using namespace cage;
+
 const char *fontNames[] = {
 	"cage-tests/gui/DroidSansMono.ttf",
 	"cage-tests/gui/immortal.ttf",

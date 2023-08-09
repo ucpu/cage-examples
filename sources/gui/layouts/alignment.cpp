@@ -1,5 +1,7 @@
 #include "../gui.h"
 
+using namespace cage;
+
 class GuiTestImpl : public GuiTestClass
 {
 public:

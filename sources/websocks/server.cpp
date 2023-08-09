@@ -1,9 +1,10 @@
 #include <algorithm>
+#include <vector>
+
 #include <cage-core/concurrent.h>
 #include <cage-core/config.h>
 #include <cage-core/logger.h>
 #include <cage-core/networkWebsocket.h>
-#include <vector>
 
 using namespace cage;
 

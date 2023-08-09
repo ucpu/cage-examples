@@ -1,3 +1,5 @@
+#include <vector>
+
 #include <cage-core/assetManager.h>
 #include <cage-core/camera.h>
 #include <cage-core/collider.h>
@@ -12,13 +14,10 @@
 #include <cage-engine/scene.h>
 #include <cage-engine/sceneScreenSpaceEffects.h>
 #include <cage-engine/window.h>
-
 #include <cage-simple/cameraRay.h>
 #include <cage-simple/engine.h>
 #include <cage-simple/fpsCamera.h>
 #include <cage-simple/statisticsGui.h>
-
-#include <vector>
 
 using namespace cage;
 constexpr uint32 assetsName = HashString("cage-tests/explosion/explosion.pack");
