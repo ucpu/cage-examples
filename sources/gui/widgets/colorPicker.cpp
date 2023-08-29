@@ -13,7 +13,7 @@ class GuiTestImpl : public GuiTestClass
 		guiBasicLayout();
 		{
 			Entity *e = ents->get(3);
-			GuiLayoutTableComponent &layout = e->value<GuiLayoutTableComponent>();
+			e->value<GuiLayoutTableComponent>();
 		}
 
 		uint32 index = 1;

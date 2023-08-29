@@ -447,7 +447,7 @@ void initializeGui()
 			GuiParentComponent &p = table->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 2;
-			GuiLayoutTableComponent &t = table->value<GuiLayoutTableComponent>();
+			table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
 		genInputFloat(table, childIndex, baseName, "Threshold:", 0, 5, 0.01, ScreenSpaceEffectsComponent().bloom.threshold);
@@ -478,7 +478,7 @@ void initializeGui()
 			GuiParentComponent &p = table->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 2;
-			GuiLayoutTableComponent &t = table->value<GuiLayoutTableComponent>();
+			table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
 		genInputFloat(table, childIndex, baseName, "Darker speed:", 0, 10, 0.02, ScreenSpaceEffectsComponent().eyeAdaptation.darkerSpeed);
@@ -516,7 +516,7 @@ void initializeGui()
 			GuiParentComponent &p = table->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 2;
-			GuiLayoutTableComponent &t = table->value<GuiLayoutTableComponent>();
+			table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
 		genInputFloat(table, childIndex, baseName, "Shoulder Strength:", 0, 1, 0.02, ScreenSpaceEffectsComponent().tonemap.shoulderStrength);
@@ -552,7 +552,7 @@ void initializeGui()
 			GuiParentComponent &p = table->value<GuiParentComponent>();
 			p.parent = panel->name();
 			p.order = 2;
-			GuiLayoutTableComponent &t = table->value<GuiLayoutTableComponent>();
+			table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
 		genInputFloat(table, childIndex, baseName, "Gamma:", 1, 5, 0.1, ScreenSpaceEffectsComponent().gamma);
