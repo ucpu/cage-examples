@@ -34,7 +34,7 @@ namespace GuiTestClassNS
 			{ // splitter
 				Entity *split = ents->create(1);
 				split->value<GuiLayoutLineComponent>().vertical = true;
-				split->value<GuiLayoutLineComponent>().end = LineEdgeModeEnum::Flexible;
+				split->value<GuiLayoutLineComponent>().last = LineEdgeModeEnum::Flexible;
 			}
 			{ // top panel
 				Entity *panel = ents->create(2);
