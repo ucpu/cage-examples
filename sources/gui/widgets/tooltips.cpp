@@ -84,6 +84,32 @@ void tooltipRecursive(uint32 depth, const GuiTooltipConfig &cfg)
 	e->value<GuiTooltipComponent>().tooltip.bind<uint32, &tooltipRecursive>(depth + 1);
 }
 
+void tooltipTall(const GuiTooltipConfig &cfg)
+{
+	cfg.closeCondition = TooltipCloseConditionEnum::Modal;
+	Entity *f = cfg.tooltip->manager()->createUnique();
+	f->value<GuiParentComponent>().parent = cfg.tooltip->name();
+	f->value<GuiPanelComponent>();
+	f->value<GuiExplicitSizeComponent>().size = Vec2(120, 1000);
+	Entity *e = cfg.tooltip->manager()->createUnique();
+	e->value<GuiParentComponent>().parent = f->name();
+	e->value<GuiLabelComponent>();
+	e->value<GuiTextComponent>().value = "modal";
+}
+
+void tooltipWide(const GuiTooltipConfig &cfg)
+{
+	cfg.closeCondition = TooltipCloseConditionEnum::Modal;
+	Entity *f = cfg.tooltip->manager()->createUnique();
+	f->value<GuiParentComponent>().parent = cfg.tooltip->name();
+	f->value<GuiPanelComponent>();
+	f->value<GuiExplicitSizeComponent>().size = Vec2(1000, 120);
+	Entity *e = cfg.tooltip->manager()->createUnique();
+	e->value<GuiParentComponent>().parent = f->name();
+	e->value<GuiLabelComponent>();
+	e->value<GuiTextComponent>().value = "modal";
+}
+
 class GuiTestImpl : public GuiTestClass
 {
 	void initialize() override
@@ -223,6 +249,28 @@ class GuiTestImpl : public GuiTestClass
 			e->value<GuiLabelComponent>();
 			e->value<GuiTextComponent>().value = "label";
 			e->value<GuiTooltipComponent>().tooltip.bind<uint32, &tooltipRecursive>(1);
+		}
+
+		{ // tall
+			guiLabel(3, index, "tall");
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = 3;
+			p.order = index++;
+			e->value<GuiLabelComponent>();
+			e->value<GuiTextComponent>().value = "label";
+			e->value<GuiTooltipComponent>().tooltip.bind<tooltipTall>();
+		}
+
+		{ // wide
+			guiLabel(3, index, "wide");
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = 3;
+			p.order = index++;
+			e->value<GuiLabelComponent>();
+			e->value<GuiTextComponent>().value = "label";
+			e->value<GuiTooltipComponent>().tooltip.bind<tooltipWide>();
 		}
 	}
 };
