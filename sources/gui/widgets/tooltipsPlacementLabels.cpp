@@ -32,4 +32,4 @@ class GuiTestImpl : public GuiTestClass
 	}
 };
 
-MAIN(GuiTestImpl, "tooltips placement")
+MAIN(GuiTestImpl, "tooltips placement labels")

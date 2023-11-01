@@ -18,7 +18,7 @@ void tooltipMultiline(const GuiTooltipConfig &cfg)
 
 void tooltipCenteredOverLabel(const GuiTooltipConfig &cfg)
 {
-	cfg.placement = TooltipPlacementEnum::Center;
+	cfg.placement = TooltipPlacementEnum::InvokerCenter;
 	cfg.tooltip->value<GuiPanelComponent>();
 	Entity *e = cfg.tooltip->manager()->createUnique();
 	e->value<GuiParentComponent>().parent = cfg.tooltip->name();
@@ -28,8 +28,28 @@ void tooltipCenteredOverLabel(const GuiTooltipConfig &cfg)
 
 void tooltipCenteredInScreen(const GuiTooltipConfig &cfg)
 {
+	cfg.placement = TooltipPlacementEnum::ScreenCenter;
+	cfg.tooltip->value<GuiPanelComponent>();
+	Entity *e = cfg.tooltip->manager()->createUnique();
+	e->value<GuiParentComponent>().parent = cfg.tooltip->name();
+	e->value<GuiLabelComponent>();
+	e->value<GuiTextComponent>().value = "centered in screen";
+}
+
+void tooltipCenteredAtCursor(const GuiTooltipConfig &cfg)
+{
+	cfg.placement = TooltipPlacementEnum::CursorCenter;
+	cfg.tooltip->value<GuiPanelComponent>();
+	Entity *e = cfg.tooltip->manager()->createUnique();
+	e->value<GuiParentComponent>().parent = cfg.tooltip->name();
+	e->value<GuiLabelComponent>();
+	e->value<GuiTextComponent>().value = "centered at cursor";
+}
+
+void tooltipManualPosition(const GuiTooltipConfig &cfg)
+{
 	cfg.placement = TooltipPlacementEnum::Manual;
-	cfg.tooltip->value<GuiLayoutAlignmentComponent>().alignment = Vec2(0.5);
+	cfg.tooltip->value<GuiLayoutAlignmentComponent>().alignment = Vec2(0.25);
 	Entity *f = cfg.tooltip->manager()->createUnique();
 	f->value<GuiParentComponent>().parent = cfg.tooltip->name();
 	f->value<GuiPanelComponent>();
@@ -166,6 +186,28 @@ class GuiTestImpl : public GuiTestClass
 			e->value<GuiLabelComponent>();
 			e->value<GuiTextComponent>().value = "label";
 			e->value<GuiTooltipComponent>().tooltip.bind<tooltipCenteredInScreen>();
+		}
+
+		{ // at cursor
+			guiLabel(3, index, "cursor center");
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = 3;
+			p.order = index++;
+			e->value<GuiLabelComponent>();
+			e->value<GuiTextComponent>().value = "label";
+			e->value<GuiTooltipComponent>().tooltip.bind<tooltipCenteredAtCursor>();
+		}
+
+		{ // manual position
+			guiLabel(3, index, "manual position");
+			Entity *e = ents->createUnique();
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = 3;
+			p.order = index++;
+			e->value<GuiLabelComponent>();
+			e->value<GuiTextComponent>().value = "label";
+			e->value<GuiTooltipComponent>().tooltip.bind<tooltipManualPosition>();
 		}
 
 		{ // short delay
