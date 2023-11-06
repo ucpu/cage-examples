@@ -2,6 +2,14 @@
 
 using namespace cage;
 
+void tooltipCallback(uint32 index, const GuiTooltipConfig &cfg)
+{
+	cfg.placement = TooltipPlacementEnum::InvokerCorner;
+	auto g = newGuiBuilder(cfg.tooltip);
+	auto _ = g->panel();
+	g->label().text(Stringizer() + "option " + index);
+}
+
 class GuiTestImpl : public GuiTestClass
 {
 	void initialize() override
@@ -51,6 +59,7 @@ class GuiTestImpl : public GuiTestClass
 			p.order = index++;
 			e->value<GuiComboBoxComponent>().selected = 2;
 			e->value<GuiTextComponent>().value = "select one:";
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"select one">();
 			for (uint32 i = 0; i < 4; i++)
 			{
 				Entity *o = ents->createUnique();
@@ -58,6 +67,7 @@ class GuiTestImpl : public GuiTestClass
 				p.parent = e->name();
 				p.order = index++;
 				o->value<GuiTextComponent>().value = Stringizer() + "option " + i;
+				o->value<GuiTooltipComponent>().tooltip.bind<uint32, &tooltipCallback>(i);
 			}
 		}
 		{ // disabled combo
@@ -69,6 +79,7 @@ class GuiTestImpl : public GuiTestClass
 			e->value<GuiComboBoxComponent>();
 			e->value<GuiWidgetStateComponent>().disabled = true;
 			e->value<GuiTextComponent>().value = "select one:";
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"select one">();
 			for (uint32 i = 0; i < 4; i++)
 			{
 				Entity *o = ents->createUnique();
@@ -76,6 +87,7 @@ class GuiTestImpl : public GuiTestClass
 				p.parent = e->name();
 				p.order = index++;
 				o->value<GuiTextComponent>().value = Stringizer() + "option " + i;
+				o->value<GuiTooltipComponent>().tooltip.bind<uint32, &tooltipCallback>(i);
 			}
 		}
 		{ // disabled items
@@ -86,6 +98,7 @@ class GuiTestImpl : public GuiTestClass
 			p.order = index++;
 			e->value<GuiComboBoxComponent>();
 			e->value<GuiTextComponent>().value = "select one:";
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"select one">();
 			for (uint32 i = 0; i < 4; i++)
 			{
 				Entity *o = ents->createUnique();
@@ -95,6 +108,7 @@ class GuiTestImpl : public GuiTestClass
 				o->value<GuiTextComponent>().value = Stringizer() + "option " + i;
 				if (i == 2)
 					o->value<GuiWidgetStateComponent>().disabled = true;
+				o->value<GuiTooltipComponent>().tooltip.bind<uint32, &tooltipCallback>(i);
 			}
 		}
 	}
