@@ -15,14 +15,12 @@
 #include <cage-engine/window.h>
 #include <cage-simple/engine.h>
 #include <cage-simple/fpsCamera.h>
-#include <cage-simple/statisticsGui.h>
 
 using namespace cage;
 
 namespace
 {
 	Holder<FpsCamera> cameraCtrl;
-	Holder<StatisticsGui> statistics;
 
 	uint32 sceneIndexCurrent;
 	uint32 sceneIndexLoaded;
@@ -216,7 +214,6 @@ void cameraInitialize()
 	cameraCtrl = newFpsCamera();
 	cameraCtrl->movementSpeed = 0.5;
 	cameraCtrl->mouseButton = MouseButtonsFlags::Left;
-	statistics = newStatisticsGui();
 }
 
 void updateInitialize()
@@ -227,17 +224,16 @@ void updateInitialize()
 	Holder<GuiBuilder> g = newGuiBuilder(engineGuiEntities());
 	{
 		auto _ = g->alignment(Vec2(0, 1));
-		g->button().text("< prev").bind<&actionPrev>();
+		g->button().text("< prev").event<&actionPrev>();
 	}
 	{
 		auto _ = g->alignment(Vec2(1, 1));
-		g->button().text("next >").bind<&actionNext>();
+		g->button().text("next >").event<&actionNext>();
 	}
 }
 
 void updateFinalize()
 {
-	statistics.clear();
 	cameraCtrl.clear();
 	engineAssets()->remove(HashString("scenes/common/common.pack"));
 	if (sceneHashCurrent)

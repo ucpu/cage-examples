@@ -29,6 +29,7 @@ class GuiTestImpl : public GuiTestClass
 {
 public:
 	MemoryBuffer buffer;
+	uint32 updatedIndex = 0;
 
 	bool switchSkin(Entity *comboBox)
 	{
@@ -84,13 +85,13 @@ public:
 			g->label().text("lorem ipsum dolor sit amet\nthe quick brown fox jumps over the lazy dog\n1 + 1 = 3\n\nlast line");
 
 			g->label().text("color picker");
-			g->colorPicker(Vec3(1, 0, 0), true).bind<uint32, &buttonActionWithUint32>(42);
+			g->colorPicker(Vec3(1, 0, 0), true).event<uint32, &buttonActionWithUint32>(42);
 
 			g->label().text("button 1");
-			g->button().text("text").bind<&buttonActionSimple>();
+			g->button().text("text").event<&buttonActionSimple>();
 
 			g->label().text("button 2");
-			g->button().size(Vec2(120)).image(GuiImageComponent{ .textureUvOffset = Vec2(5 / 8.f, 2 / 8.f), .textureUvSize = Vec2(1 / 8.f, 1 / 8.f), .textureName = HashString("cage/texture/helper.jpg") }).bind<&buttonActionOriginal>();
+			g->button().size(Vec2(120)).image(GuiImageComponent{ .textureUvOffset = Vec2(5 / 8.f, 2 / 8.f), .textureUvSize = Vec2(1 / 8.f, 1 / 8.f), .textureName = HashString("cage/texture/helper.jpg") }).event<&buttonActionOriginal>();
 
 			g->label().text("slider");
 			g->horizontalSliderBar(0.3);
@@ -106,6 +107,9 @@ public:
 
 			g->label().text("text area");
 			g->textArea(&buffer);
+
+			g->label().text("updated label");
+			g->label().text("").update([&](Entity *e) { e->value<GuiTextComponent>().value = Stringizer() + updatedIndex++; });
 		}
 	}
 };

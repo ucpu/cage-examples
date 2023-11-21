@@ -33,9 +33,9 @@ public:
 		{ // controls
 			Holder<GuiBuilder> g = newGuiBuilder(engineGuiEntities()->get(2));
 			auto _ = g->leftRow();
-			g->checkBox().text("grid").bind<&setGrid>();
-			g->checkBox(true).text("vertical").bind<&setVertical>();
-			g->input(2, 0, 10).text("sections").bind<&setSegments>();
+			g->checkBox().text("grid").event<&setGrid>();
+			g->checkBox(true).text("vertical").event<&setVertical>();
+			g->input(2, 0, 10).text("sections").event<&setSegments>();
 		}
 
 		{ // the table
