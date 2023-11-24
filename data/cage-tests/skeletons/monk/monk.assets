@@ -13,14 +13,12 @@ monk.x?Walk
 []
 scheme = model
 bones = true
-axes = +x-z+y
 monk.x?Monk_MonkBody
 monk.x?Monk_MonkHair
 monk.x?Monk_MonkHead
 
 []
 scheme = skeleton
-axes = +x-z+y
 monk.x;skeleton
 
 []

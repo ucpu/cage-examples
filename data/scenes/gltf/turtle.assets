@@ -5,7 +5,6 @@ turtle.glb?Turtle_Swim
 []
 scheme = model
 bones = true
-scale = 0.3
 turtle.glb?BackFlippers_BackFeetMat
 turtle.glb?Eyes_Eyes
 turtle.glb?Shell_ShellMat
@@ -13,7 +12,6 @@ turtle.glb?UpperBody_UpperBodyMat
 
 []
 scheme = skeleton
-scale = 0.3
 turtle.glb;skeleton
 
 []

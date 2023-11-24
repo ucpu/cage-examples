@@ -1,4 +1,3 @@
-
 []
 scheme = model
 uvs = false
@@ -6,39 +5,25 @@ bones = true
 material = spawner.cpm
 spawner.x
 spawner.glb
-
-[]
-scheme = model
-uvs = false
-bones = true
-material = spawner.cpm
-scale = 0.01
 spawner.fbx
 
 []
 scheme = skeleton
 spawner.x;skeleton
 spawner.glb;skeleton
-
-[]
-scheme = skeleton
-scale = 0.01
 spawner.fbx;skeleton
 
 []
 scheme = animation
 spawner.x?looping
 spawner.glb?looping
-
-[]
-scheme = animation
 spawner.fbx?spawner-armature|looping
 
 []
 scheme = object
-spawner_fbx.object
-spawner_glb.object
 spawner_x.object
+spawner_glb.object
+spawner_fbx.object
 
 []
 scheme = pack

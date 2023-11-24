@@ -67,11 +67,12 @@ int main(int argc, char *args[])
 			for (const char *object : objects)
 			{
 				Entity *e = ents->create(30 + i);
-				RenderComponent &r = e->value<RenderComponent>();
-				r.object = HashString(object);
+				e->value<RenderComponent>().object = HashString(object);
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 1, 0);
 				t.scale = 0.6;
+				if (i < 2)
+					t.scale *= 0.01; // stupid fbx
 				label(remove(String(object), 0, 27), t.position + Vec3(0, 1, 0));
 				i++;
 			}

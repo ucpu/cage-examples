@@ -1,4 +1,3 @@
-
 []
 scheme = pack
 dragon.pack
@@ -12,4 +11,5 @@ scheme = model
 scale = 50
 uvs = false
 passInvalidNormals = true
-dragon.obj?1
+trianglesOnly = true
+dragon.obj

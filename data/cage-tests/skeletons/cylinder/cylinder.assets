@@ -8,14 +8,10 @@ cylinder.x?curve
 scheme = model
 bones = true
 uvs = false
-axes = +x-z+y
-scale = 0.5
 cylinder.x
 
 []
 scheme = skeleton
-axes = +x-z+y
-scale = 0.5
 cylinder.x;skeleton
 
 []

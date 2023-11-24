@@ -1,0 +1,17 @@
+cage-tests/vr/vr.pack
+
+scenes/common/ground.obj
+0 0 0
+0
+
+cage-tests/vr/wheelchair.glb
+0 0 0
+0
+
+cage-tests/vr/grip.obj
+-1 1 0.2
+0
+
+cage-tests/vr/aim.obj
+-1 1 -0.2
+0
