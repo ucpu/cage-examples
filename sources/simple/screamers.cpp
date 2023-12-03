@@ -101,7 +101,6 @@ void makeExplosion(const Vec3 &position)
 			l.color += randomRange3(-0.05, 0.05);
 			l.color = saturate(l.color);
 			l.intensity = 8;
-			l.attenuation = Vec3(0, 1, 0);
 		}
 	}
 	{
@@ -120,7 +119,6 @@ void makeExplosion(const Vec3 &position)
 			l.color += randomRange3(-0.05, 0.05);
 			l.color = saturate(l.color);
 			l.intensity = 5;
-			l.attenuation = Vec3(0, 1, 0);
 		}
 	}
 	{
@@ -180,7 +178,6 @@ void spawnScreamer()
 	snd.startTime = engineControlTime();
 
 	LightComponent &lig = e->value<LightComponent>();
-	lig.attenuation = Vec3(0, 1, 0);
 	render.color = lig.color = randomDirection3() * 0.5 + 0.5;
 	lig.intensity = 5;
 

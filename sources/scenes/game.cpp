@@ -110,28 +110,21 @@ void sceneReload()
 	for (int i = 0; i < directionalLightsCount; i++)
 	{
 		directionalLights[i] = engineEntities()->createAnonymous();
-		TransformComponent &ts = directionalLights[i]->value<TransformComponent>();
-		ts.orientation = Quat(Degs(randomChance() * -20 - 30), Degs(i * 360.0f / (float)directionalLightsCount + randomChance() * 180 / (float)directionalLightsCount), Degs());
+		directionalLights[i]->value<TransformComponent>().orientation = Quat(Degs(randomChance() * -20 - 30), Degs(i * 360.0f / (float)directionalLightsCount + randomChance() * 180 / (float)directionalLightsCount), Degs());
 		LightComponent &ls = directionalLights[i]->value<LightComponent>();
 		ls.color = Vec3(1);
 		ls.intensity = 2.5;
 		ls.lightType = LightTypeEnum::Directional;
-		ShadowmapComponent &ss = directionalLights[i]->value<ShadowmapComponent>();
-		ss.resolution = 2048;
+		directionalLights[i]->value<ShadowmapComponent>().resolution = 2048;
 	}
 
 	// point lights
 	for (int i = 0; i < pointLightsCount; i++)
 	{
-		pointLights[i] = engineEntities()->createAnonymous();
-		TransformComponent &ts = pointLights[i]->value<TransformComponent>();
-		ts.position = (Vec3(randomChance(), randomChance(), randomChance()) * 2 - 1) * 15;
-		LightComponent &ls = pointLights[i]->value<LightComponent>();
-		ls.color = colorHsvToRgb(Vec3(randomChance(), 1, 1));
-		ls.lightType = LightTypeEnum::Point;
-		RenderComponent &r = pointLights[i]->value<RenderComponent>();
-		r.color = ls.color;
-		r.object = HashString("scenes/common/lightbulb.obj");
+		Entity *e = pointLights[i] = engineEntities()->createAnonymous();
+		e->value<TransformComponent>().position = (Vec3(randomChance(), randomChance(), randomChance()) * 2 - 1) * 15;
+		e->value<RenderComponent>().color = e->value<LightComponent>().color = colorHsvToRgb(Vec3(randomChance(), 1, 1));
+		e->value<RenderComponent>().object = HashString("scenes/common/lightbulb.obj");
 	}
 }
 

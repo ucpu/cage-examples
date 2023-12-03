@@ -191,8 +191,7 @@ int main(int argc, char *args[])
 			l.lightType = LightTypeEnum::Spot;
 			l.spotAngle = Degs(40);
 			l.spotExponent = 40;
-			l.attenuation = Vec3(1, 0, 0.005);
-			l.intensity = 3;
+			l.intensity = 100;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 1024;
 			s.worldSize = Vec3(3, 50, 0);

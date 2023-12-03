@@ -95,7 +95,6 @@ void makeExplosion(const Vec3 &position)
 			l.color += randomRange3(-0.05, 0.05);
 			l.color = clamp(l.color, 0, 1);
 			l.intensity = randomRange(2.0, 4.0);
-			l.attenuation = Vec3(0, 0.5, 0.5);
 		}
 	}
 	{

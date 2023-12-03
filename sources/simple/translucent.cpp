@@ -140,7 +140,6 @@ int main(int argc, char *args[])
 			l.lightType = LightTypeEnum::Spot;
 			l.spotAngle = Degs(60);
 			l.spotExponent = 40;
-			l.attenuation = Vec3(0, 0, 0.03);
 			l.color = Vec3(1);
 			l.intensity = 15;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
@@ -247,8 +246,7 @@ int main(int argc, char *args[])
 			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Point;
 			r.color = l.color = colorHsvToRgb(randomChance3() * Vec3(1, .5, .5) + Vec3(0, .5, .5));
-			l.intensity = 3;
-			l.attenuation = Vec3(0.5, 0, 0.07);
+			l.intensity = 20;
 		}
 		for (uint32 j = 0; j < 3; j++)
 		{
