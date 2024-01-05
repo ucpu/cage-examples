@@ -49,11 +49,15 @@ struct ParticleComponent
 	Real dimming = Real::Nan();
 };
 
+struct DestroyingComponent
+{
+	static EntityComponent *component;
+};
+
 EntityComponent *ScreamerComponent::component;
 EntityComponent *TtlComponent::component;
 EntityComponent *ParticleComponent::component;
-
-EntityGroup *entsToDestroy;
+EntityComponent *DestroyingComponent::component;
 
 uint32 arrayPick(PointerRange<const uint32> arr)
 {
@@ -199,20 +203,20 @@ void updateScreamers()
 		CAGE_LOG(SeverityEnum::Info, "screamers", "more screamers!");
 	}
 
-	if (ScreamerComponent::component->group()->count() < screamersCapacity && randomChance() / screamersCapacity < 0.01)
+	if (ScreamerComponent::component->count() < screamersCapacity && randomChance() / screamersCapacity < 0.01)
 		spawnScreamer();
 
 	const Line cursorRay = cameraMouseRay(engineEntities()->get(1));
 
 	std::vector<Vec3> newSmokes, newExplosions;
-	for (Entity *e : ScreamerComponent::component->group()->entities())
+	for (Entity *e : ScreamerComponent::component->entities())
 	{
 		TransformComponent &tr = e->value<TransformComponent>();
 
 		if (intersects(cursorRay, +collider, tr))
 		{ // hit the screamer
 			CAGE_LOG(SeverityEnum::Info, "screamers", "poof");
-			e->add(entsToDestroy);
+			e->value<DestroyingComponent>();
 			newExplosions.push_back(tr.position);
 			continue;
 		}
@@ -221,7 +225,7 @@ void updateScreamers()
 		if (dist < 2)
 		{ // hit the player
 			CAGE_LOG(SeverityEnum::Info, "screamers", "hit");
-			e->add(entsToDestroy);
+			e->value<DestroyingComponent>();
 			continue;
 		}
 
@@ -257,14 +261,14 @@ void update()
 	updateParticles();
 
 	// ttl
-	for (Entity *e : TtlComponent::component->group()->entities())
+	for (Entity *e : TtlComponent::component->entities())
 	{
 		TtlComponent &ttl = e->value<TtlComponent>(TtlComponent::component);
 		if (ttl.ttl-- == 0)
-			e->add(entsToDestroy);
+			e->value<DestroyingComponent>();
 	}
 
-	entsToDestroy->destroy();
+	DestroyingComponent::component->destroy();
 }
 
 int main(int argc, char *args[])
@@ -291,7 +295,7 @@ int main(int argc, char *args[])
 		ScreamerComponent::component = ents->defineComponent(ScreamerComponent());
 		TtlComponent::component = ents->defineComponent(TtlComponent());
 		ParticleComponent::component = ents->defineComponent(ParticleComponent());
-		entsToDestroy = ents->defineGroup();
+		DestroyingComponent::component = ents->defineComponent(DestroyingComponent());
 		{ // camera
 			Entity *e = ents->create(1);
 			e->value<TransformComponent>().position = cameraCenter;

@@ -80,7 +80,7 @@ void sceneReload()
 			f->readLine(rotLine);
 			ts.orientation = Quat(Rads(), Rads(toFloat(rotLine)), Rads());
 		}
-		CAGE_LOG(SeverityEnum::Info, "scenes", Stringizer() + "scene contains " + (engineEntities()->group()->count()) + " entities");
+		CAGE_LOG(SeverityEnum::Info, "scenes", Stringizer() + "scene contains " + (engineEntities()->count()) + " entities");
 	}
 	catch (...)
 	{

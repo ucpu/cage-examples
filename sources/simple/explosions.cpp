@@ -24,7 +24,6 @@ constexpr uint32 assetsName = HashString("cage-tests/explosion/explosion.pack");
 constexpr const uint32 assetsExplosions[] = { HashString("cage-tests/explosion/sprite.obj;explosion_1"), HashString("cage-tests/explosion/sprite.obj;explosion_2"), HashString("cage-tests/explosion/sprite.obj;explosion_3") };
 constexpr const uint32 assetsSmokes[] = { HashString("cage-tests/explosion/sprite.obj;smoke_1"), HashString("cage-tests/explosion/sprite.obj;smoke_2") };
 constexpr const uint32 assetsSparks[] = { HashString("cage-tests/explosion/sprite.obj;spark_1") };
-EntityGroup *entitiesToDestroy;
 
 uint32 pickExplosion()
 {
@@ -53,7 +52,13 @@ struct Particle
 	uint32 ttl = 0;
 };
 
+struct DestroyingComponent
+{
+	static EntityComponent *component;
+};
+
 EntityComponent *Particle::component;
+EntityComponent *DestroyingComponent::component;
 
 Entity *makeParticle(const Vec3 &position, Real scale, uint32 object, uint32 ttl)
 {
@@ -164,7 +169,7 @@ void update()
 		Particle &p = e->value<Particle>(Particle::component);
 		if (p.ttl-- == 0)
 		{
-			entitiesToDestroy->add(e);
+			e->value<DestroyingComponent>();
 			continue;
 		}
 		TransformComponent &t = e->value<TransformComponent>();
@@ -184,7 +189,7 @@ void update()
 	for (const Vec4 &s : newSmokes)
 		makeSmoke(Vec3(s), s[3]);
 
-	entitiesToDestroy->destroy();
+	DestroyingComponent::component->destroy();
 }
 
 int main(int argc, char *args[])
@@ -209,7 +214,7 @@ int main(int argc, char *args[])
 
 		// entities
 		EntityManager *ents = engineEntities();
-		entitiesToDestroy = ents->defineGroup();
+		DestroyingComponent::component = ents->defineComponent(DestroyingComponent());
 		Particle::component = ents->defineComponent<Particle>(Particle());
 		{ // camera
 			Entity *e = ents->create(1);
