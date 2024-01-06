@@ -50,6 +50,7 @@ void tooltipManualPosition(const GuiTooltipConfig &cfg)
 {
 	cfg.placement = TooltipPlacementEnum::Manual;
 	cfg.tooltip->value<GuiLayoutAlignmentComponent>().alignment = Vec2(0.25);
+	cfg.tooltip->value<GuiParentComponent>().order = 100;
 	Entity *f = cfg.tooltip->manager()->createUnique();
 	f->value<GuiParentComponent>().parent = cfg.tooltip->name();
 	f->value<GuiPanelComponent>();
@@ -57,7 +58,7 @@ void tooltipManualPosition(const GuiTooltipConfig &cfg)
 	Entity *e = cfg.tooltip->manager()->createUnique();
 	e->value<GuiParentComponent>().parent = f->name();
 	e->value<GuiLabelComponent>();
-	e->value<GuiTextComponent>().value = "centered in the screen";
+	e->value<GuiTextComponent>().value = "manual position in top-left quarter";
 }
 
 void tooltipScrollbars(const GuiTooltipConfig &cfg)
@@ -93,15 +94,13 @@ void tooltipModal(const GuiTooltipConfig &cfg)
 void tooltipRecursive(uint32 depth, const GuiTooltipConfig &cfg)
 {
 	cfg.closeCondition = TooltipCloseConditionEnum::Modal;
-	Entity *f = cfg.tooltip->manager()->createUnique();
-	f->value<GuiParentComponent>().parent = cfg.tooltip->name();
-	f->value<GuiPanelComponent>();
-	f->value<GuiExplicitSizeComponent>().size = Vec2(120);
-	Entity *e = cfg.tooltip->manager()->createUnique();
-	e->value<GuiParentComponent>().parent = f->name();
-	e->value<GuiLabelComponent>();
-	e->value<GuiTextComponent>().value = Stringizer() + "depth: " + depth;
-	e->value<GuiTooltipComponent>().tooltip.bind<uint32, &tooltipRecursive>(depth + 1);
+	Holder g = newGuiBuilder(cfg.tooltip);
+	auto _1 = g->panel().size(Vec2(150));
+	auto _2 = g->column();
+	g->label().text(Stringizer() + "depth: " + depth).tooltip({ Delegate<void(const GuiTooltipConfig &)>().bind<uint32, &tooltipRecursive>(depth + 1) });
+	const uint32 cnt = randomRange(0, 5);
+	for (uint32 i = 0; i < cnt; i++)
+		g->label().text("haha");
 }
 
 void tooltipTall(const GuiTooltipConfig &cfg)
