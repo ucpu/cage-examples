@@ -5,6 +5,13 @@ bones = true
 material = spawner.cpm
 spawner.x
 spawner.glb
+
+[]
+scheme = model
+uvs = false
+bones = true
+material = spawner.cpm
+scale = 0.01
 spawner.fbx
 
 []

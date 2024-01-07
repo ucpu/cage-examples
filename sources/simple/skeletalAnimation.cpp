@@ -63,8 +63,6 @@ int main(int argc, char *args[])
 				e->value<SkeletalAnimationComponent>().name = HashString(animation);
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 3);
-				t.scale *= 0.01; // stupid x
-				t.orientation = Quat(Degs(90), Degs(), Degs());
 				label(remove(String(animation), 0, 35), t.position + Vec3(0, 2, 0));
 				i++;
 			}
@@ -73,8 +71,6 @@ int main(int argc, char *args[])
 				e->value<RenderComponent>().object = HashString("cage-tests/skeletons/lemur/lemur.x");
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 3);
-				t.scale *= 0.01; // stupid x
-				t.orientation = Quat(Degs(90), Degs(), Degs());
 				label("no animation", t.position + Vec3(0, 2, 0));
 				i++;
 			}
@@ -85,8 +81,6 @@ int main(int argc, char *args[])
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 3);
 				t.scale = 1.5;
-				t.scale *= 0.01; // stupid x
-				t.orientation = Quat(Degs(90), Degs(), Degs());
 				label("scaled", t.position + Vec3(0, 3, 0));
 				i++;
 			}
@@ -99,10 +93,7 @@ int main(int argc, char *args[])
 				SkeletalAnimationComponent &s = e->value<SkeletalAnimationComponent>();
 				s.name = HashString(animations[1]);
 				s.speed = randomRange(0.1, 10.0);
-				TransformComponent &t = e->value<TransformComponent>();
-				t.position = Vec3((i % 32) * 2 - 32, 0, (i / 32) * 2 - 70);
-				t.scale *= 0.01; // stupid x
-				t.orientation = Quat(Degs(90), Degs(), Degs());
+				e->value<TransformComponent>().position = Vec3((i % 32) * 2 - 32, 0, (i / 32) * 2 - 70);
 			}
 #endif
 		}
@@ -116,8 +107,6 @@ int main(int argc, char *args[])
 				e->value<SkeletalAnimationComponent>().name = HashString(animation);
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 0);
-				t.orientation = Quat(Degs(90), Degs(), Degs());
-				t.scale *= 0.5;
 				label(remove(String(animation), 0, 41), t.position + Vec3(0, 3.3, 0));
 				i++;
 			}
@@ -126,8 +115,6 @@ int main(int argc, char *args[])
 				e->value<RenderComponent>().object = HashString("cage-tests/skeletons/cylinder/cylinder.x");
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 0);
-				t.orientation = Quat(Degs(90), Degs(), Degs());
-				t.scale *= 0.5;
 				label("no anim set", t.position + Vec3(0, 3.3, 0));
 				i++;
 			}
@@ -137,8 +124,6 @@ int main(int argc, char *args[])
 				e->value<SkeletalAnimationComponent>().name = HashString("cage-tests/skeletons/cylinder/cylinder.x?non-existent");
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 0);
-				t.orientation = Quat(Degs(90), Degs(), Degs());
-				t.scale *= 0.5;
 				label("invalid anim", t.position + Vec3(0, 3.3, 0));
 				i++;
 			}
@@ -147,8 +132,6 @@ int main(int argc, char *args[])
 				e->value<RenderComponent>().object = HashString("cage-tests/skeletons/cylinder/non-existent.x");
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 0);
-				t.orientation = Quat(Degs(90), Degs(), Degs());
-				t.scale *= 0.5;
 				label("invalid object", t.position + Vec3(0, 3.3, 0));
 				i++;
 			}
@@ -163,7 +146,6 @@ int main(int argc, char *args[])
 				e->value<SkeletalAnimationComponent>().name = HashString(animation);
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, -3);
-				t.orientation = Quat(Degs(90), Degs(), Degs());
 				label(remove(String(animation), 0, 33), t.position + Vec3(0, 2, 0));
 				i++;
 			}
@@ -172,7 +154,6 @@ int main(int argc, char *args[])
 				e->value<RenderComponent>().object = HashString("cage-tests/skeletons/monk/monk.object");
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, -3);
-				t.orientation = Quat(Degs(90), Degs(), Degs());
 				label("no anim", t.position + Vec3(0, 2, 0));
 				i++;
 			}
@@ -182,7 +163,7 @@ int main(int argc, char *args[])
 				e->value<SkeletalAnimationComponent>().name = HashString("cage-tests/skeletons/monk/monk.x?Dance");
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, -3);
-				t.orientation = Quat(Degs(), Degs(randomRange(45, 270)), Degs()) * Quat(Degs(90), Degs(), Degs());
+				t.orientation = Quat(Degs(), Degs(randomRange(45, 270)), Degs());
 				label("rotated", t.position + Vec3(0, 2, 0));
 				i++;
 			}
@@ -197,8 +178,6 @@ int main(int argc, char *args[])
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 + 1.5f, 1, 0);
 				t.scale = 0.6;
-				if (i == 0)
-					t.scale *= 0.01; // stupid fbx
 				label(remove(String(object), 0, 28), t.position + Vec3(0, 1, 0));
 				i++;
 			}
