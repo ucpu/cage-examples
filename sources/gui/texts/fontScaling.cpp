@@ -1,4 +1,4 @@
-#include "gui.h"
+#include "../gui.h"
 
 #include <cage-core/color.h>
 

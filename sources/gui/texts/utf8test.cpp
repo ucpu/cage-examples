@@ -1,4 +1,4 @@
-#include "gui.h"
+#include "../gui.h"
 
 // *************************************************************************
 // This process may fail due to the text containing malformed utf-8 text.

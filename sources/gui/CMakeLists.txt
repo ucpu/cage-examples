@@ -16,5 +16,6 @@ macro(cage_tests folder)
 endmacro()
 
 cage_tests("layouts/")
+cage_tests("texts/")
 cage_tests("widgets/")
 cage_tests("")
