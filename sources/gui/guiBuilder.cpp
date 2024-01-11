@@ -105,6 +105,18 @@ public:
 			g->label().text("disabled input");
 			g->input(0, -13, 42, 5).disabled();
 
+			g->label().text("spoiler");
+			{
+				auto _1 = g->spoiler().text("Quotes");
+				auto _2 = g->column();
+				g->label().text("Be yourself; everyone else is already taken.");
+				g->label().text("Two things are infinite: the universe and human stupidity; and I'm not sure about the universe.");
+				g->label().text("The fool doth think he is wise, but the wise man knows himself to be a fool.");
+				g->label().text("The opposite of love is not hate, it's indifference. The opposite of art is not ugliness, it's indifference.\nThe opposite of faith is not heresy, it's indifference. And the opposite of life is not death, it's indifference.");
+				g->label().text("The man who does not read has no advantage over the man who cannot read.");
+				g->label().text("I solemnly swear that I am up to no good.");
+			}
+
 			g->label().text("text area");
 			g->textArea(&buffer);
 
