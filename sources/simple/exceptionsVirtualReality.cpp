@@ -18,12 +18,6 @@ constexpr float probInit = 0.05f;
 constexpr float probLoop = 0.0003f;
 constexpr float probFinish = 0.1f;
 
-void windowClose(InputWindow)
-{
-	fullStop = true;
-	engineStop();
-}
-
 void maybeThrow(float chance, uint32 index)
 {
 	if (randomChance() < chance)
@@ -140,7 +134,12 @@ int main(int argc, char *args[])
 			GCHL_GENERATE(soundFinish, soundThread().finalize);
 			GCHL_GENERATE(soundSound, soundThread().sound);
 #undef GCHL_GENERATE
-			const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
+			const auto closeListener = engineWindow()->events.listen(inputFilter(
+				[](input::WindowClose)
+				{
+					fullStop = true;
+					engineStop();
+				}));
 
 			engineWindow()->setWindowed();
 			engineWindow()->windowedSize(Vec2i(800, 600));

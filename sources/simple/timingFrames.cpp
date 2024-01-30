@@ -36,11 +36,6 @@ void shoot(const Transform &where)
 	e->value<RenderComponent>().object = HashString("cage/model/fake.obj");
 }
 
-void windowClose(InputWindow)
-{
-	engineStop();
-}
-
 void controlInit()
 {
 	EntityManager *ents = engineEntities();
@@ -203,7 +198,7 @@ int main(int argc, char *args[])
 		const auto renderListener = graphicsDispatchThread().dispatch.listen(&render);
 		const auto soundListener = soundThread().sound.listen(&soundUpdate);
 		const auto guiInitListener = controlThread().initialize.listen(&guiInit);
-		const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
+		const auto closeListener = engineWindow()->events.listen(inputFilter([](input::WindowClose) { engineStop(); }));
 
 		engineWindow()->setMaximized();
 		engineWindow()->title("timing frames");

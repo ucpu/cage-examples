@@ -16,11 +16,6 @@
 using namespace cage;
 constexpr uint32 assetsName = HashString("cage-tests/lods/lods.pack");
 
-void windowClose(InputWindow)
-{
-	engineStop();
-}
-
 int main(int argc, char *args[])
 {
 	try
@@ -33,7 +28,7 @@ int main(int argc, char *args[])
 		engineInitialize(EngineCreateConfig());
 
 		// events
-		const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
+		const auto closeListener = engineWindow()->events.listen(inputFilter([](input::WindowClose) { engineStop(); }));
 
 		// window
 		engineWindow()->setMaximized();

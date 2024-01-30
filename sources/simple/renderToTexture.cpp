@@ -20,11 +20,6 @@ using namespace cage;
 constexpr uint32 assetsName = HashString("cage-tests/room/room.pack");
 constexpr uint32 screenName = HashString("cage-tests/room/tvscreen.jpg");
 
-void windowClose(InputWindow)
-{
-	engineStop();
-}
-
 void graphicsInitialize()
 {
 	Holder<Texture> fabScreenTex = newTexture();
@@ -66,7 +61,7 @@ int main(int argc, char *args[])
 
 		// events
 		const auto updateListener = controlThread().update.listen(&update);
-		const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
+		const auto closeListener = engineWindow()->events.listen(inputFilter([](input::WindowClose) { engineStop(); }));
 		const auto graphicsInitListener = graphicsDispatchThread().initialize.listen(&graphicsInitialize);
 		const auto graphicsFinisListener = graphicsDispatchThread().finalize.listen(&graphicsFinalize);
 

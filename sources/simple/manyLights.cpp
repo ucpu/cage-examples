@@ -43,7 +43,7 @@ int main(int argc, char *args[])
 
 		// events
 		const auto updateListener = controlThread().update.listen(&update);
-		const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>([](auto) { engineStop(); }));
+		const auto closeListener = engineWindow()->events.listen(inputFilter([](input::WindowClose) { engineStop(); }));
 
 		// window
 		engineWindow()->setMaximized();

@@ -70,11 +70,11 @@ namespace GuiTestClassNS
 
 		virtual void update() {}
 
-		virtual void guiEvent(InputGuiWidget in)
+		virtual void guiValueEvent(input::GuiValue in)
 		{
-			CAGE_LOG(SeverityEnum::Info, "gui event", Stringizer() + "gui event on entity: " + in.widget);
+			CAGE_LOG(SeverityEnum::Info, "gui event", Stringizer() + "gui event on entity: " + in.entity->name());
 
-			Entity *e = engineGuiEntities()->get(in.widget);
+			Entity *e = in.entity;
 
 			if (e->has<GuiButtonComponent>())
 			{
@@ -118,6 +118,8 @@ namespace GuiTestClassNS
 			}
 		}
 
+		virtual void guiConfirmEvent(input::GuiInputConfirm in) { CAGE_LOG(SeverityEnum::Info, "gui event", Stringizer() + "gui event on entity: " + in.entity->name()); }
+
 		virtual void initializeEngine() { engineInitialize(EngineCreateConfig()); }
 
 		virtual void initialize() = 0;
@@ -134,20 +136,10 @@ namespace GuiTestClassNS
 				initializeEngine();
 
 				// events
-				const auto windowCloseListener = engineWindow()->events.listen(
-					[&](const GenericInput &in)
-					{
-						if (in.type == InputClassEnum::WindowClose)
-							this->windowClose();
-					},
-					-5156);
+				const auto windowCloseListener = engineWindow()->events.listen(inputFilter([&](input::WindowClose in) { this->windowClose(); }), -5156);
 				const auto updateListener = controlThread().update.listen([&]() { this->update(); });
-				const auto guiListener = engineGuiManager()->widgetEvent.listen(
-					[&](const GenericInput &in)
-					{
-						if (in.type == InputClassEnum::GuiWidget)
-							this->guiEvent(in.data.get<InputGuiWidget>());
-					});
+				const auto guiValueListener = engineGuiManager()->widgetEvent.listen(inputFilter([&](input::GuiValue in) { this->guiValueEvent(in); }));
+				const auto guiConfirmListener = engineGuiManager()->widgetEvent.listen(inputFilter([&](input::GuiInputConfirm in) { this->guiConfirmEvent(in); }));
 
 				// window
 				engineWindow()->windowedSize(Vec2i(800, 600));

@@ -15,11 +15,6 @@
 using namespace cage;
 constexpr uint32 assetsName = HashString("cage-tests/decals/decals.pack");
 
-void windowClose(InputWindow)
-{
-	engineStop();
-}
-
 void update()
 {
 	// nothing for now
@@ -51,7 +46,7 @@ std::pair<Vec3, Vec3> raycast()
 	return { p, n };
 }
 
-void keyPress(InputKey in)
+void keyPress(input::KeyPress in)
 {
 	if (in.key != 32)
 		return;
@@ -83,8 +78,8 @@ int main(int argc, char *args[])
 
 		// events
 		const auto updateListener = controlThread().update.listen(&update);
-		const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
-		const auto keyPressListener = engineWindow()->events.listen(inputListener<InputClassEnum::KeyPress, InputKey>(&keyPress));
+		const auto closeListener = engineWindow()->events.listen(inputFilter([](input::WindowClose) { engineStop(); }));
+		const auto keyPressListener = engineWindow()->events.listen(inputFilter(keyPress));
 
 		// window
 		engineWindow()->setMaximized();

@@ -128,12 +128,7 @@ void sceneReload()
 	}
 }
 
-void windowClose(InputWindow)
-{
-	engineStop();
-}
-
-void keyPress(InputKey in)
+void keyPress(input::KeyPress in)
 {
 	switch (in.key)
 	{
@@ -187,7 +182,7 @@ void update()
 	}
 }
 
-void actionPrev()
+void actionPrev(input::GuiValue)
 {
 	if (sceneIndexCurrent == 0)
 		sceneIndexCurrent = numeric_cast<uint32>(maps.size()) - 1;
@@ -195,7 +190,7 @@ void actionPrev()
 		sceneIndexCurrent--;
 }
 
-void actionNext()
+void actionNext(input::GuiValue)
 {
 	sceneIndexCurrent++;
 	if (sceneIndexCurrent == maps.size())
@@ -217,11 +212,11 @@ void updateInitialize()
 	Holder<GuiBuilder> g = newGuiBuilder(engineGuiEntities());
 	{
 		auto _ = g->alignment(Vec2(0, 1));
-		g->button().text("< prev").event<&actionPrev>();
+		g->button().text("< prev").event(inputFilter(actionPrev));
 	}
 	{
 		auto _ = g->alignment(Vec2(1, 1));
-		g->button().text("next >").event<&actionNext>();
+		g->button().text("next >").event(inputFilter(actionNext));
 	}
 }
 

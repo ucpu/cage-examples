@@ -10,10 +10,10 @@ class GuiTestImpl : public GuiTestClass
 public:
 	MemoryBuffer buffer;
 
-	bool switchSkin(Entity *comboBox)
+	bool switchSkin(input::GuiValue in)
 	{
 		EntityManager *ents = engineGuiEntities();
-		ents->get(3)->value<GuiWidgetStateComponent>().skinIndex = comboBox->value<GuiComboBoxComponent>().selected;
+		ents->get(3)->value<GuiWidgetStateComponent>().skinIndex = in.entity->value<GuiComboBoxComponent>().selected;
 		return true;
 	}
 
@@ -32,7 +32,7 @@ public:
 			e->value<GuiParentComponent>().parent = 2;
 			e->value<GuiComboBoxComponent>();
 			e->value<GuiTextComponent>().value = "skins";
-			e->value<GuiEventComponent>().event.bind<GuiTestImpl, &GuiTestImpl::switchSkin>(this);
+			e->value<GuiEventComponent>().event = inputFilter([this](input::GuiValue in) { switchSkin(in); });
 			static constexpr const char *options[] = {
 				"default",
 				"large",

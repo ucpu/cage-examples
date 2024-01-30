@@ -4,22 +4,22 @@
 
 using namespace cage;
 
-bool setGrid(Entity *c)
+bool setGrid(input::GuiValue in)
 {
-	engineGuiEntities()->get(42)->value<GuiLayoutTableComponent>().grid = c->value<GuiCheckBoxComponent>().state == CheckBoxStateEnum::Checked;
+	engineGuiEntities()->get(42)->value<GuiLayoutTableComponent>().grid = in.entity->value<GuiCheckBoxComponent>().state == CheckBoxStateEnum::Checked;
 	return true;
 }
 
-bool setVertical(Entity *c)
+bool setVertical(input::GuiValue in)
 {
-	engineGuiEntities()->get(42)->value<GuiLayoutTableComponent>().vertical = c->value<GuiCheckBoxComponent>().state == CheckBoxStateEnum::Checked;
+	engineGuiEntities()->get(42)->value<GuiLayoutTableComponent>().vertical = in.entity->value<GuiCheckBoxComponent>().state == CheckBoxStateEnum::Checked;
 	return true;
 }
 
-bool setSegments(Entity *c)
+bool setSegments(input::GuiValue in)
 {
-	if (c->value<GuiInputComponent>().valid)
-		engineGuiEntities()->get(42)->value<GuiLayoutTableComponent>().sections = toUint32(c->value<GuiInputComponent>().value);
+	if (in.entity->value<GuiInputComponent>().valid)
+		engineGuiEntities()->get(42)->value<GuiLayoutTableComponent>().sections = toUint32(in.entity->value<GuiInputComponent>().value);
 	return true;
 }
 
@@ -33,9 +33,9 @@ public:
 		{ // controls
 			Holder<GuiBuilder> g = newGuiBuilder(engineGuiEntities()->get(2));
 			auto _ = g->leftRow();
-			g->checkBox().text("grid").event<&setGrid>();
-			g->checkBox(true).text("vertical").event<&setVertical>();
-			g->input(2, 0, 10).text("sections").event<&setSegments>();
+			g->checkBox().text("grid").event(inputFilter(setGrid));
+			g->checkBox(true).text("vertical").event(inputFilter(setVertical));
+			g->input(2, 0, 10).text("sections").event(inputFilter(setSegments));
 		}
 
 		{ // the table

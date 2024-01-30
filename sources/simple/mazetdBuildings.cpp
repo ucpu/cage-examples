@@ -16,11 +16,6 @@
 using namespace cage;
 constexpr uint32 assetsName = HashString("cage-tests/mazetd/mazetd.pack");
 
-void windowClose(InputWindow)
-{
-	engineStop();
-}
-
 void update()
 {
 	static uint64 timeToChange = 0;
@@ -130,7 +125,7 @@ int main(int argc, char *args[])
 
 		// events
 		const auto updateListener = controlThread().update.listen(&update);
-		const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
+		const auto closeListener = engineWindow()->events.listen(inputFilter([](input::WindowClose) { engineStop(); }));
 
 		// window
 		engineWindow()->setMaximized();

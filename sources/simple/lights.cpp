@@ -18,11 +18,6 @@
 using namespace cage;
 constexpr uint32 assetsName = HashString("cage-tests/bottle/bottle.pack");
 
-void windowClose(InputWindow)
-{
-	engineStop();
-}
-
 Vec3 getGuiColor(uint32 id)
 {
 	Entity *e = engineGuiEntities()->get(id);
@@ -164,7 +159,7 @@ int main(int argc, char *args[])
 
 		// events
 		const auto updateListener = controlThread().update.listen(&update);
-		const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
+		const auto closeListener = engineWindow()->events.listen(inputFilter([](input::WindowClose) { engineStop(); }));
 
 		// window
 		engineWindow()->setMaximized();

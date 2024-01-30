@@ -18,11 +18,6 @@
 using namespace cage;
 constexpr uint32 assetsName = HashString("cage-tests/skeletons/skeletons.pack");
 
-void windowClose(InputWindow)
-{
-	engineStop();
-}
-
 void label(const String &name, const Vec3 &position)
 {
 	Entity *e = engineEntities()->createAnonymous();
@@ -45,7 +40,7 @@ int main(int argc, char *args[])
 		engineInitialize(EngineCreateConfig());
 
 		// events
-		const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
+		const auto closeListener = engineWindow()->events.listen(inputFilter([](input::WindowClose) { engineStop(); }));
 
 		// window
 		engineWindow()->setMaximized();

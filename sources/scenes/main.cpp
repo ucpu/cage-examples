@@ -9,8 +9,7 @@
 
 using namespace cage;
 
-void windowClose(InputWindow);
-void keyPress(InputKey in);
+void keyPress(input::KeyPress in);
 void update();
 
 void cameraInitialize();
@@ -29,8 +28,8 @@ int main(int argc, const char *args[])
 	cameraInitialize();
 
 	const auto updateListener = controlThread().update.listen(&update);
-	const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
-	const auto keyPressListener = engineWindow()->events.listen(inputListener<InputClassEnum::KeyPress, InputKey>(&keyPress));
+	const auto closeListener = engineWindow()->events.listen(inputFilter([](input::WindowClose) { engineStop(); }));
+	const auto keyPressListener = engineWindow()->events.listen(inputFilter(keyPress));
 
 	updateInitialize();
 	{

@@ -20,21 +20,17 @@ struct Gp : Immovable
 	Holder<Gamepad> g = newGamepad();
 	std::vector<Entity *> bs, as;
 
-	const EventListener<bool(const GenericInput &)> connectedListener = g->events.listen(inputListener<InputClassEnum::GamepadConnected, InputGamepadState>([this](InputGamepadState in) { return this->connected(in); }));
-	const EventListener<bool(const GenericInput &)> disconnectedListener = g->events.listen(inputListener<InputClassEnum::GamepadDisconnected, InputGamepadState>([this](InputGamepadState in) { return this->disconnected(in); }));
-	const EventListener<bool(const GenericInput &)> pressListener = g->events.listen(inputListener<InputClassEnum::GamepadPress, InputGamepadKey>([this](InputGamepadKey in) { return this->press(in); }));
-	const EventListener<bool(const GenericInput &)> releaseListener = g->events.listen(inputListener<InputClassEnum::GamepadRelease, InputGamepadKey>([this](InputGamepadKey in) { return this->release(in); }));
-	const EventListener<bool(const GenericInput &)> axisListener = g->events.listen(inputListener<InputClassEnum::GamepadAxis, InputGamepadAxis>([this](InputGamepadAxis in) { return this->axis(in); }));
+	const EventListener<bool(const GenericInput &)> connectedListener = g->events.listen(inputFilter([this](input::GamepadConnected in) { return this->connected(in); }));
+	const EventListener<bool(const GenericInput &)> disconnectedListener = g->events.listen(inputFilter([this](input::GamepadDisconnected in) { return this->disconnected(in); }));
+	const EventListener<bool(const GenericInput &)> pressListener = g->events.listen(inputFilter([this](input::GamepadPress in) { return this->press(in); }));
+	const EventListener<bool(const GenericInput &)> releaseListener = g->events.listen(inputFilter([this](input::GamepadRelease in) { return this->release(in); }));
+	const EventListener<bool(const GenericInput &)> axisListener = g->events.listen(inputFilter([this](input::GamepadAxis in) { return this->axis(in); }));
 
-	void connected(InputGamepadState in) { CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "connected"); }
-
-	void disconnected(InputGamepadState in) { CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "disconnected"); }
-
-	void press(InputGamepadKey in) { CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "press: " + in.key); }
-
-	void release(InputGamepadKey in) { CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "release: " + in.key); }
-
-	void axis(InputGamepadAxis in) { CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "axis: " + in.axis + ", value: " + in.value); }
+	void connected(input::GamepadConnected in) { CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "connected"); }
+	void disconnected(input::GamepadDisconnected in) { CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "disconnected"); }
+	void press(input::GamepadPress in) { CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "press: " + in.key); }
+	void release(input::GamepadRelease in) { CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "release: " + in.key); }
+	void axis(input::GamepadAxis in) { CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "axis: " + in.axis + ", value: " + in.value); }
 
 	Gp() { CAGE_LOG(SeverityEnum::Info, "gamepad", Stringizer() + "name: " + g->name()); }
 
@@ -99,11 +95,6 @@ struct Gp : Immovable
 
 std::vector<Holder<Gp>> gps;
 
-void windowClose(InputWindow)
-{
-	engineStop();
-}
-
 void update()
 {
 	if (gamepadsAvailable())
@@ -127,7 +118,7 @@ int main(int argc, char *args[])
 
 		// events
 		const auto updateListener = controlThread().update.listen(&update);
-		const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
+		const auto closeListener = engineWindow()->events.listen(inputFilter([](input::WindowClose) { engineStop(); }));
 
 		// window
 		engineWindow()->setMaximized();

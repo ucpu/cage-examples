@@ -19,11 +19,6 @@ bool closing = false;
 constexpr uint32 assetsName1 = HashString("scenes/mcguire/crytek/sponza-preload.object");
 constexpr uint32 assetsName2 = HashString("cage-tests/vr/vr.pack");
 
-void windowClose(InputWindow)
-{
-	closing = true;
-}
-
 int main(int argc, char *args[])
 {
 	try
@@ -33,7 +28,7 @@ int main(int argc, char *args[])
 		log1->output.bind<logOutputStdOut>();
 
 		Holder<Window> window = newWindow(WindowCreateConfig{ .vsync = 0 });
-		const auto closeListener = window->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
+		const auto closeListener = window->events.listen(inputFilter([](input::WindowClose) { closing = true; }));
 		window->title("cage test virtual reality");
 
 		// assets

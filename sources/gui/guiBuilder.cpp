@@ -5,36 +5,16 @@
 
 using namespace cage;
 
-namespace
-{
-	void buttonActionSimple()
-	{
-		// nothing
-	}
-
-	bool buttonActionWithUint32(uint32, Entity *)
-	{
-		buttonActionSimple();
-		return true;
-	}
-
-	bool buttonActionOriginal(Entity *)
-	{
-		buttonActionSimple();
-		return true;
-	}
-}
-
 class GuiTestImpl : public GuiTestClass
 {
 public:
 	MemoryBuffer buffer;
 	uint32 updatedIndex = 0;
 
-	bool switchSkin(Entity *comboBox)
+	bool switchSkin(input::GuiValue in)
 	{
 		EntityManager *ents = engineGuiEntities();
-		ents->get(3)->value<GuiWidgetStateComponent>().skinIndex = comboBox->value<GuiComboBoxComponent>().selected;
+		ents->get(3)->value<GuiWidgetStateComponent>().skinIndex = in.entity->value<GuiComboBoxComponent>().selected;
 		return true;
 	}
 
@@ -44,7 +24,7 @@ public:
 
 		{
 			Holder<GuiBuilder> g = newGuiBuilder(engineGuiEntities()->get(2));
-			auto _ = g->comboBox().text("skins").event(Delegate<bool(Entity *)>().bind<GuiTestImpl, &GuiTestImpl::switchSkin>(this));
+			auto _ = g->comboBox().text("skins").event(inputFilter([this](input::GuiValue in) { switchSkin(in); }));
 			static constexpr const char *options[] = {
 				"default",
 				"large",
@@ -85,13 +65,13 @@ public:
 			g->label().text("lorem ipsum dolor sit amet\nthe quick brown fox jumps over the lazy dog\n1 + 1 = 3\n\nlast line");
 
 			g->label().text("color picker");
-			g->colorPicker(Vec3(1, 0, 0), true).event<uint32, &buttonActionWithUint32>(42);
+			g->colorPicker(Vec3(1, 0, 0), true);
 
 			g->label().text("button 1");
-			g->button().text("text").event<&buttonActionSimple>();
+			g->button().text("text");
 
 			g->label().text("button 2");
-			g->button().size(Vec2(120)).image(GuiImageComponent{ .textureUvOffset = Vec2(5 / 8.f, 2 / 8.f), .textureUvSize = Vec2(1 / 8.f, 1 / 8.f), .textureName = HashString("cage/texture/helper.jpg") }).event<&buttonActionOriginal>();
+			g->button().size(Vec2(120)).image(GuiImageComponent{ .textureUvOffset = Vec2(5 / 8.f, 2 / 8.f), .textureUvSize = Vec2(1 / 8.f, 1 / 8.f), .textureName = HashString("cage/texture/helper.jpg") });
 
 			g->label().text("slider");
 			g->horizontalSliderBar(0.3);

@@ -39,11 +39,6 @@ constexpr const char *labelTexts[] = {
 constexpr uint32 fontsCount = sizeof(fontNames) / sizeof(fontNames[0]);
 static_assert(sizeof(fontNames) / sizeof(fontNames[0]) == sizeof(labelTexts) / sizeof(labelTexts[0]), "arrays must have same number of elements");
 
-void windowClose(InputWindow)
-{
-	engineStop();
-}
-
 NoiseFunctionCreateConfig noiseInit(uint32 seed)
 {
 	NoiseFunctionCreateConfig cfg;
@@ -86,7 +81,7 @@ int main(int argc, char *args[])
 
 		// events
 		const auto updateListener = controlThread().update.listen(&update);
-		const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
+		const auto closeListener = engineWindow()->events.listen(inputFilter([](input::WindowClose) { engineStop(); }));
 
 		// window
 		engineWindow()->setMaximized();

@@ -127,40 +127,40 @@ const auto initListener = controlThread().initialize.listen(
 		{
 			g->label().text("boxes: ");
 			g->input(boxesCount, 100, 100000, 100)
-				.event(
-					[](Entity *e)
+				.event(inputFilter(
+					[](input::GuiValue in)
 					{
-						auto &i = e->value<GuiInputComponent>();
+						auto &i = in.entity->value<GuiInputComponent>();
 						if (i.valid)
 						{
 							boxesCount = toUint32(i.value);
 							generate();
 						}
 						return true;
-					});
+					}));
 		}
 
 		{
 			g->label().text("camera range: ");
 			g->horizontalSliderBar(cameraRange)
-				.event(
-					[](Entity *e)
+				.event(inputFilter(
+					[](input::GuiValue in)
 					{
-						cameraRange = e->value<GuiSliderBarComponent>().value;
+						cameraRange = in.entity->value<GuiSliderBarComponent>().value;
 						return true;
-					});
+					}));
 		}
 
 		{
 			g->label().text("enable shadow: ");
 			g->checkBox(shadowEnabled)
-				.event(
-					[](Entity *e)
+				.event(inputFilter(
+					[](input::GuiValue in)
 					{
-						shadowEnabled = e->value<GuiCheckBoxComponent>().state == CheckBoxStateEnum::Checked;
+						shadowEnabled = in.entity->value<GuiCheckBoxComponent>().state == CheckBoxStateEnum::Checked;
 						generate();
 						return true;
-					});
+					}));
 		}
 	});
 
@@ -175,7 +175,7 @@ int main(int argc, char *args[])
 
 		engineInitialize(EngineCreateConfig());
 
-		const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>([](InputWindow) { engineStop(); }));
+		const auto closeListener = engineWindow()->events.listen(inputFilter([](input::WindowClose) { engineStop(); }));
 		engineWindow()->setMaximized();
 		engineWindow()->title("performance");
 

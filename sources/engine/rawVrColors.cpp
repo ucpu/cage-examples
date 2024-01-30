@@ -10,44 +10,39 @@ using namespace cage;
 
 bool closing = false;
 
-void windowClose(InputWindow)
-{
-	closing = true;
-}
-
-void headsetConnected(InputHeadsetState in)
+void headsetConnected(input::HeadsetConnected in)
 {
 	CAGE_LOG(SeverityEnum::Info, "headset", Stringizer() + "headset connected");
 }
-void headsetDiconnected(InputHeadsetState in)
+void headsetDiconnected(input::HeadsetDisconnected in)
 {
 	CAGE_LOG(SeverityEnum::Info, "headset", Stringizer() + "headset disconnected");
 }
-void headsetPose(InputHeadsetPose in)
+void headsetPose(input::HeadsetPose in)
 {
 	//CAGE_LOG(SeverityEnum::Info, "headset", Stringizer() + "headset pose: " + in.pose);
 }
-void controllerConnected(InputControllerState in)
+void controllerConnected(input::ControllerConnected in)
 {
 	CAGE_LOG(SeverityEnum::Info, "controller", Stringizer() + "controller connected");
 }
-void controllerDiconnected(InputControllerState in)
+void controllerDiconnected(input::ControllerDisconnected in)
 {
 	CAGE_LOG(SeverityEnum::Info, "controller", Stringizer() + "controller disconnected");
 }
-void controllerPose(InputControllerPose in)
+void controllerPose(input::ControllerPose in)
 {
 	//CAGE_LOG(SeverityEnum::Info, "controller", Stringizer() + "controller grip pose: " + in.pose);
 }
-void press(InputControllerKey in)
+void press(input::ControllerPress in)
 {
 	CAGE_LOG(SeverityEnum::Info, "controller", Stringizer() + "press: " + in.key);
 }
-void release(InputControllerKey in)
+void release(input::ControllerRelease in)
 {
 	CAGE_LOG(SeverityEnum::Info, "controller", Stringizer() + "release: " + in.key);
 }
-void axis(InputControllerAxis in)
+void axis(input::ControllerAxis in)
 {
 	CAGE_LOG(SeverityEnum::Info, "controller", Stringizer() + "axis: " + in.axis + ", value: " + in.value);
 }
@@ -61,22 +56,22 @@ int main(int argc, char *args[])
 		log1->output.bind<logOutputStdOut>();
 
 		Holder<Window> window = newWindow(WindowCreateConfig{ .vsync = 0 });
-		const auto closeListener = window->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
+		const auto closeListener = window->events.listen(inputFilter([](input::WindowClose) { closing = true; }));
 		window->title("cage test virtual reality");
 		window->windowedSize(Vec2i(800, 600));
 		window->setWindowed();
 		window->makeCurrent();
 
 		Holder<VirtualReality> virtualreality = newVirtualReality({});
-		const auto headsetConnectedListener = virtualreality->events.listen(inputListener<InputClassEnum::HeadsetConnected, InputHeadsetState>([](auto in) { return headsetConnected(in); }));
-		const auto headsetDisconnectedListener = virtualreality->events.listen(inputListener<InputClassEnum::HeadsetDisconnected, InputHeadsetState>([](auto in) { return headsetDiconnected(in); }));
-		const auto headsetPoseListener = virtualreality->events.listen(inputListener<InputClassEnum::HeadsetPose, InputHeadsetPose>([](auto in) { return headsetPose(in); }));
-		const auto controllerConnectedListener = virtualreality->events.listen(inputListener<InputClassEnum::ControllerConnected, InputControllerState>([](auto in) { return controllerConnected(in); }));
-		const auto controllerDisconnectedListener = virtualreality->events.listen(inputListener<InputClassEnum::ControllerDisconnected, InputControllerState>([](auto in) { return controllerDiconnected(in); }));
-		const auto controllerPoseListener = virtualreality->events.listen(inputListener<InputClassEnum::ControllerPose, InputControllerPose>([](auto in) { return controllerPose(in); }));
-		const auto pressListener = virtualreality->events.listen(inputListener<InputClassEnum::ControllerPress, InputControllerKey>([](auto in) { return press(in); }));
-		const auto releaseListener = virtualreality->events.listen(inputListener<InputClassEnum::ControllerRelease, InputControllerKey>([](auto in) { return release(in); }));
-		const auto axisListener = virtualreality->events.listen(inputListener<InputClassEnum::ControllerAxis, InputControllerAxis>([](auto in) { return axis(in); }));
+		const auto headsetConnectedListener = virtualreality->events.listen(inputFilter(&headsetConnected));
+		const auto headsetDisconnectedListener = virtualreality->events.listen(inputFilter(&headsetDiconnected));
+		const auto headsetPoseListener = virtualreality->events.listen(inputFilter(&headsetPose));
+		const auto controllerConnectedListener = virtualreality->events.listen(inputFilter(&controllerConnected));
+		const auto controllerDisconnectedListener = virtualreality->events.listen(inputFilter(&controllerDiconnected));
+		const auto controllerPoseListener = virtualreality->events.listen(inputFilter(&controllerPose));
+		const auto pressListener = virtualreality->events.listen(inputFilter(press));
+		const auto releaseListener = virtualreality->events.listen(inputFilter(release));
+		const auto axisListener = virtualreality->events.listen(inputFilter(axis));
 
 		Holder<FrameBuffer> fb = newFrameBufferDraw();
 

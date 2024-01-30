@@ -129,7 +129,7 @@ class GuiTestImpl : public GuiTestClass
 			p.order = index++;
 			e->value<GuiButtonComponent>();
 			e->value<GuiTextComponent>().value = "custom event";
-			e->value<GuiEventComponent>().event.bind<GuiTestImpl, &GuiTestImpl::onButtonPressed>(this);
+			e->value<GuiEventComponent>().event = inputFilter([this](input::GuiValue in) { onButtonPressed(in.entity); });
 		}
 
 		{ // disabled

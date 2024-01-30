@@ -17,11 +17,6 @@ using namespace cage;
 
 bool autoCubes = true;
 
-void windowClose(InputWindow)
-{
-	engineStop();
-}
-
 Frustum cameraFrustum()
 {
 	Entity *camE = engineEntities()->get(1);
@@ -32,7 +27,7 @@ Frustum cameraFrustum()
 	return frustum;
 }
 
-void keyPress(InputKey in)
+void keyPress(input::KeyPress in)
 {
 	EntityManager *ents = engineEntities();
 
@@ -117,8 +112,8 @@ int main(int argc, char *args[])
 
 		// events
 		const auto updateListener = controlThread().update.listen(&update);
-		const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
-		const auto keyPressListener = engineWindow()->events.listen(inputListener<InputClassEnum::KeyPress, InputKey>(&keyPress));
+		const auto closeListener = engineWindow()->events.listen(inputFilter([](input::WindowClose) { engineStop(); }));
+		const auto keyPressListener = engineWindow()->events.listen(inputFilter(keyPress));
 
 		// window
 		engineWindow()->setMaximized();

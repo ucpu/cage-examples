@@ -18,11 +18,6 @@ using namespace cage;
 constexpr uint32 assetsName1 = HashString("cage-tests/camera-effects/effects.pack");
 constexpr uint32 assetsName2 = HashString("cage-tests/vr/vr.pack");
 
-void windowClose(InputWindow)
-{
-	engineStop();
-}
-
 struct ShotComponent
 {
 	uint32 ttl = 600;
@@ -139,7 +134,7 @@ int main(int argc, char *args[])
 
 		// events
 		const auto updateListener = controlThread().update.listen(&update);
-		const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
+		const auto closeListener = engineWindow()->events.listen(inputFilter([](input::WindowClose) { engineStop(); }));
 
 		// window
 		engineWindow()->title("virtual reality");

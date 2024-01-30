@@ -20,11 +20,6 @@ using namespace cage;
 bool closing = false;
 constexpr uint32 assetsName = HashString("cage-tests/logo/logo.pack");
 
-void windowClose(InputWindow)
-{
-	closing = true;
-}
-
 int main(int argc, char *args[])
 {
 	try
@@ -36,7 +31,7 @@ int main(int argc, char *args[])
 
 		// window
 		Holder<Window> window = newWindow({});
-		const auto closeListener = window->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
+		const auto closeListener = window->events.listen(inputFilter([](input::WindowClose) { closing = true; }));
 		window->title("cage test logo");
 		detail::initializeOpengl();
 

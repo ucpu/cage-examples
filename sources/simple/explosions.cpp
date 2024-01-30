@@ -116,12 +116,7 @@ void makeExplosion(const Vec3 &position)
 	}
 }
 
-void windowClose(InputWindow)
-{
-	engineStop();
-}
-
-void mousePress(InputMouse in)
+void mousePress(input::MousePress in)
 {
 	if (none(in.buttons & MouseButtonsFlags::Left))
 		return;
@@ -205,8 +200,8 @@ int main(int argc, char *args[])
 
 		// events
 		const auto updateListener = controlThread().update.listen(&update);
-		const auto closeListener = engineWindow()->events.listen(inputListener<InputClassEnum::WindowClose, InputWindow>(&windowClose));
-		const auto mouseListener = engineWindow()->events.listen(inputListener<InputClassEnum::MousePress, InputMouse>(&mousePress));
+		const auto closeListener = engineWindow()->events.listen(inputFilter([](input::WindowClose) { engineStop(); }));
+		const auto mouseListener = engineWindow()->events.listen(inputFilter(mousePress));
 
 		// window
 		engineWindow()->setMaximized();
