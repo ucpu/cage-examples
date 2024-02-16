@@ -107,9 +107,9 @@ int main(int argc, char *args[])
 					uint32 i = randomRange(0u, count);
 					CAGE_ASSERT(i < count);
 					if (loaded[i])
-						assets->remove(names[i]);
+						assets->unload(names[i]);
 					else
-						assets->add(names[i]);
+						assets->load(names[i]);
 					loaded[i] = !loaded[i];
 				}
 				else
@@ -124,8 +124,8 @@ int main(int argc, char *args[])
 		CAGE_LOG(SeverityEnum::Info, "test", "cleaning");
 		for (uint32 i = 0; i < count; i++)
 			if (loaded[i])
-				assets->remove(names[i]);
-		assets->unloadWait();
+				assets->unload(names[i]);
+		assets->waitTillEmpty();
 		destroying = true;
 		thrGl->wait();
 		thrSl->wait();

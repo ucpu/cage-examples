@@ -228,9 +228,9 @@ int main(int argc, char *args[])
 		cameraCtrl->movementSpeed = 0.3;
 		Holder<StatisticsGui> statistics = newStatisticsGui();
 
-		engineAssets()->add(assetsName);
+		engineAssets()->load(assetsName);
 		engineRun();
-		engineAssets()->remove(assetsName);
+		engineAssets()->unload(assetsName);
 		engineFinalize();
 
 		return 0;

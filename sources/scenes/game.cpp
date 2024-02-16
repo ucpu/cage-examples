@@ -56,9 +56,9 @@ void sceneReload()
 		String name;
 		f->readLine(name);
 		if (sceneHashCurrent)
-			engineAssets()->remove(sceneHashCurrent);
+			engineAssets()->unload(sceneHashCurrent);
 		sceneHashCurrent = HashString(name.c_str());
-		engineAssets()->add(sceneHashCurrent);
+		engineAssets()->load(sceneHashCurrent);
 
 		while (f->readLine(name))
 		{
@@ -151,7 +151,7 @@ void keyPress(input::KeyPress in)
 
 void update()
 {
-#if 0
+#if 1
 	{ // automatic reloading -> used for engine testing
 		static uint64 last = 0;
 		uint64 now = applicationTime();
@@ -208,7 +208,7 @@ void updateInitialize()
 {
 	loadMapsList();
 	sceneReload();
-	engineAssets()->add(HashString("scenes/common/common.pack"));
+	engineAssets()->load(HashString("scenes/common/common.pack"));
 	Holder<GuiBuilder> g = newGuiBuilder(engineGuiEntities());
 	{
 		auto _ = g->alignment(Vec2(0, 1));
@@ -223,8 +223,8 @@ void updateInitialize()
 void updateFinalize()
 {
 	cameraCtrl.clear();
-	engineAssets()->remove(HashString("scenes/common/common.pack"));
+	engineAssets()->unload(HashString("scenes/common/common.pack"));
 	if (sceneHashCurrent)
-		engineAssets()->remove(sceneHashCurrent);
+		engineAssets()->unload(sceneHashCurrent);
 	sceneHashCurrent = 0;
 }

@@ -45,7 +45,7 @@ int main(int argc, char *args[])
 		assets->defineScheme<AssetSchemeIndexSound, Sound>(genAssetSchemeSound());
 
 		// load assets
-		assets->add(assetsName);
+		assets->load(assetsName);
 		while (true)
 		{
 			if (assets->get<AssetSchemeIndexPack, AssetPack>(assetsName))
@@ -92,7 +92,7 @@ int main(int argc, char *args[])
 		}
 
 		// unload assets
-		assets->remove(assetsName);
+		assets->unload(assetsName);
 		assets->unloadCustomThread(0);
 
 		return 0;

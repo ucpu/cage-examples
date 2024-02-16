@@ -111,7 +111,7 @@ int main(int argc, char *args[])
 			e->value<RenderComponent>().object = HashString("cage/model/fake.obj");
 		}
 
-		engineAssets()->add(assetsName);
+		engineAssets()->load(assetsName);
 		{
 			Holder<FpsCamera> fpsCamera = newFpsCamera(ents->get(1));
 			fpsCamera->mouseButton = MouseButtonsFlags::Right;
@@ -123,7 +123,7 @@ int main(int argc, char *args[])
 			makeGui(circlingGui->guiEntities(), "circling gui");
 			engineRun();
 		}
-		engineAssets()->remove(assetsName);
+		engineAssets()->unload(assetsName);
 		engineFinalize();
 
 		return 0;

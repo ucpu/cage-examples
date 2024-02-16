@@ -219,11 +219,11 @@ int main(int argc, char *args[])
 
 		Holder<StatisticsGui> statistics = newStatisticsGui();
 
-		engineAssets()->add(assetsName1);
-		engineAssets()->add(assetsName2);
+		engineAssets()->load(assetsName1);
+		engineAssets()->load(assetsName2);
 		engineRun();
-		engineAssets()->remove(assetsName1);
-		engineAssets()->remove(assetsName2);
+		engineAssets()->unload(assetsName1);
+		engineAssets()->unload(assetsName2);
 		engineFinalize();
 
 		return 0;

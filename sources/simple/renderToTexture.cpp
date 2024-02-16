@@ -32,12 +32,12 @@ void graphicsInitialize()
 		CameraComponent &c = e->value<CameraComponent>();
 		c.target = +fabScreenTex;
 	}
-	engineAssets()->fabricate<AssetSchemeIndexTexture, Texture>(screenName, std::move(fabScreenTex), "fabricated tv screen");
+	engineAssets()->loadValue<AssetSchemeIndexTexture, Texture>(screenName, std::move(fabScreenTex), "fabricated tv screen");
 }
 
 void graphicsFinalize()
 {
-	engineAssets()->remove(screenName);
+	engineAssets()->unload(screenName);
 }
 
 void update()
@@ -130,9 +130,9 @@ int main(int argc, char *args[])
 		fpsCamera->movementSpeed = 0.1;
 		Holder<StatisticsGui> statistics = newStatisticsGui();
 
-		engineAssets()->add(assetsName);
+		engineAssets()->load(assetsName);
 		engineRun();
-		engineAssets()->remove(assetsName);
+		engineAssets()->unload(assetsName);
 		engineFinalize();
 
 		return 0;

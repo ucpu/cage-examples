@@ -40,8 +40,8 @@ int main(int argc, char *args[])
 		assets->defineScheme<AssetSchemeIndexRenderObject, RenderObject>(genAssetSchemeRenderObject());
 
 		// load assets
-		assets->add(assetsName1);
-		assets->add(assetsName2);
+		assets->load(assetsName1);
+		assets->load(assetsName2);
 		while (assets->processing())
 		{
 			assets->processCustomThread(0);
@@ -136,8 +136,8 @@ int main(int argc, char *args[])
 		}
 
 		// unload assets
-		assets->remove(assetsName1);
-		assets->remove(assetsName2);
+		assets->unload(assetsName1);
+		assets->unload(assetsName2);
 		assets->unloadCustomThread(0);
 
 		return 0;

@@ -667,9 +667,9 @@ int main(int argc, char *args[])
 		fpsCamera->movementSpeed = 0.3;
 		Holder<StatisticsGui> statistics = newStatisticsGui();
 
-		engineAssets()->add(assetsName);
+		engineAssets()->load(assetsName);
 		engineRun();
-		engineAssets()->remove(assetsName);
+		engineAssets()->unload(assetsName);
 		engineFinalize();
 
 		return 0;

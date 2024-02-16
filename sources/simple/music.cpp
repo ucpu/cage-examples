@@ -151,14 +151,14 @@ int main(int argc, char *args[])
 		engineWindow()->title("music");
 		init();
 
-		engineAssets()->add(assetsName);
+		engineAssets()->load(assetsName);
 		{
 			Holder<StatisticsGui> statistics = newStatisticsGui();
 			Holder<FpsCamera> fps = newFpsCamera(engineEntities()->get(1));
 			fps->mouseButton = MouseButtonsFlags::Left;
 			engineRun();
 		}
-		engineAssets()->remove(assetsName);
+		engineAssets()->unload(assetsName);
 		engineFinalize();
 
 		return 0;

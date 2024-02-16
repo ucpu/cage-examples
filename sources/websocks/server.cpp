@@ -4,6 +4,7 @@
 #include <cage-core/concurrent.h>
 #include <cage-core/config.h>
 #include <cage-core/logger.h>
+#include <cage-core/networkTcp.h>
 #include <cage-core/networkWebsocket.h>
 
 using namespace cage;
@@ -16,7 +17,8 @@ void update()
 	// detect new connections
 	while (auto c = server->accept())
 	{
-		CAGE_LOG(SeverityEnum::Info, "connection", Stringizer() + c->address() + ":" + c->port());
+		const auto info = c->remoteInfo();
+		CAGE_LOG(SeverityEnum::Info, "connection", Stringizer() + info.address + ":" + info.port);
 		connections.push_back(std::move(c));
 	}
 
