@@ -103,6 +103,7 @@ public:
 			p.order = side;
 			panel->value<GuiPanelComponent>();
 			panel->value<GuiLayoutLineComponent>().vertical = true;
+			panel->value<GuiLayoutLineComponent>().last = LineEdgeModeEnum::Empty;
 			panel->value<GuiTextComponent>().value = name;
 			panel->value<GuiLayoutScrollbarsComponent>();
 		}

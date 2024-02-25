@@ -45,7 +45,7 @@ public:
 	{
 		Holder<GuiBuilder> g = newGuiBuilder(engineGuiEntities());
 		auto _1 = g->horizontalScrollbar(true);
-		auto _2 = g->row(false, 0.5);
+		auto _2 = g->row(0.5);
 
 		{
 			auto _1 = g->panel().text("basic");
@@ -58,7 +58,7 @@ public:
 			}
 			{
 				auto _1 = g->panel().text("row spaced");
-				auto _2 = g->row(true);
+				auto _2 = g->spacedRow();
 				generate(g);
 			}
 			{
@@ -68,7 +68,7 @@ public:
 			}
 			{
 				auto _1 = g->panel().text("left row flexible right");
-				auto _2 = g->leftRow(true);
+				auto _2 = g->leftRowStretchRight();
 				generate(g);
 			}
 			{
@@ -78,7 +78,7 @@ public:
 			}
 			{
 				auto _1 = g->panel().text("right row flexible left");
-				auto _2 = g->rightRow(true);
+				auto _2 = g->rightRowStretchLeft();
 				generate(g);
 			}
 			{
@@ -88,22 +88,22 @@ public:
 			}
 			{
 				auto _1 = g->panel().text("center row flexible edges");
-				auto _2 = g->centerRow(true);
+				auto _2 = g->centerRowStretchBoth();
 				generate(g);
 			}
 			{
 				auto _1 = g->panel().text("row vertalign 0");
-				auto _2 = g->row(false, 0);
+				auto _2 = g->row(0);
 				generate(g);
 			}
 			{
 				auto _1 = g->panel().text("row vertalign 0.5");
-				auto _2 = g->row(false, 0.5);
+				auto _2 = g->row(0.5);
 				generate(g);
 			}
 			{
 				auto _1 = g->panel().text("row vertalign 1");
-				auto _2 = g->row(false, 1);
+				auto _2 = g->row(1);
 				generate(g);
 			}
 			g->panel().text("extra width").size(Vec2(400, 50));
@@ -145,7 +145,7 @@ public:
 			}
 			{
 				auto _1 = g->panel().text("row spaced");
-				auto _2 = g->row(true);
+				auto _2 = g->spacedRow();
 				generate(g, 20);
 			}
 			{
@@ -155,7 +155,7 @@ public:
 			}
 			{
 				auto _1 = g->panel().text("left row flexible right");
-				auto _2 = g->leftRow(true);
+				auto _2 = g->leftRowStretchRight();
 				generate(g, 20);
 			}
 			{
@@ -165,7 +165,7 @@ public:
 			}
 			{
 				auto _1 = g->panel().text("right row flexible left");
-				auto _2 = g->rightRow(true);
+				auto _2 = g->rightRowStretchLeft();
 				generate(g, 20);
 			}
 			{
@@ -175,7 +175,7 @@ public:
 			}
 			{
 				auto _1 = g->panel().text("center row flexible edges");
-				auto _2 = g->centerRow(true);
+				auto _2 = g->centerRowStretchBoth();
 				generate(g, 20);
 			}
 		}
@@ -193,7 +193,7 @@ public:
 			{
 				auto _1 = g->panel().text("row spaced");
 				auto _2 = g->scrollbars();
-				auto _3 = g->row(true);
+				auto _3 = g->spacedRow();
 				generate(g, 20);
 			}
 			{
@@ -205,7 +205,7 @@ public:
 			{
 				auto _1 = g->panel().text("left row flexible right");
 				auto _2 = g->scrollbars();
-				auto _3 = g->leftRow(true);
+				auto _3 = g->leftRowStretchRight();
 				generate(g, 20);
 			}
 			{
@@ -217,7 +217,7 @@ public:
 			{
 				auto _1 = g->panel().text("right row flexible left");
 				auto _2 = g->scrollbars();
-				auto _3 = g->rightRow(true);
+				auto _3 = g->rightRowStretchLeft();
 				generate(g, 20);
 			}
 			{
@@ -229,7 +229,7 @@ public:
 			{
 				auto _1 = g->panel().text("center row flexible edges");
 				auto _2 = g->scrollbars();
-				auto _3 = g->centerRow(true);
+				auto _3 = g->centerRowStretchBoth();
 				generate(g, 20);
 			}
 		}
@@ -259,33 +259,33 @@ public:
 			auto _3 = g->column();
 			{
 				auto _1 = g->panel().text("left row");
-				auto _2 = g->column(false, 0);
+				auto _2 = g->column(0);
 				for (Real w = 100; w < 300; w += 60)
 				{
 					auto _1 = g->panel().text(Stringizer() + w).size(Vec2(w, Real::Nan()));
-					auto _2 = g->leftRow(true);
+					auto _2 = g->leftRowStretchRight();
 					g->panel().skin(3).text("fixed left");
 					g->panel().skin(3).text("flexible right");
 				}
 			}
 			{
 				auto _1 = g->panel().text("center row");
-				auto _2 = g->column(false, 0);
+				auto _2 = g->column(0);
 				for (Real w = 100; w < 300; w += 60)
 				{
 					auto _1 = g->panel().text(Stringizer() + w).size(Vec2(w, Real::Nan()));
-					auto _2 = g->centerRow(true);
+					auto _2 = g->centerRowStretchBoth();
 					g->panel().skin(3).text("flexible left");
 					g->panel().skin(3).text("flexible right");
 				}
 			}
 			{
 				auto _1 = g->panel().text("right row");
-				auto _2 = g->column(false, 0);
+				auto _2 = g->column(0);
 				for (Real w = 100; w < 300; w += 60)
 				{
 					auto _1 = g->panel().text(Stringizer() + w).size(Vec2(w, Real::Nan()));
-					auto _2 = g->rightRow(true);
+					auto _2 = g->rightRowStretchLeft();
 					g->panel().skin(3).text("flexible left");
 					g->panel().skin(3).text("fixed right");
 				}
@@ -298,11 +298,11 @@ public:
 			auto _3 = g->column();
 			{
 				auto _1 = g->panel().text("left row").size(Vec2(200, Real::Nan()));
-				auto _2 = g->column(false, 0);
+				auto _2 = g->column(0);
 				for (uint32 cnt = 0; cnt < 10; cnt += 3)
 				{
 					auto _1 = g->panel().text(Stringizer() + cnt);
-					auto _2 = g->leftRow(true);
+					auto _2 = g->leftRowStretchRight();
 					{
 						auto _ = g->panel().skin(3).text("fixed left");
 						g->label().text("hej");

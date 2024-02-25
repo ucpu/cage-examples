@@ -21,7 +21,7 @@ public:
 	{
 		Holder<GuiBuilder> g = newGuiBuilder(engineGuiEntities());
 		auto _1 = g->scrollbars();
-		auto _2 = g->row(false, 0.5);
+		auto _2 = g->row(0.5);
 
 		{
 			auto _1 = g->panel().text("horizontal split 2");
