@@ -23,7 +23,7 @@ jobs:
         cmake --version
         git --version
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
 
@@ -82,7 +82,7 @@ jobs:
         ${{ matrix.compiler.cc }} --version
         ${{ matrix.compiler.cxx }} --version
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
 
@@ -121,7 +121,7 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y xorg-dev nasm ${{ matrix.compiler.install }}
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
 
