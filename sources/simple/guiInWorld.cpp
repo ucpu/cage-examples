@@ -14,7 +14,7 @@
 
 using namespace cage;
 
-constexpr uint32 assetsName = HashString("cage-tests/cross/cross.pack");
+constexpr uint32 AssetsName = HashString("cage-tests/cross/cross.pack");
 
 void update()
 {
@@ -111,7 +111,7 @@ int main(int argc, char *args[])
 			e->value<RenderComponent>().object = HashString("cage/model/fake.obj");
 		}
 
-		engineAssets()->load(assetsName);
+		engineAssets()->load(AssetsName);
 		{
 			Holder<FpsCamera> fpsCamera = newFpsCamera(ents->get(1));
 			fpsCamera->mouseButton = MouseButtonsFlags::Right;
@@ -123,7 +123,7 @@ int main(int argc, char *args[])
 			makeGui(circlingGui->guiEntities(), "circling gui");
 			engineRun();
 		}
-		engineAssets()->unload(assetsName);
+		engineAssets()->unload(AssetsName);
 		engineFinalize();
 
 		return 0;

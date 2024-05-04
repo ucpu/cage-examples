@@ -3,6 +3,7 @@
 #include <cage-core/hashString.h>
 #include <cage-core/logger.h>
 #include <cage-core/noiseFunction.h>
+#include <cage-core/texts.h>
 #include <cage-engine/guiComponents.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/scene.h>
@@ -13,9 +14,9 @@
 #include <cage-simple/statisticsGui.h>
 
 using namespace cage;
-constexpr uint32 assetsName = HashString("cage-tests/texts/texts.pack");
+constexpr uint32 AssetsName = HashString("cage-tests/texts/texts.pack");
 
-constexpr const char *fontNames[] = {
+constexpr const char *FontNames[] = {
 	"cage-tests/gui/DroidSansMono.ttf",
 	"cage-tests/gui/immortal.ttf",
 	"cage-tests/gui/roboto.ttf",
@@ -25,7 +26,7 @@ constexpr const char *fontNames[] = {
 	"cage/font/ubuntu/italic.ttf",
 	"cage/font/ubuntu/monospace.ttf",
 };
-constexpr const char *labelTexts[] = {
+constexpr const char *LabelTexts[] = {
 	"Droid Sans Mono",
 	"Immortal",
 	"Roboto",
@@ -36,8 +37,8 @@ constexpr const char *labelTexts[] = {
 	"Ubuntu Mono",
 };
 
-constexpr uint32 fontsCount = sizeof(fontNames) / sizeof(fontNames[0]);
-static_assert(sizeof(fontNames) / sizeof(fontNames[0]) == sizeof(labelTexts) / sizeof(labelTexts[0]), "arrays must have same number of elements");
+constexpr uint32 fontsCount = array_size(FontNames);
+static_assert(array_size(FontNames) == array_size(LabelTexts), "arrays must have same number of elements");
 
 NoiseFunctionCreateConfig noiseInit(uint32 seed)
 {
@@ -119,8 +120,7 @@ int main(int argc, char *args[])
 		{ // text hello
 			Entity *e = ents->create(11);
 			TextComponent &r = e->value<TextComponent>();
-			r.assetName = HashString("cage-tests/texts/texts.textpack");
-			r.textName = HashString("short/hello");
+			r.textId = HashString("short");
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(0, 0, -10);
 			t.scale = 3;
@@ -128,8 +128,7 @@ int main(int argc, char *args[])
 		{ // text long
 			Entity *e = ents->createAnonymous();
 			TextComponent &r = e->value<TextComponent>();
-			r.assetName = HashString("cage-tests/texts/texts.textpack");
-			r.textName = HashString("long/a");
+			r.textId = HashString("long/a");
 			r.color = Vec3(1, 0, 0);
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(-10, 0, 0);
@@ -148,8 +147,7 @@ int main(int argc, char *args[])
 		{ // text params
 			Entity *e = ents->create(10);
 			TextComponent &r = e->value<TextComponent>();
-			r.assetName = HashString("cage-tests/texts/texts.textpack");
-			r.textName = HashString("params/a");
+			r.textId = HashString("params");
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(0, 0, 10);
 			t.orientation = Quat(Degs(), Degs(180), Degs());
@@ -159,8 +157,8 @@ int main(int argc, char *args[])
 			{
 				Entity *e = ents->createAnonymous();
 				TextComponent &r = e->value<TextComponent>();
-				r.value = labelTexts[i];
-				r.font = HashString(fontNames[i]);
+				r.value = LabelTexts[i];
+				r.font = HashString(FontNames[i]);
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(0, -3, 2.0 * i - fontsCount);
 				t.orientation = Quat(Degs(-90), Degs(), Degs());
@@ -172,9 +170,12 @@ int main(int argc, char *args[])
 		cameraCtrl->movementSpeed = 0.3;
 		Holder<StatisticsGui> statistics = newStatisticsGui();
 
-		engineAssets()->load(assetsName);
+		if (randomChance() < 0.5)
+			textsSetLanguages("cs_CZ;");
+
+		engineAssets()->load(AssetsName);
 		engineRun();
-		engineAssets()->unload(assetsName);
+		engineAssets()->unload(AssetsName);
 		engineFinalize();
 
 		return 0;

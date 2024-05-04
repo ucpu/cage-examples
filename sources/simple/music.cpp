@@ -14,7 +14,7 @@
 
 using namespace cage;
 
-constexpr uint32 assetsName = HashString("cage-tests/music/music.pack");
+constexpr uint32 AssetsName = HashString("cage-tests/music/music.pack");
 
 void init()
 {
@@ -151,14 +151,14 @@ int main(int argc, char *args[])
 		engineWindow()->title("music");
 		init();
 
-		engineAssets()->load(assetsName);
+		engineAssets()->load(AssetsName);
 		{
 			Holder<StatisticsGui> statistics = newStatisticsGui();
 			Holder<FpsCamera> fps = newFpsCamera(engineEntities()->get(1));
 			fps->mouseButton = MouseButtonsFlags::Left;
 			engineRun();
 		}
-		engineAssets()->unload(assetsName);
+		engineAssets()->unload(AssetsName);
 		engineFinalize();
 
 		return 0;

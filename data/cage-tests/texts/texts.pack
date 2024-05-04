@@ -3,8 +3,6 @@
 ../gui/gui.pack
 
 []
+texts.pot
 czech.png
 english.png
-
-[]
-czech.textpack

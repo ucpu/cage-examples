@@ -148,10 +148,10 @@ namespace GuiTestClassNS
 
 				// run
 				initialize();
-				static constexpr uint32 assetsName = HashString("cage-tests/gui/gui.pack");
-				engineAssets()->load(assetsName);
+				static constexpr uint32 AssetsName = HashString("cage-tests/gui/gui.pack");
+				engineAssets()->load(AssetsName);
 				engineRun();
-				engineAssets()->unload(assetsName);
+				engineAssets()->unload(AssetsName);
 				engineFinalize();
 
 				return 0;

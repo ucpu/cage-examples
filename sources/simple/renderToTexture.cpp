@@ -17,7 +17,7 @@
 #include <cage-simple/statisticsGui.h>
 
 using namespace cage;
-constexpr uint32 assetsName = HashString("cage-tests/room/room.pack");
+constexpr uint32 AssetsName = HashString("cage-tests/room/room.pack");
 constexpr uint32 screenName = HashString("cage-tests/room/tvscreen.jpg");
 
 void graphicsInitialize()
@@ -130,9 +130,9 @@ int main(int argc, char *args[])
 		fpsCamera->movementSpeed = 0.1;
 		Holder<StatisticsGui> statistics = newStatisticsGui();
 
-		engineAssets()->load(assetsName);
+		engineAssets()->load(AssetsName);
 		engineRun();
-		engineAssets()->unload(assetsName);
+		engineAssets()->unload(AssetsName);
 		engineFinalize();
 
 		return 0;

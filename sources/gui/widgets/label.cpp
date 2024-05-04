@@ -45,7 +45,7 @@ class GuiTestImpl : public GuiTestClass
 			p.order = index++;
 			e->value<GuiLabelComponent>();
 			e->value<GuiTextComponent>().value = "hover over this";
-			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"", HashString("cage-tests/gui/texts.textpack"), HashString("texts/hello")>();
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"", HashString("texts/hello")>();
 		}
 
 		{ // horizontal

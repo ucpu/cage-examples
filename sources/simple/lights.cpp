@@ -16,7 +16,7 @@
 #include <cage-simple/statisticsGui.h>
 
 using namespace cage;
-constexpr uint32 assetsName = HashString("cage-tests/bottle/bottle.pack");
+constexpr uint32 AssetsName = HashString("cage-tests/bottle/bottle.pack");
 
 Vec3 getGuiColor(uint32 id)
 {
@@ -211,9 +211,9 @@ int main(int argc, char *args[])
 		fpsCamera->movementSpeed = 0.3;
 		Holder<StatisticsGui> statistics = newStatisticsGui();
 
-		engineAssets()->load(assetsName);
+		engineAssets()->load(AssetsName);
 		engineRun();
-		engineAssets()->unload(assetsName);
+		engineAssets()->unload(AssetsName);
 		engineFinalize();
 
 		return 0;

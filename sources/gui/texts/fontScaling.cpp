@@ -4,7 +4,7 @@
 
 using namespace cage;
 
-const char *fontNames[] = {
+const char *FontNames[] = {
 	"cage-tests/gui/DroidSansMono.ttf",
 	"cage-tests/gui/immortal.ttf",
 	"cage-tests/gui/roboto.ttf",
@@ -14,7 +14,7 @@ const char *fontNames[] = {
 	"cage/font/ubuntu/italic.ttf",
 	"cage/font/ubuntu/monospace.ttf",
 };
-const String labelTexts[] = {
+const String LabelTexts[] = {
 	"Droid Sans Mono",
 	"Immortal",
 	"Roboto",
@@ -25,8 +25,8 @@ const String labelTexts[] = {
 	"Ubuntu Mono",
 };
 
-const uint32 fontsCount = sizeof(fontNames) / sizeof(fontNames[0]);
-static_assert(sizeof(fontNames) / sizeof(fontNames[0]) == sizeof(labelTexts) / sizeof(labelTexts[0]), "arrays must have same number of elements");
+const uint32 fontsCount = sizeof(FontNames) / sizeof(FontNames[0]);
+static_assert(sizeof(FontNames) / sizeof(FontNames[0]) == sizeof(LabelTexts) / sizeof(LabelTexts[0]), "arrays must have same number of elements");
 
 class GuiTestImpl : public GuiTestClass
 {
@@ -61,9 +61,9 @@ public:
 			e->value<GuiParentComponent>().parent = 2;
 			e->value<GuiParentComponent>().order = i;
 			e->value<GuiLabelComponent>();
-			e->value<GuiTextComponent>().value = labelTexts[i];
+			e->value<GuiTextComponent>().value = LabelTexts[i];
 			GuiTextFormatComponent &format = e->value<GuiTextFormatComponent>();
-			format.font = HashString(fontNames[i]);
+			format.font = HashString(FontNames[i]);
 			format.align = TextAlignEnum::Center;
 			format.color = colorHsvToRgb(Vec3(randomChance(), 1, 1));
 		}

@@ -3,10 +3,8 @@ scheme = pack
 texts.pack
 
 []
-scheme = textpack
-alias = texts.textpack
-czech.textpack
-english.textpack
+scheme = texts
+texts.pot
 
 []
 scheme = texture

@@ -11,7 +11,7 @@
 #include <cage-simple/statisticsGui.h>
 
 using namespace cage;
-constexpr uint32 assetsName = HashString("cage-tests/normals/normals.pack");
+constexpr uint32 AssetsName = HashString("cage-tests/normals/normals.pack");
 
 void update()
 {
@@ -75,9 +75,9 @@ int main(int argc, char *args[])
 		cameraCtrl->movementSpeed = 0.3;
 		Holder<StatisticsGui> statistics = newStatisticsGui();
 
-		engineAssets()->load(assetsName);
+		engineAssets()->load(AssetsName);
 		engineRun();
-		engineAssets()->unload(assetsName);
+		engineAssets()->unload(AssetsName);
 		engineFinalize();
 
 		return 0;

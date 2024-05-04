@@ -14,9 +14,9 @@ scheme = texture
 skin.png
 
 []
-scheme = textpack
-utf8test.textpack
-texts.textpack
+scheme = texts
+multilingual = false
+texts.po
 
 []
 scheme = texture

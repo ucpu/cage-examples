@@ -20,7 +20,7 @@
 #include <cage-simple/statisticsGui.h>
 
 using namespace cage;
-constexpr uint32 assetsName = HashString("cage-tests/explosion/explosion.pack");
+constexpr uint32 AssetsName = HashString("cage-tests/explosion/explosion.pack");
 constexpr const uint32 assetsExplosions[] = { HashString("cage-tests/explosion/sprite.obj;explosion_1"), HashString("cage-tests/explosion/sprite.obj;explosion_2"), HashString("cage-tests/explosion/sprite.obj;explosion_3") };
 constexpr const uint32 assetsSmokes[] = { HashString("cage-tests/explosion/sprite.obj;smoke_1"), HashString("cage-tests/explosion/sprite.obj;smoke_2") };
 constexpr const uint32 assetsSparks[] = { HashString("cage-tests/explosion/sprite.obj;spark_1") };
@@ -251,9 +251,9 @@ int main(int argc, char *args[])
 		cameraCtrl->movementSpeed = 0.3;
 		Holder<StatisticsGui> statistics = newStatisticsGui();
 
-		engineAssets()->load(assetsName);
+		engineAssets()->load(AssetsName);
 		engineRun();
-		engineAssets()->unload(assetsName);
+		engineAssets()->unload(AssetsName);
 		engineFinalize();
 
 		return 0;

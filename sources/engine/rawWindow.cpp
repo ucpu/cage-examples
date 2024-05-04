@@ -18,7 +18,7 @@
 using namespace cage;
 
 bool closing = false;
-constexpr uint32 assetsName = HashString("cage-tests/logo/logo.pack");
+constexpr uint32 AssetsName = HashString("cage-tests/logo/logo.pack");
 
 int main(int argc, char *args[])
 {
@@ -45,10 +45,10 @@ int main(int argc, char *args[])
 		assets->defineScheme<AssetSchemeIndexSound, Sound>(genAssetSchemeSound());
 
 		// load assets
-		assets->load(assetsName);
+		assets->load(AssetsName);
 		while (true)
 		{
-			if (assets->get<AssetSchemeIndexPack, AssetPack>(assetsName))
+			if (assets->get<AssetSchemeIndexPack, AssetPack>(AssetsName))
 				break;
 			assets->processCustomThread(0);
 			threadSleep(1000);
@@ -92,7 +92,7 @@ int main(int argc, char *args[])
 		}
 
 		// unload assets
-		assets->unload(assetsName);
+		assets->unload(AssetsName);
 		assets->unloadCustomThread(0);
 
 		return 0;

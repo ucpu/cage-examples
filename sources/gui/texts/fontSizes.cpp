@@ -2,7 +2,7 @@
 
 using namespace cage;
 
-constexpr const char *fontNames[] = {
+constexpr const char *FontNames[] = {
 	"cage-tests/gui/DroidSansMono.ttf",
 	"cage-tests/gui/immortal.ttf",
 	"cage-tests/gui/roboto.ttf",
@@ -12,7 +12,7 @@ constexpr const char *fontNames[] = {
 	"cage/font/ubuntu/italic.ttf",
 	"cage/font/ubuntu/monospace.ttf",
 };
-constexpr String labelTexts[] = {
+constexpr String LabelTexts[] = {
 	"Droid Sans Mono",
 	"Immortal",
 	"Roboto",
@@ -24,8 +24,8 @@ constexpr String labelTexts[] = {
 };
 constexpr String multilineText = "lorem ipsum dolor sit amet\npříliš žluťoučký kůň úpěl ďábelské ódy\na quick brown fox jumps over a lazy dog\nhello world, foo, bar, baz\n\n";
 
-const uint32 fontsCount = array_size(fontNames);
-static_assert(array_size(fontNames) == array_size(labelTexts));
+const uint32 fontsCount = array_size(FontNames);
+static_assert(array_size(FontNames) == array_size(LabelTexts));
 
 constexpr Real fontSizes[] = { 9, 11, 14, 18 };
 
@@ -46,11 +46,11 @@ public:
 		}
 		for (uint32 fontIndex = 0; fontIndex < fontsCount; fontIndex++)
 		{
-			g->label().text(labelTexts[fontIndex]);
+			g->label().text(LabelTexts[fontIndex]);
 			for (Real size : fontSizes)
 			{
 				GuiTextFormatComponent f;
-				f.font = HashString(fontNames[fontIndex]);
+				f.font = HashString(FontNames[fontIndex]);
 				f.size = size;
 				g->label().text(multilineText).textFormat(f);
 			}

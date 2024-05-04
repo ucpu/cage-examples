@@ -2,7 +2,7 @@
 
 using namespace cage;
 
-const char *fontNames[] = {
+const char *FontNames[] = {
 	"cage-tests/gui/DroidSansMono.ttf",
 	"cage-tests/gui/immortal.ttf",
 	"cage-tests/gui/roboto.ttf",
@@ -12,7 +12,7 @@ const char *fontNames[] = {
 	"cage/font/ubuntu/italic.ttf",
 	"cage/font/ubuntu/monospace.ttf",
 };
-const String labelTexts[] = {
+const String LabelTexts[] = {
 	"Droid Sans Mono",
 	"Immortal",
 	"Roboto",
@@ -24,8 +24,8 @@ const String labelTexts[] = {
 };
 const String multilineText = "lorem ipsum dolor sit amet\npříliš žluťoučký kůň úpěl ďábelské ódy\na quick brown fox jumps over a lazy dog\n\nhello world, foo, bar, baz";
 
-const uint32 fontsCount = sizeof(fontNames) / sizeof(fontNames[0]);
-static_assert(sizeof(fontNames) / sizeof(fontNames[0]) == sizeof(labelTexts) / sizeof(labelTexts[0]), "arrays must have same number of elements");
+const uint32 fontsCount = sizeof(FontNames) / sizeof(FontNames[0]);
+static_assert(sizeof(FontNames) / sizeof(FontNames[0]) == sizeof(LabelTexts) / sizeof(LabelTexts[0]), "arrays must have same number of elements");
 
 class GuiTestImpl : public GuiTestClass
 {
@@ -49,8 +49,8 @@ public:
 				e->value<GuiParentComponent>().parent = 2;
 				e->value<GuiParentComponent>().order = i * 2 + 0;
 				e->value<GuiLabelComponent>();
-				e->value<GuiTextComponent>().value = labelTexts[i];
-				e->value<GuiTextFormatComponent>().font = HashString(fontNames[i]);
+				e->value<GuiTextComponent>().value = LabelTexts[i];
+				e->value<GuiTextFormatComponent>().font = HashString(FontNames[i]);
 			}
 
 			{
@@ -65,7 +65,7 @@ public:
 				e->value<GuiParentComponent>().parent = 1000 + i;
 				e->value<GuiLabelComponent>();
 				e->value<GuiTextComponent>().value = multilineText;
-				e->value<GuiTextFormatComponent>().font = HashString(fontNames[i]);
+				e->value<GuiTextFormatComponent>().font = HashString(FontNames[i]);
 			}
 		}
 	}

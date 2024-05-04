@@ -1,0 +1,11 @@
+msgid "short"
+msgstr "ahoj"
+
+msgid "long/a"
+msgstr "příliš žluťoučký kůň úpěl ďábelské ódy"
+
+msgid "long/b"
+msgstr "lorem ipsum dolor sit amet"
+
+msgid "params"
+msgstr "pozice: x: {0}, y: {1}, z: {2}"

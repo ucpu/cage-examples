@@ -15,7 +15,7 @@
 
 using namespace cage;
 
-constexpr uint32 assetsName = HashString("cage-tests/camera-effects/effects.pack");
+constexpr uint32 AssetsName = HashString("cage-tests/camera-effects/effects.pack");
 
 void enableEffect(ScreenSpaceEffectsFlags effect, bool enable)
 {
@@ -667,9 +667,9 @@ int main(int argc, char *args[])
 		fpsCamera->movementSpeed = 0.3;
 		Holder<StatisticsGui> statistics = newStatisticsGui();
 
-		engineAssets()->load(assetsName);
+		engineAssets()->load(AssetsName);
 		engineRun();
-		engineAssets()->unload(assetsName);
+		engineAssets()->unload(AssetsName);
 		engineFinalize();
 
 		return 0;

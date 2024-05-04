@@ -18,7 +18,7 @@
 #include <cage-simple/statisticsGui.h>
 
 using namespace cage;
-constexpr uint32 assetsName = HashString("cage-tests/screamers/screamers.pack");
+constexpr uint32 AssetsName = HashString("cage-tests/screamers/screamers.pack");
 constexpr const uint32 assetsScreams[] = { HashString("cage-tests/screamers/screams/1.mp3"), HashString("cage-tests/screamers/screams/2.wav"), HashString("cage-tests/screamers/screams/3.ogg"), HashString("cage-tests/screamers/screams/4.wav") };
 constexpr const uint32 assetsExplosionsSounds[] = { HashString("cage-tests/screamers/explosion/1.flac"), HashString("cage-tests/screamers/explosion/2.wav"), HashString("cage-tests/screamers/explosion/3.wav") };
 constexpr const uint32 assetsExplosionsSprites[] = { HashString("cage-tests/explosion/sprite.obj;explosion_1"), HashString("cage-tests/explosion/sprite.obj;explosion_2"), HashString("cage-tests/explosion/sprite.obj;explosion_3") };
@@ -329,9 +329,9 @@ int main(int argc, char *args[])
 		cameraCtrl->turningSpeed *= 0.5;
 		Holder<StatisticsGui> statistics = newStatisticsGui();
 
-		engineAssets()->load(assetsName);
+		engineAssets()->load(AssetsName);
 		engineRun();
-		engineAssets()->unload(assetsName);
+		engineAssets()->unload(AssetsName);
 		engineFinalize();
 
 		return 0;

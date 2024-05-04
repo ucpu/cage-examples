@@ -15,7 +15,7 @@
 #include <cage-simple/statisticsGui.h>
 
 using namespace cage;
-constexpr uint32 assetsName = HashString("cage-tests/translucent/translucent.pack");
+constexpr uint32 AssetsName = HashString("cage-tests/translucent/translucent.pack");
 constexpr uint32 knotsCount = 40;
 constexpr uint32 bulbsCount = 50;
 
@@ -256,9 +256,9 @@ int main(int argc, char *args[])
 		cameraCtrl->movementSpeed = 0.3;
 		Holder<StatisticsGui> statistics = newStatisticsGui();
 
-		engineAssets()->load(assetsName);
+		engineAssets()->load(AssetsName);
 		engineRun();
-		engineAssets()->unload(assetsName);
+		engineAssets()->unload(AssetsName);
 		engineFinalize();
 
 		return 0;

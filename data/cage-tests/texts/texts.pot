@@ -1,0 +1,11 @@
+msgid "short"
+msgstr "hello"
+
+msgid "long/a"
+msgstr "brown_fox_jumps_over_a_lazy_dog"
+
+msgid "long/b"
+msgstr "lorem_ipsum"
+
+msgid "params"
+msgstr "position: xyz"
