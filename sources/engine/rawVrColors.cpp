@@ -62,7 +62,7 @@ int main(int argc, char *args[])
 		window->setWindowed();
 		window->makeCurrent();
 
-		Holder<VirtualReality> virtualreality = newVirtualReality({});
+		Holder<VirtualReality> virtualreality = newVirtualReality();
 		const auto headsetConnectedListener = virtualreality->events.listen(inputFilter(&headsetConnected));
 		const auto headsetDisconnectedListener = virtualreality->events.listen(inputFilter(&headsetDiconnected));
 		const auto headsetPoseListener = virtualreality->events.listen(inputFilter(&headsetPose));

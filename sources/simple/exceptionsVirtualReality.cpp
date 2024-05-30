@@ -112,9 +112,8 @@ int main(int argc, char *args[])
 		while (!fullStop)
 		{
 			{
-				VirtualRealityCreateConfig vr;
 				EngineCreateConfig cfg;
-				cfg.virtualReality = &vr;
+				cfg.virtualReality = true;
 				engineInitialize(cfg);
 			}
 

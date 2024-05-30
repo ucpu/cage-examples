@@ -6,8 +6,6 @@ logo.pack
 []
 scheme = sound
 stream = true
-loopBefore = true
-loopAfter = true
 logo.ogg
 
 []

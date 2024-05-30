@@ -6,9 +6,6 @@ PurplePlanet.pack
 []
 scheme = sound
 stream = true
-loopBefore = true
-loopAfter = true
-mono = true
 BigDayOut.mp3
 Civilisation.mp3
 FunkCity.mp3

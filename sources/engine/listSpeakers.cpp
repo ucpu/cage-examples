@@ -28,10 +28,11 @@ void testDevice(const String &deviceId, uint32 sampleRate)
 {
 	CAGE_LOG(SeverityEnum::Info, "listing", "-----------------");
 
-	SpeakerCreateConfig cnf;
-	cnf.deviceId = deviceId;
-	cnf.sampleRate = sampleRate;
-	Holder<Speaker> speaker = newSpeaker(cnf, Delegate<void(const SoundCallbackData &)>().bind<&synthesizeTone>());
+	SpeakerCreateConfig cfg;
+	cfg.deviceId = deviceId;
+	cfg.sampleRate = sampleRate;
+	cfg.callback = Delegate<void(const SoundCallbackData &)>().bind<&synthesizeTone>();
+	Holder<Speaker> speaker = newSpeaker(cfg);
 	CAGE_LOG(SeverityEnum::Info, "speaker", Stringizer() + "channels: " + speaker->channels());
 	CAGE_LOG(SeverityEnum::Info, "speaker", Stringizer() + "sample rate: " + speaker->sampleRate());
 	CAGE_LOG(SeverityEnum::Info, "speaker", Stringizer() + "latency: " + speaker->latency());

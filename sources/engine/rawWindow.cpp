@@ -67,10 +67,11 @@ int main(int argc, char *args[])
 			shader->bind();
 
 			// initialize sounds
-			Holder<VoicesMixer> mixer = newVoicesMixer({});
-			Holder<Speaker> speaker = newSpeaker({}, Delegate<void(const SoundCallbackData &)>().bind<VoicesMixer, &VoicesMixer::process>(+mixer));
+			Holder<VoicesMixer> mixer = newVoicesMixer();
+			Holder<Speaker> speaker = newSpeaker({ .callback = Delegate<void(const SoundCallbackData &)>().bind<VoicesMixer, &VoicesMixer::process>(+mixer) });
 			Holder<Voice> voice = mixer->newVoice();
 			voice->sound = sound.share();
+			voice->loop = true;
 			speaker->start();
 
 			// show the window

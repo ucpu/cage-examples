@@ -180,6 +180,7 @@ void spawnScreamer()
 	SoundComponent &snd = e->value<SoundComponent>();
 	snd.name = arrayPick(assetsScreams);
 	snd.startTime = engineControlTime();
+	snd.loop = true;
 
 	LightComponent &lig = e->value<LightComponent>();
 	render.color = lig.color = randomDirection3() * 0.5 + 0.5;
@@ -299,7 +300,7 @@ int main(int argc, char *args[])
 			c.far = 500;
 			c.ambientColor = Vec3(1);
 			c.ambientIntensity = 0.2;
-			e->value<ListenerComponent>().rolloffFactor = 0.1;
+			e->value<ListenerComponent>();
 		}
 		{ // skybox
 			Entity *e = ents->create(2);

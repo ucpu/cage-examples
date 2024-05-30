@@ -126,9 +126,8 @@ int main(int argc, char *args[])
 		log1->output.bind<logOutputStdOut>();
 
 		{
-			VirtualRealityCreateConfig v;
 			EngineCreateConfig e;
-			e.virtualReality = &v;
+			e.virtualReality = true;
 			engineInitialize(e);
 		}
 

@@ -59,7 +59,7 @@ int main(int argc, char *args[])
 			// show window
 			window->windowedSize(Vec2i(800, 600));
 			window->setWindowed();
-			Holder<VirtualReality> virtualreality = newVirtualReality({});
+			Holder<VirtualReality> virtualreality = newVirtualReality();
 			Holder<FrameBuffer> fb = newFrameBufferDraw();
 			Holder<Texture> depthTexture = newTexture();
 			depthTexture->setDebugName("depth texture");
