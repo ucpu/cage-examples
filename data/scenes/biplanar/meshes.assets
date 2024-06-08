@@ -1,0 +1,6 @@
+[]
+scheme = model
+scale = 0.01
+material = monkey.cpm
+uvs = false
+monkey.glb

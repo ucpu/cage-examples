@@ -1,0 +1,11 @@
+[]
+scheme = shader
+biplanar.glsl
+
+[]
+scheme = object
+biplanar.object
+
+[]
+scheme = pack
+biplanar.pack
