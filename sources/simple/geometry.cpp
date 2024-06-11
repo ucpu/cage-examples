@@ -23,7 +23,7 @@ Frustum cameraFrustum()
 	TransformComponent &camT = camE->value<TransformComponent>();
 	CameraComponent &camC = camE->value<CameraComponent>();
 	const Vec2i resolution = engineWindow()->resolution();
-	const Frustum frustum = Frustum(camT, perspectiveProjection(camC.camera.perspectiveFov, Real(resolution[0]) / resolution[1], camC.near, camC.far));
+	const Frustum frustum = Frustum(camT, perspectiveProjection(camC.perspectiveFov, Real(resolution[0]) / resolution[1], camC.near, camC.far));
 	return frustum;
 }
 

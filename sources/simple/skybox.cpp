@@ -60,7 +60,7 @@ int main(int argc, char *args[])
 			l.intensity = 2;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 2048;
-			s.worldSize = Vec3(50);
+			s.directionalWorldSize = 50;
 		}
 		{ // floor
 			Entity *e = ents->create(4);

@@ -85,7 +85,7 @@ int main(int argc, char *args[])
 			l.intensity = 3;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 2048;
-			s.worldSize = Vec3(30);
+			s.directionalWorldSize = 30;
 			//e->value<RenderComponent>().object = HashString("cage-tests/cross/cross.obj");
 		}
 		{ // floor

@@ -72,7 +72,7 @@ void generate()
 		if (shadowEnabled)
 		{
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
-			s.worldSize = Vec3(20);
+			s.directionalWorldSize = 20;
 			s.resolution = 4096;
 		}
 	}

@@ -3,11 +3,6 @@ $include /cage/shader/shaderConventions.h
 
 $include /cage/shader/engine/vertex.glsl
 
-float sqr(float x)
-{
-	return x * x;
-}
-
 vec3 applyWind(vec3 p, vec3 origin)
 {
 	float k = length(vec2(p.x, p.z));

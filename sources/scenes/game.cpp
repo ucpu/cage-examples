@@ -122,8 +122,10 @@ void sceneReload()
 	for (int i = 0; i < pointLightsCount; i++)
 	{
 		Entity *e = pointLights[i] = engineEntities()->createAnonymous();
-		e->value<TransformComponent>().position = (Vec3(randomChance(), randomChance(), randomChance()) * 2 - 1) * 15;
+		e->value<TransformComponent>().position = (randomChance3() * 2 - 1) * 15;
 		e->value<RenderComponent>().color = e->value<LightComponent>().color = colorHsvToRgb(Vec3(randomChance(), 1, 1));
+		e->value<LightComponent>().minDistance = 0.1;
+		e->value<LightComponent>().maxDistance = 10;
 		e->value<RenderComponent>().object = HashString("scenes/common/lightbulb.obj");
 	}
 }

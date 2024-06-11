@@ -65,7 +65,7 @@ int main(int argc, char *args[])
 			l.lightType = LightTypeEnum::Directional;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 1024;
-			s.worldSize = Vec3(20, 20, 20);
+			s.directionalWorldSize = 20;
 		}
 		{ // camera
 			Entity *e = ents->create(10);

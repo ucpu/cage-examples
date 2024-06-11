@@ -108,7 +108,7 @@ void generatePieces()
 		l.sceneMask = 1u << (i + 1);
 		ShadowmapComponent &s = e->value<ShadowmapComponent>();
 		s.resolution = 2048;
-		s.worldSize = Vec3(15);
+		s.directionalWorldSize = 15;
 	}
 }
 
@@ -154,7 +154,7 @@ int main(int argc, char *args[])
 			l.intensity = 1;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 2048;
-			s.worldSize = Vec3(15);
+			s.directionalWorldSize = 15;
 		}
 		{ // floor
 			Entity *e = ents->createUnique();

@@ -120,7 +120,7 @@ int main(int argc, char *args[])
 			l.intensity = 2;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 2048;
-			s.worldSize = Vec3(15);
+			s.directionalWorldSize = 15;
 		}
 		{ // flash light
 			Entity *e = ents->create(3);
@@ -137,9 +137,9 @@ int main(int argc, char *args[])
 			l.spotExponent = 40;
 			l.color = Vec3(1);
 			l.intensity = 15;
-			ShadowmapComponent &s = e->value<ShadowmapComponent>();
-			s.resolution = 1024;
-			s.worldSize = Vec3(3, 50, 0);
+			l.minDistance = 3;
+			l.maxDistance = 50;
+			e->value<ShadowmapComponent>().resolution = 1024;
 		}
 		{ // floor
 			Entity *e = ents->create(5);

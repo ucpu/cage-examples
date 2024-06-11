@@ -44,10 +44,8 @@ void update()
 
 	{ // update ambient light
 		Entity *e = ents->get(10);
-		CameraComponent &c = e->value<CameraComponent>();
-		c.ambientColor = getGuiColor(27); // ambient light
-		LightComponent &l = e->value<LightComponent>();
-		l.color = getGuiColor(28); // headlight
+		e->value<CameraComponent>().ambientColor = getGuiColor(27); // ambient light
+		e->value<LightComponent>().color = getGuiColor(28); // headlight
 	}
 
 	for (uint32 i = 0; i < 3; i++)
@@ -187,9 +185,10 @@ int main(int argc, char *args[])
 			l.spotAngle = Degs(40);
 			l.spotExponent = 40;
 			l.intensity = 100;
-			ShadowmapComponent &s = e->value<ShadowmapComponent>();
-			s.resolution = 1024;
-			s.worldSize = Vec3(3, 50, 0);
+			l.minDistance = 3;
+			l.maxDistance = 50;
+			e->value<ShadowmapComponent>().resolution = 1024;
+			e->value<ShadowmapComponent>().shadowFactor = 0.5;
 		}
 		{ // camera
 			Entity *e = ents->create(10);

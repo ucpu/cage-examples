@@ -130,7 +130,7 @@ int main(int argc, char *args[])
 			c.ambientColor = Vec3(1);
 			c.ambientIntensity = 1;
 			c.cameraType = CameraTypeEnum::Orthographic;
-			c.camera.orthographicSize = Vec2(30, 20);
+			c.orthographicSize = Vec2(30, 20);
 			c.near = -10;
 			c.far = 100;
 			TransformComponent &t = e->value<TransformComponent>();
