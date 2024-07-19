@@ -68,7 +68,7 @@ jobs:
     - name: Install packages
       run: |
         sudo apt-get update
-        sudo apt-get install -y xorg-dev nasm ${{ matrix.compiler.install }}
+        sudo apt-get install -y xorg-dev libwayland-dev libxkbcommon-dev libpulse-dev libasound2-dev nasm libssl-dev ${{ matrix.compiler.install }}
 
     - name: Versions
       run: |
@@ -114,7 +114,7 @@ jobs:
     - name: Install packages
       run: |
         sudo apt-get update
-        sudo apt-get install -y xorg-dev nasm ${{ matrix.compiler.install }}
+        sudo apt-get install -y xorg-dev libwayland-dev libxkbcommon-dev libpulse-dev libasound2-dev nasm libssl-dev ${{ matrix.compiler.install }}
 
     - uses: actions/checkout@v4
       with:
