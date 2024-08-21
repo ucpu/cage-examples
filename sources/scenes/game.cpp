@@ -153,7 +153,7 @@ void keyPress(input::KeyPress in)
 
 void update()
 {
-#if 0
+#if 1
 	{ // automatic reloading -> used for engine testing
 		static uint64 last = 0;
 		uint64 now = applicationTime();
