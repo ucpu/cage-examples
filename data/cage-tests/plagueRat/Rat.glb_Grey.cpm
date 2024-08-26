@@ -1,0 +1,9 @@
+[base]
+albedo = 0.5, 0.5, 0.5
+roughness = 0.9
+
+[textures]
+custom = postules.png
+
+[render]
+shader = plague.glsl

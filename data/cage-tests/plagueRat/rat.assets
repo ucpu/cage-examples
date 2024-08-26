@@ -1,0 +1,35 @@
+[]
+scheme = model
+bones = true
+trianglesOnly = true
+scale = 0.2
+axes = -x+y-z
+Rat.glb?Cylinder-0_Pink
+Rat.glb?Cylinder-1_Grey
+
+[]
+scheme = skeleton
+Rat.glb;skeleton
+
+[]
+scheme = animation
+Rat.glb?Rat_Death
+Rat.glb?Rat_Idle
+Rat.glb?Rat_Jump
+Rat.glb?Rat_Walk
+
+[]
+scheme = object
+Rat.object
+
+[]
+scheme = shader
+plague.glsl
+
+[]
+scheme = texture
+postules.png
+
+[]
+scheme = pack
+rat.pack
