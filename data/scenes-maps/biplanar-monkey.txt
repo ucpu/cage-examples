@@ -1,0 +1,5 @@
+scenes/biplanar-monkey/biplanar.pack
+
+scenes/biplanar-monkey/biplanar.object
+0 0 0
+0

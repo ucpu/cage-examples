@@ -1,0 +1,13 @@
+scenes/biplanar-shapes/biplanar.pack
+
+scenes/biplanar-shapes/biplanar.object
+0 0 0
+0
+
+scenes/biplanar-shapes/biplanar.object
+0 10 0
+45
+
+scenes/biplanar-shapes/biplanar.object
+0 -10 0
+120
