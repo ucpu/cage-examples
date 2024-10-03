@@ -215,48 +215,6 @@ void update()
 			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
 			enableEffect(ScreenSpaceEffectsFlags::ToneMapping, cb.state == CheckBoxStateEnum::Checked);
 		}
-		{ // shoulderStrength
-			Entity *e = ents->get(baseName + 1);
-			GuiInputComponent &in = e->value<GuiInputComponent>();
-			if (in.valid)
-				eff.tonemap.shoulderStrength = toFloat(in.value);
-		}
-		{ // linearStrength
-			Entity *e = ents->get(baseName + 2);
-			GuiInputComponent &in = e->value<GuiInputComponent>();
-			if (in.valid)
-				eff.tonemap.linearStrength = toFloat(in.value);
-		}
-		{ // linearAngle
-			Entity *e = ents->get(baseName + 3);
-			GuiInputComponent &in = e->value<GuiInputComponent>();
-			if (in.valid)
-				eff.tonemap.linearAngle = toFloat(in.value);
-		}
-		{ // toeStrength
-			Entity *e = ents->get(baseName + 4);
-			GuiInputComponent &in = e->value<GuiInputComponent>();
-			if (in.valid)
-				eff.tonemap.toeStrength = toFloat(in.value);
-		}
-		{ // toeNumerator
-			Entity *e = ents->get(baseName + 5);
-			GuiInputComponent &in = e->value<GuiInputComponent>();
-			if (in.valid)
-				eff.tonemap.toeNumerator = toFloat(in.value);
-		}
-		{ // toeDenominator
-			Entity *e = ents->get(baseName + 6);
-			GuiInputComponent &in = e->value<GuiInputComponent>();
-			if (in.valid)
-				eff.tonemap.toeDenominator = toFloat(in.value);
-		}
-		{ // white
-			Entity *e = ents->get(baseName + 7);
-			GuiInputComponent &in = e->value<GuiInputComponent>();
-			if (in.valid)
-				eff.tonemap.white = toFloat(in.value);
-		}
 	}
 
 	{ // gamma
@@ -358,7 +316,7 @@ void initializeGui()
 			p.parent = layout->name();
 			p.order = baseName;
 			panel->value<GuiSpoilerComponent>();
-			panel->value<GuiTextComponent>().value = "Ambient Occlusion";
+			panel->value<GuiTextComponent>().value = "Ambient occlusion";
 			panel->value<GuiLayoutLineComponent>().vertical = true;
 		}
 		{ // enabled
@@ -377,12 +335,12 @@ void initializeGui()
 			table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
-		genInputFloat(table, childIndex, baseName, "World Radius:", 0.1, 3, 0.05, ScreenSpaceEffectsComponent().ssao.worldRadius);
+		genInputFloat(table, childIndex, baseName, "World radius:", 0.1, 3, 0.05, ScreenSpaceEffectsComponent().ssao.worldRadius);
 		genInputFloat(table, childIndex, baseName, "Strength:", 0, 3, 0.1, ScreenSpaceEffectsComponent().ssao.strength);
 		genInputFloat(table, childIndex, baseName, "Bias:", -0.5, 0.5, 0.01, ScreenSpaceEffectsComponent().ssao.bias);
 		genInputFloat(table, childIndex, baseName, "Power:", 0.1, 2, 0.02, ScreenSpaceEffectsComponent().ssao.power);
 		genInputInt(table, childIndex, baseName, "Samples:", 1, 128, 1, ScreenSpaceEffectsComponent().ssao.samplesCount);
-		genInputInt(table, childIndex, baseName, "Blur Passes:", 0, 10, 1, ScreenSpaceEffectsComponent().ssao.blurPasses);
+		genInputInt(table, childIndex, baseName, "Blur passes:", 0, 10, 1, ScreenSpaceEffectsComponent().ssao.blurPasses);
 	}
 
 	{ // depth of field
@@ -446,7 +404,7 @@ void initializeGui()
 		}
 		sint32 childIndex = 1;
 		genInputFloat(table, childIndex, baseName, "Threshold:", 0, 5, 0.01, ScreenSpaceEffectsComponent().bloom.threshold);
-		genInputInt(table, childIndex, baseName, "Blur Passes:", 1, 10, 1, ScreenSpaceEffectsComponent().bloom.blurPasses);
+		genInputInt(table, childIndex, baseName, "Blur passes:", 1, 10, 1, ScreenSpaceEffectsComponent().bloom.blurPasses);
 	}
 
 	{ // eye adaptation
@@ -506,21 +464,6 @@ void initializeGui()
 			e->value<GuiTextComponent>().value = "Enabled";
 			e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Checked;
 		}
-		Entity *table = ents->createUnique();
-		{
-			GuiParentComponent &p = table->value<GuiParentComponent>();
-			p.parent = panel->name();
-			p.order = 2;
-			table->value<GuiLayoutTableComponent>();
-		}
-		sint32 childIndex = 1;
-		genInputFloat(table, childIndex, baseName, "Shoulder Strength:", 0, 1, 0.02, ScreenSpaceEffectsComponent().tonemap.shoulderStrength);
-		genInputFloat(table, childIndex, baseName, "Linear Strength:", 0, 1, 0.02, ScreenSpaceEffectsComponent().tonemap.linearStrength);
-		genInputFloat(table, childIndex, baseName, "Linear Angle:", 0, 1, 0.02, ScreenSpaceEffectsComponent().tonemap.linearAngle);
-		genInputFloat(table, childIndex, baseName, "Toe Strength:", 0, 1, 0.02, ScreenSpaceEffectsComponent().tonemap.toeStrength);
-		genInputFloat(table, childIndex, baseName, "Toe Numerator:", 0, 1, 0.02, ScreenSpaceEffectsComponent().tonemap.toeNumerator);
-		genInputFloat(table, childIndex, baseName, "Toe Denominator:", 0, 1, 0.02, ScreenSpaceEffectsComponent().tonemap.toeDenominator);
-		genInputFloat(table, childIndex, baseName, "White:", 0, 100, 1, ScreenSpaceEffectsComponent().tonemap.white);
 	}
 
 	{ // gamma
@@ -582,7 +525,7 @@ void initializeGui()
 			p.parent = layout->name();
 			p.order = baseName;
 			panel->value<GuiSpoilerComponent>();
-			panel->value<GuiTextComponent>().value = "Lights Intensities";
+			panel->value<GuiTextComponent>().value = "Lights intensities";
 			panel->value<GuiLayoutLineComponent>().vertical = true;
 		}
 		Entity *table = ents->createUnique();
