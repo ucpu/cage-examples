@@ -24,7 +24,7 @@ class GuiTestImpl : public GuiTestClass
 			p.order = i;
 			e->value<GuiLayoutAlignmentComponent>().alignment = Vec2(0.5);
 			Entity *f = ents->createUnique();
-			f->value<GuiParentComponent>().parent = e->name();
+			f->value<GuiParentComponent>().parent = e->id();
 			f->value<GuiLabelComponent>();
 			f->value<GuiTextComponent>().value = Stringizer() + "label " + i;
 			f->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"How are you doing?">();

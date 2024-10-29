@@ -212,7 +212,7 @@ public:
 			{
 				Entity *ee = ents->createUnique();
 				GuiParentComponent &p = ee->value<GuiParentComponent>();
-				p.parent = e->name();
+				p.parent = e->id();
 				p.order = i;
 				ee->value<GuiTextComponent>().value = Stringizer() + i;
 			}
@@ -266,7 +266,7 @@ public:
 			e->value<GuiTextComponent>().value = "caption";
 			envelopeInScrollbars(e);
 			Entity *f = ents->createUnique();
-			f->value<GuiParentComponent>().parent = e->name();
+			f->value<GuiParentComponent>().parent = e->id();
 			f->value<GuiLabelComponent>();
 			f->value<GuiTextComponent>().value = "hello";
 		}
@@ -279,7 +279,7 @@ public:
 			e->value<GuiTextComponent>().value = "caption";
 			envelopeInScrollbars(e);
 			Entity *f = ents->createUnique();
-			f->value<GuiParentComponent>().parent = e->name();
+			f->value<GuiParentComponent>().parent = e->id();
 			f->value<GuiLabelComponent>();
 			f->value<GuiTextComponent>().value = "world";
 		}

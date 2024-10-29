@@ -37,7 +37,7 @@ class GuiTestImpl : public GuiTestClass
 			p.order = i;
 			e->value<GuiLayoutAlignmentComponent>().alignment = Vec2(0.5);
 			Entity *f = ents->createUnique();
-			f->value<GuiParentComponent>().parent = e->name();
+			f->value<GuiParentComponent>().parent = e->id();
 			f->value<GuiButtonComponent>();
 			f->value<GuiTextComponent>().value = Stringizer() + "button " + i;
 			f->value<GuiTooltipComponent>().tooltip = tooltipCallback;

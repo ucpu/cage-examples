@@ -117,7 +117,7 @@ void guiInit()
 		layout->value<GuiPanelComponent>();
 		layout->value<GuiLayoutTableComponent>();
 		GuiParentComponent &child = layout->value<GuiParentComponent>();
-		child.parent = panel->name();
+		child.parent = panel->id();
 	}
 
 	// controls
@@ -129,7 +129,7 @@ void guiInit()
 		Entity *lab = g->entities()->createUnique();
 		{
 			GuiParentComponent &child = lab->value<GuiParentComponent>();
-			child.parent = layout->name();
+			child.parent = layout->id();
 			child.order = i * 2 + 0;
 			lab->value<GuiLabelComponent>();
 			GuiTextComponent &t = lab->value<GuiTextComponent>();
@@ -138,7 +138,7 @@ void guiInit()
 		Entity *con = g->entities()->create(20 + i);
 		{
 			GuiParentComponent &child = con->value<GuiParentComponent>();
-			child.parent = layout->name();
+			child.parent = layout->id();
 			child.order = i * 2 + 1;
 			GuiInputComponent &c = con->value<GuiInputComponent>();
 			c.type = InputTypeEnum::Integer;

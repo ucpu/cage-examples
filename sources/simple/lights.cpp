@@ -92,7 +92,7 @@ void initializeGui()
 		Entity *panel = ents->create(20);
 		{
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
-			p.parent = layout->name();
+			p.parent = layout->id();
 			p.order = 1;
 			panel->value<GuiSpoilerComponent>();
 			GuiTextComponent &t = panel->value<GuiTextComponent>();
@@ -100,8 +100,8 @@ void initializeGui()
 			GuiLayoutLineComponent &l = panel->value<GuiLayoutLineComponent>();
 			l.vertical = true;
 		}
-		initializeGuiColors(panel->name(), 27, Vec3(0, 0, 0.1));
-		initializeGuiColors(panel->name(), 28, Vec3(0, 0, 0.2));
+		initializeGuiColors(panel->id(), 27, Vec3(0, 0, 0.1));
+		initializeGuiColors(panel->id(), 28, Vec3(0, 0, 0.2));
 	}
 
 	static constexpr const Vec3 colors[3] = { Vec3(0.11, 0.95, 0.8), Vec3(0.44, 0.95, 0.8), Vec3(0.77, 0.95, 0.8) };
@@ -112,7 +112,7 @@ void initializeGui()
 		Entity *panel = ents->create(30 + i * 10);
 		{
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
-			p.parent = layout->name();
+			p.parent = layout->id();
 			p.order = 5 + i;
 			panel->value<GuiSpoilerComponent>();
 			GuiTextComponent &t = panel->value<GuiTextComponent>();
@@ -123,7 +123,7 @@ void initializeGui()
 		{
 			Entity *e = ents->create(33 + i * 10);
 			GuiParentComponent &p = e->value<GuiParentComponent>();
-			p.parent = panel->name();
+			p.parent = panel->id();
 			p.order = 2;
 			GuiSliderBarComponent &c = e->value<GuiSliderBarComponent>();
 			c.value = pitches[i].value;
@@ -133,14 +133,14 @@ void initializeGui()
 		{
 			Entity *e = ents->create(34 + i * 10);
 			GuiParentComponent &p = e->value<GuiParentComponent>();
-			p.parent = panel->name();
+			p.parent = panel->id();
 			p.order = 3;
 			GuiSliderBarComponent &c = e->value<GuiSliderBarComponent>();
 			c.value = yaws[i].value;
 			c.min = 0;
 			c.max = 360;
 		}
-		initializeGuiColors(panel->name(), 37 + i * 10, colors[i]);
+		initializeGuiColors(panel->id(), 37 + i * 10, colors[i]);
 	}
 }
 

@@ -60,7 +60,7 @@ class GuiTestImpl : public GuiTestClass
 			{
 				Entity *e = ents->createUnique();
 				GuiParentComponent &p = e->value<GuiParentComponent>();
-				p.parent = layout->name();
+				p.parent = layout->id();
 				p.order = index++;
 				e->value<GuiButtonComponent>();
 				e->value<GuiTextComponent>().value = Stringizer() + i;
@@ -79,7 +79,7 @@ class GuiTestImpl : public GuiTestClass
 			{
 				Entity *e = ents->createUnique();
 				GuiParentComponent &p = e->value<GuiParentComponent>();
-				p.parent = layout->name();
+				p.parent = layout->id();
 				p.order = index++;
 				e->value<GuiButtonComponent>();
 				e->value<GuiTextComponent>().value = Stringizer() + i;

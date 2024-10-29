@@ -9,7 +9,7 @@ void tooltipMultiline(const GuiTooltipConfig &cfg)
 	for (uint32 i = 0; i < 4; i++)
 	{
 		Entity *e = cfg.tooltip->manager()->createUnique();
-		e->value<GuiParentComponent>().parent = cfg.tooltip->name();
+		e->value<GuiParentComponent>().parent = cfg.tooltip->id();
 		e->value<GuiParentComponent>().order = i;
 		e->value<GuiLabelComponent>();
 		e->value<GuiTextComponent>().value = Stringizer() + "text " + i;
@@ -21,7 +21,7 @@ void tooltipCenteredOverLabel(const GuiTooltipConfig &cfg)
 	cfg.placement = TooltipPlacementEnum::InvokerCenter;
 	cfg.tooltip->value<GuiPanelComponent>();
 	Entity *e = cfg.tooltip->manager()->createUnique();
-	e->value<GuiParentComponent>().parent = cfg.tooltip->name();
+	e->value<GuiParentComponent>().parent = cfg.tooltip->id();
 	e->value<GuiLabelComponent>();
 	e->value<GuiTextComponent>().value = "centered over label";
 }
@@ -31,7 +31,7 @@ void tooltipCenteredInScreen(const GuiTooltipConfig &cfg)
 	cfg.placement = TooltipPlacementEnum::ScreenCenter;
 	cfg.tooltip->value<GuiPanelComponent>();
 	Entity *e = cfg.tooltip->manager()->createUnique();
-	e->value<GuiParentComponent>().parent = cfg.tooltip->name();
+	e->value<GuiParentComponent>().parent = cfg.tooltip->id();
 	e->value<GuiLabelComponent>();
 	e->value<GuiTextComponent>().value = "centered in screen";
 }
@@ -41,7 +41,7 @@ void tooltipCenteredAtCursor(const GuiTooltipConfig &cfg)
 	cfg.placement = TooltipPlacementEnum::CursorCenter;
 	cfg.tooltip->value<GuiPanelComponent>();
 	Entity *e = cfg.tooltip->manager()->createUnique();
-	e->value<GuiParentComponent>().parent = cfg.tooltip->name();
+	e->value<GuiParentComponent>().parent = cfg.tooltip->id();
 	e->value<GuiLabelComponent>();
 	e->value<GuiTextComponent>().value = "centered at cursor";
 }
@@ -52,11 +52,11 @@ void tooltipManualPosition(const GuiTooltipConfig &cfg)
 	cfg.tooltip->value<GuiLayoutAlignmentComponent>().alignment = Vec2(0.25);
 	cfg.tooltip->value<GuiParentComponent>().order = 100;
 	Entity *f = cfg.tooltip->manager()->createUnique();
-	f->value<GuiParentComponent>().parent = cfg.tooltip->name();
+	f->value<GuiParentComponent>().parent = cfg.tooltip->id();
 	f->value<GuiPanelComponent>();
 	f->value<GuiExplicitSizeComponent>().size = Vec2(120);
 	Entity *e = cfg.tooltip->manager()->createUnique();
-	e->value<GuiParentComponent>().parent = f->name();
+	e->value<GuiParentComponent>().parent = f->id();
 	e->value<GuiLabelComponent>();
 	e->value<GuiTextComponent>().value = "manual position in top-left quarter";
 }
@@ -71,7 +71,7 @@ void tooltipScrollbars(const GuiTooltipConfig &cfg)
 	for (uint32 i = 0; i < 20; i++)
 	{
 		Entity *e = cfg.tooltip->manager()->createUnique();
-		e->value<GuiParentComponent>().parent = cfg.tooltip->name();
+		e->value<GuiParentComponent>().parent = cfg.tooltip->id();
 		e->value<GuiParentComponent>().order = i;
 		e->value<GuiLabelComponent>();
 		e->value<GuiTextComponent>().value = Stringizer() + "text " + i;
@@ -82,11 +82,11 @@ void tooltipModal(const GuiTooltipConfig &cfg)
 {
 	cfg.closeCondition = TooltipCloseConditionEnum::Modal;
 	Entity *f = cfg.tooltip->manager()->createUnique();
-	f->value<GuiParentComponent>().parent = cfg.tooltip->name();
+	f->value<GuiParentComponent>().parent = cfg.tooltip->id();
 	f->value<GuiPanelComponent>();
 	f->value<GuiExplicitSizeComponent>().size = Vec2(120);
 	Entity *e = cfg.tooltip->manager()->createUnique();
-	e->value<GuiParentComponent>().parent = f->name();
+	e->value<GuiParentComponent>().parent = f->id();
 	e->value<GuiLabelComponent>();
 	e->value<GuiTextComponent>().value = "modal";
 }
@@ -107,11 +107,11 @@ void tooltipTall(const GuiTooltipConfig &cfg)
 {
 	cfg.closeCondition = TooltipCloseConditionEnum::Modal;
 	Entity *f = cfg.tooltip->manager()->createUnique();
-	f->value<GuiParentComponent>().parent = cfg.tooltip->name();
+	f->value<GuiParentComponent>().parent = cfg.tooltip->id();
 	f->value<GuiPanelComponent>();
 	f->value<GuiExplicitSizeComponent>().size = Vec2(120, 1000);
 	Entity *e = cfg.tooltip->manager()->createUnique();
-	e->value<GuiParentComponent>().parent = f->name();
+	e->value<GuiParentComponent>().parent = f->id();
 	e->value<GuiLabelComponent>();
 	e->value<GuiTextComponent>().value = "modal";
 }
@@ -120,11 +120,11 @@ void tooltipWide(const GuiTooltipConfig &cfg)
 {
 	cfg.closeCondition = TooltipCloseConditionEnum::Modal;
 	Entity *f = cfg.tooltip->manager()->createUnique();
-	f->value<GuiParentComponent>().parent = cfg.tooltip->name();
+	f->value<GuiParentComponent>().parent = cfg.tooltip->id();
 	f->value<GuiPanelComponent>();
 	f->value<GuiExplicitSizeComponent>().size = Vec2(1000, 120);
 	Entity *e = cfg.tooltip->manager()->createUnique();
-	e->value<GuiParentComponent>().parent = f->name();
+	e->value<GuiParentComponent>().parent = f->id();
 	e->value<GuiLabelComponent>();
 	e->value<GuiTextComponent>().value = "modal";
 }

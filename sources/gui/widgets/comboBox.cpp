@@ -46,7 +46,7 @@ class GuiTestImpl : public GuiTestClass
 			{
 				Entity *o = ents->createUnique();
 				GuiParentComponent &p = o->value<GuiParentComponent>();
-				p.parent = e->name();
+				p.parent = e->id();
 				p.order = index++;
 				o->value<GuiTextComponent>().value = Stringizer() + "option " + i;
 			}
@@ -64,7 +64,7 @@ class GuiTestImpl : public GuiTestClass
 			{
 				Entity *o = ents->createUnique();
 				GuiParentComponent &p = o->value<GuiParentComponent>();
-				p.parent = e->name();
+				p.parent = e->id();
 				p.order = index++;
 				o->value<GuiTextComponent>().value = Stringizer() + "option " + i;
 				o->value<GuiTooltipComponent>().tooltip.bind<uint32, &tooltipCallback>(i);
@@ -84,7 +84,7 @@ class GuiTestImpl : public GuiTestClass
 			{
 				Entity *o = ents->createUnique();
 				GuiParentComponent &p = o->value<GuiParentComponent>();
-				p.parent = e->name();
+				p.parent = e->id();
 				p.order = index++;
 				o->value<GuiTextComponent>().value = Stringizer() + "option " + i;
 				o->value<GuiTooltipComponent>().tooltip.bind<uint32, &tooltipCallback>(i);
@@ -103,7 +103,7 @@ class GuiTestImpl : public GuiTestClass
 			{
 				Entity *o = ents->createUnique();
 				GuiParentComponent &p = o->value<GuiParentComponent>();
-				p.parent = e->name();
+				p.parent = e->id();
 				p.order = index++;
 				o->value<GuiTextComponent>().value = Stringizer() + "option " + i;
 				if (i == 2)

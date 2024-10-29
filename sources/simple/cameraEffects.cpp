@@ -266,7 +266,7 @@ Entity *genInputFloat(Entity *table, sint32 &childIndex, uint32 nameBase, const 
 	{
 		Entity *e = ents->createUnique();
 		GuiParentComponent &p = e->value<GuiParentComponent>();
-		p.parent = table->name();
+		p.parent = table->id();
 		p.order = childIndex++;
 		e->value<GuiLabelComponent>();
 		e->value<GuiTextComponent>().value = labelText;
@@ -274,7 +274,7 @@ Entity *genInputFloat(Entity *table, sint32 &childIndex, uint32 nameBase, const 
 	{
 		Entity *e = ents->create(nameBase + childIndex / 2);
 		GuiParentComponent &p = e->value<GuiParentComponent>();
-		p.parent = table->name();
+		p.parent = table->id();
 		p.order = childIndex++;
 		GuiInputComponent &in = e->value<GuiInputComponent>();
 		in.type = InputTypeEnum::Real;
@@ -313,7 +313,7 @@ void initializeGui()
 		Entity *panel = ents->createUnique();
 		{
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
-			p.parent = layout->name();
+			p.parent = layout->id();
 			p.order = baseName;
 			panel->value<GuiSpoilerComponent>();
 			panel->value<GuiTextComponent>().value = "Ambient occlusion";
@@ -322,7 +322,7 @@ void initializeGui()
 		{ // enabled
 			Entity *e = ents->create(baseName);
 			GuiParentComponent &p = e->value<GuiParentComponent>();
-			p.parent = panel->name();
+			p.parent = panel->id();
 			p.order = 1;
 			e->value<GuiTextComponent>().value = "Enabled";
 			e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Checked;
@@ -330,7 +330,7 @@ void initializeGui()
 		Entity *table = ents->createUnique();
 		{
 			GuiParentComponent &p = table->value<GuiParentComponent>();
-			p.parent = panel->name();
+			p.parent = panel->id();
 			p.order = 2;
 			table->value<GuiLayoutTableComponent>();
 		}
@@ -348,7 +348,7 @@ void initializeGui()
 		Entity *panel = ents->createUnique();
 		{
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
-			p.parent = layout->name();
+			p.parent = layout->id();
 			p.order = baseName;
 			panel->value<GuiSpoilerComponent>();
 			panel->value<GuiTextComponent>().value = "Depth of field";
@@ -357,7 +357,7 @@ void initializeGui()
 		{ // enabled
 			Entity *e = ents->create(baseName);
 			GuiParentComponent &p = e->value<GuiParentComponent>();
-			p.parent = panel->name();
+			p.parent = panel->id();
 			p.order = 1;
 			e->value<GuiTextComponent>().value = "Enabled";
 			e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Checked;
@@ -365,7 +365,7 @@ void initializeGui()
 		Entity *table = ents->createUnique();
 		{
 			GuiParentComponent &p = table->value<GuiParentComponent>();
-			p.parent = panel->name();
+			p.parent = panel->id();
 			p.order = 2;
 			table->value<GuiLayoutTableComponent>();
 		}
@@ -381,7 +381,7 @@ void initializeGui()
 		Entity *panel = ents->createUnique();
 		{
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
-			p.parent = layout->name();
+			p.parent = layout->id();
 			p.order = baseName;
 			panel->value<GuiSpoilerComponent>();
 			panel->value<GuiTextComponent>().value = "Bloom";
@@ -390,7 +390,7 @@ void initializeGui()
 		{ // enabled
 			Entity *e = ents->create(baseName);
 			GuiParentComponent &p = e->value<GuiParentComponent>();
-			p.parent = panel->name();
+			p.parent = panel->id();
 			p.order = 1;
 			e->value<GuiTextComponent>().value = "Enabled";
 			e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Checked;
@@ -398,7 +398,7 @@ void initializeGui()
 		Entity *table = ents->createUnique();
 		{
 			GuiParentComponent &p = table->value<GuiParentComponent>();
-			p.parent = panel->name();
+			p.parent = panel->id();
 			p.order = 2;
 			table->value<GuiLayoutTableComponent>();
 		}
@@ -412,7 +412,7 @@ void initializeGui()
 		Entity *panel = ents->createUnique();
 		{
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
-			p.parent = layout->name();
+			p.parent = layout->id();
 			p.order = baseName;
 			panel->value<GuiSpoilerComponent>();
 			panel->value<GuiTextComponent>().value = "Eye adaptation";
@@ -421,7 +421,7 @@ void initializeGui()
 		{ // enabled
 			Entity *e = ents->create(baseName);
 			GuiParentComponent &p = e->value<GuiParentComponent>();
-			p.parent = panel->name();
+			p.parent = panel->id();
 			p.order = 1;
 			e->value<GuiTextComponent>().value = "Enabled";
 			e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Checked;
@@ -429,7 +429,7 @@ void initializeGui()
 		Entity *table = ents->createUnique();
 		{
 			GuiParentComponent &p = table->value<GuiParentComponent>();
-			p.parent = panel->name();
+			p.parent = panel->id();
 			p.order = 2;
 			table->value<GuiLayoutTableComponent>();
 		}
@@ -450,7 +450,7 @@ void initializeGui()
 		Entity *panel = ents->createUnique();
 		{
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
-			p.parent = layout->name();
+			p.parent = layout->id();
 			p.order = baseName;
 			panel->value<GuiSpoilerComponent>();
 			panel->value<GuiTextComponent>().value = "Tone mapping";
@@ -459,7 +459,7 @@ void initializeGui()
 		{ // enabled
 			Entity *e = ents->create(baseName);
 			GuiParentComponent &p = e->value<GuiParentComponent>();
-			p.parent = panel->name();
+			p.parent = panel->id();
 			p.order = 1;
 			e->value<GuiTextComponent>().value = "Enabled";
 			e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Checked;
@@ -471,7 +471,7 @@ void initializeGui()
 		Entity *panel = ents->createUnique();
 		{
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
-			p.parent = layout->name();
+			p.parent = layout->id();
 			p.order = baseName;
 			panel->value<GuiSpoilerComponent>();
 			panel->value<GuiTextComponent>().value = "Gamma";
@@ -480,7 +480,7 @@ void initializeGui()
 		{ // enabled
 			Entity *e = ents->create(baseName);
 			GuiParentComponent &p = e->value<GuiParentComponent>();
-			p.parent = panel->name();
+			p.parent = panel->id();
 			p.order = 1;
 			e->value<GuiTextComponent>().value = "Enabled";
 			e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Checked;
@@ -488,7 +488,7 @@ void initializeGui()
 		Entity *table = ents->createUnique();
 		{
 			GuiParentComponent &p = table->value<GuiParentComponent>();
-			p.parent = panel->name();
+			p.parent = panel->id();
 			p.order = 2;
 			table->value<GuiLayoutTableComponent>();
 		}
@@ -501,7 +501,7 @@ void initializeGui()
 		Entity *panel = ents->createUnique();
 		{
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
-			p.parent = layout->name();
+			p.parent = layout->id();
 			p.order = baseName;
 			panel->value<GuiSpoilerComponent>();
 			panel->value<GuiTextComponent>().value = "Antialiasing";
@@ -510,7 +510,7 @@ void initializeGui()
 		{ // enabled
 			Entity *e = ents->create(baseName);
 			GuiParentComponent &p = e->value<GuiParentComponent>();
-			p.parent = panel->name();
+			p.parent = panel->id();
 			p.order = 1;
 			e->value<GuiTextComponent>().value = "Enabled";
 			e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Checked;
@@ -522,7 +522,7 @@ void initializeGui()
 		Entity *panel = ents->createUnique();
 		{
 			GuiParentComponent &p = panel->value<GuiParentComponent>();
-			p.parent = layout->name();
+			p.parent = layout->id();
 			p.order = baseName;
 			panel->value<GuiSpoilerComponent>();
 			panel->value<GuiTextComponent>().value = "Lights intensities";
@@ -531,7 +531,7 @@ void initializeGui()
 		Entity *table = ents->createUnique();
 		{
 			GuiParentComponent &p = table->value<GuiParentComponent>();
-			p.parent = panel->name();
+			p.parent = panel->id();
 			p.order = 2;
 			table->value<GuiLayoutTableComponent>();
 		}

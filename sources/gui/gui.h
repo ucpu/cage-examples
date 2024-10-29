@@ -60,7 +60,7 @@ namespace GuiTestClassNS
 			GuiParentComponent &pr = r->value<GuiParentComponent>();
 			GuiParentComponent &pe = e->value<GuiParentComponent>();
 			pr = pe;
-			pe.parent = r->name();
+			pe.parent = r->id();
 			pe.order = 0;
 			r->value<GuiLayoutScrollbarsComponent>();
 			return r;
@@ -72,7 +72,7 @@ namespace GuiTestClassNS
 
 		virtual void guiValueEvent(input::GuiValue in)
 		{
-			CAGE_LOG(SeverityEnum::Info, "gui event", Stringizer() + "gui event on entity: " + in.entity->name());
+			CAGE_LOG(SeverityEnum::Info, "gui event", Stringizer() + "gui event on entity: " + in.entity->id());
 
 			Entity *e = in.entity;
 
@@ -118,7 +118,7 @@ namespace GuiTestClassNS
 			}
 		}
 
-		virtual void guiConfirmEvent(input::GuiInputConfirm in) { CAGE_LOG(SeverityEnum::Info, "gui event", Stringizer() + "gui event on entity: " + in.entity->name()); }
+		virtual void guiConfirmEvent(input::GuiInputConfirm in) { CAGE_LOG(SeverityEnum::Info, "gui event", Stringizer() + "gui event on entity: " + in.entity->id()); }
 
 		virtual void initializeEngine() { engineInitialize(EngineCreateConfig()); }
 

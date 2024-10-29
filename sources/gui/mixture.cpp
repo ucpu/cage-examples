@@ -103,7 +103,7 @@ public:
 			{
 				Entity *o = ents->createUnique();
 				GuiParentComponent &p = o->value<GuiParentComponent>();
-				p.parent = e->name();
+				p.parent = e->id();
 				p.order = index++;
 				o->value<GuiTextComponent>().value = Stringizer() + "option " + i;
 			}

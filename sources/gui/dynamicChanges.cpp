@@ -20,11 +20,11 @@ public:
 		for (uint32 i = 0; i < cnt; i++)
 		{
 			Entity *e = ents->createUnique();
-			widgets.push_back(e->name());
+			widgets.push_back(e->id());
 			GuiParentComponent &p = e->value<GuiParentComponent>();
 			p.parent = parent;
 			p.order = i;
-			e->value<GuiTextComponent>().value = Stringizer() + e->name();
+			e->value<GuiTextComponent>().value = Stringizer() + e->id();
 		}
 	}
 
@@ -36,7 +36,7 @@ public:
 						  {
 							  Entity *e = ents->get(n);
 							  GuiParentComponent &p = e->value<GuiParentComponent>();
-							  bool ret = !ents->has(p.parent);
+							  bool ret = !ents->exists(p.parent);
 							  if (ret)
 								  e->destroy();
 							  return ret;
@@ -61,18 +61,18 @@ public:
 		if (widgets.size() < 3 || (widgets.size() < 10 && randomChance() < 0.1))
 		{
 			Entity *e = ents->createUnique();
-			widgets.push_back(e->name());
+			widgets.push_back(e->id());
 			{
 				GuiParentComponent &p = e->value<GuiParentComponent>();
 				p.parent = 10;
-				p.order = e->name();
+				p.order = e->id();
 			}
 			switch (randomRange(0, 12))
 			{
 				case 0:
 				{
 					e->value<GuiButtonComponent>();
-					e->value<GuiTextComponent>().value = Stringizer() + e->name();
+					e->value<GuiTextComponent>().value = Stringizer() + e->id();
 				}
 				break;
 				case 1:
@@ -88,24 +88,24 @@ public:
 				case 3:
 				{
 					e->value<GuiComboBoxComponent>();
-					generateList(e->name());
+					generateList(e->id());
 				}
 				break;
 				case 4:
 				{
-					e->value<GuiInputComponent>().value = Stringizer() + e->name();
+					e->value<GuiInputComponent>().value = Stringizer() + e->id();
 				}
 				break;
 				case 5:
 				{
 					e->value<GuiLabelComponent>();
-					e->value<GuiTextComponent>().value = Stringizer() + e->name();
+					e->value<GuiTextComponent>().value = Stringizer() + e->id();
 				}
 				break;
 				case 6:
 				{
 					e->value<GuiPanelComponent>();
-					e->value<GuiTextComponent>().value = Stringizer() + e->name();
+					e->value<GuiTextComponent>().value = Stringizer() + e->id();
 				}
 				break;
 				case 7:
@@ -128,7 +128,7 @@ public:
 				case 10:
 				{
 					e->value<GuiSpoilerComponent>();
-					e->value<GuiTextComponent>().value = Stringizer() + e->name();
+					e->value<GuiTextComponent>().value = Stringizer() + e->id();
 				}
 				break;
 				case 11:
