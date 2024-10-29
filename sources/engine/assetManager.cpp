@@ -1,7 +1,7 @@
 #include <atomic>
 
 #include <cage-core/assetContext.h>
-#include <cage-core/assetManager.h>
+#include <cage-core/assetsManager.h>
 #include <cage-core/concurrent.h>
 #include <cage-core/hashString.h>
 #include <cage-core/logger.h>
@@ -18,7 +18,7 @@ using namespace cage;
 
 std::atomic<bool> destroying;
 Holder<Window> window;
-Holder<AssetManager> assets;
+Holder<AssetsManager> assets;
 
 // asset names
 constexpr const uint32 names[] = {
@@ -77,7 +77,7 @@ int main(int argc, char *args[])
 
 		// asset schemes
 		AssetManagerCreateConfig cfg;
-		assets = newAssetManager(cfg);
+		assets = newAssetsManager(cfg);
 		assets->defineScheme<AssetSchemeIndexPack, AssetPack>(genAssetSchemePack());
 		assets->defineScheme<AssetSchemeIndexShaderProgram, MultiShaderProgram>(genAssetSchemeShaderProgram(1));
 		assets->defineScheme<AssetSchemeIndexTexture, Texture>(genAssetSchemeTexture(1));

@@ -1,6 +1,6 @@
 #include <vector>
 
-#include <cage-core/assetManager.h>
+#include <cage-core/assetsManager.h>
 #include <cage-core/debug.h>
 #include <cage-core/entities.h>
 #include <cage-core/hashString.h>

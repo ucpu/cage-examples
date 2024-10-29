@@ -1,6 +1,6 @@
 #include <vector>
 
-#include <cage-core/assetManager.h>
+#include <cage-core/assetsManager.h>
 #include <cage-core/camera.h>
 #include <cage-core/collider.h>
 #include <cage-core/entities.h>

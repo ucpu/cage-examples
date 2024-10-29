@@ -1,4 +1,4 @@
-#include <cage-core/assetManager.h>
+#include <cage-core/assetsManager.h>
 #include <cage-core/collider.h>
 #include <cage-core/entities.h>
 #include <cage-core/geometry.h>

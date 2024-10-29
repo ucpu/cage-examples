@@ -1,4 +1,4 @@
-#include <cage-core/assetManager.h>
+#include <cage-core/assetsManager.h>
 #include <cage-core/entitiesVisitor.h>
 #include <cage-core/hashString.h>
 #include <cage-core/logger.h>

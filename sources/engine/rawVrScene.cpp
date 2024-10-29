@@ -1,5 +1,5 @@
 #include <cage-core/assetContext.h>
-#include <cage-core/assetManager.h>
+#include <cage-core/assetsManager.h>
 #include <cage-core/concurrent.h>
 #include <cage-core/hashString.h>
 #include <cage-core/logger.h>
@@ -32,7 +32,7 @@ int main(int argc, char *args[])
 		window->title("cage test virtual reality");
 
 		// assets
-		Holder<AssetManager> assets = newAssetManager(AssetManagerCreateConfig());
+		Holder<AssetsManager> assets = newAssetsManager(AssetManagerCreateConfig());
 		assets->defineScheme<AssetSchemeIndexPack, AssetPack>(genAssetSchemePack());
 		assets->defineScheme<AssetSchemeIndexShaderProgram, MultiShaderProgram>(genAssetSchemeShaderProgram(0));
 		assets->defineScheme<AssetSchemeIndexTexture, Texture>(genAssetSchemeTexture(0));
