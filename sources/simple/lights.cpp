@@ -9,7 +9,6 @@
 #include <cage-engine/guiComponents.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/scene.h>
-#include <cage-engine/sceneScreenSpaceEffects.h>
 #include <cage-engine/window.h>
 #include <cage-simple/engine.h>
 #include <cage-simple/fpsCamera.h>
@@ -148,11 +147,7 @@ int main(int argc, char *args[])
 {
 	try
 	{
-		// log to console
-		Holder<Logger> log1 = newLogger();
-		log1->format.bind<logFormatConsole>();
-		log1->output.bind<logOutputStdOut>();
-
+		initializeConsoleLogger();
 		engineInitialize(EngineCreateConfig());
 
 		// events
@@ -180,6 +175,7 @@ int main(int argc, char *args[])
 		{ // spot lights
 			Entity *e = ents->create(5 + i);
 			e->value<RenderComponent>().object = HashString("cage-tests/bottle/other.obj?arrow");
+			//e->value<RenderComponent>().object = HashString("cage/model/axes.obj");
 			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Spot;
 			l.spotAngle = Degs(40);
@@ -198,7 +194,7 @@ int main(int argc, char *args[])
 			CameraComponent &c = e->value<CameraComponent>();
 			c.near = 0.1;
 			c.far = 1000;
-			e->value<ScreenSpaceEffectsComponent>();
+			//e->value<ScreenSpaceEffectsComponent>();
 			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Directional;
 			l.intensity = 1;
