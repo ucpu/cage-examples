@@ -20,17 +20,15 @@ struct DataComponent
 	uint64 destroyTime = 0;
 };
 
-void addEntities(uint32 cnt)
+void addLight(uint64 duration)
 {
-	const uint64 time = engineControlTime();
-	for (uint32 i = 0; i < cnt; i++)
-	{
-		Entity *e = engineEntities()->createAnonymous();
-		e->value<DataComponent>().destroyTime = time + randomRange(200, 300) * 1'000;
-		e->value<RenderComponent>().object = HashString("scenes/mcguire/crytek/sponza.object");
-		e->value<RenderComponent>().opacity = randomChance() * 0.4 + 0.3; // prevent depth pre-pass optimization
-		e->value<TransformComponent>().position += randomDirection3() * randomRange(0.01, 0.1);
-	}
+	Entity *e = engineEntities()->createAnonymous();
+	e->value<DataComponent>().destroyTime = engineControlTime() + duration;
+	e->value<TransformComponent>().position += randomDirection3() * randomRange(0.1, 10.0) * Vec3(1, 0.1, 1) + Vec3(0, 1, 0);
+	e->value<TransformComponent>().scale = 0.3;
+	e->value<RenderComponent>().object = HashString("scenes/common/lightbulb.obj");
+	e->value<RenderComponent>().color = Vec3(1);
+	e->value<LightComponent>().intensity = 0.1;
 }
 
 void update()
@@ -44,15 +42,12 @@ void update()
 		},
 		engineEntities(), true);
 
-	const sint32 cnt = numeric_cast<sint32>((sin(Degs(time / 200'000)) + 0.8) * 20);
-	if (cnt > 0)
-		addEntities(cnt);
+	addLight(numeric_cast<sint64>((cage::sin(Degs(time / 200'000)) * 0.5 + 0.50001) * 10'000'000));
 }
 
 void keyPress(input::KeyPress in)
 {
-	if (in.key == 32) // space
-		addEntities(100);
+	// todo
 }
 
 void generateGui()
@@ -84,6 +79,7 @@ int main(int argc, char *args[])
 	{
 		initializeConsoleLogger();
 		engineInitialize(EngineCreateConfig());
+		engineDynamicResolution().enabled = true;
 
 		// events
 		const auto updateListener = controlThread().update.listen(update);
@@ -108,7 +104,10 @@ int main(int argc, char *args[])
 			c.ambientIntensity = 0.05;
 			c.near = 0.1;
 			c.far = 100;
+			c.maxLights = 1000;
 			e->value<ScreenSpaceEffectsComponent>();
+			ScreenSpaceEffectsComponent &f = e->value<ScreenSpaceEffectsComponent>();
+			f.effects = ScreenSpaceEffectsFlags::DepthOfField | ScreenSpaceEffectsFlags::Bloom | ScreenSpaceEffectsFlags::ToneMapping | ScreenSpaceEffectsFlags::GammaCorrection | ScreenSpaceEffectsFlags::AntiAliasing;
 		}
 		{ // skybox
 			Entity *e = ents->createAnonymous();
@@ -124,9 +123,9 @@ int main(int argc, char *args[])
 			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Directional;
 			l.color = Vec3(1);
-			l.intensity = 3;
+			l.intensity = 4;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
-			s.resolution = 2048;
+			s.resolution = 4096;
 			s.directionalWorldSize = 30;
 		}
 		{ // floor
@@ -144,6 +143,7 @@ int main(int argc, char *args[])
 		fpsCamera->mouseButton = MouseButtonsFlags::Left;
 		fpsCamera->movementSpeed = 0.3;
 		Holder<StatisticsGui> statistics = newStatisticsGui();
+		statistics->statisticsMode = StatisticsGuiModeEnum::Latest;
 
 		engineAssets()->load(AssetsName);
 		engineRun();
