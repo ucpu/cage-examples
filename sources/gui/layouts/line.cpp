@@ -33,7 +33,7 @@ public:
 	{
 		for (uint32 i = 0; i < count; i++)
 		{
-			auto _1 = g->panel().text(Stringizer() + i).skin(3);
+			auto _1 = g->panel().text(Stringizer() + i).skin(GuiSkinTooltips);
 			auto _2 = g->column();
 			const uint32 cnt = randomRange(0, 3);
 			for (uint32 j = 0; j < cnt; j++)
@@ -264,8 +264,8 @@ public:
 				{
 					auto _1 = g->panel().text(Stringizer() + w).size(Vec2(w, Real::Nan()));
 					auto _2 = g->leftRowStretchRight();
-					g->panel().skin(3).text("fixed left");
-					g->panel().skin(3).text("flexible right");
+					g->panel().skin(GuiSkinTooltips).text("fixed left");
+					g->panel().skin(GuiSkinTooltips).text("flexible right");
 				}
 			}
 			{
@@ -275,8 +275,8 @@ public:
 				{
 					auto _1 = g->panel().text(Stringizer() + w).size(Vec2(w, Real::Nan()));
 					auto _2 = g->centerRowStretchBoth();
-					g->panel().skin(3).text("flexible left");
-					g->panel().skin(3).text("flexible right");
+					g->panel().skin(GuiSkinTooltips).text("flexible left");
+					g->panel().skin(GuiSkinTooltips).text("flexible right");
 				}
 			}
 			{
@@ -286,8 +286,8 @@ public:
 				{
 					auto _1 = g->panel().text(Stringizer() + w).size(Vec2(w, Real::Nan()));
 					auto _2 = g->rightRowStretchLeft();
-					g->panel().skin(3).text("flexible left");
-					g->panel().skin(3).text("fixed right");
+					g->panel().skin(GuiSkinTooltips).text("flexible left");
+					g->panel().skin(GuiSkinTooltips).text("fixed right");
 				}
 			}
 		}
@@ -304,7 +304,7 @@ public:
 					auto _1 = g->panel().text(Stringizer() + cnt);
 					auto _2 = g->leftRowStretchRight();
 					{
-						auto _ = g->panel().skin(3).text("fixed left");
+						auto _ = g->panel().skin(GuiSkinTooltips).text("fixed left");
 						g->label().text("hej");
 					}
 					generate(g, cnt);

@@ -14,7 +14,7 @@ public:
 	bool switchSkin(input::GuiValue in)
 	{
 		EntityManager *ents = engineGuiEntities();
-		ents->get(3)->value<GuiWidgetStateComponent>().skinIndex = in.entity->value<GuiComboBoxComponent>().selected;
+		ents->get(3)->value<GuiWidgetStateComponent>().skin = GuiSkinIndex(in.entity->value<GuiComboBoxComponent>().selected);
 		return true;
 	}
 
@@ -102,6 +102,27 @@ public:
 
 			g->label().text("updated label");
 			g->label().text("").update([&](Entity *e) { e->value<GuiTextComponent>().value = Stringizer() + updatedIndex++; });
+
+			g->label().text("red accent");
+			{
+				auto _ = g->row();
+				for (Real a = 0.1; a < 0.51; a += 0.1)
+					g->button().text(Stringizer() + a).accent(Vec4(1, 0, 0, a));
+			}
+
+			g->label().text("green accent");
+			{
+				auto _ = g->row();
+				for (Real a = 0.1; a < 0.51; a += 0.1)
+					g->button().text(Stringizer() + a).accent(Vec4(0, 1, 0, a));
+			}
+
+			g->label().text("blue accent");
+			{
+				auto _ = g->row();
+				for (Real a = 0.1; a < 0.51; a += 0.1)
+					g->button().text(Stringizer() + a).accent(Vec4(0, 0, 1, a));
+			}
 		}
 	}
 };

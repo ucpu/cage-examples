@@ -9,7 +9,7 @@ public:
 	{
 		for (uint32 i = 0; i < count; i++)
 		{
-			auto _1 = g->panel().text(Stringizer() + i).skin(3);
+			auto _1 = g->panel().text(Stringizer() + i).skin(GuiSkinTooltips);
 			auto _2 = g->column();
 			const uint32 cnt = randomRange(0, 3);
 			for (uint32 j = 0; j < cnt; j++)

@@ -13,7 +13,7 @@ public:
 	bool switchSkin(input::GuiValue in)
 	{
 		EntityManager *ents = engineGuiEntities();
-		ents->get(3)->value<GuiWidgetStateComponent>().skinIndex = in.entity->value<GuiComboBoxComponent>().selected;
+		ents->get(3)->value<GuiWidgetStateComponent>().skin = GuiSkinIndex(in.entity->value<GuiComboBoxComponent>().selected);
 		return true;
 	}
 

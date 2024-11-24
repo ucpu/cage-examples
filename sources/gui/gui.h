@@ -128,11 +128,7 @@ namespace GuiTestClassNS
 		{
 			try
 			{
-				// log to console
-				Holder<Logger> log1 = newLogger();
-				log1->format.bind<logFormatConsole>();
-				log1->output.bind<logOutputStdOut>();
-
+				initializeConsoleLogger();
 				initializeEngine();
 
 				// events
