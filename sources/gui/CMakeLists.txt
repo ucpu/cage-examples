@@ -19,3 +19,6 @@ cage_tests("layouts/")
 cage_tests("texts/")
 cage_tests("widgets/")
 cage_tests("")
+
+cage_embed_file(multilingualQuotes texts/multilingualQuotes.txt multilingualQuotesTxt)
+cage_embed_file(utf8stressTest texts/utf8stressTest.txt utf8stressTestTxt)
