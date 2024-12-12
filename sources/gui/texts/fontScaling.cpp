@@ -13,6 +13,7 @@ const char *FontNames[] = {
 	"cage/font/ubuntu/bold.ttf",
 	"cage/font/ubuntu/italic.ttf",
 	"cage/font/ubuntu/monospace.ttf",
+	"cage-tests/gui/noto/universal.ttf",
 };
 const String LabelTexts[] = {
 	"Droid Sans Mono",
@@ -23,6 +24,7 @@ const String LabelTexts[] = {
 	"Ubuntu Bold",
 	"Ubuntu Italic",
 	"Ubuntu Mono",
+	"Noto Universal",
 };
 
 const uint32 fontsCount = sizeof(FontNames) / sizeof(FontNames[0]);

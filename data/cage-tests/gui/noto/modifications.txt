@@ -1,0 +1,3 @@
+source: https://github.com/satbyy/go-noto-universal/releases
+Aug 1, 2023, v7.0
+file: GoNotoKurrent-Regular.ttf 

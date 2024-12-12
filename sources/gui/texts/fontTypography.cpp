@@ -11,6 +11,7 @@ const char *FontNames[] = {
 	"cage/font/ubuntu/bold.ttf",
 	"cage/font/ubuntu/italic.ttf",
 	"cage/font/ubuntu/monospace.ttf",
+	"cage-tests/gui/noto/universal.ttf",
 };
 const String LabelTexts[] = {
 	"Droid Sans Mono",
@@ -21,6 +22,7 @@ const String LabelTexts[] = {
 	"Ubuntu Bold",
 	"Ubuntu Italic",
 	"Ubuntu Mono",
+	"Noto Universal",
 };
 const String multilineText = "lorem ipsum dolor sit amet\npříliš žluťoučký kůň úpěl ďábelské ódy\na quick brown fox jumps over a lazy dog\n\nhello world, foo, bar, baz";
 

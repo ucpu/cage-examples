@@ -2,10 +2,10 @@ msgid "short"
 msgstr "hello"
 
 msgid "long/a"
-msgstr "brown_fox_jumps_over_a_lazy_dog"
+msgstr "brown fox jumps over a lazy dog"
 
 msgid "long/b"
-msgstr "lorem_ipsum"
+msgstr "lorem ipsum dolor sit amet"
 
 msgid "params"
-msgstr "position: xyz"
+msgstr "position: x: {0}, y: {1}, z: {2}"

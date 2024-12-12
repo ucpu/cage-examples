@@ -12,6 +12,7 @@ class GuiTestImpl : public GuiTestClass
 public:
 	void initialize() override
 	{
+		detail::GuiTextFontDefault = HashString("cage-tests/gui/noto/universal.ttf");
 		auto g = newGuiBuilder(engineGuiEntities());
 		auto _1 = g->panel();
 		auto _2 = g->scrollbars();

@@ -5,9 +5,13 @@ gui.pack
 []
 scheme = font
 immortal.ttf
+immortal.ttf?0
 DroidSansMono.ttf
+DroidSansMono.ttf?0
 asimov.otf
+asimov.otf?0
 roboto.ttf
+roboto.ttf?0
 
 []
 scheme = texture

@@ -71,13 +71,11 @@ void update()
 
 int main(int argc, char *args[])
 {
+	//detail::GuiTextFontDefault = HashString("cage-tests/gui/noto/universal.ttf");
+
 	try
 	{
-		// log to console
-		Holder<Logger> log1 = newLogger();
-		log1->format.bind<logFormatConsole>();
-		log1->output.bind<logOutputStdOut>();
-
+		initializeConsoleLogger();
 		engineInitialize(EngineCreateConfig());
 
 		// events
@@ -131,18 +129,25 @@ int main(int argc, char *args[])
 			r.textId = HashString("long/a");
 			r.color = Vec3(1, 0, 0);
 			TransformComponent &t = e->value<TransformComponent>();
-			t.position = Vec3(-10, 0, 0);
-			t.orientation = Quat(Degs(), Degs(90), Degs());
+			t.position = Vec3(0, 0, -20);
 		}
 		{ // text lorem ipsum
 			Entity *e = ents->createAnonymous();
 			TextComponent &r = e->value<TextComponent>();
 			r.value = "Lorem ipsum dolor sit amet,\nconsectetur adipisici elit,\nsed eiusmod tempor incidunt ut labore et dolore magna aliqua.\nUt enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.";
 			r.color = Vec3(0, 0, 1);
-			r.align = TextAlignEnum::Center;
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(10, 0, 0);
 			t.orientation = Quat(Degs(), Degs(-90), Degs());
+		}
+		{ // text long paragprah
+			Entity *e = ents->createAnonymous();
+			TextComponent &r = e->value<TextComponent>();
+			r.value = "Za devatero horami a devatero řekami, v kouzelném kraji, kde se sny stávají skutečností, žilo bylo...\r\nKdo? Král, obyčejný chalupník, nebo snad kouzelná bytost? Jak má příběh pokračovat?";
+			r.color = Vec3(0.6);
+			TransformComponent &t = e->value<TransformComponent>();
+			t.position = Vec3(-10, 0, 0);
+			t.orientation = Quat(Degs(), Degs(90), Degs());
 		}
 		{ // text params
 			Entity *e = ents->create(10);

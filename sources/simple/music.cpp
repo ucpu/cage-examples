@@ -32,7 +32,7 @@ void init()
 	}
 
 	{ // sun
-		Entity *e = ents->createAnonymous();
+		Entity *e = ents->createUnique();
 		e->value<TransformComponent>().orientation = Quat(Degs(-90), {}, {});
 		e->value<LightComponent>().lightType = LightTypeEnum::Directional;
 		ShadowmapComponent &s = e->value<ShadowmapComponent>();
@@ -115,7 +115,7 @@ void update()
 		{
 			Entity *e = ents->get(numeric_cast<uint32>(it.index) + 200);
 			TransformComponent &t = e->value<TransformComponent>();
-			t.position = *it + Vec3(0, 0.25, 0);
+			t.position = *it + Vec3(0, 0.4, 0);
 			if (distance(cameraPos, t.position) > 0.1)
 				t.orientation = Quat(t.position - cameraPos, Vec3(0, 1, 0));
 		}
