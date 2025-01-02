@@ -150,7 +150,7 @@ int main(int argc, char *args[])
 			e->value<TextureAnimationComponent>();
 		}
 		{ // sun
-			Entity *e = ents->createAnonymous();
+			Entity *e = ents->createUnique();
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(0, 5, 0);
 			t.orientation = Quat(Degs(-75), Degs(-120), Degs());

@@ -82,7 +82,7 @@ int main(int argc, char *args[])
 		assets->defineScheme<AssetSchemeIndexShaderProgram, MultiShaderProgram>(genAssetSchemeShaderProgram(1));
 		assets->defineScheme<AssetSchemeIndexTexture, Texture>(genAssetSchemeTexture(1));
 		assets->defineScheme<AssetSchemeIndexModel, Model>(genAssetSchemeModel(1));
-		assets->defineScheme<AssetSchemeIndexFont, Font>(genAssetSchemeFont(1));
+		assets->defineScheme<AssetSchemeIndexFont, Font>(genAssetSchemeFont());
 		assets->defineScheme<AssetSchemeIndexSound, Sound>(genAssetSchemeSound());
 
 		// threads

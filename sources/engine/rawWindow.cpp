@@ -41,7 +41,7 @@ int main(int argc, char *args[])
 		assets->defineScheme<AssetSchemeIndexShaderProgram, MultiShaderProgram>(genAssetSchemeShaderProgram(0));
 		assets->defineScheme<AssetSchemeIndexTexture, Texture>(genAssetSchemeTexture(0));
 		assets->defineScheme<AssetSchemeIndexModel, Model>(genAssetSchemeModel(0));
-		assets->defineScheme<AssetSchemeIndexFont, Font>(genAssetSchemeFont(0));
+		assets->defineScheme<AssetSchemeIndexFont, Font>(genAssetSchemeFont());
 		assets->defineScheme<AssetSchemeIndexSound, Sound>(genAssetSchemeSound());
 
 		// load assets
