@@ -25,7 +25,7 @@ Holder<NoiseFunction> noise = []()
 }();
 
 Holder<FpsCamera> cameraCtrl;
-uint32 boxesCount = 5000;
+uint32 boxesCount = 50000;
 Real cameraRange = 0.5;
 bool shadowEnabled = true;
 

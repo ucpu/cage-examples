@@ -109,7 +109,7 @@ void sceneReload()
 	// directional lights
 	for (int i = 0; i < directionalLightsCount; i++)
 	{
-		directionalLights[i] = engineEntities()->createAnonymous();
+		directionalLights[i] = engineEntities()->createUnique();
 		directionalLights[i]->value<TransformComponent>().orientation = Quat(Degs(randomChance() * -20 - 30), Degs(i * 360.0f / (float)directionalLightsCount + randomChance() * 180 / (float)directionalLightsCount), Degs());
 		LightComponent &ls = directionalLights[i]->value<LightComponent>();
 		ls.color = Vec3(1);
