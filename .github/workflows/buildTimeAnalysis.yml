@@ -5,8 +5,8 @@ jobs:
   Analysis:
     runs-on: ubuntu-24.04
     env:
-      CC: clang
-      CXX: clang++
+      CC: clang-16
+      CXX: clang++-16
       CFLAGS: -ftime-trace
       CXXFLAGS: -ftime-trace
     strategy:
