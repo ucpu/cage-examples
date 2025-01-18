@@ -62,8 +62,8 @@ jobs:
       run: |
         cmake --version
         git --version
-        ${{ matrix.compiler.cc }} --version
-        ${{ matrix.compiler.cxx }} --version
+        $CC --version
+        $CXX --version
 
     - uses: actions/checkout@v4
       with:
