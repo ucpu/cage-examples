@@ -49,7 +49,7 @@ class GuiTestImpl : public GuiTestClass
 			ib.min.f = -1;
 			ib.max.f = 1;
 			ib.step.f = 0.1;
-			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"range -1 .. 1">();
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<0, "range -1 .. 1">();
 		}
 
 		{ // password
@@ -90,7 +90,7 @@ class GuiTestImpl : public GuiTestClass
 			p.order = index++;
 			e->value<GuiInputComponent>();
 			e->value<GuiWidgetStateComponent>().disabled = true;
-			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"this widget may not show tooltip">();
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<0, "this widget may not show tooltip">();
 			e->value<GuiTooltipComponent>().enableForDisabled = false;
 		}
 
@@ -102,7 +102,7 @@ class GuiTestImpl : public GuiTestClass
 			p.order = index++;
 			e->value<GuiInputComponent>();
 			e->value<GuiWidgetStateComponent>().disabled = true;
-			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"this widget should show tooltip">();
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<0, "this widget should show tooltip">();
 			e->value<GuiTooltipComponent>().enableForDisabled = true;
 		}
 	}

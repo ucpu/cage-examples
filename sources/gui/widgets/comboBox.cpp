@@ -32,7 +32,7 @@ class GuiTestImpl : public GuiTestClass
 			p.order = index++;
 			e->value<GuiComboBoxComponent>();
 			e->value<GuiTextComponent>().value = "placeholder";
-			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"nothing to choose from?">();
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<0, "nothing to choose from?">();
 		}
 		{ // items
 			guiLabel(3, index, "items");
@@ -59,7 +59,7 @@ class GuiTestImpl : public GuiTestClass
 			p.order = index++;
 			e->value<GuiComboBoxComponent>().selected = 2;
 			e->value<GuiTextComponent>().value = "select one:";
-			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"select one">();
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<0, "select one">();
 			for (uint32 i = 0; i < 4; i++)
 			{
 				Entity *o = ents->createUnique();
@@ -79,7 +79,7 @@ class GuiTestImpl : public GuiTestClass
 			e->value<GuiComboBoxComponent>();
 			e->value<GuiWidgetStateComponent>().disabled = true;
 			e->value<GuiTextComponent>().value = "select one:";
-			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"select one">();
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<0, "select one">();
 			for (uint32 i = 0; i < 4; i++)
 			{
 				Entity *o = ents->createUnique();
@@ -98,7 +98,7 @@ class GuiTestImpl : public GuiTestClass
 			p.order = index++;
 			e->value<GuiComboBoxComponent>();
 			e->value<GuiTextComponent>().value = "select one:";
-			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"select one">();
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<0, "select one">();
 			for (uint32 i = 0; i < 4; i++)
 			{
 				Entity *o = ents->createUnique();

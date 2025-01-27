@@ -30,7 +30,7 @@ class GuiTestImpl : public GuiTestClass
 			p.parent = 3;
 			p.order = index++;
 			e->value<GuiProgressBarComponent>();
-			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"some progress is being made">();
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<0, "some progress is being made">();
 		}
 
 		{ // progressed

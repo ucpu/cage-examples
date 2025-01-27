@@ -27,7 +27,7 @@ class GuiTestImpl : public GuiTestClass
 			f->value<GuiParentComponent>().parent = e->id();
 			f->value<GuiLabelComponent>();
 			f->value<GuiTextComponent>().value = Stringizer() + "label " + i;
-			f->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"How are you doing?">();
+			f->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<0, "How are you doing?">();
 		}
 	}
 };

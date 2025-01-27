@@ -45,7 +45,7 @@ class GuiTestImpl : public GuiTestClass
 			p.order = index++;
 			e->value<GuiButtonComponent>();
 			e->value<GuiTextComponent>().value = "text";
-			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"press me">();
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<0, "press me">();
 			e->value<GuiTooltipComponent>().delay = 1000;
 		}
 

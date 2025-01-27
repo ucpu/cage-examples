@@ -151,7 +151,7 @@ class GuiTestImpl : public GuiTestClass
 			p.order = index++;
 			e->value<GuiLabelComponent>();
 			e->value<GuiTextComponent>().value = "label";
-			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"How are you doing?">();
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<0, "How are you doing?">();
 		}
 
 		{ // multiline tooltip
@@ -217,7 +217,7 @@ class GuiTestImpl : public GuiTestClass
 			p.order = index++;
 			e->value<GuiLabelComponent>();
 			e->value<GuiTextComponent>().value = "label";
-			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"tooltip">();
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<0, "tooltip">();
 			e->value<GuiTooltipComponent>().delay = 0;
 		}
 
@@ -229,7 +229,7 @@ class GuiTestImpl : public GuiTestClass
 			p.order = index++;
 			e->value<GuiLabelComponent>();
 			e->value<GuiTextComponent>().value = "label";
-			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"tooltip">();
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<0, "tooltip">();
 			e->value<GuiTooltipComponent>().delay = 2000000;
 		}
 
@@ -242,7 +242,7 @@ class GuiTestImpl : public GuiTestClass
 			e->value<GuiLabelComponent>();
 			e->value<GuiTextComponent>().value = "label";
 			e->value<GuiWidgetStateComponent>().disabled = true;
-			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"tooltip">();
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<0, "tooltip">();
 			e->value<GuiTooltipComponent>().enableForDisabled = true;
 		}
 
@@ -255,7 +255,7 @@ class GuiTestImpl : public GuiTestClass
 			e->value<GuiLabelComponent>();
 			e->value<GuiTextComponent>().value = "label";
 			e->value<GuiWidgetStateComponent>().disabled = true;
-			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"tooltip">();
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<0, "tooltip">();
 			e->value<GuiTooltipComponent>().enableForDisabled = false;
 		}
 

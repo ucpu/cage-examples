@@ -34,7 +34,7 @@ class GuiTestImpl : public GuiTestClass
 			p.order = index++;
 			e->value<GuiLabelComponent>();
 			e->value<GuiTextComponent>().value = "hover over this";
-			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"How are you doing?">();
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<0, "How are you doing?">();
 		}
 
 		{ // with asset tooltip
@@ -96,7 +96,7 @@ class GuiTestImpl : public GuiTestClass
 			m.textureName = HashString("cage/texture/helper.jpg");
 			m.textureUvOffset = Vec2(5 / 8.f, 2 / 8.f);
 			m.textureUvSize = Vec2(1 / 8.f, 1 / 8.f);
-			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"helper.jpg">();
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<0, "helper.jpg">();
 		}
 	}
 };

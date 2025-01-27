@@ -23,7 +23,7 @@ class GuiTestImpl : public GuiTestClass
 			p.parent = 3;
 			p.order = index++;
 			e->value<GuiSliderBarComponent>();
-			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<"move me all the way to the right">();
+			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<0, "move me all the way to the right">();
 			envelopeInScrollbars(e);
 		}
 
