@@ -2,7 +2,9 @@
 
 #include <cage-core/assetsManager.h>
 #include <cage-core/entities.h>
+#include <cage-core/files.h>
 #include <cage-core/hashString.h>
+#include <cage-core/ini.h>
 #include <cage-core/logger.h>
 #include <cage-engine/guiBuilder.h>
 #include <cage-engine/highPerformanceGpuHint.h>
@@ -14,7 +16,7 @@
 using namespace cage;
 constexpr uint32 AssetsName = HashString("cage-tests/screamers/screamers.pack");
 
-Holder<Keybind> keyTurnLeft = newKeybind({ .id = "turnLeft", .modes = KeybindModesFlags::Tick }, std::vector<GenericInput>{ input::KeyPress{ { .key = 'A' } }, input::KeyPress{ { .key = 263 } } },
+Holder<Keybind> keyTurnLeft = newKeybind({ .id = "turnLeft", .modes = KeybindModesFlags::EngineTick }, std::vector<GenericInput>{ input::KeyPress{ { .key = 'A' } }, input::KeyPress{ { .key = 263 } } },
 	[](const GenericInput &)
 	{
 		Entity *e = engineEntities()->get(1);
@@ -22,7 +24,7 @@ Holder<Keybind> keyTurnLeft = newKeybind({ .id = "turnLeft", .modes = KeybindMod
 		return false;
 	});
 
-Holder<Keybind> keyTurnRight = newKeybind({ .id = "turnRight", .modes = KeybindModesFlags::Tick }, std::vector<GenericInput>{ input::KeyPress{ { .key = 'D' } }, input::KeyPress{ { .key = 262 } } },
+Holder<Keybind> keyTurnRight = newKeybind({ .id = "turnRight", .modes = KeybindModesFlags::EngineTick }, std::vector<GenericInput>{ input::KeyPress{ { .key = 'D' } }, input::KeyPress{ { .key = 262 } } },
 	[](const GenericInput &)
 	{
 		Entity *e = engineEntities()->get(1);
@@ -30,7 +32,7 @@ Holder<Keybind> keyTurnRight = newKeybind({ .id = "turnRight", .modes = KeybindM
 		return false;
 	});
 
-Holder<Keybind> keyWalkForward = newKeybind({ .id = "walkForward", .modes = KeybindModesFlags::Tick }, std::vector<GenericInput>{ input::KeyPress{ { .key = 'W' } }, input::KeyPress{ { .key = 265 } } },
+Holder<Keybind> keyWalkForward = newKeybind({ .id = "walkForward", .modes = KeybindModesFlags::EngineTick }, std::vector<GenericInput>{ input::KeyPress{ { .key = 'W' } }, input::KeyPress{ { .key = 265 } } },
 	[](const GenericInput &)
 	{
 		Entity *e = engineEntities()->get(1);
@@ -38,7 +40,7 @@ Holder<Keybind> keyWalkForward = newKeybind({ .id = "walkForward", .modes = Keyb
 		return false;
 	});
 
-Holder<Keybind> keyWalkBack = newKeybind({ .id = "walkBack", .modes = KeybindModesFlags::Tick }, std::vector<GenericInput>{ input::KeyPress{ { .key = 'S' } }, input::KeyPress{ { .key = 264 } } },
+Holder<Keybind> keyWalkBack = newKeybind({ .id = "walkBack", .modes = KeybindModesFlags::EngineTick }, std::vector<GenericInput>{ input::KeyPress{ { .key = 'S' } }, input::KeyPress{ { .key = 264 } } },
 	[](const GenericInput &)
 	{
 		Entity *e = engineEntities()->get(1);
@@ -46,7 +48,7 @@ Holder<Keybind> keyWalkBack = newKeybind({ .id = "walkBack", .modes = KeybindMod
 		return false;
 	});
 
-Holder<Keybind> keyStrafeLeft = newKeybind({ .id = "strafeLeft", .modes = KeybindModesFlags::Tick }, input::KeyPress{ { .key = 'Q' } },
+Holder<Keybind> keyStrafeLeft = newKeybind({ .id = "strafeLeft", .modes = KeybindModesFlags::EngineTick }, input::KeyPress{ { .key = 'Q' } },
 	[](const GenericInput &)
 	{
 		Entity *e = engineEntities()->get(1);
@@ -54,7 +56,7 @@ Holder<Keybind> keyStrafeLeft = newKeybind({ .id = "strafeLeft", .modes = Keybin
 		return false;
 	});
 
-Holder<Keybind> keyStrafeRight = newKeybind({ .id = "strafeRight", .modes = KeybindModesFlags::Tick }, input::KeyPress{ { .key = 'E' } },
+Holder<Keybind> keyStrafeRight = newKeybind({ .id = "strafeRight", .modes = KeybindModesFlags::EngineTick }, input::KeyPress{ { .key = 'E' } },
 	[](const GenericInput &)
 	{
 		Entity *e = engineEntities()->get(1);
@@ -78,6 +80,11 @@ Holder<Keybind> keyShrinkSmall = newKeybind({ .id = "shrinkSmall" }, input::Mous
 		return false;
 	});
 
+String filename(uint32 i)
+{
+	return Stringizer() + "keybinds_" + i + ".ini";
+}
+
 int main(int argc, char *args[])
 {
 	try
@@ -86,7 +93,6 @@ int main(int argc, char *args[])
 		engineInitialize(EngineCreateConfig());
 
 		// events
-		const auto updateListener = controlThread().update.listen(keybindsDispatchTick);
 		const auto closeListener = engineWindow()->events.listen(inputFilter([](input::WindowClose) { engineStop(); }));
 
 		// window
@@ -135,7 +141,33 @@ int main(int argc, char *args[])
 			auto _1 = g->alignment(Vec2());
 			auto _2 = g->spoiler().text("Controls");
 			auto _3 = g->scrollbars();
+			auto _4 = g->column();
 			keybindsGuiTable(+g);
+			{
+				auto _ = g->horizontalTable(2);
+				for (uint32 i = 0; i < 3; i++)
+				{
+					g->button()
+						.text(Stringizer() + "Save " + i)
+						.event(
+							[i](const GenericInput &) -> bool
+							{
+								keybindsExport()->exportFile(filename(i));
+								return true;
+							});
+					g->button()
+						.text(Stringizer() + "Load " + i)
+						.event(
+							[i](const GenericInput &) -> bool
+							{
+								Holder<Ini> ini = newIni();
+								ini->importFile(filename(i));
+								keybindsImport(+ini, true);
+								return true;
+							})
+						.update([i](Entity *e) { e->value<GuiWidgetStateComponent>().disabled = !pathIsFile(filename(i)); });
+				}
+			}
 		}
 
 		engineAssets()->load(AssetsName);
