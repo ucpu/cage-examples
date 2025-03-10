@@ -242,6 +242,21 @@ void update()
 		}
 	}
 
+	{ // sharpening
+		constexpr sint32 baseName = genBaseName(ScreenSpaceEffectsFlags::Sharpening);
+		{ // enable
+			Entity *e = ents->get(baseName);
+			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
+			enableEffect(ScreenSpaceEffectsFlags::Sharpening, cb.state == CheckBoxStateEnum::Checked);
+		}
+		{ // strength
+			Entity *e = ents->get(baseName + 1);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
+			if (in.valid)
+				eff.sharpening.strength = toFloat(in.value);
+		}
+	}
+
 	{ // lights intensities
 		constexpr sint32 baseName = 2000;
 		{ // sun
@@ -515,6 +530,36 @@ void initializeGui()
 			e->value<GuiTextComponent>().value = "Enabled";
 			e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Checked;
 		}
+	}
+
+	{ // sharpening
+		constexpr sint32 baseName = genBaseName(ScreenSpaceEffectsFlags::Sharpening);
+		Entity *panel = ents->createUnique();
+		{
+			GuiParentComponent &p = panel->value<GuiParentComponent>();
+			p.parent = layout->id();
+			p.order = baseName;
+			panel->value<GuiSpoilerComponent>();
+			panel->value<GuiTextComponent>().value = "Sharpening";
+			panel->value<GuiLayoutLineComponent>().vertical = true;
+		}
+		{ // enabled
+			Entity *e = ents->create(baseName);
+			GuiParentComponent &p = e->value<GuiParentComponent>();
+			p.parent = panel->id();
+			p.order = 1;
+			e->value<GuiTextComponent>().value = "Enabled";
+			e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Unchecked;
+		}
+		Entity *table = ents->createUnique();
+		{
+			GuiParentComponent &p = table->value<GuiParentComponent>();
+			p.parent = panel->id();
+			p.order = 2;
+			table->value<GuiLayoutTableComponent>();
+		}
+		sint32 childIndex = 1;
+		genInputFloat(table, childIndex, baseName, "Strength:", 0, 1, 0.1, ScreenSpaceEffectsComponent().sharpening.strength);
 	}
 
 	{ // light intensities
