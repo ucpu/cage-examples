@@ -162,6 +162,18 @@ int main(int argc, char *args[])
 				t.orientation = Quat(Degs(-90), Degs(), Degs());
 			}
 		}
+		{ // icon (czech)
+			Entity *e = ents->createAnonymous();
+			e->value<TransformComponent>().position = Vec3(-10, 4, 0);
+			e->value<TransformComponent>().orientation = Quat(Degs(), Degs(90), Degs());
+			e->value<IconComponent>().icon = HashString("cage-tests/texts/czech.png");
+		}
+		{ // icon (english)
+			Entity *e = ents->createAnonymous();
+			e->value<TransformComponent>().position = Vec3(10, 4, 0);
+			e->value<TransformComponent>().orientation = Quat(Degs(), Degs(-90), Degs());
+			e->value<IconComponent>().icon = HashString("cage-tests/texts/english.png");
+		}
 
 		Holder<FpsCamera> cameraCtrl = newFpsCamera(ents->get(3));
 		cameraCtrl->mouseButton = MouseButtonsFlags::Left;
