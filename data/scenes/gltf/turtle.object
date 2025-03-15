@@ -6,5 +6,3 @@ turtle.glb?UpperBody_UpperBodyMat
 
 [skeletalAnimation]
 name = turtle.glb?Turtle_Swim
-speed = 1
-offset = 0

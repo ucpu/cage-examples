@@ -68,9 +68,8 @@ int main(int argc, char *args[])
 			e->value<SceneComponent>().sceneMask = 3;
 			e->value<TransformComponent>();
 		}
-		Entity *eye = nullptr;
 		{ // eye (camera)
-			Entity *e = eye = ents->create(1);
+			Entity *e = ents->create(1);
 			e->value<TransformComponent>().position = Vec3(0, 1.7, 0);
 			CameraComponent &c = e->value<CameraComponent>();
 			c.ambientColor = Vec3(1);
@@ -78,10 +77,9 @@ int main(int argc, char *args[])
 			c.near = 0.2;
 			c.far = 100;
 			e->value<SceneComponent>().sceneMask = 1;
-			//e->value<ScreenSpaceEffectsComponent>();
 		}
 		{ // eye (model)
-			Entity *e = eye = ents->create(2);
+			Entity *e = ents->create(2);
 			e->value<TransformComponent>();
 			e->value<ModelComponent>().model = HashString("cage-tests/room/eye.obj");
 			e->value<SceneComponent>().sceneMask = 2;
@@ -115,7 +113,7 @@ int main(int argc, char *args[])
 			e->value<ModelComponent>().model = HashString("cage-tests/room/camera.obj?camera");
 		}
 
-		Holder<FpsCamera> fpsCamera = newFpsCamera(eye);
+		Holder<FpsCamera> fpsCamera = newFpsCamera(ents->get(1));
 		fpsCamera->mouseButton = MouseButtonsFlags::Left;
 		fpsCamera->movementSpeed = 0.1;
 		Holder<StatisticsGui> statistics = newStatisticsGui();

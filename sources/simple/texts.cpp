@@ -60,7 +60,7 @@ void update()
 		TransformComponent &t = e->value<TransformComponent>();
 		t.position = Vec3(noise1->evaluate(engineControlTime()) * 2, noise2->evaluate(engineControlTime()) * 2, 10);
 		e->value<TextComponent>();
-		e->value<TextValueComponent>() = Stringizer() + t.position[0] + "|" + t.position[1] + "|" + t.position[2];
+		e->value<TextValueComponent>().value = Stringizer() + t.position[0] + "|" + t.position[1] + "|" + t.position[2];
 	}
 
 	{
@@ -129,7 +129,7 @@ int main(int argc, char *args[])
 		{ // text lorem ipsum
 			Entity *e = ents->createAnonymous();
 			e->value<TextComponent>();
-			e->value<TextValueComponent>() = "Lorem ipsum dolor sit amet,\nconsectetur adipisici elit,\nsed eiusmod tempor incidunt ut labore et dolore magna aliqua.\nUt enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.";
+			e->value<TextValueComponent>().value = "Lorem ipsum dolor sit amet,\nconsectetur adipisici elit,\nsed eiusmod tempor incidunt ut labore et dolore magna aliqua.\nUt enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.";
 			e->value<ColorComponent>() = { Vec3(0, 0, 1) };
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(10, 0, 0);
@@ -138,7 +138,7 @@ int main(int argc, char *args[])
 		{ // text long paragprah
 			Entity *e = ents->createAnonymous();
 			e->value<TextComponent>();
-			e->value<TextValueComponent>() = "Za devatero horami a devatero řekami, v kouzelném kraji, kde se sny stávají skutečností, žilo bylo...\r\nKdo? Král, obyčejný chalupník, nebo snad kouzelná bytost? Jak má příběh pokračovat?";
+			e->value<TextValueComponent>().value = "Za devatero horami a devatero řekami, v kouzelném kraji, kde se sny stávají skutečností, žilo bylo...\r\nKdo? Král, obyčejný chalupník, nebo snad kouzelná bytost? Jak má příběh pokračovat?";
 			e->value<ColorComponent>() = { Vec3(0.6) };
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(-10, 0, 0);

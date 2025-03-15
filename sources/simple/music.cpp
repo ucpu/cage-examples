@@ -42,8 +42,9 @@ void init()
 
 	{ // floor
 		Entity *e = ents->createAnonymous();
-		e->value<TransformComponent>().scale = 200 / 8;
 		e->value<ModelComponent>().model = HashString("cage-tests/lods/floor.object");
+		e->value<TransformComponent>().position = Vec3(0, -5, 0);
+		e->value<TransformComponent>().scale = 10;
 	}
 
 	constexpr const char *names[] = { "BigDayOut.mp3", "Civilisation.mp3", "FunkCity.mp3", "IntoBattle.mp3", "RetroGamer.mp3", "TrueFaith.mp3" };
@@ -126,11 +127,7 @@ int main(int argc, char *args[])
 {
 	try
 	{
-		// log to console
-		Holder<Logger> log1 = newLogger();
-		log1->format.bind<logFormatConsole>();
-		log1->output.bind<logOutputStdOut>();
-
+		initializeConsoleLogger();
 		engineInitialize(EngineCreateConfig());
 
 		// events
