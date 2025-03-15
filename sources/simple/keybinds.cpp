@@ -112,15 +112,13 @@ int main(int argc, char *args[])
 		{ // skybox
 			Entity *e = ents->createUnique();
 			e->value<TransformComponent>();
-			e->value<RenderComponent>().object = HashString("cage-tests/screamers/skybox.obj");
+			e->value<ModelComponent>().model = HashString("cage-tests/screamers/skybox.obj");
 		}
 		{ // sun
 			Entity *e = ents->createUnique();
 			e->value<TransformComponent>().orientation = Quat(Degs(-50), Degs(-42 + 180), Degs());
-			LightComponent &l = e->value<LightComponent>();
-			l.lightType = LightTypeEnum::Directional;
-			l.color = Vec3(1);
-			l.intensity = 0.5;
+			e->value<LightComponent>().lightType = LightTypeEnum::Directional;
+			e->value<ColorComponent>().intensity = 0.5;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 4096;
 			s.directionalWorldSize = 50;
@@ -128,12 +126,12 @@ int main(int argc, char *args[])
 		{ // floor
 			Entity *e = ents->createUnique();
 			e->value<TransformComponent>();
-			e->value<RenderComponent>().object = HashString("scenes/common/ground.obj");
+			e->value<ModelComponent>().model = HashString("scenes/common/ground.obj");
 		}
 		{ // monkey
 			Entity *e = ents->create(1);
 			e->value<TransformComponent>();
-			e->value<RenderComponent>().object = HashString("cage-tests/screamers/suzanne.blend");
+			e->value<ModelComponent>().model = HashString("cage-tests/screamers/suzanne.blend");
 		}
 
 		{

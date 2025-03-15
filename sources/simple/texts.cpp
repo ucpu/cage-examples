@@ -59,7 +59,8 @@ void update()
 		Entity *e = ents->get(10);
 		TransformComponent &t = e->value<TransformComponent>();
 		t.position = Vec3(noise1->evaluate(engineControlTime()) * 2, noise2->evaluate(engineControlTime()) * 2, 10);
-		e->value<TextComponent>().value = Stringizer() + t.position[0] + "|" + t.position[1] + "|" + t.position[2];
+		e->value<TextComponent>();
+		e->value<TextValueComponent>() = Stringizer() + t.position[0] + "|" + t.position[1] + "|" + t.position[2];
 	}
 
 	{
@@ -90,19 +91,15 @@ int main(int argc, char *args[])
 		EntityManager *ents = engineEntities();
 		{ // floor
 			Entity *e = ents->create(1);
-			RenderComponent &r = e->value<RenderComponent>();
-			r.object = HashString("cage-tests/skeletons/floor/floor.obj");
-			TransformComponent &t = e->value<TransformComponent>();
-			t.position = Vec3(0, -5, 0);
+			e->value<ModelComponent>().model = HashString("cage-tests/skeletons/floor/floor.obj");
+			e->value<TransformComponent>().position = Vec3(0, -5, 0);
 		}
 		{ // sun
 			Entity *e = ents->create(2);
 			TransformComponent &t = e->value<TransformComponent>();
 			t.orientation = Quat(Degs(-50), Degs(-42 + 180), Degs());
-			LightComponent &l = e->value<LightComponent>();
-			l.lightType = LightTypeEnum::Directional;
-			l.color = Vec3(1);
-			l.intensity = 3;
+			e->value<LightComponent>().lightType = LightTypeEnum::Directional;
+			e->value<ColorComponent>() = { Vec3(1), 3 };
 		}
 		{ // camera
 			Entity *e = ents->create(3);
@@ -117,42 +114,39 @@ int main(int argc, char *args[])
 		}
 		{ // text hello
 			Entity *e = ents->create(11);
-			TextComponent &r = e->value<TextComponent>();
-			r.textId = HashString("short");
+			e->value<TextComponent>().textId = HashString("short");
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(0, 0, -10);
 			t.scale = 3;
 		}
 		{ // text long
 			Entity *e = ents->createAnonymous();
-			TextComponent &r = e->value<TextComponent>();
-			r.textId = HashString("long/a");
-			r.color = Vec3(1, 0, 0);
+			e->value<TextComponent>().textId = HashString("long/a");
+			e->value<ColorComponent>() = { Vec3(1, 0, 0) };
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(0, 0, -20);
 		}
 		{ // text lorem ipsum
 			Entity *e = ents->createAnonymous();
-			TextComponent &r = e->value<TextComponent>();
-			r.value = "Lorem ipsum dolor sit amet,\nconsectetur adipisici elit,\nsed eiusmod tempor incidunt ut labore et dolore magna aliqua.\nUt enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.";
-			r.color = Vec3(0, 0, 1);
+			e->value<TextComponent>();
+			e->value<TextValueComponent>() = "Lorem ipsum dolor sit amet,\nconsectetur adipisici elit,\nsed eiusmod tempor incidunt ut labore et dolore magna aliqua.\nUt enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.";
+			e->value<ColorComponent>() = { Vec3(0, 0, 1) };
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(10, 0, 0);
 			t.orientation = Quat(Degs(), Degs(-90), Degs());
 		}
 		{ // text long paragprah
 			Entity *e = ents->createAnonymous();
-			TextComponent &r = e->value<TextComponent>();
-			r.value = "Za devatero horami a devatero řekami, v kouzelném kraji, kde se sny stávají skutečností, žilo bylo...\r\nKdo? Král, obyčejný chalupník, nebo snad kouzelná bytost? Jak má příběh pokračovat?";
-			r.color = Vec3(0.6);
+			e->value<TextComponent>();
+			e->value<TextValueComponent>() = "Za devatero horami a devatero řekami, v kouzelném kraji, kde se sny stávají skutečností, žilo bylo...\r\nKdo? Král, obyčejný chalupník, nebo snad kouzelná bytost? Jak má příběh pokračovat?";
+			e->value<ColorComponent>() = { Vec3(0.6) };
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(-10, 0, 0);
 			t.orientation = Quat(Degs(), Degs(90), Degs());
 		}
 		{ // text params
 			Entity *e = ents->create(10);
-			TextComponent &r = e->value<TextComponent>();
-			r.textId = HashString("params");
+			e->value<TextComponent>().textId = HashString("params");
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(0, 0, 10);
 			t.orientation = Quat(Degs(), Degs(180), Degs());
@@ -161,9 +155,8 @@ int main(int argc, char *args[])
 			for (uint32 i = 0; i < fontsCount; i++)
 			{
 				Entity *e = ents->createAnonymous();
-				TextComponent &r = e->value<TextComponent>();
-				r.value = LabelTexts[i];
-				r.font = HashString(FontNames[i]);
+				e->value<TextComponent>().font = HashString(FontNames[i]);
+				e->value<TextValueComponent>() = LabelTexts[i];
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(0, -3, 2.0 * i - fontsCount);
 				t.orientation = Quat(Degs(-90), Degs(), Degs());

@@ -263,7 +263,7 @@ void update()
 			Entity *e = ents->get(baseName + 1);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				engineEntities()->get(2)->value<LightComponent>().intensity = toFloat(in.value);
+				engineEntities()->get(2)->value<ColorComponent>().intensity = toFloat(in.value);
 		}
 		CameraComponent &cam = camera->value<CameraComponent>();
 		{ // ambient
@@ -623,30 +623,27 @@ int main(int argc, char *args[])
 		{ // skybox
 			Entity *e = ents->createAnonymous();
 			e->value<TransformComponent>();
-			e->value<RenderComponent>().object = HashString("scenes/common/skybox.obj");
-			e->value<TextureAnimationComponent>();
+			e->value<ModelComponent>().model = HashString("scenes/common/skybox.obj");
 		}
 		{ // sun
 			Entity *e = ents->create(2);
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(0, 5, 0);
 			t.orientation = Quat(Degs(-75), Degs(-120), Degs());
-			LightComponent &l = e->value<LightComponent>();
-			l.lightType = LightTypeEnum::Directional;
-			l.color = Vec3(1);
-			l.intensity = 3;
+			e->value<LightComponent>().lightType = LightTypeEnum::Directional;
+			e->value<ColorComponent>().intensity = 3;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 2048;
 			s.directionalWorldSize = 30;
 		}
 		{ // floor
 			Entity *e = ents->createAnonymous();
-			e->value<RenderComponent>().object = HashString("scenes/common/ground.obj");
+			e->value<ModelComponent>().model = HashString("scenes/common/ground.obj");
 			e->value<TransformComponent>().position = Vec3(0, -1.264425, 0);
 		}
 		{ // sponza
 			Entity *e = ents->createAnonymous();
-			e->value<RenderComponent>().object = HashString("scenes/mcguire/crytek/sponza.object");
+			e->value<ModelComponent>().model = HashString("scenes/mcguire/crytek/sponza.object");
 			e->value<TransformComponent>();
 		}
 

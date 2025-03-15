@@ -26,9 +26,9 @@ void addLight(uint64 duration)
 	e->value<DataComponent>().destroyTime = engineControlTime() + duration;
 	e->value<TransformComponent>().position += randomDirection3() * randomRange(0.1, 10.0) * Vec3(1, 0.1, 1) + Vec3(0, 1, 0);
 	e->value<TransformComponent>().scale = 0.3;
-	e->value<RenderComponent>().object = HashString("scenes/common/lightbulb.obj");
-	e->value<RenderComponent>().color = Vec3(1);
-	e->value<LightComponent>().intensity = 0.1;
+	e->value<ModelComponent>().model = HashString("scenes/common/lightbulb.obj");
+	e->value<ColorComponent>().intensity = 0.1;
+	e->value<LightComponent>();
 }
 
 void update()
@@ -112,30 +112,27 @@ int main(int argc, char *args[])
 		{ // skybox
 			Entity *e = ents->createAnonymous();
 			e->value<TransformComponent>();
-			e->value<RenderComponent>().object = HashString("scenes/common/skybox.obj");
-			e->value<TextureAnimationComponent>();
+			e->value<ModelComponent>().model = HashString("scenes/common/skybox.obj");
 		}
 		{ // sun
 			Entity *e = ents->create(2);
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(0, 5, 0);
 			t.orientation = Quat(Degs(-75), Degs(-120), Degs());
-			LightComponent &l = e->value<LightComponent>();
-			l.lightType = LightTypeEnum::Directional;
-			l.color = Vec3(1);
-			l.intensity = 4;
+			e->value<LightComponent>().lightType = LightTypeEnum::Directional;
+			e->value<ColorComponent>().intensity = 4;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 4096;
 			s.directionalWorldSize = 30;
 		}
 		{ // floor
 			Entity *e = ents->createAnonymous();
-			e->value<RenderComponent>().object = HashString("scenes/common/ground.obj");
+			e->value<ModelComponent>().model = HashString("scenes/common/ground.obj");
 			e->value<TransformComponent>().position = Vec3(0, -1.264425, 0);
 		}
 		{ // sponza
 			Entity *e = ents->createAnonymous();
-			e->value<RenderComponent>().object = HashString("scenes/mcguire/crytek/sponza.object");
+			e->value<ModelComponent>().model = HashString("scenes/mcguire/crytek/sponza.object");
 			e->value<TransformComponent>();
 		}
 

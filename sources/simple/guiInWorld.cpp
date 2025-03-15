@@ -39,11 +39,7 @@ int main(int argc, char *args[])
 {
 	try
 	{
-		// log to console
-		Holder<Logger> log1 = newLogger();
-		log1->format.bind<logFormatConsole>();
-		log1->output.bind<logOutputStdOut>();
-
+		initializeConsoleLogger();
 		engineInitialize(EngineCreateConfig());
 
 		// events
@@ -71,44 +67,40 @@ int main(int argc, char *args[])
 		{ // skybox
 			Entity *e = ents->createAnonymous();
 			e->value<TransformComponent>();
-			e->value<RenderComponent>().object = HashString("scenes/common/skybox.obj");
-			e->value<TextureAnimationComponent>();
+			e->value<ModelComponent>().model = HashString("scenes/common/skybox.obj");
 		}
 		{ // sun
 			Entity *e = ents->create(2);
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(0, 5, 0);
 			t.orientation = Quat(Degs(-60), randomAngle(), Degs());
-			LightComponent &l = e->value<LightComponent>();
-			l.lightType = LightTypeEnum::Directional;
-			l.color = Vec3(1);
-			l.intensity = 3;
+			e->value<LightComponent>().lightType = LightTypeEnum::Directional;
+			e->value<ColorComponent>().intensity = 3;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 2048;
 			s.directionalWorldSize = 30;
-			//e->value<RenderComponent>().object = HashString("cage-tests/cross/cross.obj");
 		}
 		{ // floor
 			Entity *e = ents->createAnonymous();
-			e->value<RenderComponent>().object = HashString("scenes/common/ground.obj");
+			e->value<ModelComponent>().model = HashString("scenes/common/ground.obj");
 			e->value<TransformComponent>().position = Vec3(0, -1.264425, 0);
 		}
 		{ // test cross
 			Entity *e = ents->createAnonymous();
 			e->value<TransformComponent>().position = Vec3(10, 0, 10);
-			e->value<RenderComponent>().object = HashString("cage-tests/cross/cross.obj");
+			e->value<ModelComponent>().model = HashString("cage-tests/cross/cross.obj");
 		}
 		{ // gui on floor
 			Entity *e = ents->create(100);
 			e->value<TransformComponent>().position = Vec3(0, -1.0, 0);
 			e->value<TransformComponent>().orientation = Quat(Degs(70), Degs(180), Degs());
 			e->value<TransformComponent>().scale = 1.3;
-			e->value<RenderComponent>().object = HashString("cage/model/fake.obj");
+			e->value<ModelComponent>().model = HashString("cage/model/fake.obj");
 		}
 		{ // circling gui
 			Entity *e = ents->create(101);
 			e->value<TransformComponent>().scale = 2;
-			e->value<RenderComponent>().object = HashString("cage/model/fake.obj");
+			e->value<ModelComponent>().model = HashString("cage/model/fake.obj");
 		}
 
 		engineAssets()->load(AssetsName);

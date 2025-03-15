@@ -44,15 +44,13 @@ void update()
 	{ // update ambient light
 		Entity *e = ents->get(10);
 		e->value<CameraComponent>().ambientColor = getGuiColor(27); // ambient light
-		e->value<LightComponent>().color = getGuiColor(28); // headlight
+		e->value<ColorComponent>().color = getGuiColor(28); // headlight
 	}
 
 	for (uint32 i = 0; i < 3; i++)
 	{ // update lights
 		Entity *e = ents->get(5 + i);
-		RenderComponent &r = e->value<RenderComponent>();
-		LightComponent &l = e->value<LightComponent>();
-		r.color = l.color = getGuiColor(37 + i * 10);
+		e->value<ColorComponent>().color = getGuiColor(37 + i * 10);
 		TransformComponent &t = e->value<TransformComponent>();
 		Vec3 o = getGuiOrientation(33 + i * 10);
 		t.orientation = Quat(Degs(o[0] - 90), Degs(o[1]), Degs());
@@ -163,26 +161,26 @@ int main(int argc, char *args[])
 		EntityManager *ents = engineEntities();
 		{ // floor
 			Entity *e = ents->create(1);
-			e->value<RenderComponent>().object = HashString("cage-tests/bottle/other.obj?plane");
+			e->value<ModelComponent>().model = HashString("cage-tests/bottle/other.obj?plane");
 			e->value<TransformComponent>();
 		}
 		{ // bottle
 			Entity *e = ents->create(2);
-			e->value<RenderComponent>().object = HashString("cage-tests/bottle/bottle.obj");
+			e->value<ModelComponent>().model = HashString("cage-tests/bottle/bottle.obj");
 			e->value<TransformComponent>().position += Vec3(1, 0, 0);
 		}
 		for (uint32 i = 0; i < 3; i++)
 		{ // spot lights
 			Entity *e = ents->create(5 + i);
-			e->value<RenderComponent>().object = HashString("cage-tests/bottle/other.obj?arrow");
-			//e->value<RenderComponent>().object = HashString("cage/model/axes.obj");
+			e->value<ModelComponent>().model = HashString("cage-tests/bottle/other.obj?arrow");
+			//e->value<ModelComponent>().model = HashString("cage/model/axes.obj");
 			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Spot;
 			l.spotAngle = Degs(40);
 			l.spotExponent = 40;
-			l.intensity = 100;
 			l.minDistance = 3;
 			l.maxDistance = 50;
+			e->value<ColorComponent>().intensity = 100;
 			e->value<ShadowmapComponent>().resolution = 1024;
 			e->value<ShadowmapComponent>().shadowFactor = 0.5;
 		}
@@ -197,7 +195,6 @@ int main(int argc, char *args[])
 			//e->value<ScreenSpaceEffectsComponent>();
 			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Directional;
-			l.intensity = 1;
 			l.ssaoFactor = 1;
 		}
 

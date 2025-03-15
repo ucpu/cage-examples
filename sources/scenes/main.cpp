@@ -18,11 +18,7 @@ void updateFinalize();
 
 int main(int argc, const char *args[])
 {
-	// log to console
-	Holder<Logger> log1 = newLogger();
-	log1->format.bind<logFormatConsole>();
-	log1->output.bind<logOutputStdOut>();
-
+	initializeConsoleLogger();
 	configSetBool("cage/config/autoSave", true);
 	engineInitialize(EngineCreateConfig());
 	cameraInitialize();

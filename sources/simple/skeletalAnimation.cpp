@@ -21,7 +21,8 @@ constexpr uint32 AssetsName = HashString("cage-tests/skeletons/skeletons.pack");
 void label(const String &name, const Vec3 &position)
 {
 	Entity *e = engineEntities()->createAnonymous();
-	e->value<TextComponent>().value = name;
+	e->value<TextComponent>();
+	e->value<TextValueComponent>() = name;
 	TransformComponent &t = e->value<TransformComponent>();
 	t.position = position;
 	t.scale = 0.2;
@@ -54,8 +55,8 @@ int main(int argc, char *args[])
 			for (const char *animation : animations)
 			{
 				Entity *e = ents->create(1 + i);
-				e->value<RenderComponent>().object = HashString("cage-tests/skeletons/lemur/lemur.x");
-				e->value<SkeletalAnimationComponent>().name = HashString(animation);
+				e->value<ModelComponent>().model = HashString("cage-tests/skeletons/lemur/lemur.x");
+				e->value<SkeletalAnimationComponent>().animation = HashString(animation);
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 3);
 				label(remove(String(animation), 0, 35), t.position + Vec3(0, 2, 0));
@@ -63,7 +64,7 @@ int main(int argc, char *args[])
 			}
 			{ // no animation
 				Entity *e = ents->create(1 + i);
-				e->value<RenderComponent>().object = HashString("cage-tests/skeletons/lemur/lemur.x");
+				e->value<ModelComponent>().model = HashString("cage-tests/skeletons/lemur/lemur.x");
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 3);
 				label("no animation", t.position + Vec3(0, 2, 0));
@@ -71,8 +72,8 @@ int main(int argc, char *args[])
 			}
 			{ // scaled
 				Entity *e = ents->create(1 + i);
-				e->value<RenderComponent>().object = HashString("cage-tests/skeletons/lemur/lemur.x");
-				e->value<SkeletalAnimationComponent>().name = HashString("cage-tests/skeletons/lemur/lemur.x?idle");
+				e->value<ModelComponent>().model = HashString("cage-tests/skeletons/lemur/lemur.x");
+				e->value<SkeletalAnimationComponent>().animation = HashString("cage-tests/skeletons/lemur/lemur.x?idle");
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 3);
 				t.scale = 1.5;
@@ -84,10 +85,9 @@ int main(int argc, char *args[])
 			for (sint32 i = 0; i < 32 * 32; i++)
 			{
 				Entity *e = ents->createAnonymous();
-				e->value<RenderComponent>().object = HashString("cage-tests/skeletons/lemur/lemur.x");
-				SkeletalAnimationComponent &s = e->value<SkeletalAnimationComponent>();
-				s.name = HashString(animations[1]);
-				s.speed = randomRange(0.1, 10.0);
+				e->value<ModelComponent>().model = HashString("cage-tests/skeletons/lemur/lemur.x");
+				e->value<SkeletalAnimationComponent>().animation = HashString(animations[1]);
+				e->value<AnimationSpeedComponent>().speed = randomRange(0.1, 10.0);
 				e->value<TransformComponent>().position = Vec3((i % 32) * 2 - 32, 0, (i / 32) * 2 - 70);
 			}
 #endif
@@ -98,8 +98,8 @@ int main(int argc, char *args[])
 			for (const char *animation : animations)
 			{
 				Entity *e = ents->create(10 + i);
-				e->value<RenderComponent>().object = HashString("cage-tests/skeletons/cylinder/cylinder.x");
-				e->value<SkeletalAnimationComponent>().name = HashString(animation);
+				e->value<ModelComponent>().model = HashString("cage-tests/skeletons/cylinder/cylinder.x");
+				e->value<SkeletalAnimationComponent>().animation = HashString(animation);
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 0);
 				label(remove(String(animation), 0, 41), t.position + Vec3(0, 3.3, 0));
@@ -107,7 +107,7 @@ int main(int argc, char *args[])
 			}
 			{ // no animation set
 				Entity *e = ents->create(10 + i);
-				e->value<RenderComponent>().object = HashString("cage-tests/skeletons/cylinder/cylinder.x");
+				e->value<ModelComponent>().model = HashString("cage-tests/skeletons/cylinder/cylinder.x");
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 0);
 				label("no anim set", t.position + Vec3(0, 3.3, 0));
@@ -115,8 +115,8 @@ int main(int argc, char *args[])
 			}
 			{ // non-existent animation
 				Entity *e = ents->create(10 + i);
-				e->value<RenderComponent>().object = HashString("cage-tests/skeletons/cylinder/cylinder.x");
-				e->value<SkeletalAnimationComponent>().name = HashString("cage-tests/skeletons/cylinder/cylinder.x?non-existent");
+				e->value<ModelComponent>().model = HashString("cage-tests/skeletons/cylinder/cylinder.x");
+				e->value<SkeletalAnimationComponent>().animation = HashString("cage-tests/skeletons/cylinder/cylinder.x?non-existent");
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 0);
 				label("invalid anim", t.position + Vec3(0, 3.3, 0));
@@ -124,7 +124,7 @@ int main(int argc, char *args[])
 			}
 			{ // non-existent object
 				Entity *e = ents->create(10 + i);
-				e->value<RenderComponent>().object = HashString("cage-tests/skeletons/cylinder/non-existent.x");
+				e->value<ModelComponent>().model = HashString("cage-tests/skeletons/cylinder/non-existent.x");
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 0);
 				label("invalid object", t.position + Vec3(0, 3.3, 0));
@@ -137,8 +137,8 @@ int main(int argc, char *args[])
 			for (const char *animation : animations)
 			{
 				Entity *e = ents->create(20 + i);
-				e->value<RenderComponent>().object = HashString("cage-tests/skeletons/monk/monk.object");
-				e->value<SkeletalAnimationComponent>().name = HashString(animation);
+				e->value<ModelComponent>().model = HashString("cage-tests/skeletons/monk/monk.object");
+				e->value<SkeletalAnimationComponent>().animation = HashString(animation);
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, -3);
 				label(remove(String(animation), 0, 33), t.position + Vec3(0, 2, 0));
@@ -146,7 +146,7 @@ int main(int argc, char *args[])
 			}
 			{ // no animation
 				Entity *e = ents->create(20 + i);
-				e->value<RenderComponent>().object = HashString("cage-tests/skeletons/monk/monk.object");
+				e->value<ModelComponent>().model = HashString("cage-tests/skeletons/monk/monk.object");
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, -3);
 				label("no anim", t.position + Vec3(0, 2, 0));
@@ -154,8 +154,8 @@ int main(int argc, char *args[])
 			}
 			{ // rotated
 				Entity *e = ents->create(20 + i);
-				e->value<RenderComponent>().object = HashString("cage-tests/skeletons/monk/monk.object");
-				e->value<SkeletalAnimationComponent>().name = HashString("cage-tests/skeletons/monk/monk.x?Dance");
+				e->value<ModelComponent>().model = HashString("cage-tests/skeletons/monk/monk.object");
+				e->value<SkeletalAnimationComponent>().animation = HashString("cage-tests/skeletons/monk/monk.x?Dance");
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, -3);
 				t.orientation = Quat(Degs(), Degs(randomRange(45, 270)), Degs());
@@ -169,7 +169,7 @@ int main(int argc, char *args[])
 			for (const char *object : objects)
 			{
 				Entity *e = ents->create(30 + i);
-				e->value<RenderComponent>().object = HashString(object);
+				e->value<ModelComponent>().model = HashString(object);
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 + 1.5f, 1, 0);
 				t.scale = 0.6;
@@ -179,16 +179,14 @@ int main(int argc, char *args[])
 		}
 		{ // floor
 			Entity *e = ents->create(100);
-			e->value<RenderComponent>().object = HashString("cage-tests/skeletons/floor/floor.obj");
+			e->value<ModelComponent>().model = HashString("cage-tests/skeletons/floor/floor.obj");
 			e->value<TransformComponent>();
 		}
 		{ // sun
 			Entity *e = ents->create(101);
 			e->value<TransformComponent>().orientation = Quat(Degs(-50), Degs(-42 + 180), Degs());
-			LightComponent &l = e->value<LightComponent>();
-			l.lightType = LightTypeEnum::Directional;
-			l.color = Vec3(1);
-			l.intensity = 2;
+			e->value<LightComponent>().lightType = LightTypeEnum::Directional;
+			e->value<ColorComponent>().intensity = 2;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 2048;
 			s.directionalWorldSize = 12;

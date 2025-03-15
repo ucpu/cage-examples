@@ -43,7 +43,7 @@ void init()
 	{ // floor
 		Entity *e = ents->createAnonymous();
 		e->value<TransformComponent>().scale = 200 / 8;
-		e->value<RenderComponent>().object = HashString("cage-tests/lods/floor.object");
+		e->value<ModelComponent>().model = HashString("cage-tests/lods/floor.object");
 	}
 
 	constexpr const char *names[] = { "BigDayOut.mp3", "Civilisation.mp3", "FunkCity.mp3", "IntoBattle.mp3", "RetroGamer.mp3", "TrueFaith.mp3" };
@@ -52,20 +52,20 @@ void init()
 		{
 			Entity *e = ents->create(numeric_cast<uint32>(it.index) + 100);
 			e->value<TransformComponent>().scale = 2;
-			e->value<SoundComponent>().name = HashString(String(Stringizer() + "cage-tests/music/PurplePlanet/" + *it));
+			e->value<SoundComponent>().sound = HashString(String(Stringizer() + "cage-tests/music/PurplePlanet/" + *it));
 			e->value<SoundComponent>().loop = true;
 			e->value<SoundComponent>().attenuation = SoundAttenuationEnum::InverseSquare;
 			e->value<SoundComponent>().minDistance = 10;
-			RenderComponent &r = e->value<RenderComponent>();
-			r.color = Vec3(1);
-			r.object = HashString("scenes/common/lightbulb.obj");
-			e->value<LightComponent>().intensity = 2;
+			e->value<ModelComponent>().model = HashString("scenes/common/lightbulb.obj");
+			e->value<LightComponent>();
+			e->value<ColorComponent>().intensity = 2;
 		}
 		{
 			Entity *e = ents->create(numeric_cast<uint32>(it.index) + 200);
 			e->value<TransformComponent>().scale = 0.5;
+			e->value<TextComponent>();
 			String n = *it;
-			e->value<TextComponent>().value = split(n, ".");
+			e->value<TextValueComponent>() = split(n, ".");
 		}
 	}
 }

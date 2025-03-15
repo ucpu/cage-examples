@@ -1,11 +1,7 @@
-#include <vector>
-
 #include <cage-core/assetsManager.h>
-#include <cage-core/config.h>
 #include <cage-core/entities.h>
 #include <cage-core/hashString.h>
 #include <cage-core/logger.h>
-#include <cage-engine/guiComponents.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/scene.h>
 #include <cage-engine/window.h>
@@ -20,11 +16,7 @@ int main(int argc, char *args[])
 {
 	try
 	{
-		// log to console
-		Holder<Logger> log1 = newLogger();
-		log1->format.bind<logFormatConsole>();
-		log1->output.bind<logOutputStdOut>();
-
+		initializeConsoleLogger();
 		engineInitialize(EngineCreateConfig());
 
 		// events
@@ -38,31 +30,23 @@ int main(int argc, char *args[])
 		EntityManager *ents = engineEntities();
 		{ // cube
 			Entity *e = ents->create(1);
-			RenderComponent &r = e->value<RenderComponent>();
-			r.object = HashString("cage-tests/lods/cube.object");
-			TransformComponent &t = e->value<TransformComponent>();
-			t.position = Vec3(-8, 0, 0);
+			e->value<ModelComponent>().model = HashString("cage-tests/lods/cube.object");
+			e->value<TransformComponent>().position = Vec3(-8, 0, 0);
 		}
 		{ // sphere
 			Entity *e = ents->create(2);
-			RenderComponent &r = e->value<RenderComponent>();
-			r.object = HashString("cage-tests/lods/sphere.object");
-			TransformComponent &t = e->value<TransformComponent>();
-			t.position = Vec3(8, 0, 0);
+			e->value<ModelComponent>().model = HashString("cage-tests/lods/sphere.object");
+			e->value<TransformComponent>().position = Vec3(8, 0, 0);
 		}
 		{ // floor
 			Entity *e = ents->create(3);
-			RenderComponent &r = e->value<RenderComponent>();
-			r.object = HashString("cage-tests/lods/floor.object");
-			TransformComponent &t = e->value<TransformComponent>();
-			t.position = Vec3(0, -5, 0);
+			e->value<ModelComponent>().model = HashString("cage-tests/lods/floor.object");
+			e->value<TransformComponent>().position = Vec3(0, -5, 0);
 		}
 		{ // sun
 			Entity *e = ents->create(9);
-			TransformComponent &t = e->value<TransformComponent>();
-			t.orientation = Quat(Degs(-60), Degs(20), Degs());
-			LightComponent &l = e->value<LightComponent>();
-			l.lightType = LightTypeEnum::Directional;
+			e->value<TransformComponent>().orientation = Quat(Degs(-60), Degs(20), Degs());
+			e->value<LightComponent>().lightType = LightTypeEnum::Directional;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 1024;
 			s.directionalWorldSize = 20;

@@ -36,7 +36,7 @@ struct BoxUpdater
 
 	void run()
 	{
-		PointerRange<Entity *const> boxesEntities = engineEntities()->component<RenderComponent>()->entities();
+		PointerRange<Entity *const> boxesEntities = engineEntities()->component<ModelComponent>()->entities();
 		tasksRunBlocking<Entity *const, 1024>(
 			"update boxes",
 			[&](Entity *e)
@@ -66,9 +66,8 @@ void generate()
 	{ // light
 		Entity *e = ents->create(2);
 		e->value<TransformComponent>().orientation = Quat(Degs(-20), Degs(-110), Degs());
-		LightComponent &l = e->value<LightComponent>();
-		l.lightType = LightTypeEnum::Directional;
-		l.color = Vec3(0.9);
+		e->value<LightComponent>().lightType = LightTypeEnum::Directional;
+		e->value<ColorComponent>().color = Vec3(0.9);
 		if (shadowEnabled)
 		{
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
@@ -91,7 +90,7 @@ void generate()
 			TransformComponent &t = e->value<TransformComponent>();
 			t.scale = 0.15 * 0.49;
 			t.position = Vec3((x - side * 0.5) * 0.15, -2, (y - side * 0.5) * 0.15);
-			e->value<RenderComponent>().object = HashString("cage/model/fake.obj");
+			e->value<ModelComponent>().model = HashString("cage/model/fake.obj");
 		}
 	}
 

@@ -65,11 +65,11 @@ void sceneReload()
 			if (name.empty())
 				continue;
 			Entity *e = engineEntities()->createAnonymous();
-			RenderComponent &rs = e->value<RenderComponent>();
-			rs.object = HashString(name.c_str());
-			if (!rs.object)
+			ModelComponent &rs = e->value<ModelComponent>();
+			rs.model = HashString(name.c_str());
+			if (!rs.model)
 			{
-				CAGE_LOG_THROW(Stringizer() + "object: '" + name + "'");
+				CAGE_LOG_THROW(Stringizer() + "object: " + name);
 				CAGE_THROW_ERROR(Exception, "object has invalid hash");
 			}
 			TransformComponent &ts = e->value<TransformComponent>();
@@ -102,20 +102,17 @@ void sceneReload()
 	{ // skybox
 		Entity *sky = engineEntities()->create(3);
 		sky->value<TransformComponent>();
-		sky->value<RenderComponent>().object = HashString("scenes/common/skybox.obj");
-		sky->value<TextureAnimationComponent>();
+		sky->value<ModelComponent>().model = HashString("scenes/common/skybox.obj");
 	}
 
 	// directional lights
 	for (int i = 0; i < directionalLightsCount; i++)
 	{
-		directionalLights[i] = engineEntities()->createUnique();
-		directionalLights[i]->value<TransformComponent>().orientation = Quat(Degs(randomChance() * -20 - 30), Degs(i * 360.0f / (float)directionalLightsCount + randomChance() * 180 / (float)directionalLightsCount), Degs());
-		LightComponent &ls = directionalLights[i]->value<LightComponent>();
-		ls.color = Vec3(1);
-		ls.intensity = 2.5;
-		ls.lightType = LightTypeEnum::Directional;
-		directionalLights[i]->value<ShadowmapComponent>().resolution = 2048;
+		Entity *e = directionalLights[i] = engineEntities()->createUnique();
+		e->value<TransformComponent>().orientation = Quat(Degs(randomChance() * -20 - 30), Degs(i * 360.0f / (float)directionalLightsCount + randomChance() * 180 / (float)directionalLightsCount), Degs());
+		e->value<LightComponent>().lightType = LightTypeEnum::Directional;
+		e->value<ColorComponent>().intensity = 2.5;
+		e->value<ShadowmapComponent>().resolution = 2048;
 	}
 
 	// point lights
@@ -123,10 +120,10 @@ void sceneReload()
 	{
 		Entity *e = pointLights[i] = engineEntities()->createAnonymous();
 		e->value<TransformComponent>().position = (randomChance3() * 2 - 1) * 15;
-		e->value<RenderComponent>().color = e->value<LightComponent>().color = colorHsvToRgb(Vec3(randomChance(), 1, 1));
+		e->value<ColorComponent>().color = colorHsvToRgb(Vec3(randomChance(), 1, 1));
 		e->value<LightComponent>().minDistance = 0.1;
 		e->value<LightComponent>().maxDistance = 10;
-		e->value<RenderComponent>().object = HashString("scenes/common/lightbulb.obj");
+		e->value<ModelComponent>().model = HashString("scenes/common/lightbulb.obj");
 	}
 }
 

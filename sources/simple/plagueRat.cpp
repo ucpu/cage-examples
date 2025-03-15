@@ -48,10 +48,7 @@ int main(int argc, char *args[])
 			TransformComponent &t = e->value<TransformComponent>();
 			t.orientation = Quat(Degs(-50), Degs(270), Degs());
 			t.position = Vec3(0, 2, 0);
-			LightComponent &l = e->value<LightComponent>();
-			l.lightType = LightTypeEnum::Directional;
-			l.color = Vec3(1);
-			l.intensity = 1;
+			e->value<LightComponent>().lightType = LightTypeEnum::Directional;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 2048;
 			s.directionalWorldSize = 15;
@@ -59,14 +56,14 @@ int main(int argc, char *args[])
 		{ // floor
 			Entity *e = ents->createUnique();
 			e->value<TransformComponent>().position = Vec3();
-			e->value<RenderComponent>().object = HashString("cage-tests/skeletons/floor/floor.obj");
+			e->value<ModelComponent>().model = HashString("cage-tests/skeletons/floor/floor.obj");
 		}
 		{ // the rat
 			Entity *e = ents->createAnonymous();
 			e->value<TransformComponent>().position = Vec3(0, 0, 0);
 			e->value<TransformComponent>().orientation = Quat({}, Degs(180), {});
-			e->value<RenderComponent>().object = HashString("cage-tests/plagueRat/Rat.object");
-			e->value<SkeletalAnimationComponent>().name = HashString("cage-tests/plagueRat/Rat.glb?Rat_Walk");
+			e->value<ModelComponent>().model = HashString("cage-tests/plagueRat/Rat.object");
+			e->value<SkeletalAnimationComponent>().animation = HashString("cage-tests/plagueRat/Rat.glb?Rat_Walk");
 		}
 
 		Holder<FpsCamera> cameraCtrl = newFpsCamera(ents->get(1));
