@@ -146,7 +146,7 @@ public:
 			p.order = index++;
 			e->value<GuiButtonComponent>();
 			GuiImageComponent &m = e->value<GuiImageComponent>();
-			m.textureName = HashString("cage/texture/helper.jpg");
+			m.textureName = HashString("cage/textures/helper.jpg");
 			m.textureUvOffset = Vec2(5 / 8.f, 2 / 8.f);
 			m.textureUvSize = Vec2(1 / 8.f, 1 / 8.f);
 			e->value<GuiExplicitSizeComponent>().size = Vec2(120, 120);

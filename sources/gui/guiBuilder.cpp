@@ -71,7 +71,7 @@ public:
 			g->button().text("text");
 
 			g->label().text("button 2");
-			g->button().size(Vec2(120)).image(GuiImageComponent{ .textureUvOffset = Vec2(5 / 8.f, 2 / 8.f), .textureUvSize = Vec2(1 / 8.f, 1 / 8.f), .textureName = HashString("cage/texture/helper.jpg") });
+			g->button().size(Vec2(120)).image(GuiImageComponent{ .textureUvOffset = Vec2(5 / 8.f, 2 / 8.f), .textureUvSize = Vec2(1 / 8.f, 1 / 8.f), .textureName = HashString("cage/textures/helper.jpg") });
 
 			g->label().text("slider");
 			g->horizontalSliderBar(0.3);

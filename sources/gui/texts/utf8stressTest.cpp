@@ -19,7 +19,7 @@ public:
 		const auto lr = newLineReader(utf8stressTestTxt().cast<const char>());
 		String s;
 		while (lr->readLine(s))
-			g->label().text(s).textFormat(GuiTextFormatComponent{ .font = HashString("cage/font/ubuntu/monospace.ttf") });
+			g->label().text(s).textFormat(GuiTextFormatComponent{ .font = HashString("cage/fonts/ubuntu/monospace.ttf") });
 	}
 };
 

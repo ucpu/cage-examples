@@ -90,7 +90,7 @@ void generate()
 			TransformComponent &t = e->value<TransformComponent>();
 			t.scale = 0.15 * 0.49;
 			t.position = Vec3((x - side * 0.5) * 0.15, -2, (y - side * 0.5) * 0.15);
-			e->value<ModelComponent>().model = HashString("cage/model/fake.obj");
+			e->value<ModelComponent>().model = HashString("cage/models/fake.obj");
 		}
 	}
 

@@ -1,7 +1,7 @@
 
-$include /cage/shader/shaderConventions.h
+$include /cage/shaders/shaderConventions.h
 
-$include /cage/shader/engine/vertex.glsl
+$include /cage/shaders/engine/vertex.glsl
 
 vec3 applyWind(vec3 p, vec3 origin)
 {
@@ -26,7 +26,7 @@ void main()
 	varPosition = transpose(uniMeshes[varInstanceId].mMat) * vec4(varPosition, 1);
 }
 
-$include /cage/shader/engine/fragment.glsl
+$include /cage/shaders/engine/fragment.glsl
 
 #ifndef CutOut
 layout(early_fragment_tests) in;

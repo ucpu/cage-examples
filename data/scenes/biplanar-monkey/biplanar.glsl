@@ -1,17 +1,17 @@
 
-$include /cage/shader/shaderConventions.h
+$include /cage/shaders/shaderConventions.h
 
-$include /cage/shader/engine/vertex.glsl
+$include /cage/shaders/engine/vertex.glsl
 
 void main()
 {
 	updateVertex();
 }
 
-$include /cage/shader/engine/fragment.glsl
+$include /cage/shaders/engine/fragment.glsl
 
-$include /cage/shader/functions/simplex.glsl
-$include /cage/shader/functions/biplanar.glsl
+$include /cage/shaders/functions/simplex.glsl
+$include /cage/shaders/functions/biplanar.glsl
 
 float makeArrayIndex()
 {

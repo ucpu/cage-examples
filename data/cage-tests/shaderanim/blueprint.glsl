@@ -1,14 +1,14 @@
 
-$include /cage/shader/shaderConventions.h
+$include /cage/shaders/shaderConventions.h
 
-$include /cage/shader/engine/vertex.glsl
+$include /cage/shaders/engine/vertex.glsl
 
 void main()
 {
 	updateVertex();
 }
 
-$include /cage/shader/engine/fragment.glsl
+$include /cage/shaders/engine/fragment.glsl
 
 void main()
 {

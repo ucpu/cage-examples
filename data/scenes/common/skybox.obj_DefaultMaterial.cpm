@@ -6,7 +6,7 @@ emission = 1
 albedo = skyboxes/$.png
 
 [render]
-shader = /cage/shader/engine/skybox.glsl
+shader = /cage/shaders/engine/skybox.glsl
 layer = -10000
 
 [flags]

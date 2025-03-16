@@ -63,11 +63,7 @@ void update()
 
 int main(int argc, const char *args[])
 {
-	// log to console
-	Holder<Logger> log1 = newLogger();
-	log1->format.bind<logFormatConsole>();
-	log1->output.bind<logOutputStdOut>();
-
+	initializeConsoleLogger();
 	server = newWebsocketServer(8456);
 	while (true)
 	{

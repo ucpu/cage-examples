@@ -23,17 +23,17 @@ Holder<AssetsManager> assets;
 // asset names
 constexpr const uint32 names[] = {
 	HashString("cage/cage.pack"),
-	HashString("cage/texture/texture.pack"),
-	HashString("cage/sound/sound.pack"),
-	HashString("cage/shader/shader.pack"),
-	HashString("cage/model/model.pack"),
-	HashString("cage/font/font.pack"),
+	HashString("cage/textures/textures.pack"),
+	HashString("cage/sounds/sounds.pack"),
+	HashString("cage/shaders/shaders.pack"),
+	HashString("cage/models/models.pack"),
+	HashString("cage/fonts/fonts.pack"),
 	HashString("cage/cage.pack"),
-	HashString("cage/texture/texture.pack"),
-	HashString("cage/sound/sound.pack"),
-	HashString("cage/shader/shader.pack"),
-	HashString("cage/model/model.pack"),
-	HashString("cage/font/font.pack"),
+	HashString("cage/textures/textures.pack"),
+	HashString("cage/sounds/sounds.pack"),
+	HashString("cage/shaders/shaders.pack"),
+	HashString("cage/models/models.pack"),
+	HashString("cage/fonts/fonts.pack"),
 };
 constexpr uint32 count = sizeof(names) / sizeof(names[0]);
 

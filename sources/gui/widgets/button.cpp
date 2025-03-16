@@ -94,7 +94,7 @@ class GuiTestImpl : public GuiTestClass
 			p.order = index++;
 			e->value<GuiButtonComponent>();
 			GuiImageComponent &m = e->value<GuiImageComponent>();
-			m.textureName = HashString("cage/texture/helper.jpg");
+			m.textureName = HashString("cage/textures/helper.jpg");
 			m.textureUvOffset = Vec2(5 / 8.f, 2 / 8.f);
 			m.textureUvSize = Vec2(1 / 8.f, 1 / 8.f);
 		}
@@ -117,7 +117,7 @@ class GuiTestImpl : public GuiTestClass
 			p.parent = 3;
 			p.order = index++;
 			e->value<GuiButtonComponent>();
-			e->value<GuiImageComponent>().textureName = HashString("cage/texture/helper.jpg___");
+			e->value<GuiImageComponent>().textureName = HashString("cage/textures/helper.jpg___");
 		}
 		*/
 

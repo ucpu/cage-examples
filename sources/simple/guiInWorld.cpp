@@ -95,12 +95,12 @@ int main(int argc, char *args[])
 			e->value<TransformComponent>().position = Vec3(0, -1.0, 0);
 			e->value<TransformComponent>().orientation = Quat(Degs(70), Degs(180), Degs());
 			e->value<TransformComponent>().scale = 1.3;
-			e->value<ModelComponent>().model = HashString("cage/model/fake.obj");
+			e->value<ModelComponent>().model = HashString("cage/models/fake.obj");
 		}
 		{ // circling gui
 			Entity *e = ents->create(101);
 			e->value<TransformComponent>().scale = 2;
-			e->value<ModelComponent>().model = HashString("cage/model/fake.obj");
+			e->value<ModelComponent>().model = HashString("cage/models/fake.obj");
 		}
 
 		engineAssets()->load(AssetsName);

@@ -21,10 +21,10 @@ constexpr const char *FontNames[] = {
 	"cage-tests/gui/immortal.ttf",
 	"cage-tests/gui/roboto.ttf",
 	"cage-tests/gui/asimov.otf",
-	"cage/font/ubuntu/regular.ttf",
-	"cage/font/ubuntu/bold.ttf",
-	"cage/font/ubuntu/italic.ttf",
-	"cage/font/ubuntu/monospace.ttf",
+	"cage/fonts/ubuntu/regular.ttf",
+	"cage/fonts/ubuntu/bold.ttf",
+	"cage/fonts/ubuntu/italic.ttf",
+	"cage/fonts/ubuntu/monospace.ttf",
 };
 constexpr const char *LabelTexts[] = {
 	"Droid Sans Mono",

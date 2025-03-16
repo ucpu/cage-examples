@@ -1,7 +1,7 @@
 
-$include /cage/shader/shaderConventions.h
+$include /cage/shaders/shaderConventions.h
 
-$include /cage/shader/engine/vertex.glsl
+$include /cage/shaders/engine/vertex.glsl
 
 vec3 bezierPoint(float t, vec3 points[4])
 {
@@ -62,7 +62,7 @@ void main()
 	gl_Position = uniViewport.vpMat * vec4(varPosition, 1);
 }
 
-$include /cage/shader/engine/fragment.glsl
+$include /cage/shaders/engine/fragment.glsl
 
 void main()
 {

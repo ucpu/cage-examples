@@ -93,7 +93,7 @@ class GuiTestImpl : public GuiTestClass
 			p.order = index++;
 			e->value<GuiLabelComponent>();
 			GuiImageComponent &m = e->value<GuiImageComponent>();
-			m.textureName = HashString("cage/texture/helper.jpg");
+			m.textureName = HashString("cage/textures/helper.jpg");
 			m.textureUvOffset = Vec2(5 / 8.f, 2 / 8.f);
 			m.textureUvSize = Vec2(1 / 8.f, 1 / 8.f);
 			e->value<GuiTooltipComponent>().tooltip = detail::guiTooltipText<0, "helper.jpg">();

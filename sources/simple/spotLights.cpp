@@ -173,7 +173,7 @@ int main(int argc, char *args[])
 		{ // spot lights
 			Entity *e = ents->create(5 + i);
 			e->value<ModelComponent>().model = HashString("cage-tests/bottle/other.obj?arrow");
-			//e->value<ModelComponent>().model = HashString("cage/model/axes.obj");
+			//e->value<ModelComponent>().model = HashString("cage/models/axes.obj");
 			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Spot;
 			l.spotAngle = Degs(40);

@@ -30,7 +30,7 @@ void shoot(const Transform &where)
 	e->value<TransformComponent>() = where;
 	e->value<TransformComponent>().scale = 0.04;
 	e->value<ShotComponent>();
-	e->value<ModelComponent>().model = HashString("cage/model/fake.obj");
+	e->value<ModelComponent>().model = HashString("cage/models/fake.obj");
 }
 
 VariableSmoothingBuffer<Transform, 15> smoother;

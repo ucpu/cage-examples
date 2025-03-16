@@ -9,7 +9,7 @@ normal = normals.jpg
 
 [render]
 layer = 500
-shader = /cage/shader/engine/decal.glsl
+shader = /cage/shaders/engine/decal.glsl
 
 [flags]
 cutOut
