@@ -6,6 +6,8 @@
 #include <cage-core/hashString.h>
 #include <cage-core/ini.h>
 #include <cage-core/logger.h>
+#include <cage-core/string.h>
+#include <cage-core/stringLiteral.h>
 #include <cage-engine/guiBuilder.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/keybinds.h>
@@ -15,6 +17,54 @@
 
 using namespace cage;
 constexpr uint32 AssetsName = HashString("cage-tests/screamers/screamers.pack");
+
+struct Printer
+{
+	Stringizer str;
+
+	CAGE_FORCE_INLINE String finishName(String s) { return replace(trim(s), " ", " + "); }
+
+	CAGE_FORCE_INLINE void printImpl(const input::privat::BaseKey &input) { str + finishName(Stringizer() + getModifiersNames(input.mods) + " " + getKeyName(input.key)); }
+
+	CAGE_FORCE_INLINE void printImpl(const input::privat::BaseMouse &input) { str + finishName(Stringizer() + getModifiersNames(input.mods) + " " + getButtonsNames(input.buttons)); }
+
+	CAGE_FORCE_INLINE void printImpl(const input::MouseWheel &input) { str + finishName(getModifiersNames(input.mods)); }
+
+	template<class T, StringLiteral Name>
+	CAGE_FORCE_INLINE void print(const GenericInput &input)
+	{
+		if (input.has<T>())
+		{
+			str + Name.value + ": ";
+			printImpl(input.get<T>());
+		}
+	}
+
+	CAGE_FORCE_INLINE String print(const GenericInput &input)
+	{
+		print<input::KeyPress, "key press">(input);
+		//print<input::KeyRepeat, "key repeat">(input);
+		print<input::KeyRelease, "key release">(input);
+		print<input::MousePress, "mouse press">(input);
+		print<input::MouseDoublePress, "mouse double press">(input);
+		print<input::MouseRelease, "mouse release">(input);
+		print<input::MouseWheel, "mouse wheel">(input);
+		return str;
+	}
+};
+
+String toString(const GenericInput &input)
+{
+	return Printer().print(input);
+}
+
+const auto inputEventListener = engineEvents().listen(
+	[](const GenericInput &input)
+	{
+		const String s = toString(input);
+		if (!s.empty())
+			CAGE_LOG(SeverityEnum::Info, "input", s);
+	});
 
 Holder<Keybind> keyTurnLeft = newKeybind({ .id = "turnLeft", .modes = KeybindModesFlags::EngineTick }, std::vector<GenericInput>{ input::KeyPress{ { .key = 'A' } }, input::KeyPress{ { .key = 263 } } },
 	[](const GenericInput &)
@@ -79,6 +129,8 @@ Holder<Keybind> keyShrinkSmall = newKeybind({ .id = "shrinkSmall" }, input::Mous
 		e->value<TransformComponent>().scale = 1;
 		return false;
 	});
+
+Holder<Keybind> keyApplause = newKeybind(KeybindCreateConfig{ .id = "applause", .devices = KeybindDevicesFlags::Modifiers }, input::KeyPress{ { .mods = ModifiersFlags::Shift } }, [](const GenericInput &) { return false; });
 
 String filename(uint32 i)
 {

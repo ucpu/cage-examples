@@ -158,7 +158,7 @@ int main(int argc, char *args[])
 			e->value<TransformComponent>().scale = 0.03;
 			e->value<MovingComponent>().velocity = randomDirection3() * 0.02 * Vec3(1, 0, 1);
 			e->value<ModelComponent>().model = HashString("cage-tests/translucent/shapes.blend?Bulb");
-			e->value<LightComponent>();
+			e->value<LightComponent>().priority = randomRange(-100, 100);
 			e->value<ColorComponent>() = { randomChance3() * 0.5 + 0.5, randomRange(0.5, 2.0) };
 		}
 

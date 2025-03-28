@@ -10,9 +10,9 @@
 #include <cage-engine/opengl.h>
 #include <cage-engine/shaderProgram.h>
 #include <cage-engine/sound.h>
+#include <cage-engine/soundsVoices.h>
 #include <cage-engine/speaker.h>
 #include <cage-engine/texture.h>
-#include <cage-engine/voices.h>
 #include <cage-engine/window.h>
 
 using namespace cage;
