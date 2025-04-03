@@ -1,4 +1,3 @@
-
 []
 scheme = pack
 common.pack
@@ -28,7 +27,6 @@ skybox.obj
 scheme = texture
 srgb = true
 target = 2dArray
-animationDuration = 10000000
 skyboxes/$.png
 
 []

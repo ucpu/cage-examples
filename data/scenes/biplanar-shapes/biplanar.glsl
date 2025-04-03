@@ -28,7 +28,7 @@ void main()
 	vec3 bent = biplanarSampleNormal(texMaterialNormal2d, bip);
 	//normal = mix(normal, bent, sin(uniViewport.time.z * 3000) * 0.5 + 0.5);
 	normal = bent;
-	mat3 nm = mat3(uniMeshes[varInstanceId].normalMat);
+	mat3 nm = transpose(mat3(uniMeshes[varInstanceId].modelMat));
 	normal = normalize(nm * normal);
 	outColor = lighting(mat);
 #endif // DepthOnly

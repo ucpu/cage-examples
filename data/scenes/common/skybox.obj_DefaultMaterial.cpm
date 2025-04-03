@@ -9,6 +9,9 @@ albedo = skyboxes/$.png
 shader = /cage/shaders/engine/skybox.glsl
 layer = -10000
 
+[animation]
+duration = 10
+
 [flags]
 noDepthTest
 noDepthWrite

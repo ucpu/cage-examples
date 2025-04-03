@@ -44,7 +44,7 @@ void main()
 	mat.opacity = 1;
 	mat.fade = 0;
 	normal = biplanarSampleNormal(texMaterialNormalArray, bip, arrayIndex);
-	mat3 nm = mat3(uniMeshes[varInstanceId].normalMat);
+	mat3 nm = transpose(mat3(uniMeshes[varInstanceId].modelMat));
 	normal = normalize(nm * normal);
 	outColor = lighting(mat);
 #endif // DepthOnly
