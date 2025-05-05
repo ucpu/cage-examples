@@ -39,7 +39,7 @@ void main()
 	mat.albedo = biplanarSample(texMaterialAlbedoArray, bip, arrayIndex).rgb;
 	vec4 spec = biplanarSample(texMaterialSpecialArray, bip, arrayIndex);
 	mat.roughness = spec.x;
-	mat.metalness = spec.y;
+	mat.metallic = spec.y;
 	mat.emissive = spec.z;
 	mat.opacity = 1;
 	mat.fade = 0;

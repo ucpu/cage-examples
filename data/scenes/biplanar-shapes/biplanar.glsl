@@ -20,7 +20,7 @@ void main()
 	normal = normalize(varNormal);
 	mat.albedo = vec3(0, 0.2, 0.7);
 	mat.roughness = 0.4;
-	mat.metalness = 0;
+	mat.metallic = 0;
 	mat.emissive = 0;
 	mat.opacity = 1;
 	mat.fade = 0;
