@@ -31,7 +31,7 @@ public:
 				"compact",
 				"tooltips",
 			};
-			for (uint32 i = 0; i < sizeof(options) / sizeof(options[0]); i++)
+			for (uint32 i = 0; i < array_size(options); i++)
 				g->empty().text(options[i]);
 		}
 
@@ -39,11 +39,17 @@ public:
 			Holder<GuiBuilder> g = newGuiBuilder(engineGuiEntities()->get(3));
 			auto _ = g->verticalTable();
 
+			g->label().text("header");
+			g->header().text("Header");
+
 			for (uint32 i = 0; i < 4; i++)
 			{
 				g->label().text("label");
 				g->label().text(Stringizer() + "text " + i);
 			}
+
+			g->label().text("header 2");
+			g->header().text("Header 2");
 
 			g->label().text("default input");
 			g->input("");
@@ -67,11 +73,17 @@ public:
 			g->label().text("color picker");
 			g->colorPicker(Vec3(1, 0, 0), true);
 
+			g->label().text("solid color");
+			g->solidColor(Vec3(0, 1, 0));
+
 			g->label().text("button 1");
 			g->button().text("text");
 
 			g->label().text("button 2");
 			g->button().size(Vec2(120)).image(GuiImageComponent{ .textureUvOffset = Vec2(5 / 8.f, 2 / 8.f), .textureUvSize = Vec2(1 / 8.f, 1 / 8.f), .textureName = HashString("cage/textures/helper.jpg") });
+
+			g->label().text("separator");
+			g->horizontalSeparator();
 
 			g->label().text("slider");
 			g->horizontalSliderBar(0.3);
@@ -106,22 +118,30 @@ public:
 			g->label().text("red accent");
 			{
 				auto _ = g->row();
-				for (Real a = 0.1; a < 0.51; a += 0.1)
+				for (Real a = 0.1; a < 0.41; a += 0.1)
 					g->button().text(Stringizer() + a).accent(Vec4(1, 0, 0, a));
 			}
 
 			g->label().text("green accent");
 			{
 				auto _ = g->row();
-				for (Real a = 0.1; a < 0.51; a += 0.1)
+				for (Real a = 0.1; a < 0.41; a += 0.1)
 					g->button().text(Stringizer() + a).accent(Vec4(0, 1, 0, a));
 			}
 
 			g->label().text("blue accent");
 			{
 				auto _ = g->row();
-				for (Real a = 0.1; a < 0.51; a += 0.1)
+				for (Real a = 0.1; a < 0.41; a += 0.1)
 					g->button().text(Stringizer() + a).accent(Vec4(0, 0, 1, a));
+			}
+
+			g->label().text("frame");
+			{
+				auto _1 = g->frame();
+				auto _2 = g->row();
+				g->label().text("aaa");
+				g->label().text("bbb");
 			}
 		}
 	}

@@ -148,7 +148,8 @@ public:
 	bool closing = false;
 
 #define GCHL_GENERATE(N) EventListener<bool(const GenericInput &)> listener##N = window->events.listen(inputFilter([this](typename privat::ExtractParam<decltype(&WindowTestClass::N)>::Param in) { this->N(in); }));
-	CAGE_EVAL_MEDIUM(CAGE_EXPAND_ARGS(GCHL_GENERATE, windowClose, windowShow, windowHide, windowMove, windowResize, mouseMove, mousePress, mouseDoublePress, mouseRelease, mouseWheel, focusGain, focusLose, keyPress, keyRelease, keyRepeat, keyChar));
+	CAGE_EVAL(CAGE_EXPAND_ARGS(GCHL_GENERATE, windowClose, windowShow, windowHide, windowMove, windowResize, focusLose, focusGain));
+	CAGE_EVAL(CAGE_EXPAND_ARGS(GCHL_GENERATE, mouseMove, mousePress, mouseDoublePress, mouseRelease, mouseWheel, keyPress, keyRelease, keyRepeat, keyChar));
 #undef GCHL_GENERATE
 };
 

@@ -316,6 +316,7 @@ Entity *genInputInt(Entity *table, sint32 &childIndex, uint32 nameBase, const St
 void initializeGui()
 {
 	EntityManager *ents = engineGuiEntities();
+
 	Entity *layout = ents->createUnique();
 	{ // layout
 		layout->value<GuiLayoutScrollbarsComponent>();

@@ -77,17 +77,15 @@ public:
 		};
 
 		engineGuiManager()->skin(GuiSkinDefault) = generate(GuiSkinDefault);
-		engineGuiManager()->skin(GuiSkinLarge) = generate(GuiSkinLarge);
-		engineGuiManager()->skin(GuiSkinCompact) = generate(GuiSkinCompact);
 		engineGuiManager()->skin(GuiSkinTooltips) = generate(GuiSkinTooltips);
-		engineGuiManager()->skin(GuiSkinIndex(4)) = generate(GuiSkinDefault);
-		engineGuiManager()->skin(GuiSkinIndex(4)).textureName = HashString("cage-tests/gui/skin.png");
+		engineGuiManager()->skin(GuiSkinIndex(2)) = generate(GuiSkinDefault);
+		engineGuiManager()->skin(GuiSkinIndex(2)).textureId = HashString("cage-tests/gui/skin.png");
 	}
 
 	void initializeEngine() override
 	{
 		GuiManagerCreateConfig g;
-		g.skinsCount = 5;
+		g.skinsCount = 3;
 		EngineCreateConfig e;
 		e.gui = &g;
 		engineInitialize(e);
@@ -166,24 +164,6 @@ public:
 			input.step.f = 0.1;
 			e->value<GuiTextComponent>().value = "disabled input box";
 			e->value<GuiWidgetStateComponent>().disabled = true;
-		}
-		{ // large input box
-			Entity *e = ents->createUnique();
-			GuiParentComponent &p = e->value<GuiParentComponent>();
-			p.parent = side;
-			p.order = index++;
-			e->value<GuiInputComponent>();
-			e->value<GuiTextComponent>().value = "large input box";
-			e->value<GuiWidgetStateComponent>().skin = GuiSkinLarge;
-		}
-		{ // compact input box
-			Entity *e = ents->createUnique();
-			GuiParentComponent &p = e->value<GuiParentComponent>();
-			p.parent = side;
-			p.order = index++;
-			e->value<GuiInputComponent>();
-			e->value<GuiTextComponent>().value = "compact input box";
-			e->value<GuiWidgetStateComponent>().skin = GuiSkinCompact;
 		}
 		{ // checkbox
 			Entity *e = ents->createUnique();
@@ -325,12 +305,8 @@ public:
 			panel->value<GuiLayoutAlignmentComponent>().alignment = Vec2(0.5, 0);
 		}
 		initializeSide(4, "default skin");
-		initializeSide(5, "large skin");
-		initializeSide(6, "compact skin");
 		initializeSide(7, "tooltips skin");
 		initializeSide(8, "default skin - texture template");
-		ents->get(5)->value<GuiWidgetStateComponent>().skin = GuiSkinLarge;
-		ents->get(6)->value<GuiWidgetStateComponent>().skin = GuiSkinCompact;
 		ents->get(7)->value<GuiWidgetStateComponent>().skin = GuiSkinTooltips;
 		ents->get(8)->value<GuiWidgetStateComponent>().skin = GuiSkinIndex(4);
 	}
