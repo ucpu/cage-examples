@@ -71,7 +71,7 @@ void generate()
 		if (shadowEnabled)
 		{
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
-			s.directionalWorldSize = 20;
+			s.cascadesPaddingDistance = 20;
 			s.resolution = 4096;
 		}
 	}

@@ -53,11 +53,11 @@ void update()
 			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
 			enableEffect(ScreenSpaceEffectsFlags::AmbientOcclusion, cb.state == CheckBoxStateEnum::Checked);
 		}
-		{ // world radius
+		{ // rays length
 			Entity *e = ents->get(baseName + 1);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				eff.ssao.worldRadius = toFloat(in.value);
+				eff.ssao.raysLength = toFloat(in.value);
 		}
 		{ // strength
 			Entity *e = ents->get(baseName + 2);
@@ -65,11 +65,11 @@ void update()
 			if (in.valid)
 				eff.ssao.strength = toFloat(in.value);
 		}
-		{ // bias
+		{ // threshold
 			Entity *e = ents->get(baseName + 3);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				eff.ssao.bias = toFloat(in.value);
+				eff.ssao.threshold = toFloat(in.value);
 		}
 		{ // power
 			Entity *e = ents->get(baseName + 4);
@@ -351,9 +351,9 @@ void initializeGui()
 			table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
-		genInputFloat(table, childIndex, baseName, "World radius:", 0.1, 3, 0.05, ScreenSpaceEffectsComponent().ssao.worldRadius);
+		genInputFloat(table, childIndex, baseName, "Rays length:", 0.1, 3, 0.05, ScreenSpaceEffectsComponent().ssao.raysLength);
 		genInputFloat(table, childIndex, baseName, "Strength:", 0, 3, 0.1, ScreenSpaceEffectsComponent().ssao.strength);
-		genInputFloat(table, childIndex, baseName, "Bias:", -0.5, 0.5, 0.01, ScreenSpaceEffectsComponent().ssao.bias);
+		genInputFloat(table, childIndex, baseName, "Threshold:", -0.5, 0.5, 0.01, ScreenSpaceEffectsComponent().ssao.threshold);
 		genInputFloat(table, childIndex, baseName, "Power:", 0.1, 2, 0.02, ScreenSpaceEffectsComponent().ssao.power);
 		genInputInt(table, childIndex, baseName, "Samples:", 1, 128, 1, ScreenSpaceEffectsComponent().ssao.samplesCount);
 		genInputInt(table, childIndex, baseName, "Blur passes:", 0, 10, 1, ScreenSpaceEffectsComponent().ssao.blurPasses);
@@ -619,6 +619,7 @@ int main(int argc, char *args[])
 			c.ambientIntensity = 0.05;
 			c.near = 0.1;
 			c.far = 100;
+			c.shadowmapFrustumDepthFraction = 0.5;
 			e->value<ScreenSpaceEffectsComponent>();
 		}
 		{ // skybox
@@ -634,8 +635,9 @@ int main(int argc, char *args[])
 			e->value<LightComponent>().lightType = LightTypeEnum::Directional;
 			e->value<ColorComponent>().intensity = 3;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
-			s.resolution = 2048;
-			s.directionalWorldSize = 30;
+			s.resolution = 1024;
+			s.cascadesPaddingDistance = 20;
+			s.cascadesSplitLogFactor = 0.6;
 		}
 		{ // floor
 			Entity *e = ents->createAnonymous();

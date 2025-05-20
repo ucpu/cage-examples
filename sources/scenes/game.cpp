@@ -11,7 +11,6 @@
 #include <cage-engine/guiBuilder.h>
 #include <cage-engine/scene.h>
 #include <cage-engine/sceneScreenSpaceEffects.h>
-#include <cage-engine/sceneShadowmapFitting.h>
 #include <cage-engine/window.h>
 #include <cage-simple/engine.h>
 #include <cage-simple/fpsCamera.h>
@@ -169,16 +168,6 @@ void update()
 	{
 		sceneReload();
 		sceneIndexLoaded = sceneIndexCurrent;
-	}
-
-	// update shadowmaps
-	for (int i = 0; i < directionalLightsCount; i++)
-	{
-		ShadowmapFittingConfig cfg;
-		cfg.assets = engineAssets();
-		cfg.light = directionalLights[i];
-		cfg.camera = engineEntities()->get(1);
-		shadowmapFitting(cfg);
 	}
 }
 

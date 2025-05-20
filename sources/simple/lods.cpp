@@ -49,7 +49,7 @@ int main(int argc, char *args[])
 			e->value<LightComponent>().lightType = LightTypeEnum::Directional;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 1024;
-			s.directionalWorldSize = 20;
+			s.cascadesPaddingDistance = 20;
 		}
 		{ // camera
 			Entity *e = ents->create(10);

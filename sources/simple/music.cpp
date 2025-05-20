@@ -37,7 +37,7 @@ void init()
 		e->value<LightComponent>().lightType = LightTypeEnum::Directional;
 		ShadowmapComponent &s = e->value<ShadowmapComponent>();
 		s.resolution = 4096;
-		s.directionalWorldSize = 200;
+		s.cascadesPaddingDistance = 200;
 	}
 
 	{ // floor

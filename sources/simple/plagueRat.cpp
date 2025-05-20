@@ -42,12 +42,10 @@ int main(int argc, char *args[])
 		{ // sun
 			Entity *e = ents->createUnique();
 			TransformComponent &t = e->value<TransformComponent>();
-			t.orientation = Quat(Degs(-50), Degs(270), Degs());
-			t.position = Vec3(0, 2, 0);
+			t.orientation = Quat(Degs(-60), Degs(270), Degs());
 			e->value<LightComponent>().lightType = LightTypeEnum::Directional;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 2048;
-			s.directionalWorldSize = 15;
 		}
 		{ // floor
 			Entity *e = ents->createUnique();

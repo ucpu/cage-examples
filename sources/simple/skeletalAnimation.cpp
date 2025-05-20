@@ -189,7 +189,7 @@ int main(int argc, char *args[])
 			e->value<ColorComponent>().intensity = 2;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 2048;
-			s.directionalWorldSize = 12;
+			s.cascadesPaddingDistance = 12;
 		}
 		{ // camera
 			Entity *e = ents->create(102);

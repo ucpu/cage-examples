@@ -109,7 +109,7 @@ int main(int argc, char *args[])
 			e->value<ColorComponent>().color = Vec3(1, 1, 0.5);
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 4096;
-			s.directionalWorldSize = 20;
+			s.cascadesPaddingDistance = 20;
 		}
 		{ // green floor
 			Entity *e = ents->create(5);
@@ -148,7 +148,7 @@ int main(int argc, char *args[])
 			e->value<ColorComponent>() = { Vec3(i == 0, i == 1, i == 2), 3 };
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 4096;
-			s.directionalWorldSize = 500;
+			s.cascadesPaddingDistance = 500;
 		}
 		// point lights
 		for (uint32 i = 0; i < 500; i++)

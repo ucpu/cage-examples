@@ -157,7 +157,7 @@ int main(int argc, char *args[])
 			e->value<ColorComponent>().intensity = 3;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 2048;
-			s.directionalWorldSize = 30;
+			s.cascadesPaddingDistance = 30;
 		}
 		{ // floor
 			Entity *e = ents->createAnonymous();

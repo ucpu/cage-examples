@@ -118,7 +118,7 @@ int main(int argc, char *args[])
 			e->value<ColorComponent>() = { Vec3(1, 1, 0.5), 2 };
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
 			s.resolution = 2048;
-			s.directionalWorldSize = 15;
+			s.cascadesPaddingDistance = 15;
 		}
 		{ // flash light
 			Entity *e = ents->create(3);
