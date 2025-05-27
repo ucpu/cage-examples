@@ -65,11 +65,11 @@ void update()
 			if (in.valid)
 				eff.ssao.strength = toFloat(in.value);
 		}
-		{ // threshold
+		{ // bias
 			Entity *e = ents->get(baseName + 3);
 			GuiInputComponent &in = e->value<GuiInputComponent>();
 			if (in.valid)
-				eff.ssao.threshold = toFloat(in.value);
+				eff.ssao.bias = toFloat(in.value);
 		}
 		{ // power
 			Entity *e = ents->get(baseName + 4);
@@ -353,7 +353,7 @@ void initializeGui()
 		sint32 childIndex = 1;
 		genInputFloat(table, childIndex, baseName, "Rays length:", 0.1, 3, 0.05, ScreenSpaceEffectsComponent().ssao.raysLength);
 		genInputFloat(table, childIndex, baseName, "Strength:", 0, 3, 0.1, ScreenSpaceEffectsComponent().ssao.strength);
-		genInputFloat(table, childIndex, baseName, "Threshold:", -0.5, 0.5, 0.01, ScreenSpaceEffectsComponent().ssao.threshold);
+		genInputFloat(table, childIndex, baseName, "Bias:", -0.5, 0.5, 0.01, ScreenSpaceEffectsComponent().ssao.bias);
 		genInputFloat(table, childIndex, baseName, "Power:", 0.1, 2, 0.02, ScreenSpaceEffectsComponent().ssao.power);
 		genInputInt(table, childIndex, baseName, "Samples:", 1, 128, 1, ScreenSpaceEffectsComponent().ssao.samplesCount);
 		genInputInt(table, childIndex, baseName, "Blur passes:", 0, 10, 1, ScreenSpaceEffectsComponent().ssao.blurPasses);
