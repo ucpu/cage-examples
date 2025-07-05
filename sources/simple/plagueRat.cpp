@@ -1,7 +1,11 @@
+#include <atomic>
+
 #include <cage-core/assetsManager.h>
+#include <cage-core/concurrent.h>
 #include <cage-core/entities.h>
 #include <cage-core/hashString.h>
 #include <cage-core/logger.h>
+#include <cage-core/tasks.h>
 #include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/scene.h>
 #include <cage-engine/window.h>
@@ -12,6 +16,32 @@
 using namespace cage;
 constexpr uint32 AssetsName = HashString("cage-tests/plagueRat/rat.pack");
 
+namespace
+{
+	// simulate long-running task
+	// if this task is scheduled in a thread that is waiting for its own subtasks, it will block it for long time
+	// this could block graphics, which is very undesirable
+
+	std::atomic<int> tasksDone = 7;
+	Holder<AsyncTask> task;
+
+	void taskRun(uint32)
+	{
+		CAGE_LOG(SeverityEnum::Info, "plague-rat", "wasteful task");
+		threadSleep(1'000'000);
+		tasksDone++;
+	}
+
+	void engineUpdate()
+	{
+		if (tasksDone > 0)
+		{
+			tasksDone--;
+			task = tasksRunAsync("waste", taskRun);
+		}
+	}
+}
+
 int main(int argc, char *args[])
 {
 	try
@@ -20,7 +50,7 @@ int main(int argc, char *args[])
 		engineInitialize(EngineCreateConfig());
 
 		// events
-		//const auto updateListener = controlThread().update.listen(&update);
+		const auto updateListener = controlThread().update.listen(engineUpdate);
 		const auto closeListener = engineWindow()->events.listen(inputFilter([](input::WindowClose) { engineStop(); }));
 
 		// window
@@ -55,7 +85,7 @@ int main(int argc, char *args[])
 		{ // the rat
 			Entity *e = ents->createAnonymous();
 			e->value<TransformComponent>().position = Vec3(0, 0, 0);
-			e->value<TransformComponent>().orientation = Quat({}, Degs(180), {});
+			e->value<TransformComponent>().orientation = Quat({}, Degs(90), {});
 			e->value<ModelComponent>().model = HashString("cage-tests/plagueRat/Rat.object");
 			e->value<SkeletalAnimationComponent>().animation = HashString("cage-tests/plagueRat/Rat.glb?Rat_Walk");
 		}
