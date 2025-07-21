@@ -1,0 +1,13 @@
+[base]
+roughness = 0.9759001
+
+[mult]
+
+[textures]
+albedo = sponza_18_albedo.png
+special = sponza_18_special.png
+
+[render]
+
+[flags]
+

@@ -1,7 +1,0 @@
-[textures]
-albedo = textures\sponza_thorn_diff.png
-special = textures\sponza_thorn_spec.png
-normal = textures\sponza_thorn_bump.png
-
-[flags]
-cutOut

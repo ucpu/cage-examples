@@ -1,0 +1,12 @@
+[base]
+roughness = 0.4082483
+
+[mult]
+
+[textures]
+albedo = sponza_23_albedo.png
+
+[render]
+
+[flags]
+

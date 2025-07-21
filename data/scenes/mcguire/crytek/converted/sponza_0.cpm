@@ -1,0 +1,14 @@
+[base]
+
+[mult]
+
+[textures]
+albedo = sponza_0_albedo.png
+normal = sponza_0_bump.png
+special = sponza_0_special.png
+
+[render]
+
+[flags]
+cutOut
+

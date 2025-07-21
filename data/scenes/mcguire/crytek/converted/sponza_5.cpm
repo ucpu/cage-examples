@@ -1,0 +1,13 @@
+[base]
+roughness = 0.4082483
+
+[mult]
+
+[textures]
+albedo = sponza_5_albedo.png
+normal = sponza_5_bump.png
+
+[render]
+
+[flags]
+

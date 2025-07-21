@@ -1,0 +1,198 @@
+[]
+scheme = model
+material = sponza_0.cpm
+sponza_0.glb
+
+[]
+scheme = model
+material = sponza_1.cpm
+sponza_1.glb
+
+[]
+scheme = model
+material = sponza_2.cpm
+sponza_2.glb
+
+[]
+scheme = model
+material = sponza_3.cpm
+sponza_3.glb
+
+[]
+scheme = model
+material = sponza_4.cpm
+sponza_4.glb
+
+[]
+scheme = model
+material = sponza_5.cpm
+sponza_5.glb
+
+[]
+scheme = model
+material = sponza_6.cpm
+sponza_6.glb
+
+[]
+scheme = model
+material = sponza_7.cpm
+sponza_7.glb
+
+[]
+scheme = model
+material = sponza_8.cpm
+sponza_8.glb
+
+[]
+scheme = model
+material = sponza_9.cpm
+sponza_9.glb
+
+[]
+scheme = model
+material = sponza_10.cpm
+sponza_10.glb
+
+[]
+scheme = model
+material = sponza_11.cpm
+sponza_11.glb
+
+[]
+scheme = model
+material = sponza_12.cpm
+sponza_12.glb
+
+[]
+scheme = model
+material = sponza_13.cpm
+sponza_13.glb
+
+[]
+scheme = model
+material = sponza_14.cpm
+sponza_14.glb
+
+[]
+scheme = model
+material = sponza_15.cpm
+sponza_15.glb
+
+[]
+scheme = model
+material = sponza_16.cpm
+sponza_16.glb
+
+[]
+scheme = model
+material = sponza_17.cpm
+sponza_17.glb
+
+[]
+scheme = model
+material = sponza_18.cpm
+sponza_18.glb
+
+[]
+scheme = model
+material = sponza_19.cpm
+sponza_19.glb
+
+[]
+scheme = model
+material = sponza_20.cpm
+sponza_20.glb
+
+[]
+scheme = model
+material = sponza_21.cpm
+sponza_21.glb
+
+[]
+scheme = model
+material = sponza_22.cpm
+sponza_22.glb
+
+[]
+scheme = model
+material = sponza_23.cpm
+sponza_23.glb
+
+[]
+scheme = model
+material = sponza_24.cpm
+sponza_24.glb
+
+[]
+scheme = texture
+srgb = true
+premultiplyAlpha = true
+sponza_0_albedo.png
+sponza_1_albedo.png
+
+[]
+scheme = texture
+srgb = true
+sponza_2_albedo.png
+sponza_3_albedo.png
+sponza_4_albedo.png
+sponza_5_albedo.png
+sponza_6_albedo.png
+sponza_7_albedo.png
+sponza_8_albedo.png
+sponza_9_albedo.png
+sponza_10_albedo.png
+sponza_11_albedo.png
+sponza_12_albedo.png
+sponza_13_albedo.png
+sponza_14_albedo.png
+sponza_15_albedo.png
+sponza_16_albedo.png
+sponza_17_albedo.png
+sponza_18_albedo.png
+sponza_19_albedo.png
+sponza_20_albedo.png
+sponza_21_albedo.png
+sponza_22_albedo.png
+sponza_23_albedo.png
+
+[]
+scheme = texture
+convert = heightToNormal
+normal = true
+sponza_0_bump.png
+sponza_2_bump.png
+sponza_3_bump.png
+sponza_4_bump.png
+sponza_5_bump.png
+sponza_8_bump.png
+sponza_13_bump.png
+sponza_14_bump.png
+sponza_20_bump.png
+sponza_22_bump.png
+
+[]
+scheme = texture
+sponza_0_special.png
+sponza_1_special.png
+sponza_2_special.png
+sponza_4_special.png
+sponza_6_special.png
+sponza_7_special.png
+sponza_8_special.png
+sponza_9_special.png
+sponza_10_special.png
+sponza_11_special.png
+sponza_12_special.png
+sponza_14_special.png
+sponza_15_special.png
+sponza_17_special.png
+sponza_18_special.png
+sponza_19_special.png
+sponza_20_special.png
+sponza_21_special.png
+
+[]
+scheme = object
+converted.object
+
