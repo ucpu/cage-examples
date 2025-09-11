@@ -45,8 +45,8 @@ void testDevice(const String &deviceId, uint32 sampleRate)
 		uint64 t = tmr->duration();
 		if (t > 3 * 1000 * 1000)
 			break;
-		speaker->process(t);
-		threadSleep(1000);
+		speaker->process(5'000);
+		threadSleep(5'000);
 	}
 	CAGE_LOG(SeverityEnum::Info, "speaker", "play stop");
 }

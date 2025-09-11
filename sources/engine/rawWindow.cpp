@@ -30,7 +30,7 @@ int main(int argc, char *args[])
 		log1->output.bind<logOutputStdOut>();
 
 		// window
-		Holder<Window> window = newWindow({});
+		Holder<Window> window = newWindow({ .vsync = false });
 		const auto closeListener = window->events.listen(inputFilter([](input::WindowClose) { closing = true; }));
 		window->title("cage test logo");
 		detail::initializeOpengl();
@@ -85,8 +85,8 @@ int main(int argc, char *args[])
 				res = window->resolution();
 				glViewport(0, 0, res[0], res[1]);
 				model->dispatch();
-				speaker->process(applicationTime());
-				threadSleep(10000);
+				speaker->process(10'000);
+				threadSleep(9'900);
 				window->swapBuffers();
 				window->processEvents();
 			}
