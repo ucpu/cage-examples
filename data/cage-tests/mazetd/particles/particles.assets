@@ -42,7 +42,6 @@ sprite.obj;water
 
 []
 scheme = texture
-target = 2dArray
 srgb = true
 downscale = 4
 fire/$$.png

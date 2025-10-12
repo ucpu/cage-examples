@@ -1,17 +1,14 @@
 []
 scheme = texture
-target = 2dArray
 srgb = true
 albedo/$.jpg
 
 []
 scheme = texture
-target = 2dArray
 convert = specularToSpecial
 special/$.jpg
 
 []
 scheme = texture
-target = 2dArray
 normal = true
 normal/$.jpg

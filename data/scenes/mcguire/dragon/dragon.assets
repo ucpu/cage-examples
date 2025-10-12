@@ -13,3 +13,7 @@ uvs = false
 passInvalidNormals = true
 trianglesOnly = true
 dragon.obj
+
+[]
+scheme = shader
+unlit.glsl

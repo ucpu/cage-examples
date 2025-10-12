@@ -13,7 +13,8 @@ foreach(item IN LISTS cage-headers-list)
 	target_sources(cage-headers PRIVATE "${cpp}")
 	math(EXPR counter "${counter}+1")
 endforeach()
-target_link_libraries(cage-headers cage-simple)
+#target_link_libraries(cage-headers cage-simple)
+target_link_libraries(cage-headers cage-engine) # temporarily use cage-engine instead of cage-simple
 cage_ide_working_dir_in_place(cage-headers)
 
 message(STATUS "found ${counter} headers")
