@@ -1,8 +1,0 @@
-
-[base]
-albedo = 0.42, 0.018, 0.062
-roughness = 0.4
-metallic = 0
-
-[flags]
-fade

@@ -1,7 +1,0 @@
-
-[base]
-roughness = 0.15
-metallic = 0.97
-
-[textures]
-albedo = albedo.psd

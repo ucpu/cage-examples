@@ -1,15 +1,20 @@
-#include <webgpu/webgpu_cpp.h>
-
-#include <cage-core/image.h>
+#include <cage-core/assetContext.h>
+#include <cage-core/assetsManager.h>
+#include <cage-core/assetsOnDemand.h>
+#include <cage-core/assetsSchemes.h>
+#include <cage-core/hashString.h>
 #include <cage-core/logger.h>
-#include <cage-core/meshAlgorithms.h>
-#include <cage-core/meshShapes.h>
-#include <cage-engine/gpuBuffer.h>
+#include <cage-core/timer.h>
+#include <cage-engine/assetsSchemes.h>
+#include <cage-engine/font.h>
 #include <cage-engine/graphicsDevice.h>
 #include <cage-engine/graphicsEncoder.h>
+#include <cage-engine/guiBuilder.h>
+#include <cage-engine/guiManager.h>
+#include <cage-engine/inputs.h>
 #include <cage-engine/model.h>
+#include <cage-engine/renderObject.h>
 #include <cage-engine/shader.h>
-#include <cage-engine/spirv.h>
 #include <cage-engine/texture.h>
 #include <cage-engine/window.h>
 
@@ -19,74 +24,127 @@ int main(int argc, const char *args[])
 {
 	initializeConsoleLogger();
 
-	Holder<Window> window = newWindow({});
 	Holder<GraphicsDevice> device = newGraphicsDevice({});
+	Holder<Window> window = newWindow({});
 
-	Holder<Spirv> spirv = newSpirv();
+	Holder<AssetsManager> assets = newAssetsManager({});
+	Holder<AssetsOnDemand> onDemand = newAssetsOnDemand(+assets);
+	assets->defineScheme<AssetSchemeIndexPack, AssetPack>(genAssetSchemePack());
+	assets->defineScheme<AssetSchemeIndexModel, Model>(genAssetSchemeModel(+device));
+	assets->defineScheme<AssetSchemeIndexShader, MultiShader>(genAssetSchemeShader(+device));
+	assets->defineScheme<AssetSchemeIndexTexture, Texture>(genAssetSchemeTexture(+device));
+	assets->defineScheme<AssetSchemeIndexRenderObject, RenderObject>(genAssetSchemeRenderObject());
+	assets->defineScheme<AssetSchemeIndexFont, Font>(genAssetSchemeFont());
+
+	assets->load(HashString("cage/cage.pack"));
+	assets->load(HashString("scenes/mcguire/crytek/sponza-preload.object"));
+	assets->load(HashString("scenes/mcguire/crytek/unlit.glsl"));
+
+	while (assets->processing())
 	{
-		static constexpr const char *vertex = R"glsl(
-#version 450 core
-layout(location = 0) in vec3 inPosition;
-layout(location = 1) in vec2 inUv;
-layout(location = 0) out vec2 varUv;
-void main()
-{
-	gl_Position = vec4(inPosition, 1);
-	varUv=inUv;
-}
-)glsl";
-		static constexpr const char *fragment = R"glsl(
-#version 450 core
-layout(location = 0) in vec2 varUv;
-layout(location = 0) out vec4 color;
-layout(set = 0, binding = 0) uniform sampler2D uniTex;
-void main()
-{
-	color = texture(uniTex, varUv);
-}
-)glsl";
-		spirv->importGlsl({ vertex, fragment });
+		assets->processCustomThread(0);
+		window->processEvents();
+		device->processEvents();
 	}
-	Holder<Shader> shader = newShader(+device, +spirv);
 
-	Holder<Mesh> mesh = newMeshIcosahedron(0.5);
-	meshConvertToExpanded(+mesh);
+	Holder<Shader> shader = assets->get<MultiShader>(HashString("scenes/mcguire/crytek/unlit.glsl"))->get(0);
+	CAGE_ASSERT(shader);
+
+	Holder<Font> font = assets->get<Font>(HashString("cage/fonts/ubuntu/regular.ttf"));
+	CAGE_ASSERT(font);
+
+	GuiManagerCreateConfig guicfg;
+	guicfg.assetManager = +assets;
+	guicfg.graphicsDevice = +device;
+	Holder<GuiManager> gui = newGuiManager(guicfg);
+
 	{
-		std::vector<Vec2> uv;
-		uv.reserve(mesh->verticesCount());
-		for (Vec3 v : mesh->positions())
-			uv.push_back(Vec2(v));
-		mesh->uvs(uv);
+		Holder<GuiBuilder> g = newGuiBuilder(gui->entities());
+		auto _1 = g->alignment(Vec2(0));
+		auto _2 = g->panel().text("Whatsup");
+		auto _3 = g->column();
+		g->label().text("rambo");
+		g->label().text("sneaky");
+		g->label().text("violin");
 	}
-	Holder<Model> model = newModel(+device, +mesh, {});
 
-	Holder<Image> image = newImage();
-	image->initialize(Vec2i(512, 512));
-	for (uint32 y = 0; y < 512; y++)
-		for (uint32 x = 0; x < 512; x++)
-			image->set(Vec2i(x, y), Vec4(x / 512.0, y / 512.0, 0, 1));
-	Holder<Texture> colorTexture = newTexture(+device, +image);
-
+	window->windowedSize(Vec2i(1700, 1000));
 	window->setWindowed();
 
-	while (true)
+	bool closing = false;
+	const auto eventClose = window->events.listen(inputFilter([&](input::WindowClose) { closing = true; }));
+	const auto eventGui = window->events.listen([&](GenericInput in) { gui->handleInput(in); });
+
+	Holder<Timer> timer = newTimer();
+	uint32 framesCount = 0;
+
+	while (!closing)
 	{
-		window->processEvents();
 		device->processEvents();
 		Holder<Texture> surfaceTexture = device->nextFrame(+window);
 		if (!surfaceTexture)
-			continue;
-
-		Holder<GraphicsEncoder> encoder = newGraphicsEncoder(+device);
-		encoder->nextPass(PassConfig{ { PassConfig::TargetConfig{ +surfaceTexture, Vec4(0.1, 0.1, 0.1, 1), true } } });
 		{
-			DrawConfig draw;
-			draw.materialTextures[0] = +colorTexture;
-			draw.model = +model;
-			draw.shader = +shader;
-			encoder->draw(draw);
+			timer->reset();
+			framesCount = 0;
+			continue;
 		}
-		encoder->submit();
+
+		if (++framesCount > 1000)
+		{
+			CAGE_LOG(SeverityEnum::Info, "timer", Stringizer() + timer->elapsed());
+			framesCount = 0;
+		}
+
+		{
+			Holder<Texture> depthTexture = newTexture(+device, DepthTextureCreateConfig{ surfaceTexture->resolution() });
+
+			Holder<GraphicsEncoder> encoder = newGraphicsEncoder(+device);
+			encoder->setLabel("sponza");
+			encoder->nextPass(PassConfig{ { PassConfig::ColorTargetConfig{ +surfaceTexture, Vec4(0.1, 0.1, 0.1, 1) } }, PassConfig::DepthTargetConfig{ +depthTexture } });
+
+			for (uint32 i = 0; i <= 24; i++)
+			{
+				Holder<Model> model = assets->get<Model>(HashString(String(Stringizer() + "scenes/mcguire/crytek/converted/sponza_" + i + ".glb")));
+				prepareModelBindings(+device, +assets, +model);
+				DrawConfig draw;
+				draw.model = +model;
+				draw.shader = +shader;
+				encoder->draw(draw);
+			}
+
+			{
+				const auto text = font->layout("Hello there", {});
+				FontRenderConfig cfg;
+				cfg.assets = +onDemand;
+				cfg.queue = +encoder;
+				cfg.transform = Mat4(Transform(Vec3(), Quat(), 0.01));
+				font->render(text, cfg);
+			}
+
+			encoder->submit();
+		}
+
+		{
+			Holder<GraphicsEncoder> encoder = newGraphicsEncoder(+device);
+			encoder->setLabel("gui");
+			encoder->nextPass(PassConfig{ { PassConfig::ColorTargetConfig{ +surfaceTexture, Vec4(), false } } });
+			gui->outputResolution(window->resolution());
+			gui->outputRetina(window->contentScaling());
+			gui->prepare();
+			window->processEvents();
+			gui->finish(+encoder);
+			encoder->submit();
+		}
+	}
+
+	assets->unload(HashString("cage/cage.pack"));
+	assets->unload(HashString("scenes/mcguire/crytek/sponza-preload.object"));
+	assets->unload(HashString("scenes/mcguire/crytek/unlit.glsl"));
+
+	while (assets->processing())
+	{
+		assets->processCustomThread(0);
+		device->processEvents();
 	}
 
 	return 0;

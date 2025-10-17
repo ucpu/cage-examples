@@ -1,9 +1,0 @@
-[textures]
-albedo = albedo/$.jpg
-special = special/$.jpg
-normal = normal/$.jpg
-
-[render]
-shader = biplanar.glsl
-
-[flags]

@@ -1,9 +1,0 @@
-[textures]
-albedo = tree-2-1.glb?BillboardCloudProxy_0_LOD1.018_albedo
-normal = tree-2-1.glb?BillboardCloudProxy_0_LOD1.018_normal
-
-[render]
-shader = wind.glsl
-
-[flags]
-cutOut

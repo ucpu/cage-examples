@@ -1,1 +1,0 @@
-textures taken from https://github.com/KhronosGroup/glTF-WebGL-PBR

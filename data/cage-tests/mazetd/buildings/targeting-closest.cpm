@@ -1,9 +1,0 @@
-[base]
-emission = 1
-
-[textures]
-albedo = targeting-closest.png
-
-[flags]
-noLighting
-noShadowCast

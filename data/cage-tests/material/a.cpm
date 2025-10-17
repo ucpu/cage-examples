@@ -1,7 +1,0 @@
-[base]
-albedo = 1, 0.88, 0.6
-
-[textures]
-special = special.png
-
-[flags]

@@ -7,3 +7,7 @@ sponza.pack
 scheme = object
 sponza.object
 sponza-preload.object
+
+[]
+scheme = shader
+unlit.glsl

@@ -1,6 +1,0 @@
-[textures]
-albedo = albedo.png
-special = special.png
-
-[flags]
-transparent

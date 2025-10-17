@@ -1,5 +1,0 @@
-DroidSansMono obtained at https://www.fontsquirrel.com/fonts/droid-sans-mono
-immortal font obtained at http://www.1001freefonts.com/immortal.font
-roboto font taken from https://fonts.google.com/specimen/Roboto
-asimov font taken from http://www.fontspace.com/kineticplasma-fonts/asimov
-utf8 stress test file obtained at http://www.cl.cam.ac.uk/~mgk25/ucs/examples/UTF-8-test.txt (and modified for the cage loader)
