@@ -3,7 +3,6 @@
 #include <cage-core/hashString.h>
 #include <cage-core/logger.h>
 #include <cage-engine/guiBuilder.h>
-#include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/scene.h>
 #include <cage-engine/sceneScreenSpaceEffects.h>
 #include <cage-engine/window.h>

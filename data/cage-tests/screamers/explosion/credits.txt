@@ -1,5 +1,0 @@
-CC0:
-1: 182429__qubodup__explosion https://freesound.org/people/qubodup/sounds/182429/
-2: 255111__rhapsodize__cinematicboom-re-created-rhapsodize https://freesound.org/people/rhapsodize/sounds/255111/
-3: 234555__electroviolence__swoosh-explosion https://freesound.org/people/Electroviolence/sounds/234555/
-

@@ -1,7 +1,0 @@
-[render]
-shader = bezier.glsl
-
-[flags]
-twoSided
-noLighting
-noShadowCast

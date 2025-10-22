@@ -1,9 +1,0 @@
-[base]
-emission = 5
-
-[textures]
-albedo = physical/$$.png
-
-[flags]
-noLighting
-cutOut

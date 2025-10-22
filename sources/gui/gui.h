@@ -4,7 +4,6 @@
 #include <cage-core/logger.h>
 #include <cage-engine/guiBuilder.h>
 #include <cage-engine/guiManager.h>
-#include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/window.h>
 #include <cage-simple/engine.h>
 

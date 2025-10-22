@@ -1,9 +1,0 @@
-[base]
-emission = 1
-
-[textures]
-albedo = targeting-back.png
-
-[flags]
-noLighting
-noShadowCast

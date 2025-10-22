@@ -9,7 +9,6 @@
 #include <cage-core/string.h>
 #include <cage-core/stringLiteral.h>
 #include <cage-engine/guiBuilder.h>
-#include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/keybinds.h>
 #include <cage-engine/scene.h>
 #include <cage-engine/window.h>

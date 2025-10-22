@@ -1,9 +1,0 @@
-[base]
-emission = 1
-
-[textures]
-albedo = targeting-strongest.png
-
-[flags]
-noLighting
-noShadowCast

@@ -3,7 +3,6 @@
 #include <cage-core/entities.h>
 #include <cage-core/hashString.h>
 #include <cage-core/logger.h>
-#include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/scene.h>
 #include <cage-engine/window.h>
 #include <cage-simple/engine.h>
@@ -59,24 +58,19 @@ void preparePrepare()
 	maybeThrow(probLoop, 7);
 }
 
-void dispatchInit()
+void graphicsInit()
 {
 	maybeThrow(probInit, 8);
 }
 
-void dispatchFinish()
+void graphicsFinish()
 {
 	maybeThrow(probFinish, 9);
 }
 
-void dispatchRender()
+void graphicsRender()
 {
 	maybeThrow(probLoop, 10);
-}
-
-void dispatchSwap()
-{
-	maybeThrow(probLoop, 11);
 }
 
 void soundInit()
@@ -116,13 +110,9 @@ int main(int argc, char *args[])
 			GCHL_GENERATE(controlUpdate, controlThread().update);
 			GCHL_GENERATE(controlInit, controlThread().initialize);
 			GCHL_GENERATE(controlFinish, controlThread().finalize);
-			GCHL_GENERATE(prepareInit, graphicsPrepareThread().initialize);
-			GCHL_GENERATE(prepareFinish, graphicsPrepareThread().finalize);
-			GCHL_GENERATE(preparePrepare, graphicsPrepareThread().prepare);
-			GCHL_GENERATE(dispatchInit, graphicsDispatchThread().initialize);
-			GCHL_GENERATE(dispatchFinish, graphicsDispatchThread().finalize);
-			GCHL_GENERATE(dispatchRender, graphicsDispatchThread().dispatch);
-			GCHL_GENERATE(dispatchSwap, graphicsDispatchThread().swap);
+			GCHL_GENERATE(graphicsInit, graphicsThread().initialize);
+			GCHL_GENERATE(graphicsFinish, graphicsThread().finalize);
+			GCHL_GENERATE(graphicsRender, graphicsThread().graphics);
 			GCHL_GENERATE(soundInit, soundThread().initialize);
 			GCHL_GENERATE(soundFinish, soundThread().finalize);
 			GCHL_GENERATE(soundSound, soundThread().sound);

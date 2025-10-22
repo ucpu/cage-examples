@@ -1,8 +1,0 @@
-[textures]
-albedo = tree-1-1.glb?Trunk_LOD1.003_albedo
-
-[render]
-shader = wind.glsl
-
-[flags]
-cutOut

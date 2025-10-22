@@ -4,7 +4,6 @@
 #include <cage-core/hashString.h>
 #include <cage-core/logger.h>
 #include <cage-core/variableSmoothingBuffer.h>
-#include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/scene.h>
 #include <cage-engine/sceneScreenSpaceEffects.h>
 #include <cage-engine/sceneVirtualReality.h>
