@@ -181,7 +181,7 @@ int main(int argc, char *args[])
 			c.ambientColor = Vec3(1);
 			c.ambientIntensity = 0.05;
 			c.virtualReality = +engineVirtualReality();
-			e->value<ScreenSpaceEffectsComponent>().effects = (ScreenSpaceEffectsFlags::Default | ScreenSpaceEffectsFlags::EyeAdaptation) & ~ScreenSpaceEffectsFlags::AmbientOcclusion;
+			e->value<ScreenSpaceEffectsComponent>().effects = ScreenSpaceEffectsFlags::Default & ~ScreenSpaceEffectsFlags::AmbientOcclusion;
 		}
 		{ // left controller grip
 			Entity *e = ents->create(3);

@@ -144,69 +144,6 @@ void update()
 		}
 	}
 
-	{ // eye adaptation
-		constexpr sint32 baseName = genBaseName(ScreenSpaceEffectsFlags::EyeAdaptation);
-		{ // enable
-			Entity *e = ents->get(baseName);
-			GuiCheckBoxComponent &cb = e->value<GuiCheckBoxComponent>();
-			enableEffect(ScreenSpaceEffectsFlags::EyeAdaptation, cb.state == CheckBoxStateEnum::Checked);
-		}
-		{ // darkerSpeed
-			Entity *e = ents->get(baseName + 1);
-			GuiInputComponent &in = e->value<GuiInputComponent>();
-			if (in.valid)
-				eff.eyeAdaptation.darkerSpeed = toFloat(in.value);
-		}
-		{ // lighterSpeed
-			Entity *e = ents->get(baseName + 2);
-			GuiInputComponent &in = e->value<GuiInputComponent>();
-			if (in.valid)
-				eff.eyeAdaptation.lighterSpeed = toFloat(in.value);
-		}
-		{ // lowLogLum
-			Entity *e = ents->get(baseName + 3);
-			GuiInputComponent &in = e->value<GuiInputComponent>();
-			if (in.valid)
-				eff.eyeAdaptation.lowLogLum = toFloat(in.value);
-		}
-		{ // highLogLum
-			Entity *e = ents->get(baseName + 4);
-			GuiInputComponent &in = e->value<GuiInputComponent>();
-			if (in.valid)
-				eff.eyeAdaptation.highLogLum = toFloat(in.value);
-		}
-		{ // nightOffset
-			Entity *e = ents->get(baseName + 5);
-			GuiInputComponent &in = e->value<GuiInputComponent>();
-			if (in.valid)
-				eff.eyeAdaptation.nightOffset = toFloat(in.value);
-		}
-		{ // nightDesaturate
-			Entity *e = ents->get(baseName + 6);
-			GuiInputComponent &in = e->value<GuiInputComponent>();
-			if (in.valid)
-				eff.eyeAdaptation.nightDesaturate = toFloat(in.value);
-		}
-		{ // nightContrast
-			Entity *e = ents->get(baseName + 7);
-			GuiInputComponent &in = e->value<GuiInputComponent>();
-			if (in.valid)
-				eff.eyeAdaptation.nightContrast = toFloat(in.value);
-		}
-		{ // key
-			Entity *e = ents->get(baseName + 8);
-			GuiInputComponent &in = e->value<GuiInputComponent>();
-			if (in.valid)
-				eff.eyeAdaptation.key = toFloat(in.value);
-		}
-		{ // strength
-			Entity *e = ents->get(baseName + 9);
-			GuiInputComponent &in = e->value<GuiInputComponent>();
-			if (in.valid)
-				eff.eyeAdaptation.strength = toFloat(in.value);
-		}
-	}
-
 	{ // tone mapping
 		constexpr sint32 baseName = genBaseName(ScreenSpaceEffectsFlags::ToneMapping);
 		{ // enable
@@ -420,44 +357,6 @@ void initializeGui()
 		sint32 childIndex = 1;
 		genInputFloat(table, childIndex, baseName, "Threshold:", 0, 5, 0.01, ScreenSpaceEffectsComponent().bloom.threshold);
 		genInputInt(table, childIndex, baseName, "Blur passes:", 1, 10, 1, ScreenSpaceEffectsComponent().bloom.blurPasses);
-	}
-
-	{ // eye adaptation
-		constexpr sint32 baseName = genBaseName(ScreenSpaceEffectsFlags::EyeAdaptation);
-		Entity *panel = ents->createUnique();
-		{
-			GuiParentComponent &p = panel->value<GuiParentComponent>();
-			p.parent = layout->id();
-			p.order = baseName;
-			panel->value<GuiSpoilerComponent>();
-			panel->value<GuiTextComponent>().value = "Eye adaptation";
-			panel->value<GuiLayoutLineComponent>().vertical = true;
-		}
-		{ // enabled
-			Entity *e = ents->create(baseName);
-			GuiParentComponent &p = e->value<GuiParentComponent>();
-			p.parent = panel->id();
-			p.order = 1;
-			e->value<GuiTextComponent>().value = "Enabled";
-			e->value<GuiCheckBoxComponent>().state = CheckBoxStateEnum::Checked;
-		}
-		Entity *table = ents->createUnique();
-		{
-			GuiParentComponent &p = table->value<GuiParentComponent>();
-			p.parent = panel->id();
-			p.order = 2;
-			table->value<GuiLayoutTableComponent>();
-		}
-		sint32 childIndex = 1;
-		genInputFloat(table, childIndex, baseName, "Darker speed:", 0, 10, 0.02, ScreenSpaceEffectsComponent().eyeAdaptation.darkerSpeed);
-		genInputFloat(table, childIndex, baseName, "Lighter speed:", 0, 10, 0.02, ScreenSpaceEffectsComponent().eyeAdaptation.lighterSpeed);
-		genInputFloat(table, childIndex, baseName, "Low logLum:", -20, 10, 0.05, ScreenSpaceEffectsComponent().eyeAdaptation.lowLogLum);
-		genInputFloat(table, childIndex, baseName, "High logLum:", -20, 10, 0.05, ScreenSpaceEffectsComponent().eyeAdaptation.highLogLum);
-		genInputFloat(table, childIndex, baseName, "Night offset:", 0, 10, 0.02, ScreenSpaceEffectsComponent().eyeAdaptation.nightOffset);
-		genInputFloat(table, childIndex, baseName, "Night desaturate:", 0, 1, 0.02, ScreenSpaceEffectsComponent().eyeAdaptation.nightDesaturate);
-		genInputFloat(table, childIndex, baseName, "Night contrast:", 0, 0.1, 0.002, ScreenSpaceEffectsComponent().eyeAdaptation.nightContrast);
-		genInputFloat(table, childIndex, baseName, "Key:", 0, 1, 0.02, ScreenSpaceEffectsComponent().eyeAdaptation.key);
-		genInputFloat(table, childIndex, baseName, "Strength:", 0, 1, 0.02, ScreenSpaceEffectsComponent().eyeAdaptation.strength);
 	}
 
 	{ // tone mapping
