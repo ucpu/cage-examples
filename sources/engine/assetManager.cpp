@@ -2,14 +2,16 @@
 
 #include <cage-core/assetContext.h>
 #include <cage-core/assetsManager.h>
+#include <cage-core/assetsSchemes.h>
 #include <cage-core/concurrent.h>
 #include <cage-core/hashString.h>
 #include <cage-core/logger.h>
 #include <cage-core/timer.h>
+#include <cage-engine/assetsSchemes.h>
 #include <cage-engine/font.h>
-#include <cage-engine/highPerformanceGpuHint.h>
+#include <cage-engine/graphicsDevice.h>
 #include <cage-engine/model.h>
-#include <cage-engine/shaderProgram.h>
+#include <cage-engine/shader.h>
 #include <cage-engine/sound.h>
 #include <cage-engine/texture.h>
 #include <cage-engine/window.h>
@@ -37,31 +39,6 @@ constexpr const uint32 names[] = {
 };
 constexpr uint32 count = sizeof(names) / sizeof(names[0]);
 
-void glThread()
-{
-	window->makeCurrent();
-	while (!destroying)
-	{
-		while (assets->processCustomThread(1))
-			;
-		threadSleep(1000);
-		for (uint32 i = 0; i < 50; i++)
-			assets->get<AssetSchemeIndexPack, AssetPack>(names[randomRange(0u, count)]);
-	}
-	assets->unloadCustomThread(1);
-	window->makeNotCurrent();
-}
-
-void slThread()
-{
-	while (!destroying)
-	{
-		threadSleep(1000);
-		for (uint32 i = 0; i < 50; i++)
-			assets->get<AssetSchemeIndexPack, AssetPack>(names[randomRange(0u, count)]);
-	}
-}
-
 int main(int argc, char *args[])
 {
 	try
@@ -73,21 +50,17 @@ int main(int argc, char *args[])
 
 		// contexts
 		window = newWindow({});
-		window->makeNotCurrent();
+		Holder<GraphicsDevice> device = newGraphicsDevice({});
 
 		// asset schemes
 		AssetManagerCreateConfig cfg;
 		assets = newAssetsManager(cfg);
 		assets->defineScheme<AssetSchemeIndexPack, AssetPack>(genAssetSchemePack());
-		assets->defineScheme<AssetSchemeIndexShaderProgram, MultiShaderProgram>(genAssetSchemeShaderProgram(1));
-		assets->defineScheme<AssetSchemeIndexTexture, Texture>(genAssetSchemeTexture(1));
-		assets->defineScheme<AssetSchemeIndexModel, Model>(genAssetSchemeModel(1));
+		assets->defineScheme<AssetSchemeIndexShader, MultiShader>(genAssetSchemeShader(+device));
+		assets->defineScheme<AssetSchemeIndexTexture, Texture>(genAssetSchemeTexture(+device));
+		assets->defineScheme<AssetSchemeIndexModel, Model>(genAssetSchemeModel(+device));
 		assets->defineScheme<AssetSchemeIndexFont, Font>(genAssetSchemeFont());
 		assets->defineScheme<AssetSchemeIndexSound, Sound>(genAssetSchemeSound());
-
-		// threads
-		Holder<Thread> thrGl = newThread(Delegate<void()>().bind<&glThread>(), "opengl");
-		Holder<Thread> thrSl = newThread(Delegate<void()>().bind<&slThread>(), "sound");
 
 		// assets
 		bool loaded[count];
@@ -127,8 +100,6 @@ int main(int argc, char *args[])
 				assets->unload(names[i]);
 		assets->waitTillEmpty();
 		destroying = true;
-		thrGl->wait();
-		thrSl->wait();
 		window.clear();
 
 		CAGE_LOG(SeverityEnum::Info, "test", "done");

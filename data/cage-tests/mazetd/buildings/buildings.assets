@@ -167,9 +167,9 @@ targeting-plane.obj;weakest
 []
 scheme = texture
 srgb = true
-wrapX = clampToEdge
-wrapY = clampToEdge
-wrapZ = clampToEdge
+wrapX = clamp
+wrapY = clamp
+wrapZ = clamp
 targeting-back.png
 targeting-closest.png
 targeting-farthest.png

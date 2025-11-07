@@ -5,7 +5,6 @@
 #include <cage-core/noiseFunction.h>
 #include <cage-core/texts.h>
 #include <cage-engine/guiComponents.h>
-#include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/scene.h>
 #include <cage-engine/sceneScreenSpaceEffects.h>
 #include <cage-engine/window.h>

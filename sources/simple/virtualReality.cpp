@@ -4,7 +4,6 @@
 #include <cage-core/hashString.h>
 #include <cage-core/logger.h>
 #include <cage-core/variableSmoothingBuffer.h>
-#include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/scene.h>
 #include <cage-engine/sceneScreenSpaceEffects.h>
 #include <cage-engine/sceneVirtualReality.h>
@@ -182,7 +181,7 @@ int main(int argc, char *args[])
 			c.ambientColor = Vec3(1);
 			c.ambientIntensity = 0.05;
 			c.virtualReality = +engineVirtualReality();
-			e->value<ScreenSpaceEffectsComponent>().effects = (ScreenSpaceEffectsFlags::Default | ScreenSpaceEffectsFlags::EyeAdaptation) & ~ScreenSpaceEffectsFlags::AmbientOcclusion;
+			e->value<ScreenSpaceEffectsComponent>().effects = ScreenSpaceEffectsFlags::Default & ~ScreenSpaceEffectsFlags::AmbientOcclusion;
 		}
 		{ // left controller grip
 			Entity *e = ents->create(3);

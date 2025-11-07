@@ -1,11 +1,11 @@
 
-$include /cage/shaders/shaderConventions.h
-
 $include /cage/shaders/engine/vertex.glsl
 
 void main()
 {
-	updateVertex();
+	propagateInputs();
+	skeletalAnimation();
+	computePosition();
 }
 
 $include /cage/shaders/engine/fragment.glsl

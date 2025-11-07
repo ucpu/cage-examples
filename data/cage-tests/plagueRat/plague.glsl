@@ -1,16 +1,16 @@
 
-$include /cage/shaders/shaderConventions.h
-
 $include /cage/shaders/engine/vertex.glsl
 
 void main()
 {
-	updateVertex();
+	propagateInputs();
+	skeletalAnimation();
+	computePosition();
 }
 
 $include /cage/shaders/engine/fragment.glsl
 
-layout(binding = CAGE_SHADER_TEXTURE_CUSTOM) uniform sampler2D texPostules;
+layout(set = 1, binding = 3) uniform sampler2D texPostules;
 
 void main()
 {

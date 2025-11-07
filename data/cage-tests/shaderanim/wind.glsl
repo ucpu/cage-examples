@@ -1,6 +1,4 @@
 
-$include /cage/shaders/shaderConventions.h
-
 $include /cage/shaders/engine/vertex.glsl
 
 vec3 applyWind(vec3 p, vec3 origin)
@@ -15,21 +13,21 @@ vec3 applyWind(vec3 p, vec3 origin)
 
 void main()
 {
-	varInstanceId = gl_InstanceID;
+	varInstanceId = gl_InstanceIndex;
 	varPosition = inPosition;
 	varNormal = inNormal;
 	varUv = inUv;
 	//skeletalAnimation();
-	vec3 origin = transpose(uniMeshes[varInstanceId].mMat) * vec4(0, 0, 0, 1);
+	vec3 origin = transpose(uniMeshes[varInstanceId].modelMat) * vec4(0, 0, 0, 1);
 	varPosition = applyWind(varPosition, origin);
-	gl_Position = uniMeshes[varInstanceId].mvpMat * vec4(varPosition, 1);
-	varPosition = transpose(uniMeshes[varInstanceId].mMat) * vec4(varPosition, 1);
+	gl_Position = uniProjection.vpMat * mat4(transpose(uniMeshes[varInstanceId].modelMat)) * vec4(varPosition, 1);
+	varPosition = transpose(uniMeshes[varInstanceId].modelMat) * vec4(varPosition, 1);
 }
 
 $include /cage/shaders/engine/fragment.glsl
 
 #ifndef CutOut
-layout(early_fragment_tests) in;
+//layout(early_fragment_tests) in; // currently not supported
 #endif
 
 void main()

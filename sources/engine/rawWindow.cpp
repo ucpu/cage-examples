@@ -1,3 +1,4 @@
+/*
 #include <cage-core/assetContext.h>
 #include <cage-core/assetsManager.h>
 #include <cage-core/concurrent.h>
@@ -5,7 +6,6 @@
 #include <cage-core/logger.h>
 #include <cage-core/timer.h>
 #include <cage-engine/font.h>
-#include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/model.h>
 #include <cage-engine/opengl.h>
 #include <cage-engine/shaderProgram.h>
@@ -104,3 +104,6 @@ int main(int argc, char *args[])
 		return 1;
 	}
 }
+*/
+
+int main(int argc, char *args[]) {}

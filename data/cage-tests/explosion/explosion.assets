@@ -54,42 +54,42 @@ sprite.obj;spark_1
 
 []
 scheme = texture
-target = 2dArray
+target = array
 srgb = true
 premultiplyAlpha = true
 explosion/1/$$.png
 
 []
 scheme = texture
-target = 2dArray
+target = array
 srgb = true
 premultiplyAlpha = true
 explosion/2/$$.png
 
 []
 scheme = texture
-target = 2dArray
+target = array
 srgb = true
 premultiplyAlpha = true
 explosion/3/$$.png
 
 []
 scheme = texture
-target = 2dArray
+target = array
 srgb = true
 premultiplyAlpha = true
 smoke/1/$$.png
 
 []
 scheme = texture
-target = 2dArray
+target = array
 srgb = true
 premultiplyAlpha = true
 smoke/2/$$.png
 
 []
 scheme = texture
-target = 2dArray
+target = array
 srgb = true
 premultiplyAlpha = true
 spark/1/$$.png

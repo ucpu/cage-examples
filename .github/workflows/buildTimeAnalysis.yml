@@ -30,8 +30,11 @@ jobs:
         echo "$PWD" >> $GITHUB_PATH
 
     - uses: actions/checkout@v4
-      with:
-        submodules: recursive
+
+    - name: Submodule
+      shell: bash
+      run: |
+        git submodule update --init # not recursive
 
     - name: Configure
       run: |

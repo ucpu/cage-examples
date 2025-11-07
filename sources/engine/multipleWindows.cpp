@@ -1,10 +1,10 @@
+/*
 #include <atomic>
 
 #include <cage-core/color.h>
 #include <cage-core/concurrent.h>
 #include <cage-core/logger.h>
 #include <cage-core/macros.h>
-#include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/opengl.h>
 #include <cage-engine/window.h>
 
@@ -184,3 +184,6 @@ int main(int argc, char *args[])
 		return 1;
 	}
 }
+*/
+
+int main(int argc, char *args[]) {}

@@ -8,7 +8,6 @@
 #include <cage-core/string.h>
 #include <cage-engine/guiBuilder.h>
 #include <cage-engine/guiManager.h>
-#include <cage-engine/highPerformanceGpuHint.h>
 #include <cage-engine/scene.h>
 #include <cage-engine/window.h>
 #include <cage-simple/engine.h>
@@ -19,8 +18,7 @@ using namespace cage;
 constexpr uint32 AssetsName = HashString("cage-tests/music/music.pack");
 
 uint64 updateDelay = 0;
-uint64 prepareDelay = 0;
-uint64 renderDelay = 0;
+uint64 graphicsDelay = 0;
 uint64 soundDelay = 0;
 
 struct ShotComponent
@@ -95,20 +93,12 @@ void update()
 	}
 }
 
-void prepare()
+void graphicsUpdate()
 {
-	if (!prepareDelay)
+	if (!graphicsDelay)
 		return;
-	const ProfilingScope profiling("prepare delay");
-	threadSleep(prepareDelay);
-}
-
-void render()
-{
-	if (!renderDelay)
-		return;
-	const ProfilingScope profiling("render delay");
-	threadSleep(renderDelay);
+	const ProfilingScope profiling("graphics delay");
+	threadSleep(graphicsDelay);
 }
 
 void soundUpdate()
@@ -127,8 +117,8 @@ void guiInit()
 	auto _3 = g->scrollbars();
 	auto _4 = g->verticalTable(2);
 
-	static constexpr const char *names[] = { "control tick", "control delay", "prepare delay", "dispatch delay", "sound delay" };
-	static constexpr const uint64 values[] = { 1000 / 20, 0, 0, 0, 0 };
+	static constexpr const char *names[] = { "control tick", "control delay", "graphics delay", "sound delay" };
+	static constexpr const uint64 values[] = { 1000 / 20, 0, 0, 0 };
 	static_assert(array_size(names) == array_size(values));
 	for (uint32 i = 0; i < array_size(names); i++)
 	{
@@ -147,7 +137,7 @@ void guiInit()
 					}
 					else
 					{
-						static uint64 *data[] = { nullptr, &updateDelay, &prepareDelay, &renderDelay, &soundDelay };
+						static uint64 *data[] = { nullptr, &updateDelay, &graphicsDelay, &soundDelay };
 						static_assert(array_size(data) == array_size(values));
 						*(data[i]) = toUint32(t.value) * 1000;
 					}
@@ -164,8 +154,7 @@ int main(int argc, char *args[])
 
 		// events
 		const auto updateListener = controlThread().update.listen(update);
-		const auto prepareListener = graphicsPrepareThread().prepare.listen(prepare);
-		const auto renderListener = graphicsDispatchThread().dispatch.listen(render);
+		const auto renderListener = graphicsThread().graphics.listen(graphicsUpdate);
 		const auto soundListener = soundThread().sound.listen(soundUpdate);
 		const auto guiInitListener = controlThread().initialize.listen(guiInit);
 		const auto closeListener = engineWindow()->events.listen(inputFilter([](input::WindowClose) { engineStop(); }));

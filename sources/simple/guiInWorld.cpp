@@ -1,3 +1,4 @@
+/*
 #include <cage-core/assetsManager.h>
 #include <cage-core/entities.h>
 #include <cage-core/hashString.h>
@@ -126,3 +127,6 @@ int main(int argc, char *args[])
 		return 1;
 	}
 }
+*/
+
+int main(int argc, char *args[]) {}

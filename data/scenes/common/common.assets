@@ -26,7 +26,7 @@ skybox.obj
 []
 scheme = texture
 srgb = true
-target = 2dArray
+target = array
 skyboxes/$.png
 
 []

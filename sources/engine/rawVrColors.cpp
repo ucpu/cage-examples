@@ -1,3 +1,4 @@
+/*
 #include <cage-core/logger.h>
 #include <cage-engine/frameBuffer.h>
 #include <cage-engine/highPerformanceGpuHint.h>
@@ -119,3 +120,6 @@ int main(int argc, char *args[])
 		return 1;
 	}
 }
+*/
+
+int main(int argc, char *args[]) {}

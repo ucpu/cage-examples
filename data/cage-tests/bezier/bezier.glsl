@@ -1,6 +1,4 @@
 
-$include /cage/shaders/shaderConventions.h
-
 $include /cage/shaders/engine/vertex.glsl
 
 vec3 bezierPoint(float t, vec3 points[4])
@@ -36,15 +34,15 @@ struct UniPoints
 {
 	vec4 a, b;
 };
-layout(std140, binding = CAGE_SHADER_UNIBLOCK_CUSTOMDATA) uniform CustomDataBlock
+layout(std430, set = 2, binding = 3) readonly buffer CustomDataBlock
 {
-	UniPoints uniPoints[CAGE_SHADER_MAX_MESHES];
+	UniPoints uniPoints[];
 };
 
 void main()
 {
-	varInstanceId = gl_InstanceID;
-	mat4 mMat = mat4(transpose(uniMeshes[varInstanceId].mMat));
+	varInstanceId = gl_InstanceIndex;
+	mat4 mMat = mat4(transpose(uniMeshes[varInstanceId].modelMat));
 	vec3 points[4];
 	points[0] = vec3(mMat * vec4(0, 0, 0, 1));
 	points[1] = uniPoints[varInstanceId].a.xyz;
@@ -59,7 +57,7 @@ void main()
 	vec3 side = normalize(cross(forward, up));
 	varPosition += side * inPosition[1] * 10;
 	varPosition += up * 1;
-	gl_Position = uniViewport.vpMat * vec4(varPosition, 1);
+	gl_Position = uniProjection.vpMat * vec4(varPosition, 1);
 }
 
 $include /cage/shaders/engine/fragment.glsl

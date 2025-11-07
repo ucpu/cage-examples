@@ -1,3 +1,4 @@
+/*
 #include <cage-core/assetContext.h>
 #include <cage-core/assetsManager.h>
 #include <cage-core/concurrent.h>
@@ -148,3 +149,6 @@ int main(int argc, char *args[])
 		return 1;
 	}
 }
+*/
+
+int main(int argc, char *args[]) {}

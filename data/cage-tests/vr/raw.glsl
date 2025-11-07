@@ -1,14 +1,15 @@
 
-$include /cage/shaders/shaderConventions.h
-
 $define shader vertex
 
-layout(location = CAGE_SHADER_ATTRIB_IN_POSITION) in vec3 inPosition;
-layout(location = CAGE_SHADER_ATTRIB_IN_UV) in vec3 inUv;
+layout(location = 0) in vec3 inPosition;
+layout(location = 2) in vec3 inUv;
 
-layout(location = 0) uniform mat4 uniMvpMat;
+layout(std430, set = 2, binding = 0) readonly buffer UniMvpMat
+{
+	mat4 uniMvpMat;
+};
 
-out vec2 varUv;
+layout(location = 0) out vec2 varUv;
 
 void main()
 {
@@ -18,9 +19,9 @@ void main()
 
 $define shader fragment
 
-in vec2 varUv;
+layout(location = 0) in vec2 varUv;
 
-layout(binding = 0) uniform sampler2D texColor;
+layout(set = 1, binding = 0) uniform sampler2D texColor;
 
 layout(location = 0) out vec4 outColor;
 

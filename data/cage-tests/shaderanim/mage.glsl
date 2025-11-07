@@ -1,18 +1,18 @@
 
-$include /cage/shaders/shaderConventions.h
-
 $include /cage/shaders/engine/vertex.glsl
 
 void main()
 {
-	updateVertex();
+	propagateInputs();
+	skeletalAnimation();
+	computePosition();
 }
 
 $include /cage/shaders/engine/fragment.glsl
 
 $include /cage/shaders/functions/fbm.glsl
 
-layout(early_fragment_tests) in;
+//layout(early_fragment_tests) in; // currently not supported
 
 float sampleHeight(vec3 wp)
 {
