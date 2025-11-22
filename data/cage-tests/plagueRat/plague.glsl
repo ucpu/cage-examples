@@ -10,7 +10,12 @@ void main()
 
 $include /cage/shaders/engine/fragment.glsl
 
-layout(set = 1, binding = 3) uniform sampler2D texPostules;
+#if !defined(MaterialTexRegular)
+#error "unintended combination of keywords"
+#endif
+
+layout(set = 1, binding = 7) uniform sampler2D texPostules;
+
 
 void main()
 {

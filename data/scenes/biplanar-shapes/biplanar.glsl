@@ -8,10 +8,15 @@ void main()
 	computePosition();
 }
 
+
 $include /cage/shaders/engine/fragment.glsl
 
 $include /cage/shaders/functions/simplex.glsl
 $include /cage/shaders/functions/biplanar.glsl
+
+#if !defined(MaterialTexRegular)
+#error "unintended combination of keywords"
+#endif
 
 void main()
 {
@@ -25,7 +30,7 @@ void main()
 	mat.opacity = 1;
 	mat.fade = 0;
 	Biplanar bip = biplanarPrepare(varPosition * 2, normal, 50);
-	vec3 bent = biplanarSampleNormal(texMaterialNormal2d, bip);
+	vec3 bent = biplanarSampleNormal(texMaterialNormal, bip);
 	//normal = mix(normal, bent, sin(uniViewport.time.z * 3000) * 0.5 + 0.5);
 	normal = bent;
 	mat3 nm = transpose(mat3(uniMeshes[varInstanceId].modelMat));

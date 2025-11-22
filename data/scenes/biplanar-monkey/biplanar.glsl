@@ -8,10 +8,15 @@ void main()
 	computePosition();
 }
 
+
 $include /cage/shaders/engine/fragment.glsl
 
 $include /cage/shaders/functions/simplex.glsl
 $include /cage/shaders/functions/biplanar.glsl
+
+#if !defined(MaterialTexArray)
+#error "unintended combination of keywords"
+#endif
 
 float makeArrayIndex()
 {
@@ -36,14 +41,14 @@ void main()
 	Material mat;
 	normal = normalize(varNormal);
 	Biplanar bip = biplanarPrepare(varPosition * 0.5, normal, 50);
-	mat.albedo = biplanarSample(texMaterialAlbedoArray, bip, arrayIndex).rgb;
-	vec4 spec = biplanarSample(texMaterialSpecialArray, bip, arrayIndex);
+	mat.albedo = biplanarSample(texMaterialAlbedo, bip, arrayIndex).rgb;
+	vec4 spec = biplanarSample(texMaterialSpecial, bip, arrayIndex);
 	mat.roughness = spec.x;
 	mat.metallic = spec.y;
 	mat.emissive = spec.z;
 	mat.opacity = 1;
 	mat.fade = 0;
-	normal = biplanarSampleNormal(texMaterialNormalArray, bip, arrayIndex);
+	normal = biplanarSampleNormal(texMaterialNormal, bip, arrayIndex);
 	mat3 nm = transpose(mat3(uniMeshes[varInstanceId].modelMat));
 	normal = normalize(nm * normal);
 	outColor = lighting(mat);

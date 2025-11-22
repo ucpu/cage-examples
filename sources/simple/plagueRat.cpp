@@ -26,7 +26,7 @@ namespace
 
 	void taskRun(uint32)
 	{
-		CAGE_LOG(SeverityEnum::Info, "plague-rat", "wasteful task");
+		CAGE_LOG(SeverityEnum::Info, "plague-rat", "plague rat: intentionally wasteful task");
 		threadSleep(1'000'000);
 		tasksDone++;
 	}
