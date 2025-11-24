@@ -59,7 +59,7 @@ jobs:
     - name: Install packages
       run: |
         sudo apt-get update
-        sudo apt-get install -y xorg-dev libwayland-dev libxkbcommon-dev libpulse-dev libasound2-dev nasm libssl-dev
+        sudo apt-get install -y xorg-dev libx11-xcb-dev libxkbcommon-dev libwayland-dev libpulse-dev libasound2-dev nasm libssl-dev
 
     - name: Versions
       run: |
@@ -102,7 +102,7 @@ jobs:
     - name: Install packages
       run: |
         sudo apt-get update
-        sudo apt-get install -y xorg-dev libwayland-dev libxkbcommon-dev libpulse-dev libasound2-dev nasm libssl-dev
+        sudo apt-get install -y xorg-dev libx11-xcb-dev libxkbcommon-dev libwayland-dev libpulse-dev libasound2-dev nasm libssl-dev
 
     - uses: actions/checkout@v4
 
