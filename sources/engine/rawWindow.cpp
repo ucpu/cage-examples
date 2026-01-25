@@ -36,7 +36,7 @@ int main(int argc, char *args[])
 		detail::initializeOpengl();
 
 		// assets
-		Holder<AssetsManager> assets = newAssetsManager(AssetManagerCreateConfig());
+		Holder<AssetsManager> assets = newAssetsManager(AssetsManagerCreateConfig());
 		assets->defineScheme<AssetSchemeIndexPack, AssetPack>(genAssetSchemePack());
 		assets->defineScheme<AssetSchemeIndexShaderProgram, MultiShaderProgram>(genAssetSchemeShaderProgram(0));
 		assets->defineScheme<AssetSchemeIndexTexture, Texture>(genAssetSchemeTexture(0));

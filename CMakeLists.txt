@@ -9,4 +9,3 @@ cage_directory_link("${CMAKE_CURRENT_SOURCE_DIR}/data/scenes-maps" "${CMAKE_BINA
 
 add_subdirectory(externals/cage)
 add_subdirectory(sources)
-

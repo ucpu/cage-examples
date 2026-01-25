@@ -53,7 +53,7 @@ int main(int argc, char *args[])
 		Holder<GraphicsDevice> device = newGraphicsDevice({});
 
 		// asset schemes
-		AssetManagerCreateConfig cfg;
+		AssetsManagerCreateConfig cfg;
 		assets = newAssetsManager(cfg);
 		assets->defineScheme<AssetSchemeIndexPack, AssetPack>(genAssetSchemePack());
 		assets->defineScheme<AssetSchemeIndexShader, MultiShader>(genAssetSchemeShader(+device));
