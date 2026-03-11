@@ -1,8 +1,9 @@
-/*
 #include <cage-core/concurrent.h>
 #include <cage-core/logger.h>
-#include <cage-core/timer.h>
+#include <cage-engine/graphicsDevice.h>
+#include <cage-engine/graphicsEncoder.h>
 #include <cage-engine/screenList.h>
+#include <cage-engine/texture.h>
 #include <cage-engine/window.h>
 
 using namespace cage;
@@ -12,20 +13,30 @@ void testScreen(const String &screenId, const Vec2i &resolution, uint32 frequenc
 	CAGE_LOG(SeverityEnum::Info, "test", Stringizer() + "testing monitor: '" + screenId + "', resolution: " + resolution[0] + " * " + resolution[1] + ", frequency: " + frequency);
 	{
 		Vec3 color = randomChance3() * 0.5 + 0.5;
-		Holder<Window> w = newWindow({});
-		w->setFullscreen(resolution, frequency, screenId);
-		w->title("cage test monitors");
-		w->processEvents();
-		detail::initializeOpengl();
-		for (int i = 0; i < 100; i++)
+		Holder<Window> window = newWindow({});
+		Holder<GraphicsDevice> device = newGraphicsDevice({ +window });
+		window->setFullscreen(resolution, frequency, screenId);
+		window->title("cage test list monitors");
+		window->processEvents();
+		for (int i = 0; i < 30; i++)
 		{
-			glViewport(0, 0, resolution[0], resolution[1]);
-			glClearColor(color[0].value, color[1].value, color[2].value, 0);
-			glClear(GL_COLOR_BUFFER_BIT);
-			w->swapBuffers();
-			w->processEvents();
-			threadSleep(100000);
+			const auto frame = device->nextFrame(+window);
+			if (frame.targetTexture)
+			{
+				Vec2i res = frame.targetTexture->resolution();
+				Holder<GraphicsEncoder> enc = newGraphicsEncoder(+device, "enc");
+				RenderPassConfig pass;
+				pass.colorTargets.push_back({ +frame.targetTexture });
+				pass.colorTargets[0].clearValue = Vec4(randomChance3(), 1);
+				enc->nextPass(pass);
+				enc->submit();
+				device->submitCommandBuffers();
+			}
+			window->processEvents();
+			threadSleep(100'000);
 		}
+		window.clear();
+		device.clear();
 	}
 	threadSleep(500 * 1000);
 }
@@ -34,10 +45,7 @@ int main(int argc, char *args[])
 {
 	try
 	{
-		// log to console
-		Holder<Logger> log1 = newLogger();
-		log1->format.bind<logFormatConsole>();
-		log1->output.bind<logOutputStdOut>();
+		initializeConsoleLogger();
 
 		Holder<ScreenList> list = newScreenList();
 		uint32 defaultIndex = list->defaultDevice();
@@ -48,7 +56,6 @@ int main(int argc, char *args[])
 			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", Stringizer() + "monitor name: '" + d->name() + "'");
 
 			ScreenMode testmode;
-
 			uint32 currentIndex = d->currentMode();
 			for (const ScreenMode &m : d->modes())
 			{
@@ -71,6 +78,3 @@ int main(int argc, char *args[])
 		return 1;
 	}
 }
-*/
-
-int main(int argc, char *args[]) {}

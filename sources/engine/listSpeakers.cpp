@@ -14,7 +14,7 @@ void synthesizeTone(const SoundCallbackData &data)
 	constexpr double twoPi = 3.14159265358979323846264338327950288419716939937510 * 2;
 	constexpr double pitch = 440;
 	const double step = twoPi * pitch / data.sampleRate;
-	const double offset = data.time * twoPi * pitch / 1000000;
+	const double offset = data.time * twoPi * pitch / 1'000'000;
 	for (uint32 sampleIndex = 0; sampleIndex < data.frames; sampleIndex++)
 	{
 		double angle = sampleIndex * step + offset;
@@ -55,10 +55,7 @@ int main(int argc, char *args[])
 {
 	try
 	{
-		// log to console
-		Holder<Logger> log1 = newLogger();
-		log1->format.bind<logFormatConsole>();
-		log1->output.bind<logOutputStdOut>();
+		initializeConsoleLogger();
 
 		Holder<SpeakerList> list = newSpeakerList();
 		for (const SpeakerDevice &d : list->devices())
@@ -72,8 +69,8 @@ int main(int argc, char *args[])
 			CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", Stringizer() + "sample rate min: " + d.minSamplerate + ", max: " + d.maxSamplerate + ", default: " + d.defaultSamplerate);
 			if (d.available)
 			{
-				testDevice(d.id, 44100);
-				testDevice(d.id, 48000);
+				testDevice(d.id, 44'100);
+				testDevice(d.id, 48'000);
 			}
 			else
 				CAGE_LOG_CONTINUE(SeverityEnum::Info, "listing", "device not available");

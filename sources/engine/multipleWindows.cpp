@@ -1,18 +1,20 @@
-/*
 #include <atomic>
 
 #include <cage-core/color.h>
 #include <cage-core/concurrent.h>
 #include <cage-core/logger.h>
 #include <cage-core/macros.h>
-#include <cage-engine/opengl.h>
+#include <cage-engine/graphicsDevice.h>
+#include <cage-engine/graphicsEncoder.h>
+#include <cage-engine/texture.h>
 #include <cage-engine/window.h>
 
 using namespace cage;
 
+Holder<Mutex> mutex = newMutex();
+Holder<GraphicsDevice> device;
 std::atomic<int> globalWindowIndex;
 bool globalClosing = false;
-Holder<Mutex> openglInitMut = newMutex();
 
 class WindowTestClass
 {
@@ -23,10 +25,6 @@ public:
 		window->setWindowed();
 		window->windowedSize(Vec2i(400, 300));
 		window->title(Stringizer() + "window " + index);
-		{
-			ScopeLock l(openglInitMut);
-			detail::initializeOpengl();
-		}
 		CAGE_LOG(SeverityEnum::Info, "test", Stringizer() + "window " + index + " created");
 	}
 
@@ -34,15 +32,22 @@ public:
 
 	void tick()
 	{
-		window->processEvents();
-		Vec2i resolution = window->resolution();
-		glViewport(0, 0, resolution[0], resolution[1]);
 		Vec3 color = colorHsvToRgb(Vec3(hue, 1, 1));
 		hue = (hue + 0.002) % 1;
-		glClearColor(color[0].value, color[1].value, color[2].value, 0);
-		glClear(GL_COLOR_BUFFER_BIT);
-		window->swapBuffers();
-		threadSleep(5000);
+
+		const auto frame = device->nextFrame(+window);
+		if (frame.targetTexture)
+		{
+			Vec2i res = frame.targetTexture->resolution();
+			Holder<GraphicsEncoder> enc = newGraphicsEncoder(+device, "enc");
+			RenderPassConfig pass;
+			pass.colorTargets.push_back({ +frame.targetTexture });
+			pass.colorTargets[0].clearValue = Vec4(color, 1);
+			enc->nextPass(pass);
+			enc->submit();
+			device->submitCommandBuffers();
+		}
+		window->processEvents();
 	}
 
 	bool windowClose(input::WindowClose)
@@ -164,13 +169,12 @@ int main(int argc, char *args[])
 {
 	try
 	{
-		// log to console
-		Holder<Logger> log1 = newLogger();
-		log1->format.bind<logFormatConsole>();
-		log1->output.bind<logOutputStdOut>();
+		initializeConsoleLogger();
 
 		CAGE_LOG(SeverityEnum::Warning, "compatibility", "be warned, this example depends on undocumented behavior and may not work on some platforms");
 		CAGE_LOG(SeverityEnum::Info, "compatibility", "it is recommended that all window-related tasks are made in the main thread");
+
+		device = newGraphicsDevice({});
 
 		Holder<Thread> thrs[3];
 		for (uint32 i = 0; i < 3; i++)
@@ -184,6 +188,3 @@ int main(int argc, char *args[])
 		return 1;
 	}
 }
-*/
-
-int main(int argc, char *args[]) {}

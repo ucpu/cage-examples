@@ -2,8 +2,10 @@
 #include <cage-core/config.h>
 #include <cage-core/entities.h>
 #include <cage-core/hashString.h>
+#include <cage-core/image.h>
 #include <cage-core/logger.h>
 #include <cage-core/string.h>
+#include <cage-engine/cursor.h>
 #include <cage-engine/guiComponents.h>
 #include <cage-engine/scene.h>
 #include <cage-engine/sceneScreenSpaceEffects.h>
@@ -485,14 +487,29 @@ void initializeGui()
 	}
 }
 
+void initializeCursor()
+{
+	Holder<Image> img = newImage();
+	img->initialize(Vec2i(100), 4, ImageFormatEnum::U8);
+
+	for (sint32 y = 0; y < 100; y++)
+	{
+		for (sint32 x = 0; x < 100; x++)
+		{
+			if (abs(x - y) < 3 || abs(x - (100 - y)) < 3)
+				img->set(x, y, Vec4(1, 0, 0, 1));
+		}
+	}
+
+	Holder<Cursor> cursor = newCursor({ +img, Vec2i(50) });
+	engineWindow()->cursor(std::move(cursor));
+}
+
 int main(int argc, char *args[])
 {
 	try
 	{
-		// log to console
-		Holder<Logger> log1 = newLogger();
-		log1->format.bind<logFormatConsole>();
-		log1->output.bind<logOutputStdOut>();
+		initializeConsoleLogger();
 
 		engineInitialize(EngineCreateConfig());
 
@@ -504,6 +521,7 @@ int main(int argc, char *args[])
 		engineWindow()->title("camera effects");
 		engineWindow()->setMaximized();
 		initializeGui();
+		initializeCursor();
 
 		// entities
 		EntityManager *ents = engineEntities();
