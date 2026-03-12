@@ -32,22 +32,19 @@ public:
 
 	void tick()
 	{
-		Vec3 color = colorHsvToRgb(Vec3(hue, 1, 1));
-		hue = (hue + 0.002) % 1;
-
 		const auto frame = device->nextFrame(+window);
 		if (frame.targetTexture)
 		{
-			Vec2i res = frame.targetTexture->resolution();
 			Holder<GraphicsEncoder> enc = newGraphicsEncoder(+device, "enc");
 			RenderPassConfig pass;
 			pass.colorTargets.push_back({ +frame.targetTexture });
-			pass.colorTargets[0].clearValue = Vec4(color, 1);
+			pass.colorTargets[0].clearValue = Vec4(colorHsvToRgb(Vec3(hue, 1, 1)), 1);
 			enc->nextPass(pass);
 			enc->submit();
 			device->submitCommandBuffers();
 		}
 		window->processEvents();
+		hue = (hue + 0.002) % 1;
 	}
 
 	bool windowClose(input::WindowClose)

@@ -12,7 +12,6 @@ void testScreen(const String &screenId, const Vec2i &resolution, uint32 frequenc
 {
 	CAGE_LOG(SeverityEnum::Info, "test", Stringizer() + "testing monitor: '" + screenId + "', resolution: " + resolution[0] + " * " + resolution[1] + ", frequency: " + frequency);
 	{
-		Vec3 color = randomChance3() * 0.5 + 0.5;
 		Holder<Window> window = newWindow({});
 		Holder<GraphicsDevice> device = newGraphicsDevice({ +window });
 		window->setFullscreen(resolution, frequency, screenId);
@@ -23,7 +22,6 @@ void testScreen(const String &screenId, const Vec2i &resolution, uint32 frequenc
 			const auto frame = device->nextFrame(+window);
 			if (frame.targetTexture)
 			{
-				Vec2i res = frame.targetTexture->resolution();
 				Holder<GraphicsEncoder> enc = newGraphicsEncoder(+device, "enc");
 				RenderPassConfig pass;
 				pass.colorTargets.push_back({ +frame.targetTexture });

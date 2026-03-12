@@ -142,6 +142,8 @@ namespace
 				return Vec4(Vec3(colorInside(GuiElementTypeEnum::PanelBase, form, rect, gx, gy)), 0);
 			case GuiElementTypeEnum::SpoilerBase:
 				return Vec4(0);
+			default:
+				break;
 		}
 
 		switch (form)
@@ -229,6 +231,8 @@ namespace
 				}
 				break;
 			}
+			default:
+				break;
 		}
 
 		switch (form)
@@ -255,6 +259,8 @@ namespace
 		{
 			case GuiElementTypeEnum::SpoilerBase:
 				return Vec4(0);
+			default:
+				break;
 		}
 
 		const Real edge = findEdge(rects, gx, gy);
@@ -308,6 +314,8 @@ namespace
 			case GuiElementTypeEnum::InputButtonDecrement:
 				x = 1 - x;
 				std::swap(x, y);
+				break;
+			default:
 				break;
 		}
 
@@ -391,6 +399,8 @@ namespace
 			case GuiElementTypeEnum::RadioBoxIndetermined:
 				pos = (pos - 0.5) * 1.4 + 0.5;
 				break;
+			default:
+				break;
 		}
 
 		Real sd = 1;
@@ -407,6 +417,8 @@ namespace
 			case GuiElementTypeEnum::SliderHorizontalDot:
 			case GuiElementTypeEnum::SliderVerticalDot:
 				sd = sdfDiamond(pos);
+				break;
+			default:
 				break;
 		}
 
@@ -436,6 +448,8 @@ namespace
 			case GuiElementTypeEnum::SliderHorizontalDot:
 			case GuiElementTypeEnum::SliderVerticalDot:
 				return colorCheckMark(type, form, rects.inner, gx, gy);
+			default:
+				break;
 		}
 
 		const Vec4 insideColor = colorInside(type, form, rects.inner, gx, gy);
@@ -471,6 +485,8 @@ namespace
 				color = blend(color, mark);
 				break;
 			}
+			default:
+				break;
 		}
 
 		return color;

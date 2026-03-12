@@ -496,7 +496,7 @@ void initializeCursor()
 	{
 		for (sint32 x = 0; x < 100; x++)
 		{
-			if (abs(x - y) < 3 || abs(x - (100 - y)) < 3)
+			if (cage::abs(x - y) < 3 || cage::abs(x - (100 - y)) < 3)
 				img->set(x, y, Vec4(1, 0, 0, 1));
 		}
 	}

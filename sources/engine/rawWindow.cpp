@@ -73,8 +73,7 @@ int main(int argc, char *args[])
 			speaker->start();
 
 			// show the window
-			Vec2i res(600, 600);
-			window->windowedSize(res);
+			window->windowedSize(Vec2i(600, 600));
 			window->setWindowed();
 
 			// loop
@@ -83,13 +82,11 @@ int main(int argc, char *args[])
 				const auto frame = device->nextFrame(+window);
 				if (frame.targetTexture)
 				{
-					res = frame.targetTexture->resolution();
 					Holder<GraphicsEncoder> enc = newGraphicsEncoder(+device, "enc");
 					RenderPassConfig pass;
 					pass.colorTargets.push_back({ +frame.targetTexture });
 					pass.colorTargets[0].clearValue = Vec4(randomChance3(), 1);
 					enc->nextPass(pass);
-					enc->scissors({}, res);
 					/*
 					DrawConfig draw;
 					draw.model = +model;
