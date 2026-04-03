@@ -1,8 +1,8 @@
-/*
 #include <cage-core/assetsManager.h>
 #include <cage-core/entities.h>
 #include <cage-core/hashString.h>
 #include <cage-core/logger.h>
+#include <cage-engine/assetsSchemes.h>
 #include <cage-engine/scene.h>
 #include <cage-engine/sceneScreenSpaceEffects.h>
 #include <cage-engine/texture.h>
@@ -15,14 +15,13 @@ using namespace cage;
 constexpr uint32 AssetsName = HashString("cage-tests/room/room.pack");
 constexpr uint32 ScreenName = HashString("cage-tests/room/tvscreen.jpg");
 
-const auto graphicsInitListener = graphicsDispatchThread().initialize.listen(
+const auto graphicsInitListener = controlThread().initialize.listen(
 	[]()
 	{
-		Holder<Texture> fabScreenTex = newTexture();
-		fabScreenTex->initialize(Vec2i(800, 500), 1, GL_RGB16F);
-		fabScreenTex->filters(GL_LINEAR, GL_LINEAR, 16);
-		fabScreenTex->wraps(GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);
-		fabScreenTex->setDebugName("fabScreenTex");
+		ColorTextureCreateConfig cfg;
+		cfg.resolution = Vec3i(800, 500, 1);
+		cfg.renderable = true;
+		Holder<Texture> fabScreenTex = newTexture(engineGraphicsDevice(), cfg, "fabricated tv screen");
 		{
 			Entity *e = engineEntities()->get(5);
 			CameraComponent &c = e->value<CameraComponent>();
@@ -31,7 +30,7 @@ const auto graphicsInitListener = graphicsDispatchThread().initialize.listen(
 		engineAssets()->loadValue<AssetSchemeIndexTexture, Texture>(ScreenName, std::move(fabScreenTex), "fabricated tv screen");
 	});
 
-const auto graphicsFinisListener = graphicsDispatchThread().finalize.listen([]() { engineAssets()->unload(ScreenName); });
+const auto graphicsFinisListener = controlThread().finalize.listen([]() { engineAssets()->unload(ScreenName); });
 
 const auto updateListener = controlThread().update.listen(
 	[]()
@@ -130,6 +129,3 @@ int main(int argc, char *args[])
 		return 1;
 	}
 }
-*/
-
-int main(int argc, char *args[]) {}
