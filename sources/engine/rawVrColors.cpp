@@ -1,13 +1,26 @@
-/*
+#include <cage-core/assetContext.h>
+#include <cage-core/assetsManager.h>
+#include <cage-core/assetsSchemes.h>
+#include <cage-core/concurrent.h>
+#include <cage-core/hashString.h>
 #include <cage-core/logger.h>
-#include <cage-engine/frameBuffer.h>
-#include <cage-engine/highPerformanceGpuHint.h>
-#include <cage-engine/opengl.h>
+#include <cage-core/timer.h>
+#include <cage-engine/assetsSchemes.h>
+#include <cage-engine/font.h>
+#include <cage-engine/graphicsDevice.h>
+#include <cage-engine/graphicsEncoder.h>
+#include <cage-engine/model.h>
+#include <cage-engine/shader.h>
+#include <cage-engine/sound.h>
+#include <cage-engine/soundsVoices.h>
+#include <cage-engine/speaker.h>
 #include <cage-engine/texture.h>
 #include <cage-engine/virtualReality.h>
 #include <cage-engine/window.h>
 
 using namespace cage;
+
+constexpr uint32 AssetsName = HashString("cage-tests/vr/vr.pack");
 
 bool closing = false;
 
@@ -52,17 +65,35 @@ int main(int argc, char *args[])
 {
 	try
 	{
-		Holder<Logger> log1 = newLogger();
-		log1->format.bind<logFormatConsole>();
-		log1->output.bind<logOutputStdOut>();
+		initializeConsoleLogger();
 
-		Holder<Window> window = newWindow(WindowCreateConfig{ .vsync = 0 });
+		Holder<Window> window = newWindow({});
 		const auto closeListener = window->events.listen(inputFilter([](input::WindowClose) { closing = true; }));
 		window->title("cage test virtual reality");
-		window->windowedSize(Vec2i(800, 600));
-		window->setWindowed();
-		window->makeCurrent();
 
+		// graphics device
+		Holder<GraphicsDevice> device = newGraphicsDevice(GraphicsDeviceCreateConfig{ .compatibility = +window, .vsync = false });
+
+		// assets
+		Holder<AssetsManager> assets = newAssetsManager(AssetsManagerCreateConfig());
+		assets->defineScheme<AssetSchemeIndexPack, AssetPack>(genAssetSchemePack());
+		assets->defineScheme<AssetSchemeIndexShader, MultiShader>(genAssetSchemeShader(+device));
+		assets->defineScheme<AssetSchemeIndexTexture, Texture>(genAssetSchemeTexture(+device));
+		assets->defineScheme<AssetSchemeIndexModel, Model>(genAssetSchemeModel(+device));
+		assets->defineScheme<AssetSchemeIndexFont, Font>(genAssetSchemeFont());
+		assets->defineScheme<AssetSchemeIndexSound, Sound>(genAssetSchemeSound());
+
+		// load assets
+		assets->load(AssetsName);
+		while (true)
+		{
+			if (assets->get<AssetSchemeIndexPack, AssetPack>(AssetsName))
+				break;
+			assets->processCustomThread(0);
+			threadSleep(1'000);
+		}
+
+		// vr
 		Holder<VirtualReality> virtualreality = newVirtualReality();
 		const auto headsetConnectedListener = virtualreality->events.listen(inputFilter(&headsetConnected));
 		const auto headsetDisconnectedListener = virtualreality->events.listen(inputFilter(&headsetDiconnected));
@@ -74,43 +105,63 @@ int main(int argc, char *args[])
 		const auto releaseListener = virtualreality->events.listen(inputFilter(release));
 		const auto axisListener = virtualreality->events.listen(inputFilter(axis));
 
-		Holder<FrameBuffer> fb = newFrameBufferDraw();
-
-		while (!closing)
 		{
-			window->processEvents();
-			virtualreality->processEvents();
+			// fetch assets
+			Holder<Model> model = assets->get<AssetSchemeIndexModel, Model>(HashString("cage/models/square.obj"));
+			Holder<Texture> texture = assets->get<AssetSchemeIndexTexture, Texture>(HashString("cage-tests/logo/logo.png"));
+			Holder<Shader> shader = assets->get<AssetSchemeIndexShader, MultiShader>(HashString("cage/shaders/engine/blitPixels.glsl"))->get(0);
+			Holder<Sound> sound = assets->get<AssetSchemeIndexSound, Sound>(HashString("cage-tests/logo/logo.ogg"));
 
-			Holder<VirtualRealityGraphicsFrame> frame = virtualreality->graphicsFrame();
-			frame->updateProjections();
-			fb->bind();
+			// show the window
+			window->windowedSize(Vec2i(600, 600));
+			window->setWindowed();
 
-			frame->renderBegin();
-			frame->acquireTextures();
-			uint32 index = 0;
-			for (const auto &view : frame->cameras)
+			while (!closing)
 			{
-				if (!view.colorTexture)
-					continue;
+				const auto frame = device->nextFrame(+window);
+				if (frame.targetTexture)
+				{
+					Holder<GraphicsEncoder> enc = newGraphicsEncoder(+device, "enc");
+					RenderPassConfig pass;
+					pass.colorTargets.push_back({ +frame.targetTexture });
+					pass.colorTargets[0].clearValue = Vec4(randomChance(), 0, 0, 1);
+					enc->nextPass(pass);
+					enc->submit();
+				}
 
-				fb->colorTexture(0, view.colorTexture);
-				fb->checkStatus();
+				Holder<VirtualRealityGraphicsFrame> vrf = virtualreality->graphicsFrame();
+				vrf->updateProjections();
+				vrf->renderBegin();
+				vrf->acquireTextures();
+				uint32 index = 0;
+				for (const auto &view : vrf->cameras)
+				{
+					if (!view.colorTexture)
+						continue;
+					Holder<GraphicsEncoder> enc = newGraphicsEncoder(+device, "enc");
+					RenderPassConfig pass;
+					pass.colorTargets.push_back({ view.colorTexture });
+					pass.colorTargets[0].clearValue = Vec4(0, randomChance() * (index == 0), randomChance() * (index == 1), 1);
+					enc->nextPass(pass);
+					enc->submit();
+					index++;
+				}
+				vrf->renderCommit();
 
-				glViewport(0, 0, view.resolution[0], view.resolution[1]);
-				glClearColor((index + 1) % 2, index % 2, 0, 0);
-				glClear(GL_COLOR_BUFFER_BIT);
-				index++;
+				device->submitCommandBuffers();
+				window->processEvents();
+				virtualreality->processEvents();
 			}
-			frame->renderCommit();
-
-			const Vec2i res = window->resolution();
-			glViewport(0, 0, res[0], res[1]);
-			glBindFramebuffer(GL_FRAMEBUFFER, 0);
-			glClearColor(0, 0, 1, 0);
-			glClear(GL_COLOR_BUFFER_BIT);
-
-			window->swapBuffers();
 		}
+
+		// unload assets
+		assets->unload(AssetsName);
+		assets->unloadCustomThread(0);
+
+		// destroy window before the device
+		virtualreality.clear();
+		window.clear();
+		device.clear();
 
 		return 0;
 	}
@@ -120,6 +171,3 @@ int main(int argc, char *args[])
 		return 1;
 	}
 }
-*/
-
-int main(int argc, char *args[]) {}
