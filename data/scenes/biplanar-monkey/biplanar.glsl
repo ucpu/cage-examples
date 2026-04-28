@@ -40,7 +40,7 @@ void main()
 	float arrayIndex = makeArrayIndex();
 	Material mat;
 	normal = normalize(varNormal);
-	Biplanar bip = biplanarPrepare(varPosition * 0.5, normal, 50);
+	Biplanar bip = biplanarPrepare(varPosition * 0.5, normal, normal, 50);
 	mat.albedo = biplanarSample(texMaterialAlbedo, bip, arrayIndex).rgb;
 	vec4 spec = biplanarSample(texMaterialSpecial, bip, arrayIndex);
 	mat.roughness = spec.x;
