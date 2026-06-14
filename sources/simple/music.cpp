@@ -41,7 +41,7 @@ void init()
 
 	{ // floor
 		Entity *e = ents->createAnonymous();
-		e->value<ModelComponent>().model = HashString("cage-tests/lods/floor.object");
+		e->value<ModelComponent>() = HashString("cage-tests/lods/floor.object");
 		e->value<TransformComponent>().position = Vec3(0, -5, 0);
 		e->value<TransformComponent>().scale = 10;
 	}
@@ -52,11 +52,11 @@ void init()
 		{
 			Entity *e = ents->create(numeric_cast<uint32>(it.index) + 100);
 			e->value<TransformComponent>().scale = 2;
-			e->value<SoundComponent>().sound = HashString(String(Stringizer() + "cage-tests/music/PurplePlanet/" + *it));
+			e->value<SoundComponent>() = HashString(String(Stringizer() + "cage-tests/music/PurplePlanet/" + *it));
 			e->value<SoundComponent>().loop = true;
 			e->value<SoundComponent>().attenuation = SoundAttenuationEnum::InverseSquare;
 			e->value<SoundComponent>().minDistance = 10;
-			e->value<ModelComponent>().model = HashString("scenes/common/lightbulb.obj");
+			e->value<ModelComponent>() = HashString("scenes/common/lightbulb.obj");
 			e->value<LightComponent>();
 			e->value<ColorComponent>().intensity = 2;
 		}

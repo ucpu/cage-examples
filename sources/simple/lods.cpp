@@ -29,17 +29,17 @@ int main(int argc, char *args[])
 		EntityManager *ents = engineEntities();
 		{ // cube
 			Entity *e = ents->create(1);
-			e->value<ModelComponent>().model = HashString("cage-tests/lods/cube.object");
+			e->value<ModelComponent>() = HashString("cage-tests/lods/cube.object");
 			e->value<TransformComponent>().position = Vec3(-8, 0, 0);
 		}
 		{ // sphere
 			Entity *e = ents->create(2);
-			e->value<ModelComponent>().model = HashString("cage-tests/lods/sphere.object");
+			e->value<ModelComponent>() = HashString("cage-tests/lods/sphere.object");
 			e->value<TransformComponent>().position = Vec3(8, 0, 0);
 		}
 		{ // floor
 			Entity *e = ents->create(3);
-			e->value<ModelComponent>().model = HashString("cage-tests/lods/floor.object");
+			e->value<ModelComponent>() = HashString("cage-tests/lods/floor.object");
 			e->value<TransformComponent>().position = Vec3(0, -5, 0);
 		}
 		{ // sun

@@ -1,0 +1,21 @@
+[tailOnly]
+__default__ = 0
+b_Tail01_012 = 1
+b_Tail02_013 = 1
+b_Tail03_014 = 1
+
+[noTail]
+__default__ = 1
+b_Tail01_012 = 0
+b_Tail02_013 = 0
+b_Tail03_014 = 0
+
+[headOnly]
+__default__ = 0
+b_Neck_04 = 1
+b_Head_05 = 1
+
+[noHead]
+__default__ = 1
+b_Neck_04 = 0
+b_Head_05 = 0

@@ -1,0 +1,27 @@
+[]
+scheme = animation
+fox.glb?Run
+fox.glb?Survey
+fox.glb?Walk
+
+[]
+scheme = model
+bones = true
+scale = 0.01
+fox.glb
+
+[]
+scheme = object
+fox.object
+
+[]
+scheme = pack
+fox.pack
+
+[]
+scheme = skeleton
+fox.glb;skeleton
+
+[]
+scheme = texture
+fox.glb?fox1_albedo

@@ -29,7 +29,7 @@ void shoot(const Transform &where)
 	e->value<TransformComponent>() = where;
 	e->value<TransformComponent>().scale = 0.04;
 	e->value<ShotComponent>();
-	e->value<ModelComponent>().model = HashString("cage/models/fake.obj");
+	e->value<ModelComponent>() = HashString("cage/models/fake.obj");
 }
 
 VariableSmoothingBuffer<Transform, 15> smoother;
@@ -145,7 +145,7 @@ int main(int argc, char *args[])
 		{ // skybox
 			Entity *e = ents->createAnonymous();
 			e->value<TransformComponent>();
-			e->value<ModelComponent>().model = HashString("scenes/common/skybox.obj");
+			e->value<ModelComponent>() = HashString("scenes/common/skybox.obj");
 		}
 		{ // sun
 			Entity *e = ents->createUnique();
@@ -160,19 +160,19 @@ int main(int argc, char *args[])
 		}
 		{ // floor
 			Entity *e = ents->createAnonymous();
-			e->value<ModelComponent>().model = HashString("scenes/common/ground.obj");
+			e->value<ModelComponent>() = HashString("scenes/common/ground.obj");
 			e->value<TransformComponent>().position = Vec3(0, -1.264425, 0);
 		}
 		{ // sponza
 			Entity *e = ents->createAnonymous();
-			e->value<ModelComponent>().model = HashString("scenes/mcguire/crytek/sponza.object");
+			e->value<ModelComponent>() = HashString("scenes/mcguire/crytek/sponza.object");
 			e->value<TransformComponent>();
 		}
 		{ // vr origin
 			Entity *e = ents->create(1);
 			e->value<TransformComponent>();
 			e->value<VrOriginComponent>().virtualReality = +engineVirtualReality();
-			e->value<ModelComponent>().model = HashString("cage-tests/vr/wheelchair.glb");
+			e->value<ModelComponent>() = HashString("cage-tests/vr/wheelchair.glb");
 		}
 		{ // vr camera
 			Entity *e = ents->create(2);
@@ -187,29 +187,29 @@ int main(int argc, char *args[])
 			Entity *e = ents->create(3);
 			e->value<TransformComponent>();
 			e->value<VrControllerComponent>().controller = &engineVirtualReality()->leftController();
-			e->value<ModelComponent>().model = HashString("cage-tests/vr/grip.obj");
+			e->value<ModelComponent>() = HashString("cage-tests/vr/grip.obj");
 		}
 		{ // right controller grip
 			Entity *e = ents->create(4);
 			e->value<TransformComponent>();
 			e->value<VrControllerComponent>().controller = &engineVirtualReality()->rightController();
-			e->value<ModelComponent>().model = HashString("cage-tests/vr/grip.obj");
+			e->value<ModelComponent>() = HashString("cage-tests/vr/grip.obj");
 		}
 		{ // left controller aim
 			Entity *e = ents->create(5);
 			e->value<TransformComponent>();
-			e->value<ModelComponent>().model = HashString("cage-tests/vr/aim.obj");
+			e->value<ModelComponent>() = HashString("cage-tests/vr/aim.obj");
 		}
 		{ // right controller aim
 			Entity *e = ents->create(6);
 			e->value<TransformComponent>();
-			e->value<ModelComponent>().model = HashString("cage-tests/vr/aim.obj");
+			e->value<ModelComponent>() = HashString("cage-tests/vr/aim.obj");
 		}
 		{ // car model
 			Entity *e = ents->create(10);
 			e->value<TransformComponent>().position = Vec3(5, 1, 0);
 			e->value<TransformComponent>().scale = 0.1;
-			e->value<ModelComponent>().model = HashString("cage-tests/vr/car.object");
+			e->value<ModelComponent>() = HashString("cage-tests/vr/car.object");
 		}
 
 		Holder<StatisticsGui> statistics = newStatisticsGui();

@@ -163,7 +163,7 @@ int main(int argc, char *args[])
 		{ // skybox
 			Entity *e = ents->createUnique();
 			e->value<TransformComponent>();
-			e->value<ModelComponent>().model = HashString("cage-tests/screamers/skybox.obj");
+			e->value<ModelComponent>() = HashString("cage-tests/screamers/skybox.obj");
 		}
 		{ // sun
 			Entity *e = ents->createUnique();
@@ -177,12 +177,12 @@ int main(int argc, char *args[])
 		{ // floor
 			Entity *e = ents->createUnique();
 			e->value<TransformComponent>();
-			e->value<ModelComponent>().model = HashString("scenes/common/ground.obj");
+			e->value<ModelComponent>() = HashString("scenes/common/ground.obj");
 		}
 		{ // monkey
 			Entity *e = ents->create(1);
 			e->value<TransformComponent>();
-			e->value<ModelComponent>().model = HashString("cage-tests/screamers/suzanne.blend");
+			e->value<ModelComponent>() = HashString("cage-tests/screamers/suzanne.blend");
 		}
 
 		{

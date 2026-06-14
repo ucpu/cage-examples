@@ -541,7 +541,7 @@ int main(int argc, char *args[])
 		{ // skybox
 			Entity *e = ents->createAnonymous();
 			e->value<TransformComponent>();
-			e->value<ModelComponent>().model = HashString("scenes/common/skybox.obj");
+			e->value<ModelComponent>() = HashString("scenes/common/skybox.obj");
 		}
 		{ // sun
 			Entity *e = ents->create(2);
@@ -557,12 +557,12 @@ int main(int argc, char *args[])
 		}
 		{ // floor
 			Entity *e = ents->createAnonymous();
-			e->value<ModelComponent>().model = HashString("scenes/common/ground.obj");
+			e->value<ModelComponent>() = HashString("scenes/common/ground.obj");
 			e->value<TransformComponent>().position = Vec3(0, -1.264425, 0);
 		}
 		{ // sponza
 			Entity *e = ents->createAnonymous();
-			e->value<ModelComponent>().model = HashString("scenes/mcguire/crytek/sponza.object");
+			e->value<ModelComponent>() = HashString("scenes/mcguire/crytek/sponza.object");
 			e->value<TransformComponent>();
 		}
 

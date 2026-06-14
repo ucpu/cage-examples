@@ -160,18 +160,18 @@ int main(int argc, char *args[])
 		EntityManager *ents = engineEntities();
 		{ // floor
 			Entity *e = ents->create(1);
-			e->value<ModelComponent>().model = HashString("cage-tests/bottle/other.obj?plane");
+			e->value<ModelComponent>() = HashString("cage-tests/bottle/other.obj?plane");
 			e->value<TransformComponent>();
 		}
 		{ // bottle
 			Entity *e = ents->create(2);
-			e->value<ModelComponent>().model = HashString("cage-tests/bottle/bottle.obj");
+			e->value<ModelComponent>() = HashString("cage-tests/bottle/bottle.obj");
 			e->value<TransformComponent>().position += Vec3(1, 0, 0);
 		}
 		for (uint32 i = 0; i < 3; i++)
 		{ // spot lights
 			Entity *e = ents->create(5 + i);
-			e->value<ModelComponent>().model = HashString("cage-tests/bottle/other.obj?arrow");
+			e->value<ModelComponent>() = HashString("cage-tests/bottle/other.obj?arrow");
 			//e->value<ModelComponent>().model = HashString("cage/models/axes.obj");
 			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Spot;

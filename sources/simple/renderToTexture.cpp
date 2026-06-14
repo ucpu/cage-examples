@@ -62,8 +62,8 @@ int main(int argc, char *args[])
 		EntityManager *ents = engineEntities();
 		{ // room
 			Entity *e = ents->create(10);
-			e->value<ModelComponent>().model = HashString("cage-tests/room/room.object");
-			e->value<SceneComponent>().sceneMask = 3;
+			e->value<ModelComponent>() = HashString("cage-tests/room/room.object");
+			e->value<SceneComponent>() = 3;
 			e->value<TransformComponent>();
 		}
 		{ // eye (camera)
@@ -74,25 +74,25 @@ int main(int argc, char *args[])
 			c.ambientIntensity = 0.7;
 			c.near = 0.2;
 			c.far = 100;
-			e->value<SceneComponent>().sceneMask = 1;
+			e->value<SceneComponent>() = 1;
 		}
 		{ // eye (model)
 			Entity *e = ents->create(2);
 			e->value<TransformComponent>();
-			e->value<ModelComponent>().model = HashString("cage-tests/room/eye.obj");
-			e->value<SceneComponent>().sceneMask = 2;
+			e->value<ModelComponent>() = HashString("cage-tests/room/eye.obj");
+			e->value<SceneComponent>() = 2;
 		}
 		{ // camera stand
 			Entity *e = ents->create(3);
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(2.5, 2.5, -1.3);
 			t.orientation = Quat(Degs(), Degs(125), Degs());
-			e->value<ModelComponent>().model = HashString("cage-tests/room/camera.obj?camera_stand");
+			e->value<ModelComponent>() = HashString("cage-tests/room/camera.obj?camera_stand");
 		}
 		{ // camera lens
 			Entity *e = ents->create(4);
 			e->value<TransformComponent>().position = Vec3(2.5, 2.5, -1.3);
-			e->value<ModelComponent>().model = HashString("cage-tests/room/camera.obj?lens");
+			e->value<ModelComponent>() = HashString("cage-tests/room/camera.obj?lens");
 		}
 		{ // camera body (camera)
 			Entity *e = ents->create(5);
@@ -103,12 +103,12 @@ int main(int argc, char *args[])
 			c.near = 0.2;
 			c.far = 100;
 			e->value<ScreenSpaceEffectsComponent>().effects = ScreenSpaceEffectsFlags::AmbientOcclusion;
-			e->value<SceneComponent>().sceneMask = 2;
+			e->value<SceneComponent>() = 2;
 		}
 		{ // camera body (model)
 			Entity *e = ents->create(6);
 			e->value<TransformComponent>().position = Vec3(2.5, 2.5, -1.3);
-			e->value<ModelComponent>().model = HashString("cage-tests/room/camera.obj?camera");
+			e->value<ModelComponent>() = HashString("cage-tests/room/camera.obj?camera");
 		}
 
 		Holder<FpsCamera> fpsCamera = newFpsCamera(ents->get(1));

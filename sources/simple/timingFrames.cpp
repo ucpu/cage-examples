@@ -33,7 +33,7 @@ void shoot(const Transform &where)
 	e->value<TransformComponent>() = where;
 	e->value<TransformComponent>().scale = 0.25;
 	e->value<ShotComponent>();
-	e->value<ModelComponent>().model = HashString("cage/models/fake.obj");
+	e->value<ModelComponent>() = HashString("cage/models/fake.obj");
 }
 
 void controlInit()
@@ -53,8 +53,8 @@ void controlInit()
 	{ // box
 		Entity *e = ents->create(2);
 		e->value<TransformComponent>();
-		e->value<ModelComponent>().model = HashString("cage/models/fake.obj");
-		e->value<SoundComponent>().sound = HashString("cage-tests/music/PurplePlanet/RetroGamer.mp3");
+		e->value<ModelComponent>() = HashString("cage/models/fake.obj");
+		e->value<SoundComponent>() = HashString("cage-tests/music/PurplePlanet/RetroGamer.mp3");
 		e->value<SoundComponent>().loop = true;
 	}
 }

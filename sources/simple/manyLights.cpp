@@ -112,17 +112,17 @@ int main(int argc, char *args[])
 		}
 		{ // green floor
 			Entity *e = ents->create(5);
-			e->value<ModelComponent>().model = HashString("cage-tests/translucent/shapes.blend?Ground");
+			e->value<ModelComponent>() = HashString("cage-tests/translucent/shapes.blend?Ground");
 			e->value<TransformComponent>().position = Vec3(0, 0, 0);
 		}
 		{ // gray floor
 			Entity *e = ents->create(6);
-			e->value<ModelComponent>().model = HashString("cage-tests/bottle/other.obj?plane");
+			e->value<ModelComponent>() = HashString("cage-tests/bottle/other.obj?plane");
 			e->value<TransformComponent>().position = Vec3(0, 0, 0);
 		}
 		{ // bottle
 			Entity *e = ents->create(7);
-			e->value<ModelComponent>().model = HashString("cage-tests/bottle/bottle.obj");
+			e->value<ModelComponent>() = HashString("cage-tests/bottle/bottle.obj");
 			e->value<TransformComponent>().position += Vec3(1, 0, 0);
 			e->value<TransformComponent>().scale = 0.3;
 		}
@@ -137,7 +137,7 @@ int main(int argc, char *args[])
 			orb.pitch = Degs(randomRange(-50, -40));
 			orb.yaw = randomAngle();
 			orb.yawSpeed = Degs(20 * 1e-6);
-			e->value<ModelComponent>().model = HashString("cage-tests/bottle/other.obj?arrow");
+			e->value<ModelComponent>() = HashString("cage-tests/bottle/other.obj?arrow");
 			LightComponent &l = e->value<LightComponent>();
 			l.lightType = LightTypeEnum::Spot;
 			l.spotAngle = Degs(60);
@@ -156,7 +156,7 @@ int main(int argc, char *args[])
 			e->value<TransformComponent>().position = randomDirection3() * 8 * Vec3(1, 0, 1) + Vec3(1, 0.2, 1);
 			e->value<TransformComponent>().scale = 0.03;
 			e->value<MovingComponent>().velocity = randomDirection3() * 0.02 * Vec3(1, 0, 1);
-			e->value<ModelComponent>().model = HashString("cage-tests/translucent/shapes.blend?Bulb");
+			e->value<ModelComponent>() = HashString("cage-tests/translucent/shapes.blend?Bulb");
 			e->value<LightComponent>().priority = randomRange(-100, 100);
 			e->value<ColorComponent>() = { randomChance3() * 0.5 + 0.5, randomRange(0.5, 2.0) };
 		}

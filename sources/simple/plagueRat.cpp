@@ -79,14 +79,14 @@ int main(int argc, char *args[])
 		{ // floor
 			Entity *e = ents->createUnique();
 			e->value<TransformComponent>().position = Vec3();
-			e->value<ModelComponent>().model = HashString("cage-tests/skeletons/floor/floor.obj");
+			e->value<ModelComponent>() = HashString("cage-tests/skeletons/floor/floor.obj");
 		}
 		{ // the rat
 			Entity *e = ents->createAnonymous();
 			e->value<TransformComponent>().position = Vec3(0, 0, 0);
 			e->value<TransformComponent>().orientation = Quat({}, Degs(90), {});
-			e->value<ModelComponent>().model = HashString("cage-tests/plagueRat/Rat.object");
-			e->value<SkeletalAnimationComponent>().animation = HashString("cage-tests/plagueRat/Rat.glb?Rat_Walk");
+			e->value<ModelComponent>() = HashString("cage-tests/plagueRat/Rat.object");
+			e->value<SkeletalAnimationComponent>() = HashString("cage-tests/plagueRat/Rat.glb?Rat_Walk");
 		}
 
 		Holder<FpsCamera> cameraCtrl = newFpsCamera(ents->get(1));

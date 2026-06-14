@@ -90,7 +90,7 @@ int main(int argc, char *args[])
 		EntityManager *ents = engineEntities();
 		{ // floor
 			Entity *e = ents->create(1);
-			e->value<ModelComponent>().model = HashString("cage-tests/skeletons/floor/floor.obj");
+			e->value<ModelComponent>() = HashString("cage-tests/skeletons/floor/floor.obj");
 			e->value<TransformComponent>().position = Vec3(0, -5, 0);
 		}
 		{ // sun
@@ -113,14 +113,14 @@ int main(int argc, char *args[])
 		}
 		{ // text hello
 			Entity *e = ents->create(11);
-			e->value<TextComponent>().textId = HashString("short");
+			e->value<TextComponent>() = HashString("short");
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(0, 0, -10);
 			t.scale = 3;
 		}
 		{ // text long
 			Entity *e = ents->createAnonymous();
-			e->value<TextComponent>().textId = HashString("long/a");
+			e->value<TextComponent>() = HashString("long/a");
 			e->value<ColorComponent>() = { Vec3(1, 0, 0) };
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(0, 0, -20);
@@ -128,7 +128,7 @@ int main(int argc, char *args[])
 		{ // text lorem ipsum
 			Entity *e = ents->createAnonymous();
 			e->value<TextComponent>();
-			e->value<TextValueComponent>().value = "Lorem ipsum dolor sit amet,\nconsectetur adipisici elit,\nsed eiusmod tempor incidunt ut labore et dolore magna aliqua.\nUt enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.";
+			e->value<TextValueComponent>() = "Lorem ipsum dolor sit amet,\nconsectetur adipisici elit,\nsed eiusmod tempor incidunt ut labore et dolore magna aliqua.\nUt enim ad minim veniam,\nquis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat.";
 			e->value<ColorComponent>() = { Vec3(0, 0, 1) };
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(10, 0, 0);
@@ -137,7 +137,7 @@ int main(int argc, char *args[])
 		{ // text long paragprah
 			Entity *e = ents->createAnonymous();
 			e->value<TextComponent>();
-			e->value<TextValueComponent>().value = "Za devatero horami a devatero řekami, v kouzelném kraji, kde se sny stávají skutečností, žilo bylo...\r\nKdo? Král, obyčejný chalupník, nebo snad kouzelná bytost? Jak má příběh pokračovat?";
+			e->value<TextValueComponent>() = "Za devatero horami a devatero řekami, v kouzelném kraji, kde se sny stávají skutečností, žilo bylo...\r\nKdo? Král, obyčejný chalupník, nebo snad kouzelná bytost? Jak má příběh pokračovat?";
 			e->value<ColorComponent>() = { Vec3(0.6) };
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(-10, 0, 0);
@@ -145,7 +145,7 @@ int main(int argc, char *args[])
 		}
 		{ // text params
 			Entity *e = ents->create(10);
-			e->value<TextComponent>().textId = HashString("params");
+			e->value<TextComponent>() = HashString("params");
 			TransformComponent &t = e->value<TransformComponent>();
 			t.position = Vec3(0, 0, 10);
 			t.orientation = Quat(Degs(), Degs(180), Degs());
@@ -154,7 +154,7 @@ int main(int argc, char *args[])
 			for (uint32 i = 0; i < fontsCount; i++)
 			{
 				Entity *e = ents->createAnonymous();
-				e->value<TextComponent>().font = HashString(FontNames[i]);
+				e->value<TextComponent>().fontId = HashString(FontNames[i]);
 				e->value<TextValueComponent>() = LabelTexts[i];
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(0, -3, 2.0 * i - fontsCount);
@@ -165,13 +165,13 @@ int main(int argc, char *args[])
 			Entity *e = ents->createAnonymous();
 			e->value<TransformComponent>().position = Vec3(-10, 4, 0);
 			e->value<TransformComponent>().orientation = Quat(Degs(), Degs(90), Degs());
-			e->value<SpriteComponent>().sprite = HashString("cage-tests/texts/czech.png");
+			e->value<SpriteComponent>() = HashString("cage-tests/texts/czech.png");
 		}
 		{ // icon (english)
 			Entity *e = ents->createAnonymous();
 			e->value<TransformComponent>().position = Vec3(10, 4, 0);
 			e->value<TransformComponent>().orientation = Quat(Degs(), Degs(-90), Degs());
-			e->value<SpriteComponent>().sprite = HashString("cage-tests/texts/english.png");
+			e->value<SpriteComponent>() = HashString("cage-tests/texts/english.png");
 		}
 
 		Holder<FpsCamera> cameraCtrl = newFpsCamera(ents->get(3));

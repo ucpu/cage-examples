@@ -65,8 +65,8 @@ void sceneReload()
 				continue;
 			Entity *e = engineEntities()->createAnonymous();
 			ModelComponent &rs = e->value<ModelComponent>();
-			rs.model = HashString(name.c_str());
-			if (!rs.model)
+			rs = HashString(name.c_str());
+			if (!rs.modelId)
 			{
 				CAGE_LOG_THROW(Stringizer() + "object: " + name);
 				CAGE_THROW_ERROR(Exception, "object has invalid hash");
@@ -102,7 +102,7 @@ void sceneReload()
 	{ // skybox
 		Entity *sky = engineEntities()->create(3);
 		sky->value<TransformComponent>();
-		sky->value<ModelComponent>().model = HashString("scenes/common/skybox.obj");
+		sky->value<ModelComponent>() = HashString("scenes/common/skybox.obj");
 	}
 
 	// directional lights
@@ -123,7 +123,7 @@ void sceneReload()
 		e->value<ColorComponent>().color = colorHsvToRgb(Vec3(randomChance(), 1, 1));
 		e->value<LightComponent>().minDistance = 0.1;
 		e->value<LightComponent>().maxDistance = 10;
-		e->value<ModelComponent>().model = HashString("scenes/common/lightbulb.obj");
+		e->value<ModelComponent>() = HashString("scenes/common/lightbulb.obj");
 	}
 }
 

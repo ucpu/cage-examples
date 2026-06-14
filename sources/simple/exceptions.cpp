@@ -122,7 +122,7 @@ int main(int argc, char *args[])
 			{ // box 1
 				Entity *e = engineEntities()->create(2);
 				e->value<TransformComponent>();
-				e->value<ModelComponent>().model = HashString("cage/models/fake.obj");
+				e->value<ModelComponent>() = HashString("cage/models/fake.obj");
 			}
 
 			Holder<StatisticsGui> statistics = newStatisticsGui();
