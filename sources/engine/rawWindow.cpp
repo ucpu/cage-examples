@@ -79,12 +79,12 @@ int main(int argc, char *args[])
 			// loop
 			while (!closing)
 			{
-				const auto frame = device->nextFrame(+window);
-				if (frame.targetTexture)
+				const auto targetTexture = device->nextWindow(+window);
+				if (targetTexture)
 				{
 					Holder<GraphicsEncoder> enc = newGraphicsEncoder(+device, "enc");
 					RenderPassConfig pass;
-					pass.colorTargets.push_back({ +frame.targetTexture });
+					pass.colorTargets.push_back({ +targetTexture });
 					pass.colorTargets[0].clearValue = Vec4(randomChance3(), 1);
 					enc->nextPass(pass);
 					/*
@@ -94,9 +94,9 @@ int main(int argc, char *args[])
 					enc->draw(draw);
 					*/
 					enc->submit();
-					device->submitCommandBuffers();
 				}
-				speaker->process(frame.frameDuration);
+				const auto stats = device->nextFrame();
+				speaker->process(stats.frameTime);
 				window->processEvents();
 			}
 		}

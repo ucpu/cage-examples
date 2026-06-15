@@ -1,7 +1,6 @@
 #include <atomic>
 
 #include <cage-core/color.h>
-#include <cage-core/concurrent.h>
 #include <cage-core/logger.h>
 #include <cage-core/macros.h>
 #include <cage-engine/graphicsDevice.h>
@@ -11,10 +10,8 @@
 
 using namespace cage;
 
-Holder<Mutex> mutex = newMutex();
 Holder<GraphicsDevice> device;
-std::atomic<int> globalWindowIndex;
-bool globalClosing = false;
+uint32 globalWindowIndex;
 
 class WindowTestClass
 {
@@ -32,16 +29,15 @@ public:
 
 	void tick()
 	{
-		const auto frame = device->nextFrame(+window);
-		if (frame.targetTexture)
+		const auto targetTexture = device->nextWindow(+window);
+		if (targetTexture)
 		{
 			Holder<GraphicsEncoder> enc = newGraphicsEncoder(+device, "enc");
 			RenderPassConfig pass;
-			pass.colorTargets.push_back({ +frame.targetTexture });
+			pass.colorTargets.push_back({ +targetTexture });
 			pass.colorTargets[0].clearValue = Vec4(colorHsvToRgb(Vec3(hue, 1, 1)), 1);
 			enc->nextPass(pass);
 			enc->submit();
-			device->submitCommandBuffers();
 		}
 		window->processEvents();
 		hue = (hue + 0.002) % 1;
@@ -155,28 +151,32 @@ public:
 #undef GCHL_GENERATE
 };
 
-void windowThread()
-{
-	WindowTestClass t;
-	while (!t.closing && !globalClosing)
-		t.tick();
-}
-
 int main(int argc, char *args[])
 {
 	try
 	{
 		initializeConsoleLogger();
-
-		CAGE_LOG(SeverityEnum::Warning, "compatibility", "be warned, this example depends on undocumented behavior and may not work on some platforms");
-		CAGE_LOG(SeverityEnum::Info, "compatibility", "it is recommended that all window-related tasks are made in the main thread");
-
 		device = newGraphicsDevice({});
-
-		Holder<Thread> thrs[3];
-		for (uint32 i = 0; i < 3; i++)
-			thrs[i] = newThread(Delegate<void()>().bind<&windowThread>(), Stringizer() + "thread " + i);
-
+		std::array<Holder<WindowTestClass>, 4> windows = {};
+		for (auto &it : windows)
+			it = systemMemory().createHolder<WindowTestClass>();
+		while (true)
+		{
+			bool anyOpen = false;
+			for (auto &it : windows)
+			{
+				if (!it)
+					continue;
+				if (it->closing)
+					it.clear();
+				else
+					it->tick();
+				anyOpen = true;
+			}
+			if (!anyOpen)
+				break;
+			device->nextFrame();
+		}
 		return 0;
 	}
 	catch (...)

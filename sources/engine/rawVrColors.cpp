@@ -118,12 +118,12 @@ int main(int argc, char *args[])
 
 			while (!closing)
 			{
-				const auto frame = device->nextFrame(+window);
-				if (frame.targetTexture)
+				const auto targetTexture = device->nextWindow(+window);
+				if (targetTexture)
 				{
 					Holder<GraphicsEncoder> enc = newGraphicsEncoder(+device, "enc");
 					RenderPassConfig pass;
-					pass.colorTargets.push_back({ +frame.targetTexture });
+					pass.colorTargets.push_back({ +targetTexture });
 					pass.colorTargets[0].clearValue = Vec4(randomChance(), 0, 0, 1);
 					enc->nextPass(pass);
 					enc->submit();
@@ -148,7 +148,7 @@ int main(int argc, char *args[])
 				}
 				vrf->renderCommit();
 
-				device->submitCommandBuffers();
+				device->nextFrame();
 				window->processEvents();
 				virtualreality->processEvents();
 			}
