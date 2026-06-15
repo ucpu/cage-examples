@@ -177,6 +177,7 @@ int main(int argc, char *args[])
 				break;
 			device->nextFrame();
 		}
+		device.clear();
 		return 0;
 	}
 	catch (...)

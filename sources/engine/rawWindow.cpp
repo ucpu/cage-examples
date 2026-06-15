@@ -105,10 +105,6 @@ int main(int argc, char *args[])
 		assets->unload(AssetsName);
 		assets->unloadCustomThread(0);
 
-		// destroy window before the device
-		window.clear();
-		device.clear();
-
 		return 0;
 	}
 	catch (...)
