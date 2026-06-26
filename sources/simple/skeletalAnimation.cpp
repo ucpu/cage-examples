@@ -84,7 +84,7 @@ int main(int argc, char *args[])
 				Entity *e = ents->createAnonymous();
 				e->value<ModelComponent>() = HashString("cage-tests/skeletons/lemur/lemur.x");
 				e->value<SkeletalAnimationComponent>() = HashString(animations[1]);
-				e->value<AnimationSpeedComponent>().speed = randomRange(0.1, 10.0);
+				e->value<SkeletalAnimationComponent>()[0].speed = randomRange(0.1, 10.0);
 				e->value<TransformComponent>().position = Vec3((i % 32) * 2 - 32, 0, (i / 32) * 2 - 70);
 			}
 #endif
@@ -248,7 +248,7 @@ int main(int argc, char *args[])
 				Entity *e = ents->create(50 + i);
 				e->value<ModelComponent>() = HashString("cage-tests/skeletons/fox/fox.object");
 				e->value<SkeletalAnimationComponent>() = HashString("cage-tests/skeletons/fox/fox.glb?Walk");
-				e->value<SkeletalAnimationComponent>().add({ .animation = HashString("cage-tests/skeletons/fox/fox.glb?Survey"), .blendingMode = SkeletalAnimationBlendingModeEnum::Additive });
+				e->value<SkeletalAnimationComponent>().add({ .animation = HashString("cage-tests/skeletons/fox/fox.glb?Survey"), .blendingMode = SkeletalAnimationBlendingModeFlags::Additive });
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 9);
 				label("walk + additive survey", t.position + Vec3(0, 2, 0));
@@ -269,7 +269,7 @@ int main(int argc, char *args[])
 				e->value<ModelComponent>() = HashString("cage-tests/skeletons/fox/fox.object");
 				e->value<SkeletalAnimationComponent>() = HashString("cage-tests/skeletons/fox/fox.glb?Walk");
 				e->value<SkeletalAnimationComponent>().add({ .animation = HashString("cage-tests/skeletons/fox/fox.glb?Run"), .weight = randomChance() });
-				e->value<SkeletalAnimationComponent>().add({ .maskName = "headOnly", .animation = HashString("cage-tests/skeletons/fox/fox.glb?Survey"), .blendingMode = SkeletalAnimationBlendingModeEnum::Additive });
+				e->value<SkeletalAnimationComponent>().add({ .maskName = "headOnly", .animation = HashString("cage-tests/skeletons/fox/fox.glb?Survey"), .blendingMode = SkeletalAnimationBlendingModeFlags::Additive });
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 9);
 				label("walk or run + additive survey head only", t.position + Vec3(0, 2, 0));
