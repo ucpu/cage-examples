@@ -7,5 +7,7 @@ cage_default_init()
 cage_assets_add_data_path("${CMAKE_CURRENT_SOURCE_DIR}/data")
 cage_directory_link("${CMAKE_CURRENT_SOURCE_DIR}/data/scenes-maps" "${CMAKE_BINARY_DIR}/result/scenes-maps")
 
+#set(cage_use_steam_sockets ON CACHE INTERNAL "include Game Networking Sockets library by Valve/Steam")
+
 add_subdirectory(externals/cage)
 add_subdirectory(sources)

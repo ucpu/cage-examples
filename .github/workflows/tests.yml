@@ -48,8 +48,8 @@ jobs:
     name: ubuntu-${{ matrix.build-config }}
     runs-on: ubuntu-24.04
     env:
-      CC: clang-16
-      CXX: clang++-16
+      CC: clang-18
+      CXX: clang++-18
     strategy:
       fail-fast: false
       matrix:
@@ -91,8 +91,8 @@ jobs:
     name: Assets
     runs-on: ubuntu-24.04
     env:
-      CC: clang-16
-      CXX: clang++-16
+      CC: clang-18
+      CXX: clang++-18
     strategy:
       fail-fast: false
       matrix:
