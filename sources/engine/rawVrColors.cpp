@@ -72,7 +72,7 @@ int main(int argc, char *args[])
 		window->title("cage test virtual reality");
 
 		// graphics device
-		Holder<GraphicsDevice> device = newGraphicsDevice(GraphicsDeviceCreateConfig{ .compatibility = +window, .vsync = false });
+		Holder<GraphicsDevice> device = newGraphicsDevice(GraphicsDeviceCreateConfig{ .compatibility = +window });
 
 		// assets
 		Holder<AssetsManager> assets = newAssetsManager(AssetsManagerCreateConfig());
@@ -118,12 +118,14 @@ int main(int argc, char *args[])
 
 			while (!closing)
 			{
-				const auto targetTexture = device->nextWindow(+window);
-				if (targetTexture)
+				GraphicsWindowPresentation gwp;
+				gwp.window = +window;
+				device->nextFrame(PointerRange(gwp));
+				if (gwp.texture)
 				{
 					Holder<GraphicsEncoder> enc = newGraphicsEncoder(+device, "enc");
 					RenderPassConfig pass;
-					pass.colorTargets.push_back({ +targetTexture });
+					pass.colorTargets.push_back({ +gwp.texture });
 					pass.colorTargets[0].clearValue = Vec4(randomChance(), 0, 0, 1);
 					enc->nextPass(pass);
 					enc->submit();
@@ -148,7 +150,6 @@ int main(int argc, char *args[])
 				}
 				vrf->renderCommit();
 
-				device->nextFrame();
 				window->processEvents();
 				virtualreality->processEvents();
 			}

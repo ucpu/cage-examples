@@ -1,4 +1,4 @@
-#include <atomic>
+#include <vector>
 
 #include <cage-core/color.h>
 #include <cage-core/logger.h>
@@ -27,9 +27,8 @@ public:
 
 	~WindowTestClass() { CAGE_LOG(SeverityEnum::Info, "test", Stringizer() + "destroying window " + index); }
 
-	void tick()
+	void tick(Holder<Texture> &targetTexture)
 	{
-		const auto targetTexture = device->nextWindow(+window);
 		if (targetTexture)
 		{
 			Holder<GraphicsEncoder> enc = newGraphicsEncoder(+device, "enc");
@@ -160,22 +159,32 @@ int main(int argc, char *args[])
 		std::array<Holder<WindowTestClass>, 4> windows = {};
 		for (auto &it : windows)
 			it = systemMemory().createHolder<WindowTestClass>();
+		std::vector<GraphicsWindowPresentation> gwps;
 		while (true)
 		{
+			gwps.clear();
 			bool anyOpen = false;
 			for (auto &it : windows)
 			{
 				if (!it)
 					continue;
 				if (it->closing)
+				{
 					it.clear();
-				else
-					it->tick();
+					continue;
+				}
 				anyOpen = true;
+				gwps.push_back(GraphicsWindowPresentation{ +it->window });
 			}
 			if (!anyOpen)
 				break;
-			device->nextFrame();
+			device->nextFrame(gwps);
+			for (auto &it : windows)
+			{
+				if (!it)
+					continue;
+				it->tick(gwps[&it - windows.data()].texture);
+			}
 		}
 		device.clear();
 		return 0;

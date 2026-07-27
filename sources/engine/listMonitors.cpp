@@ -19,17 +19,18 @@ void testScreen(const String &screenId, const Vec2i &resolution, uint32 frequenc
 		window->processEvents();
 		for (int i = 0; i < 30; i++)
 		{
-			const auto targetTexture = device->nextWindow(+window);
-			if (targetTexture)
+			GraphicsWindowPresentation gwp;
+			gwp.window = +window;
+			device->nextFrame(PointerRange(gwp));
+			if (gwp.texture)
 			{
 				Holder<GraphicsEncoder> enc = newGraphicsEncoder(+device, "enc");
 				RenderPassConfig pass;
-				pass.colorTargets.push_back({ +targetTexture });
+				pass.colorTargets.push_back({ +gwp.texture });
 				pass.colorTargets[0].clearValue = Vec4(randomChance3(), 1);
 				enc->nextPass(pass);
 				enc->submit();
 			}
-			device->nextFrame();
 			window->processEvents();
 			threadSleep(100'000);
 		}
