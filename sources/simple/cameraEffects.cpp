@@ -409,7 +409,7 @@ void initializeGui()
 			table->value<GuiLayoutTableComponent>();
 		}
 		sint32 childIndex = 1;
-		genInputFloat(table, childIndex, baseName, "Gamma:", 1, 5, 0.1, ScreenSpaceEffectsComponent().gamma);
+		genInputFloat(table, childIndex, baseName, "Gamma:", 0.5, 1.5, 0.1, ScreenSpaceEffectsComponent().gamma);
 	}
 
 	{ // antialiasing

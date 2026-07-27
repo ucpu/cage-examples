@@ -79,12 +79,14 @@ int main(int argc, char *args[])
 			// loop
 			while (!closing)
 			{
-				const auto targetTexture = device->nextWindow(+window);
-				if (targetTexture)
+				GraphicsWindowPresentation gwp;
+				gwp.window = +window;
+				const auto stats = device->nextFrame(PointerRange(gwp));
+				if (gwp.texture)
 				{
 					Holder<GraphicsEncoder> enc = newGraphicsEncoder(+device, "enc");
 					RenderPassConfig pass;
-					pass.colorTargets.push_back({ +targetTexture });
+					pass.colorTargets.push_back({ +gwp.texture });
 					pass.colorTargets[0].clearValue = Vec4(randomChance3(), 1);
 					enc->nextPass(pass);
 					/*
@@ -95,7 +97,6 @@ int main(int argc, char *args[])
 					*/
 					enc->submit();
 				}
-				const auto stats = device->nextFrame();
 				speaker->process(stats.frameTime);
 				window->processEvents();
 			}
