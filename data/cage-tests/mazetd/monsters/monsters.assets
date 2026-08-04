@@ -3,8 +3,6 @@ scheme = model
 uvs = false
 bones = true
 trianglesOnly = true
-scale = 0.07
-axes = -x+y-z
 Apatosaurus.glb?Cylinder-0_Brown
 Apatosaurus.glb?Cylinder-1_Material
 
@@ -12,49 +10,43 @@ Apatosaurus.glb?Cylinder-1_Material
 scheme = skeleton
 Apatosaurus.glb;skeleton
 
-[]
-scheme = model
-uvs = false
-bones = true
-trianglesOnly = true
-scale = 0.15
-axes = -x+y-z
-Bat.glb?Cylinder-0_Main
-Bat.glb?Cylinder-1_Black
-Bat.glb?Cylinder-2_Belly
-Bat.glb?Cylinder-3_Nose
-Bat.glb?Cylinder.001-0_Main
-Bat.glb?Cylinder.001-1_Eyes
+#[]
+#scheme = model
+#uvs = false
+#bones = true
+#trianglesOnly = true
+#Bat.glb?Cylinder-0_Main
+#Bat.glb?Cylinder-1_Black
+#Bat.glb?Cylinder-2_Belly
+#Bat.glb?Cylinder-3_Nose
+#Bat.glb?Cylinder.001-0_Main
+#Bat.glb?Cylinder.001-1_Eyes
+#
+#[]
+#scheme = skeleton
+#Bat.glb;skeleton
 
-[]
-scheme = skeleton
-Bat.glb;skeleton
-
-[]
-scheme = model
-uvs = false
-bones = true
-trianglesOnly = true
-scale = 0.2
-axes = -x+y-z
-Dragon.glb?Cylinder-0_Main
-Dragon.glb?Cylinder-1_Wings
-Dragon.glb?Cylinder-2_Belly
-Dragon.glb?Cylinder-3_Claws
-Dragon.glb?Cylinder.001-0_Main
-Dragon.glb?Cylinder.001-1_Eyes
-
-[]
-scheme = skeleton
-Dragon.glb;skeleton
+#[]
+#scheme = model
+#uvs = false
+#bones = true
+#trianglesOnly = true
+#Dragon.glb?Cylinder-0_Main
+#Dragon.glb?Cylinder-1_Wings
+#Dragon.glb?Cylinder-2_Belly
+#Dragon.glb?Cylinder-3_Claws
+#Dragon.glb?Cylinder.001-0_Main
+#Dragon.glb?Cylinder.001-1_Eyes
+#
+#[]
+#scheme = skeleton
+#Dragon.glb;skeleton
 
 []
 scheme = model
 uvs = false
 bones = true
 trianglesOnly = true
-scale = 0.2
-axes = -x+y-z
 Frog.glb?Cylinder-0_Green
 Frog.glb?Cylinder-1_Yellow
 Frog.glb?Cylinder-2_Red
@@ -69,8 +61,6 @@ scheme = model
 uvs = false
 bones = true
 trianglesOnly = true
-scale = 0.13
-axes = -x+y-z
 Parasaurolophus.glb?Cylinder-0_Green
 Parasaurolophus.glb?Cylinder-1_LightGreen
 Parasaurolophus.glb?Cylinder-2_LightYellow
@@ -85,8 +75,6 @@ scheme = model
 uvs = false
 bones = true
 trianglesOnly = true
-scale = 0.2
-axes = -x+y-z
 Rat.glb?Cylinder-0_Pink
 Rat.glb?Cylinder-1_Grey
 
@@ -99,8 +87,6 @@ scheme = model
 uvs = false
 bones = true
 trianglesOnly = true
-scale = 0.2
-axes = -x+y-z
 Skeleton.glb
 
 []
@@ -112,8 +98,6 @@ scheme = model
 uvs = false
 bones = true
 trianglesOnly = true
-scale = 0.25
-axes = +z+y-x
 Slime.glb?Cube-0_Body
 Slime.glb?Cube-1_Eyes
 
@@ -126,8 +110,6 @@ scheme = model
 uvs = false
 bones = true
 trianglesOnly = true
-scale = 0.25
-axes = -x+y-z
 Snake.glb?Cylinder-0_DarkGreen
 Snake.glb?Cylinder-1_LightGreen
 Snake.glb?Cylinder-2_Yellow
@@ -145,8 +127,6 @@ scheme = model
 uvs = false
 bones = true
 trianglesOnly = true
-scale = 0.17
-axes = -x+y-z
 Spider.glb?Cube-0_Material
 Spider.glb?Cube-1_Material.001
 
@@ -159,8 +139,6 @@ scheme = model
 uvs = false
 bones = true
 trianglesOnly = true
-scale = 0.07
-axes = -x+y-z
 Stegosaurus.glb?Cylinder-0_DarkBrown
 Stegosaurus.glb?Cylinder-1_LightBrown
 Stegosaurus.glb?Cylinder-2_Brown
@@ -174,8 +152,6 @@ scheme = model
 uvs = false
 bones = true
 trianglesOnly = true
-scale = 0.04
-axes = -x+y-z
 Trex.glb?Cylinder-0_Green
 Trex.glb?Cylinder-1_Black
 Trex.glb?Cylinder-2_LightGreen
@@ -191,8 +167,6 @@ scheme = model
 uvs = false
 bones = true
 trianglesOnly = true
-scale = 0.06
-axes = -x+y-z
 Triceratops.glb?Cylinder-0_Purple
 Triceratops.glb?Cylinder-1_LightBrown
 Triceratops.glb?Cylinder-2_Brown
@@ -206,8 +180,6 @@ scheme = model
 uvs = false
 bones = true
 trianglesOnly = true
-scale = 0.13
-axes = -x+y-z
 Velociraptor.glb?Cylinder-0_Brown
 Velociraptor.glb?Cylinder-1_Black
 Velociraptor.glb?Cylinder-2_LightBrown
@@ -221,8 +193,6 @@ scheme = model
 uvs = false
 bones = true
 trianglesOnly = true
-scale = 0.2
-axes = +z+y-x
 Wasp.glb?Cylinder.001-0_Yellow
 Wasp.glb?Cylinder.001-1_Black
 Wasp.glb?Cylinder.001-2_LightBlue
@@ -239,9 +209,9 @@ Apatosaurus.glb?Apatosaurus_Jump
 Apatosaurus.glb?Apatosaurus_Run
 Apatosaurus.glb?Apatosaurus_Walk
 Apatosaurus.glb?Stegosaurus_Death
-Bat.glb?Bat_Flying
-Dragon.glb?Dragon_Flying
-Dragon.glb?Dragon_Hit
+#Bat.glb?Bat_Flying
+#Dragon.glb?Dragon_Flying
+#Dragon.glb?Dragon_Hit
 Frog.glb?Frog_Idle
 Frog.glb?Frog_Jump
 Parasaurolophus.glb?Parasaurolophus_Idle
@@ -288,8 +258,8 @@ Wasp.glb?Wasp_Flying
 []
 scheme = object
 Apatosaurus.object
-Bat.object
-Dragon.object
+#Bat.object
+#Dragon.object
 Frog.object
 Parasaurolophus.object
 Rat.object

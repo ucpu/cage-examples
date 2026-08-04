@@ -4,6 +4,7 @@ turtle.glb?Turtle_Swim
 
 []
 scheme = model
+axes = +x-z+y
 MetalRoughSpheres.glb?Spheres.001_
 MetalRoughSpheres.glb?Spheres.002_
 MetalRoughSpheres.glb?Spheres.003_
@@ -12,15 +13,15 @@ MetalRoughSpheres.glb?Spheres_
 
 []
 scheme = model
-scale = 5
+scale = 50
+axes = +x-z+y
 MosquitoInAmber.glb?2_mosquito_lr_original.o_material_0_0_original.o_material_0
 MosquitoInAmber.glb?5_amber_lr_PBR_0_material
 MosquitoInAmber.glb?6_eclats_eclats_0_eclats
 
 []
 scheme = model
-scale = 0.02
-axes = +x-z+y
+scale = 100
 ToyCar.glb?Fabric_Fabric
 ToyCar.glb?Glass_Glass
 ToyCar.glb?ToyCar_ToyCar
@@ -28,7 +29,6 @@ ToyCar.glb?ToyCar_ToyCar
 []
 scheme = model
 bones = true
-scale = 0.3
 turtle.glb?BackFlippers_BackFeetMat
 turtle.glb?Eyes_Eyes
 turtle.glb?Shell_ShellMat

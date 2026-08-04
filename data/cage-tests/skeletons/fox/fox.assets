@@ -7,7 +7,6 @@ fox.glb?Walk
 []
 scheme = model
 bones = true
-scale = 0.01
 fox.glb
 
 []

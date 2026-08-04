@@ -47,12 +47,12 @@ int main(int argc, char *args[])
 		EntityManager *ents = engineEntities();
 
 		{ // lemurs
-			constexpr const char *animations[] = { "cage-tests/skeletons/lemur/lemur.x?AttackMelee", "cage-tests/skeletons/lemur/lemur.x?idle", "cage-tests/skeletons/lemur/lemur.x?run" };
+			constexpr const char *animations[] = { "cage-tests/skeletons/lemur/lemur.glb?AttackMelee", "cage-tests/skeletons/lemur/lemur.glb?idle", "cage-tests/skeletons/lemur/lemur.glb?run" };
 			uint32 i = 0;
 			for (const char *animation : animations)
 			{
 				Entity *e = ents->create(1 + i);
-				e->value<ModelComponent>() = HashString("cage-tests/skeletons/lemur/lemur.x");
+				e->value<ModelComponent>() = HashString("cage-tests/skeletons/lemur/lemur.glb");
 				e->value<SkeletalAnimationComponent>() = HashString(animation);
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 3);
@@ -61,7 +61,7 @@ int main(int argc, char *args[])
 			}
 			{ // no animation
 				Entity *e = ents->create(1 + i);
-				e->value<ModelComponent>() = HashString("cage-tests/skeletons/lemur/lemur.x");
+				e->value<ModelComponent>() = HashString("cage-tests/skeletons/lemur/lemur.glb");
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 3);
 				label("no animation", t.position + Vec3(0, 2, 0));
@@ -69,8 +69,8 @@ int main(int argc, char *args[])
 			}
 			{ // scaled
 				Entity *e = ents->create(1 + i);
-				e->value<ModelComponent>() = HashString("cage-tests/skeletons/lemur/lemur.x");
-				e->value<SkeletalAnimationComponent>() = HashString("cage-tests/skeletons/lemur/lemur.x?idle");
+				e->value<ModelComponent>() = HashString("cage-tests/skeletons/lemur/lemur.glb");
+				e->value<SkeletalAnimationComponent>() = HashString("cage-tests/skeletons/lemur/lemur.glb?idle");
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 3);
 				t.scale = 1.5;
@@ -82,7 +82,7 @@ int main(int argc, char *args[])
 			for (sint32 i = 0; i < 32 * 32; i++)
 			{
 				Entity *e = ents->createAnonymous();
-				e->value<ModelComponent>() = HashString("cage-tests/skeletons/lemur/lemur.x");
+				e->value<ModelComponent>() = HashString("cage-tests/skeletons/lemur/lemur.glb");
 				e->value<SkeletalAnimationComponent>() = HashString(animations[1]);
 				e->value<SkeletalAnimationComponent>()[0].speed = randomRange(0.1, 10.0);
 				e->value<TransformComponent>().position = Vec3((i % 32) * 2 - 32, 0, (i / 32) * 2 - 70);
@@ -91,47 +91,51 @@ int main(int argc, char *args[])
 		}
 
 		{ // cylinders
-			constexpr const char *animations[] = { "cage-tests/skeletons/cylinder/cylinder.x?bend", "cage-tests/skeletons/cylinder/cylinder.x?curve" };
+			constexpr const char *animations[] = { "cage-tests/skeletons/cylinder/cylinder.glb?bend", "cage-tests/skeletons/cylinder/cylinder.glb?curve" };
 			uint32 i = 0;
 			for (const char *animation : animations)
 			{
 				Entity *e = ents->create(10 + i);
-				e->value<ModelComponent>() = HashString("cage-tests/skeletons/cylinder/cylinder.x");
+				e->value<ModelComponent>() = HashString("cage-tests/skeletons/cylinder/cylinder.glb");
 				e->value<SkeletalAnimationComponent>() = HashString(animation);
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 0);
-				label(remove(String(animation), 0, 41), t.position + Vec3(0, 3.3, 0));
+				t.scale = 0.5;
+				label(remove(String(animation), 0, 43), t.position + Vec3(0, 3.3, 0));
 				i++;
 			}
 			{ // no animation set
 				Entity *e = ents->create(10 + i);
-				e->value<ModelComponent>() = HashString("cage-tests/skeletons/cylinder/cylinder.x");
+				e->value<ModelComponent>() = HashString("cage-tests/skeletons/cylinder/cylinder.glb");
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 0);
+				t.scale = 0.5;
 				label("no anim set", t.position + Vec3(0, 3.3, 0));
 				i++;
 			}
 			{ // non-existent animation
 				Entity *e = ents->create(10 + i);
-				e->value<ModelComponent>() = HashString("cage-tests/skeletons/cylinder/cylinder.x");
-				e->value<SkeletalAnimationComponent>() = HashString("cage-tests/skeletons/cylinder/cylinder.x?non-existent");
+				e->value<ModelComponent>() = HashString("cage-tests/skeletons/cylinder/cylinder.glb");
+				e->value<SkeletalAnimationComponent>() = HashString("cage-tests/skeletons/cylinder/cylinder.glb?non-existent");
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 0);
+				t.scale = 0.5;
 				label("invalid anim", t.position + Vec3(0, 3.3, 0));
 				i++;
 			}
 			{ // non-existent object
 				Entity *e = ents->create(10 + i);
-				e->value<ModelComponent>() = HashString("cage-tests/skeletons/cylinder/non-existent.x");
+				e->value<ModelComponent>() = HashString("cage-tests/skeletons/cylinder/non-existent.glb");
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 0);
+				t.scale = 0.5;
 				label("invalid object", t.position + Vec3(0, 3.3, 0));
 				i++;
 			}
 		}
 
 		{ // monks
-			constexpr const char *animations[] = { "cage-tests/skeletons/monk/monk.x?Attack1", "cage-tests/skeletons/monk/monk.x?Dance", "cage-tests/skeletons/monk/monk.x?Die" };
+			constexpr const char *animations[] = { "cage-tests/skeletons/monk/monk.glb?Attack1", "cage-tests/skeletons/monk/monk.glb?Dance", "cage-tests/skeletons/monk/monk.glb?Die" };
 			uint32 i = 0;
 			for (const char *animation : animations)
 			{
@@ -140,7 +144,7 @@ int main(int argc, char *args[])
 				e->value<SkeletalAnimationComponent>() = HashString(animation);
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, -3);
-				label(remove(String(animation), 0, 33), t.position + Vec3(0, 2, 0));
+				label(remove(String(animation), 0, 35), t.position + Vec3(0, 2, 0));
 				i++;
 			}
 			{ // no animation
@@ -154,7 +158,7 @@ int main(int argc, char *args[])
 			{ // rotated
 				Entity *e = ents->create(20 + i);
 				e->value<ModelComponent>() = HashString("cage-tests/skeletons/monk/monk.object");
-				e->value<SkeletalAnimationComponent>() = HashString("cage-tests/skeletons/monk/monk.x?Dance");
+				e->value<SkeletalAnimationComponent>() = HashString("cage-tests/skeletons/monk/monk.glb?Dance");
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, -3);
 				t.orientation = Quat(Degs(), Degs(randomRange(45, 270)), Degs());
@@ -164,9 +168,9 @@ int main(int argc, char *args[])
 			{ // blending
 				Entity *e = ents->create(20 + i);
 				e->value<ModelComponent>() = HashString("cage-tests/skeletons/monk/monk.object");
-				e->value<SkeletalAnimationComponent>().animations[0].animation = HashString("cage-tests/skeletons/monk/monk.x?Dance");
+				e->value<SkeletalAnimationComponent>().animations[0].animation = HashString("cage-tests/skeletons/monk/monk.glb?Dance");
 				e->value<SkeletalAnimationComponent>().animations[0].weight = 1;
-				e->value<SkeletalAnimationComponent>().animations[1].animation = HashString("cage-tests/skeletons/monk/monk.x?Attack1");
+				e->value<SkeletalAnimationComponent>().animations[1].animation = HashString("cage-tests/skeletons/monk/monk.glb?Attack1");
 				e->value<SkeletalAnimationComponent>().animations[1].weight = randomChance();
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, -3);
@@ -177,13 +181,13 @@ int main(int argc, char *args[])
 
 		{ // gimbals/spawners
 			uint32 i = 0;
-			constexpr const char *objects[] = { "cage-tests/skeletons/gimbal/spawner_fbx.object", "cage-tests/skeletons/gimbal/spawner_glb.object", "cage-tests/skeletons/gimbal/spawner_x.object" };
+			constexpr const char *objects[] = { "cage-tests/skeletons/gimbal/spawner_glb.object", "cage-tests/skeletons/gimbal/spawner_x.object" };
 			for (const char *object : objects)
 			{
 				Entity *e = ents->create(30 + i);
 				e->value<ModelComponent>() = HashString(object);
 				TransformComponent &t = e->value<TransformComponent>();
-				t.position = Vec3(i * 3 + 1.5f, 1, 0);
+				t.position = Vec3(i * 3 + 5, 1, 0);
 				t.scale = 0.6;
 				label(remove(String(object), 0, 28), t.position + Vec3(0, 1, 0));
 				i++;

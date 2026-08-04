@@ -1,20 +1,17 @@
 []
 scheme = animation
-cylinder.x?Default_Action
-cylinder.x?bend
-cylinder.x?curve
+cylinder.glb?bend
+cylinder.glb?curve
 
 []
 scheme = model
 bones = true
 uvs = false
-axes = +x-z+y
-scale = 0.5
-cylinder.x
+cylinder.glb
 
 []
 scheme = skeleton
-cylinder.x;skeleton
+cylinder.glb;skeleton
 
 []
 scheme = pack

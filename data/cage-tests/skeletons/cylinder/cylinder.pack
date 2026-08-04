@@ -1,8 +1,5 @@
 []
-cylinder.x?Default_Action
-cylinder.x?bend
-cylinder.x?curve
+cylinder.glb?bend
+cylinder.glb?curve
 []
-cylinder.x
-[]
-cylinder.x;skeleton
+cylinder.glb

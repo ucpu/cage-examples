@@ -5,7 +5,6 @@ formats.obj
 []
 scheme = model
 bones = true
-scale = 0.01
 formats.fbx
 
 []

@@ -1,26 +1,36 @@
 []
 scheme = animation
-monk.x?Attack1
-monk.x?Dance
-monk.x?Die
-monk.x?Flee
-monk.x?Idle
-monk.x?Sad
-monk.x?Sleep
-monk.x?TortureFire
-monk.x?Walk
+monk.glb?Attack1
+monk.glb?Dance
+monk.glb?Die
+monk.glb?Flee
+monk.glb?Idle
+monk.glb?Sad
+monk.glb?Sleep
+monk.glb?TortureFire
+monk.glb?Walk
 
 []
 scheme = model
+material = body.cpm
 bones = true
-axes = +x-z+y
-monk.x?Monk_MonkBody
-monk.x?Monk_MonkHair
-monk.x?Monk_MonkHead
+monk.glb?MonkBody
+
+[]
+scheme = model
+material = hair.cpm
+bones = true
+monk.glb?MonkHair
+
+[]
+scheme = model
+material = head.cpm
+bones = true
+monk.glb?MonkHead
 
 []
 scheme = skeleton
-monk.x;skeleton
+monk.glb;skeleton
 
 []
 scheme = pack

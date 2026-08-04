@@ -12,7 +12,7 @@ $include /cage/shaders/engine/fragment.glsl
 
 $include /cage/shaders/functions/fbm.glsl
 
-//layout(early_fragment_tests) in; // currently not supported
+layout(early_fragment_tests) in;
 
 float sampleHeight(vec3 wp)
 {

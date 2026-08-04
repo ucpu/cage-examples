@@ -2,8 +2,6 @@
 scheme = model
 bones = true
 trianglesOnly = true
-scale = 0.2
-axes = -x+y-z
 Rat.glb?Cylinder-0_Pink
 Rat.glb?Cylinder-1_Grey
 

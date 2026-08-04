@@ -1,21 +1,19 @@
 []
 scheme = animation
-lemur.x?ADefault
-lemur.x?AttackMelee
-lemur.x?Default_Action
-lemur.x?idle
-lemur.x?run
+lemur.glb?ADefault
+lemur.glb?AttackMelee
+lemur.glb?idle
+lemur.glb?run
 
 []
 scheme = model
+material = lemur.cpm
 bones = true
-axes = +x-z+y
-scale = 0.01
-lemur.x
+lemur.glb
 
 []
 scheme = skeleton
-lemur.x;skeleton
+lemur.glb;skeleton
 
 []
 scheme = texture

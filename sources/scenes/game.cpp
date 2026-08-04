@@ -154,7 +154,7 @@ void update()
 	{ // automatic reloading -> used for engine testing
 		static uint64 last = 0;
 		uint64 now = applicationTime();
-		if (now > last + (sin(Rads(now) * 2e-7) * 2.5 + 3) * 1000000)
+		if (now > last + (sin(Rads(now) * 2e-7) * 2.5 + 3) * 1'000'000)
 		{
 			sceneIndexCurrent++;
 			if (sceneIndexCurrent == maps.size())

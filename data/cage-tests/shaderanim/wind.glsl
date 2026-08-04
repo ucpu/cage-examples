@@ -27,7 +27,7 @@ void main()
 $include /cage/shaders/engine/fragment.glsl
 
 #ifndef CutOut
-//layout(early_fragment_tests) in; // currently not supported
+layout(early_fragment_tests) in;
 #endif
 
 void main()
