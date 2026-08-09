@@ -27,8 +27,6 @@ public:
 			auto _ = g->comboBox().text("skins").event(inputFilter([this](input::GuiValue in) { switchSkin(in); }));
 			static constexpr const char *options[] = {
 				"default",
-				"large",
-				"compact",
 				"tooltips",
 			};
 			for (uint32 i = 0; i < array_size(options); i++)

@@ -15,6 +15,9 @@ roboto.ttf?0
 
 []
 scheme = texture
+srgb = true
+colorPalette.png
+linearVsGamma.png
 skin.png
 
 []

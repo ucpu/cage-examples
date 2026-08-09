@@ -56,7 +56,7 @@ int main(int argc, char *args[])
 				e->value<SkeletalAnimationComponent>() = HashString(animation);
 				TransformComponent &t = e->value<TransformComponent>();
 				t.position = Vec3(i * 3 - 6.f, 0, 3);
-				label(remove(String(animation), 0, 35), t.position + Vec3(0, 2, 0));
+				label(remove(String(animation), 0, 37), t.position + Vec3(0, 2, 0));
 				i++;
 			}
 			{ // no animation
