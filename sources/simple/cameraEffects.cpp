@@ -211,6 +211,16 @@ void update()
 				cam.ambientIntensity = toFloat(in.value);
 		}
 	}
+
+	{ // rendering resolution
+		constexpr sint32 baseName = 3000;
+		{ // factor
+			Entity *e = ents->get(baseName + 1);
+			GuiInputComponent &in = e->value<GuiInputComponent>();
+			if (in.valid)
+				camera->value<CameraComponent>().renderingResolution = toFloat(in.value);
+		}
+	}
 }
 
 Entity *genInputFloat(Entity *table, sint32 &childIndex, uint32 nameBase, const String &labelText, Real rangeMin, Real rangeMax, Real step, Real current)
@@ -484,6 +494,28 @@ void initializeGui()
 		sint32 childIndex = 1;
 		genInputFloat(table, childIndex, baseName, "Sun:", 0, 100, 0.1, 3);
 		genInputFloat(table, childIndex, baseName, "Ambient:", 0, 1, 0.01, 0.05);
+	}
+
+	{ // rendering resolution
+		constexpr sint32 baseName = 3000;
+		Entity *panel = ents->createUnique();
+		{
+			GuiParentComponent &p = panel->value<GuiParentComponent>();
+			p.parent = layout->id();
+			p.order = baseName;
+			panel->value<GuiSpoilerComponent>();
+			panel->value<GuiTextComponent>().value = "Rendering resolution";
+			panel->value<GuiLayoutLineComponent>().vertical = true;
+		}
+		Entity *table = ents->createUnique();
+		{
+			GuiParentComponent &p = table->value<GuiParentComponent>();
+			p.parent = panel->id();
+			p.order = 2;
+			table->value<GuiLayoutTableComponent>();
+		}
+		sint32 childIndex = 1;
+		genInputFloat(table, childIndex, baseName, "Factor:", 0.1, 1, 0.1, 1);
 	}
 }
 
