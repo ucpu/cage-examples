@@ -8,5 +8,7 @@ texts.pot
 
 []
 scheme = texture
+srgb = true
+mipmaps = false
 czech.png
 english.png

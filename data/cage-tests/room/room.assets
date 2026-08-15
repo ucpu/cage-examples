@@ -103,6 +103,7 @@ room.obj?windowframe_windowframe
 []
 scheme = texture
 srgb = true
+mipmaps = false
 apple.jpg
 eye.png
 floor.jpg
@@ -123,6 +124,7 @@ wallpaper.jpg
 scheme = texture
 convert = heightToNormal
 normal = true
+mipmaps = false
 door.png
 
 []

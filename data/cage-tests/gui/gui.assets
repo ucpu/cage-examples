@@ -16,6 +16,7 @@ roboto.ttf?0
 []
 scheme = texture
 srgb = true
+mipmaps = false
 colorPalette.png
 linearVsGamma.png
 skin.png
@@ -27,5 +28,6 @@ texts.po
 
 []
 scheme = texture
+mipmaps = false
 czech.png
 english.png

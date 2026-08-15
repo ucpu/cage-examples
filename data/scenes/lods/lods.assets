@@ -9,6 +9,7 @@ lods.object
 []
 scheme = texture
 srgb = true
+mipmaps = false
 lod0.png
 
 []
@@ -18,6 +19,7 @@ lod0.obj
 []
 scheme = texture
 srgb = true
+mipmaps = false
 lod1.png
 
 []
@@ -27,6 +29,7 @@ lod1.obj
 []
 scheme = texture
 srgb = true
+mipmaps = false
 lod2.png
 
 []
@@ -36,6 +39,7 @@ lod2.obj
 []
 scheme = texture
 srgb = true
+mipmaps = false
 lod3.png
 
 []
@@ -45,6 +49,7 @@ lod3.obj
 []
 scheme = texture
 srgb = true
+mipmaps = false
 lod4.png
 
 []

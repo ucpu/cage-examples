@@ -11,6 +11,7 @@ tree.obj?Ranges
 []
 scheme = texture
 srgb = true
+mipmaps = false
 bark.jpg
 leaves.png
 
