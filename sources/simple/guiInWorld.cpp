@@ -15,6 +15,9 @@ using namespace cage;
 
 constexpr uint32 AssetsName = HashString("cage-tests/cross/cross.pack");
 
+Holder<GuiInWorld> floorGui;
+Holder<GuiInWorld> circlingGui;
+
 void update()
 {
 	Entity *e = engineEntities()->get(101);
@@ -23,6 +26,7 @@ void update()
 	const Real dist = 10;
 	e->value<TransformComponent>().position = Vec3(sin(angle) * dist, 0, cos(angle) * dist);
 	e->value<TransformComponent>().orientation = Quat(Degs(), angle, Degs());
+	circlingGui->update(e->value<TransformComponent>(), false);
 }
 
 void makeGui(EntityManager *ents, const String &title)
@@ -95,11 +99,18 @@ int main(int argc, char *args[])
 			e->value<TransformComponent>().orientation = Quat(Degs(70), Degs(180), Degs());
 			e->value<TransformComponent>().scale = 1.3;
 			e->value<ModelComponent>() = HashString("cage/models/fake.obj");
+			floorGui = newGuiInWorld(GuiInWorldCreateConfig{ ents->get(1) });
+			makeGui(floorGui->guiEntities(), "floor gui");
+			floorGui->update(e->value<TransformComponent>(), false);
+			e->value<ModelComponent>() = floorGui->renderModel();
 		}
 		{ // circling gui
 			Entity *e = ents->create(101);
 			e->value<TransformComponent>().scale = 2;
 			e->value<ModelComponent>() = HashString("cage/models/fake.obj");
+			circlingGui = newGuiInWorld(GuiInWorldCreateConfig{ ents->get(1) });
+			makeGui(circlingGui->guiEntities(), "circling gui");
+			e->value<ModelComponent>() = circlingGui->renderModel();
 		}
 
 		engineAssets()->load(AssetsName);
@@ -108,11 +119,9 @@ int main(int argc, char *args[])
 			fpsCamera->mouseButton = MouseButtonsFlags::Right;
 			fpsCamera->movementSpeed = 0.3;
 			Holder<StatisticsGui> statistics = newStatisticsGui();
-			Holder<GuiInWorld> floorGui = newGuiInWorld(GuiInWorldCreateConfig{ ents->get(100), ents->get(1) });
-			makeGui(floorGui->guiEntities(), "floor gui");
-			Holder<GuiInWorld> circlingGui = newGuiInWorld(GuiInWorldCreateConfig{ ents->get(101), ents->get(1) });
-			makeGui(circlingGui->guiEntities(), "circling gui");
 			engineRun();
+			floorGui.clear();
+			circlingGui.clear();
 		}
 		engineAssets()->unload(AssetsName);
 		engineFinalize();

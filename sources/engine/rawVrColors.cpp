@@ -72,7 +72,18 @@ int main(int argc, char *args[])
 		window->title("cage test virtual reality");
 
 		// graphics device
-		Holder<GraphicsDevice> device = newGraphicsDevice(GraphicsDeviceCreateConfig{ .compatibility = +window });
+		auto vrp = newVirtualReality({ .window = +window });
+		Holder<VirtualReality> virtualreality = std::move(vrp.first);
+		Holder<GraphicsDevice> device = newGraphicsDevice(vrp.second);
+		const auto headsetConnectedListener = virtualreality->events.listen(inputFilter(&headsetConnected));
+		const auto headsetDisconnectedListener = virtualreality->events.listen(inputFilter(&headsetDiconnected));
+		const auto headsetPoseListener = virtualreality->events.listen(inputFilter(&headsetPose));
+		const auto controllerConnectedListener = virtualreality->events.listen(inputFilter(&controllerConnected));
+		const auto controllerDisconnectedListener = virtualreality->events.listen(inputFilter(&controllerDiconnected));
+		const auto controllerPoseListener = virtualreality->events.listen(inputFilter(&controllerPose));
+		const auto pressListener = virtualreality->events.listen(inputFilter(press));
+		const auto releaseListener = virtualreality->events.listen(inputFilter(release));
+		const auto axisListener = virtualreality->events.listen(inputFilter(axis));
 
 		// assets
 		Holder<AssetsManager> assets = newAssetsManager(AssetsManagerCreateConfig());
@@ -92,18 +103,6 @@ int main(int argc, char *args[])
 			assets->processCustomThread(0);
 			threadSleep(1'000);
 		}
-
-		// vr
-		Holder<VirtualReality> virtualreality = newVirtualReality();
-		const auto headsetConnectedListener = virtualreality->events.listen(inputFilter(&headsetConnected));
-		const auto headsetDisconnectedListener = virtualreality->events.listen(inputFilter(&headsetDiconnected));
-		const auto headsetPoseListener = virtualreality->events.listen(inputFilter(&headsetPose));
-		const auto controllerConnectedListener = virtualreality->events.listen(inputFilter(&controllerConnected));
-		const auto controllerDisconnectedListener = virtualreality->events.listen(inputFilter(&controllerDiconnected));
-		const auto controllerPoseListener = virtualreality->events.listen(inputFilter(&controllerPose));
-		const auto pressListener = virtualreality->events.listen(inputFilter(press));
-		const auto releaseListener = virtualreality->events.listen(inputFilter(release));
-		const auto axisListener = virtualreality->events.listen(inputFilter(axis));
 
 		{
 			// fetch assets
@@ -131,10 +130,8 @@ int main(int argc, char *args[])
 					enc->submit();
 				}
 
-				Holder<VirtualRealityGraphicsFrame> vrf = virtualreality->graphicsFrame();
+				Holder<VirtualRealityGraphicsFrame> vrf = virtualreality->nextFrame();
 				vrf->updateProjections();
-				vrf->renderBegin();
-				vrf->acquireTextures();
 				uint32 index = 0;
 				for (const auto &view : vrf->cameras)
 				{
@@ -148,7 +145,7 @@ int main(int argc, char *args[])
 					enc->submit();
 					index++;
 				}
-				vrf->renderCommit();
+				vrf->commit();
 
 				window->processEvents();
 				virtualreality->processEvents();

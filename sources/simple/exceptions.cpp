@@ -41,6 +41,31 @@ void controlUpdate()
 		t.position = Vec3(sin(Rads(time * 1e-6)) * 10, cos(Rads(time * 1e-6)) * 10, -20);
 	}
 	maybeThrow(probLoop, 3);
+
+	if (randomChance() < 0.05)
+	{
+		if (engineWindow()->isFullscreen())
+		{
+			if (randomChance() < 0.5)
+				engineWindow()->setWindowed();
+			else
+				engineWindow()->setMinimized();
+		}
+		else if (engineWindow()->isMinimized())
+		{
+			if (randomChance() < 0.5)
+				engineWindow()->setWindowed();
+			else
+				engineWindow()->setFullscreen();
+		}
+		else
+		{
+			if (randomChance() < 0.5)
+				engineWindow()->setFullscreen();
+			else
+				engineWindow()->setMinimized();
+		}
+	}
 }
 
 void graphicsInit()
@@ -77,10 +102,7 @@ int main(int argc, char *args[])
 {
 	try
 	{
-		// log to console
-		Holder<Logger> log1 = newLogger();
-		log1->format.bind<logFormatConsole>();
-		log1->output.bind<logOutputStdOut>();
+		initializeConsoleLogger();
 
 		// override breakpoints
 		detail::globalBreakpointOverride(false);

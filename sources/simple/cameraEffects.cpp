@@ -12,6 +12,7 @@
 #include <cage-engine/window.h>
 #include <cage-simple/engine.h>
 #include <cage-simple/fpsCamera.h>
+#include <cage-simple/fullscreenSwitcher.h>
 #include <cage-simple/statisticsGui.h>
 
 using namespace cage;
@@ -602,6 +603,10 @@ int main(int argc, char *args[])
 		fpsCamera->mouseButton = MouseButtonsFlags::Left;
 		fpsCamera->movementSpeed = 0.3;
 		Holder<StatisticsGui> statistics = newStatisticsGui();
+		FullscreenSwitcherCreateConfig fsc;
+		fsc.window = engineWindow();
+		fsc.defaultFullscreen = false;
+		Holder<FullscreenSwitcher> fullscreenSwitcher = newFullscreenSwitcher(fsc);
 
 		engineAssets()->load(AssetsName);
 		engineRun();

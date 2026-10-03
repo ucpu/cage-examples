@@ -155,8 +155,9 @@ int main(int argc, char *args[])
 			e->value<LightComponent>().lightType = LightTypeEnum::Directional;
 			e->value<ColorComponent>().intensity = 3;
 			ShadowmapComponent &s = e->value<ShadowmapComponent>();
-			s.resolution = 2048;
-			s.cascadesPaddingDistance = 30;
+			s.resolution = 1024;
+			s.cascadesPaddingDistance = 20;
+			s.cascadesSplitLogFactor = 0.6;
 		}
 		{ // floor
 			Entity *e = ents->createAnonymous();
@@ -177,11 +178,13 @@ int main(int argc, char *args[])
 		{ // vr camera
 			Entity *e = ents->create(2);
 			e->value<TransformComponent>();
-			VrCameraComponent &c = e->value<VrCameraComponent>();
-			c.ambientColor = Vec3(1);
-			c.ambientIntensity = 0.05;
-			c.virtualReality = +engineVirtualReality();
-			e->value<ScreenSpaceEffectsComponent>().effects = ScreenSpaceEffectsFlags::Default & ~ScreenSpaceEffectsFlags::AmbientOcclusion;
+			e->value<CameraComponent>().ambientColor = Vec3(1);
+			e->value<CameraComponent>().ambientIntensity = 0.05;
+			e->value<CameraComponent>().near = 0.1;
+			e->value<CameraComponent>().far = 100;
+			e->value<CameraComponent>().shadowmapFrustumDepthFraction = 0.5;
+			e->value<VrCameraComponent>().virtualReality = +engineVirtualReality();
+			//e->value<ScreenSpaceEffectsComponent>().effects = ScreenSpaceEffectsFlags::Default & ~ScreenSpaceEffectsFlags::AmbientOcclusion;
 		}
 		{ // left controller grip
 			Entity *e = ents->create(3);
