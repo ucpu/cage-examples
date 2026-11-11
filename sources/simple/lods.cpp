@@ -27,18 +27,38 @@ int main(int argc, char *args[])
 
 		// entities
 		EntityManager *ents = engineEntities();
-		{ // cube
-			Entity *e = ents->create(1);
-			e->value<ModelComponent>() = HashString("cage-tests/lods/cube.object");
-			e->value<TransformComponent>().position = Vec3(-8, 0, 0);
+		{ // cube simple
+			Entity *e = ents->createUnique();
+			e->value<ModelComponent>() = HashString("cage-tests/lods/cubeSimple.object");
+			e->value<TransformComponent>().position = Vec3(-45, 0, 0);
 		}
-		{ // sphere
-			Entity *e = ents->create(2);
+		{ // cube 1
+			Entity *e = ents->createUnique();
+			e->value<ModelComponent>() = HashString("cage-tests/lods/cube.object");
+			e->value<TransformComponent>().position = Vec3(-30, 0, 0);
+		}
+		{ // cube 2
+			Entity *e = ents->createUnique();
+			e->value<ModelComponent>() = HashString("cage-tests/lods/cube2.object");
+			e->value<TransformComponent>().position = Vec3(-15, 0, 0);
+		}
+		{ // sphere ref
+			Entity *e = ents->createUnique();
+			e->value<ModelComponent>() = HashString("cage-tests/lods/sphereRef.object");
+			e->value<TransformComponent>().position = Vec3(0, 0, 0);
+		}
+		{ // sphere 2
+			Entity *e = ents->createUnique();
+			e->value<ModelComponent>() = HashString("cage-tests/lods/sphere2.object");
+			e->value<TransformComponent>().position = Vec3(15, 0, 0);
+		}
+		{ // sphere 1
+			Entity *e = ents->createUnique();
 			e->value<ModelComponent>() = HashString("cage-tests/lods/sphere.object");
-			e->value<TransformComponent>().position = Vec3(8, 0, 0);
+			e->value<TransformComponent>().position = Vec3(30, 0, 0);
 		}
 		{ // floor
-			Entity *e = ents->create(3);
+			Entity *e = ents->createUnique();
 			e->value<ModelComponent>() = HashString("cage-tests/lods/floor.object");
 			e->value<TransformComponent>().position = Vec3(0, -5, 0);
 		}
@@ -59,7 +79,7 @@ int main(int argc, char *args[])
 			c.ambientColor = Vec3(1);
 			c.ambientIntensity = 0.5;
 			c.near = 0.1;
-			c.far = 200;
+			c.far = 500;
 		}
 
 		Holder<FpsCamera> fpsCamera = newFpsCamera(ents->get(10));

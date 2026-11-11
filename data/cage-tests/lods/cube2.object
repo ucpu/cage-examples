@@ -1,0 +1,7 @@
+[size]
+world = 10
+pixels = 512
+
+[]
+threshold = 0.5
+lods.obj?cube_3

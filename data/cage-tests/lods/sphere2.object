@@ -1,0 +1,8 @@
+[size]
+world = 10
+pixels = 512
+
+[]
+lods.obj?sphere_3
+
+[]

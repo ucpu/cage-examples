@@ -1,5 +1,8 @@
-
 []
 cube.object
-sphere.object
+cube2.object
+cubeSimple.object
 floor.object
+sphere.object
+sphere2.object
+sphereRef.object
